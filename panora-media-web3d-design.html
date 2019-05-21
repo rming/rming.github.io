@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Flash全景浏览-web3D-富媒体应用设计">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/panora-media-web3d-design.html">
+
+
+<meta name="description" content="今天突发奇想，想到web中的全景照片的展示，就行真实的还原现实场景一样，可以说给用户带来了前所未有的友好体验，大致从网上看了一下，实现这个效果的可以分为两种方法了，一种是通过javascript代码，不过效果并不是很好，可能html5会带来一点改观吧! 而另一种，则是通过flash中的ActionScript实现的。呵呵，不错的效果，而且应用市场十分的广阔。 我们先来看一下这个国内作品的效果： 效">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flash全景浏览-web3D-富媒体应用设计">
+<meta property="og:url" content="http://rmingwang.com/panora-media-web3d-design.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="今天突发奇想，想到web中的全景照片的展示，就行真实的还原现实场景一样，可以说给用户带来了前所未有的友好体验，大致从网上看了一下，实现这个效果的可以分为两种方法了，一种是通过javascript代码，不过效果并不是很好，可能html5会带来一点改观吧! 而另一种，则是通过flash中的ActionScript实现的。呵呵，不错的效果，而且应用市场十分的广阔。 我们先来看一下这个国内作品的效果： 效">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flash全景浏览-web3D-富媒体应用设计">
+<meta name="twitter:description" content="今天突发奇想，想到web中的全景照片的展示，就行真实的还原现实场景一样，可以说给用户带来了前所未有的友好体验，大致从网上看了一下，实现这个效果的可以分为两种方法了，一种是通过javascript代码，不过效果并不是很好，可能html5会带来一点改观吧! 而另一种，则是通过flash中的ActionScript实现的。呵呵，不错的效果，而且应用市场十分的广阔。 我们先来看一下这个国内作品的效果： 效">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Flash全景浏览-web3D-富媒体应用设计 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Flash全景浏览-web3D-富媒体应用设计
+        
+      </h1>
+
+      <time class="post-time">
+          3月 29 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>今天突发奇想，想到web中的全景照片的展示，就行真实的还原现实场景一样，可以说给用户带来了前所未有的友好体验，大致从网上看了一下，实现这个效果的可以分为两种方法了，一种是通过javascript代码，不过效果并不是很好，可能html5会带来一点改观吧! 而另一种，则是通过flash中的ActionScript实现的。呵呵，不错的效果，而且应用市场十分的广阔。</p>
+<p>我们先来看一下这个<strong>国内作品</strong>的效果：</p>
+<p>效果地址：<a href="http://www.86rm.com/easytour/index.html?config=mapfloor.xml" target="_blank">点击进入WEB3D</a></p>
+<p>国内网站：<a href="http://www.86rm.com/blog" target="_blank">http://www.86rm.com/blog </a></p>
+<p>再来看看<strong>国外的情形</strong>吧，没有仔细去找，不过找到了一个flash室内全景效果，鼠标左右移动，室内家具相应的位移，作者不但写出从photoshp到flash的详细设计过程，还提供了演示与源码下载，肯定能为不少flash爱好者提供很大的帮助。</p>
+<p>演示地址:<a href="http://www.webdesignerwall.com/demo/parallax-gallery/" target="_blank"><span style="color: #000000;">http://www.webdesignerwall.com/demo/parallax-gallery/</span></a></p>
+<p>源码下载地址:<a href="http://www.webdesignerwall.com/file/parallax-gallery-demo.zip" target="_blank"><span style="color: #000000;">http://www.webdesignerwall.com/file/parallax-gallery-demo.zip</span></a></p>
+<p>教程地址:<span style="color: #000000;"><a href="http://www.webdesignerwall.com/tutorials/parallax-gallery" target="_blank">http://www.webdesignerwall.com/tutorials/parallax-gallery</a></span></p>
+<p>貌似国内的一些家伙已经开始做相关的应用了，主要还是用在展示上的。</p>
+<p><strong><strong>在线售楼系统、</strong></strong><strong><strong>360度flash全景制作、发布和浏览软件</strong></strong></p>
+<p></p><p style="font-weight: bold;"><strong>flash全景GIS漫游软件、</strong><strong>flash三维展示软件、</strong><strong>视频播放器、</strong><strong>全景地图浏览</strong></p><p></p>
+<p></p><p style="font-weight: bold;"><strong><br></strong></p><br>全景web，呵呵，有戏、好玩。搞不好以后我们的浏览器会更加丰富了<p></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/designer-developer-front-end-technology-forum.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Designer & Developer Front End Technology Forum</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/psd-source-file-heart-qiyun-side-fresh-and-natural-body-contest-green.html">
+        <span class="next-text nav-default">心栖云端征文大赛_绿色_清新自然</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/panora-media-web3d-design.html';
+
+  var disqus_title = "Flash全景浏览-web3D-富媒体应用设计";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

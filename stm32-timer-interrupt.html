@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32定时器中断">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-timer-interrupt.html">
+
+
+<meta name="description" content="STM32的定时器stm32的定时器功能十分强大，有TIME1和TIME8等高级定时器，也有TIME1~TIME5等通用定时器，还有TIME6和TIME7等基本定时器，下面着重学习下难度适中的通用定时器。  STM32 通用定时器简介通用计时器的使用，需要先配置一个时基单元，就是设定一个基准时间，确定计数一次耗去的时间，可以设定在几个微妙到几个毫秒之间。 通用定时器的都有4个独立通道（TIMx_C">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32定时器中断">
+<meta property="og:url" content="http://rmingwang.com/stm32-timer-interrupt.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="STM32的定时器stm32的定时器功能十分强大，有TIME1和TIME8等高级定时器，也有TIME1~TIME5等通用定时器，还有TIME6和TIME7等基本定时器，下面着重学习下难度适中的通用定时器。  STM32 通用定时器简介通用计时器的使用，需要先配置一个时基单元，就是设定一个基准时间，确定计数一次耗去的时间，可以设定在几个微妙到几个毫秒之间。 通用定时器的都有4个独立通道（TIMx_C">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32定时器中断">
+<meta name="twitter:description" content="STM32的定时器stm32的定时器功能十分强大，有TIME1和TIME8等高级定时器，也有TIME1~TIME5等通用定时器，还有TIME6和TIME7等基本定时器，下面着重学习下难度适中的通用定时器。  STM32 通用定时器简介通用计时器的使用，需要先配置一个时基单元，就是设定一个基准时间，确定计数一次耗去的时间，可以设定在几个微妙到几个毫秒之间。 通用定时器的都有4个独立通道（TIMx_C">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32定时器中断 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32定时器中断
+        
+      </h1>
+
+      <time class="post-time">
+          7月 21 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h3><span id="stm32的定时器">STM32的定时器</span></h3><br>stm32的定时器功能十分强大，有TIME1和TIME8等<strong>高级定时器</strong>，也有TIME1~TIME5等<strong>通用定时器</strong>，还有TIME6和TIME7等<strong>基本定时器</strong>，下面着重学习下难度适中的通用定时器。<p></p>
+<p></p><h2><span id="stm32-通用定时器简介"> STM32 通用定时器简介</span></h2><br>通用计时器的使用，需要先配置一个时基单元，就是设定一个基准时间，确定计数一次耗去的时间，可以设定在几个微妙到几个毫秒之间。<p></p>
+<p>通用定时器的都有4个独立通道（TIMx_CH1~4），这些通道可以用来作为：</p>
+<p><ul><br>    <li>输入捕获</li><br>    <li>输出比较</li><br>    <li>PWM生成</li><br>    <li>单脉冲模式输出</li><br></ul></p>
+<p><div>时基单元核心部件是一个<strong>16位分频器</strong>，通过<strong>对定时器时钟的分频</strong>实现确定<strong>时间基准</strong>的功能。</div></p>
+<p><div>根据手册可以知道 基准时钟的计算公式：</div></p>
+<p><div></div></p>
+<p><div>T = (分频寄存器+1)/TIM时钟</div></p>
+<p><div></div></p>
+<p><div>需要注意的是TIM时钟的大小，以TIM2为例，虽然其挂载在APB1总线上，PCLK时钟为36Mhz，但TIM2得到的却是72Mhz。<strong>所有挂载在APB1总线上的通用定时器时钟频率都为72Mhz</strong>;</div></p>
+<p><div></div></p>
+<p><div><strong>通用寄存器的<span style="color: #ff0000;">四个通道</span>，每一个通道相当于一个<span style="color: #ff0000;">中断触发源</span>，可以设置一个计数值，当<span style="color: #ff0000;">TIM计数值</span>和此<span style="color: #ff0000;">计数值相等</span>时，触发中断。 </strong></div><br></p>
+<p></p><h2><span id="寄存器简介"> 寄存器简介</span></h2><p></p>
+<p></p><h3><span id="控制寄存器1timx_cr1">控制寄存器1（TIMx_CR1）</span></h3><p></p>
+<p></p><h3><span id="需要注意的是">需要注意的是</span></h3><p></p>
+<p><blockquote></blockquote></p>
+<p><div><strong>ARPE位</strong> :要<strong><span style="color: #ff0000;">开启自动重装</span></strong>必须将此为置1；</div></p>
+<p><div><strong>DIR位</strong>： <span style="color: #ff0000;"><strong> 0：计数器向上计数；    1：计数器向下计数。 注：当计数器配置为中央对齐模式或编码器模式时，该位为只读。</strong></span></div></p>
+<p><div><strong>CEN位</strong>：<strong><span style="color: #ff0000;">计数器使能位</span></strong></div></p>
+<p></p><h3><span id="dma中断使能寄存器timx_dier">DMA/中断使能寄存器（TIMx_DIER）</span></h3><br>该寄存器是一个<strong>16 位的寄存器</strong><p></p>
+<p>这里我们仅关心它的<strong>第6 位</strong>和<strong>第0 位</strong>，第 6 位<span style="color: #ff0000;"><strong>TIE 为触发中断使能位</strong></span>，通过将该位置 1 使能TIMx的<strong>中断触发</strong>，注意只要是 TIMx需要使用中断，该位必须为 1 。而第 0 位，则为<span style="color: #ff0000;"><strong>允许更新中断位</strong></span>，通过置1 ，来<strong>允许由于更新事件而产生的中断</strong>。</p>
+<p><blockquote><strong>TIE:<span style="color: #ff0000;">触发中断使能位；</span></strong></blockquote></p>
+<p><div><strong>UIE:<span style="color: #ff0000;">允许更新中断位</span></strong>，允许由更新事件来产生中断;</div></p>
+<p><ul><br>    <li>更新事件包括: 计数器向上/向下溢出，计数器初始化</li><br>    <li>触发时间包括：计数器启动，停止，初始化</li><br></ul></p>
+<p><div>CC1IE~CC4IE：允许捕获/比较1~4中断</div></p>
+<p></p><h3><span id="预分频寄存器timx_psc">预分频寄存器（TIMx_PSC）</span></h3><br>该寄存器用设置<strong>对时钟进行分频</strong>，然后提供给计数器，作为<strong>计数器的时钟</strong>。<p></p>
+<p>TIMx_CNT 寄存器，该寄存器是定时器的计数器，该寄存器存储了当前定时器的计数值</p>
+<p></p><h3><span id="自动重装载寄存器timx_arr">自动重装载寄存器（TIMx_ARR ）</span></h3><br>该寄存器在物理上实际对应着2 个寄存器。<p></p>
+<p>一个是程序员可以直接操作的，另外一个是程序员看不到的，这个看不到的寄存器在《STM32参考手册》里面被叫做影子寄存器。事实上真正起作用的是影子寄存器。根据 TIMx_CR1 寄存器中APRE 位的设置：APRE=0 时，预装载寄存器的内容可以随时传送到影子寄存器，此时 2者是连通的；而 APRE=1 时，在每一次更新事件（UEV）时，才把预装在寄存器的内容传送到影子寄存器。</p>
+<p></p><h3><span id="状态寄存器timx_sr">状态寄存器（TIMx_SR）</span></h3><br>该寄存器用来标记当前与定时器相关的各种事件/ 中断是否发生。<p></p>
+<p></p><h2><span id="寄存器操作步骤">寄存器操作步骤</span></h2><p></p>
+<p></p><h3><span id="1-tim3-时钟使能">1 、TIM3 时钟使能。</span></h3><br>这里我们通过<strong>APB1ENR</strong>的第1 位来设置TIM3的时钟，因为Stm32_Clock_Init函数里面把APB1的分频设置为2 了，所以我们的 TIM3时钟就是 APB1时钟的 2 被，等于系统时钟。<p></p>
+<p></p><h3><span id="2-设置tim3_arr和tim3_psc-的值">2 、设置TIM3_ARR和TIM3_PSC 的值。</span></h3><br>通过这两个寄存器，我们来<span style="color: #ff0000;"><strong>设置自动重装的值</strong></span>，以及<span style="color: #ff0000;"><strong>分频系数</strong></span>。这两个参数加上时钟频率就决定了定时器的溢出时间。<p></p>
+<p></p><h3><span id="3-设置tim3_dier-允许更新中断">3 、设置TIM3_DIER 允许更新中断。</span></h3><br>因为我们要使用TIM3的更新中断，所以设置 <strong>DIER的UIE 位</strong>，并<span style="color: #ff0000;"><strong>使能触发中断</strong></span>。<p></p>
+<p></p><h3><span id="4-允许tim3-工作">4 、允许TIM3 工作。</span></h3><br>光配置好定时器还不行，没有开启定时器，照样不能用。我们在配置完后要<strong>开启定时器</strong>，通过<strong>TIM3_CR1 的CEN位</strong>来设置。<p></p>
+<p></p><h3><span id="5-tim3-中断分组设置">5 、TIM3 中断分组设置。</span></h3><br>在定时器配置完了之后，因为要产生中断，必不可少的要设置<span style="color: #ff0000;"><strong>NVIC相关寄存器</strong></span>，以<span style="color: #ff0000;"><strong>使能 TIM3中断</strong></span>。<p></p>
+<p></p><h3><span id="6-编写中断服务函数">6 、编写中断服务函数。</span></h3><br>在最后，还是要编写定时器<span style="color: #ff0000;"><strong>中断服务函数</strong></span>，通过该函数来处理定时器产生的相关中断。在中断产生后，通过<strong>状态寄存器的值来判断此次产生的中断属于什么类型</strong>。然后执行相关的操作，我们这里使用的是<strong>更新（溢出）中断</strong>，所以在<strong>状态寄存器SR 的最低位</strong>。在处理完中断之后应该<strong>向TIM3_SR的最低位写 0</strong> ，来<strong>清<span style="color: #ff0000;">除该中断标志</span></strong>。<p></p>
+<p></p><h2><span id="程序设计">程序设计</span></h2><br>//TIMER.C<p></p>
+<p><pre class="brush: php; gutter: true">#include &quot;timer.h&quot;</pre></p>
+<p>#include &quot;led.h&quot;</p>
+<p>//通用定时器 驱动代码               </p>
+<p>//定时器3中断服务程序<br>void TIM3_IRQHandler(void)<br>{<br>    if(TIM3-&gt;SR&amp;0X0001)//溢出中断<br>    {<br>        LED1=!LED1;<br>    }<br>    TIM3-&gt;SR&amp;=~(1&lt;&lt;0);//清除中断标志位<br>}<br>//通用定时器中断初始化<br>//这里时钟选择为APB1的2倍，而APB1为36M<br>//arr：自动重装值。<br>//psc：时钟预分频数<br>//这里使用的是定时器3!<br>void timerx_init(u16 arr,u16 psc)<br>{<br>    RCC-&gt;APB1ENR|=1&lt;&lt;1;//TIM3时钟使能<br>     TIM3-&gt;ARR=arr;  //设定计数器自动重装值//刚好1ms<br>    TIM3-&gt;PSC=psc;  //预分频器7200,得到10Khz的计数时钟<br>    //这两个东东要同时设置才可以使用中断<br>    TIM3-&gt;DIER|=1&lt;&lt;0;   //允许更新中断<br>    TIM3-&gt;DIER|=1&lt;&lt;6;   //允许触发中断<br>    TIM3-&gt;CR1|=0x01;    //使能定时器3<br>      MY_NVIC_Init(1,3,TIM3_IRQChannel,2);//抢占1，子优先级3，组2<br>}<br><strong>Timerx_Init 函数就是执行我们上面介绍的那5 个步骤，使得TIM3开始工作，并开启中断。</strong></p>
+<p><strong></strong>该函数的2 个参数用来设置 <strong>TIM3 的溢出时间</strong>。</p>
+<p>因为我们在 <strong>Stm32_Clock_Init 函数里面已经初始化APB1的时钟为 2 分频</strong>，所以<strong>APB1的时钟为36M</strong> ，而从 STM32的内部时钟树图（&lt;&lt;STM32参考手册&gt;&gt;第56 页，图 8 ）得知：<strong>当 APB1的时钟分频数为1 的时候，TIM2~7 的时钟为 APB1的时钟</strong>，<strong>而如果 APB1的时钟分频数不为1 ，那么 TIM2~7 的时钟频率将为APB1时钟的两倍。</strong>因此，TIM3的时钟为72M ，再根据我们设计的 arr和psc 的值，就可以计算中断时间了。</p>
+<p>计算公式如下：</p>
+<p></p><h3 style="text-align: center;"><span id="tout-arrpsc1tclk"><span style="color: #ff0000;">Tout= (arr*（psc+1））/Tclk；</span></span></h3><br><strong>Tclk ：</strong>TIM3的输入时钟频率（单位为Khz）。<br><strong>Tout ：</strong>TIM3溢出时间（单位为ms）。<p></p>
+<p>//MAIN.C</p>
+<p><pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;</pre></p>
+<p>#include &quot;sys.h&quot;</p>
+<p>#include &quot;usart.h&quot;</p>
+<p>#include &quot;delay.h&quot;</p>
+<p>#include &quot;led.h&quot;</p>
+<p>#include &quot;key.h&quot;</p>
+<p>#include &quot;exti.h&quot;</p>
+<p>#include &quot;wdg.h&quot;    </p>
+<p>#include &quot;timer.h&quot;<br>//定时器中断<br>int main(void)<br>{<br>     Stm32_Clock_Init(9); //系统时钟设置<br>    delay_init(72);         //延时初始化<br>    uart_init(72,9600);  //串口初始化<br>    led_init();               //初始化与LED连接的硬件接口<br>    timerx_init(5000,7199);//10Khz的计数频率，计数到5000为500ms<br>       while(1)<br>    {<br>        LED0=!LED0;<br>        delay_ms(200);<br>    }<br>}<br>此段代码对TIM3 进行初始化之后，进入死循环等待TIM3溢出中断，<span style="color: #ff0000;"><strong>当TIM3_CNT 的值等于TIM3_ARR 的值的时候</strong></span>，就会产生<span style="color: #ff0000;"><strong>TIM3 的更新中断</strong></span>，然后在中断里面取反LED1，TIM3_CNT 再从0 开始计数。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/stm32-pwm.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32 脉冲宽度调制(PWM)输出</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-wwdg.html">
+        <span class="next-text nav-default">STM32窗口看门狗（WWDG）</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-timer-interrupt.html';
+
+  var disqus_title = "STM32定时器中断";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

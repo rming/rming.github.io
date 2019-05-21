@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="wordpress 模板制作手记">
+
+
+
+
+  <meta name="keywords" content="wordpress,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/wp-templates-functions-notes.html">
+
+
+<meta name="description" content="获取指定分类指定数量的随机顺序文章标题及其链接 &amp;lt;?php $rand_posts = get_posts(&apos;numberposts=5&amp;amp;orderby=rand&amp;amp;category=1&apos;);  foreach( $rand_posts as $post ) : ?&amp;gt;    &amp;lt;li&amp;gt;&amp;lt;a href=&quot;&amp;lt;?php the_permalink(); ?">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wordpress 模板制作手记">
+<meta property="og:url" content="http://rmingwang.com/wp-templates-functions-notes.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="获取指定分类指定数量的随机顺序文章标题及其链接 &amp;lt;?php $rand_posts = get_posts(&apos;numberposts=5&amp;amp;orderby=rand&amp;amp;category=1&apos;);  foreach( $rand_posts as $post ) : ?&amp;gt;    &amp;lt;li&amp;gt;&amp;lt;a href=&quot;&amp;lt;?php the_permalink(); ?">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wordpress 模板制作手记">
+<meta name="twitter:description" content="获取指定分类指定数量的随机顺序文章标题及其链接 &amp;lt;?php $rand_posts = get_posts(&apos;numberposts=5&amp;amp;orderby=rand&amp;amp;category=1&apos;);  foreach( $rand_posts as $post ) : ?&amp;gt;    &amp;lt;li&amp;gt;&amp;lt;a href=&quot;&amp;lt;?php the_permalink(); ?">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> wordpress 模板制作手记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          wordpress 模板制作手记
+        
+      </h1>
+
+      <time class="post-time">
+          10月 30 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>获取<span style="color: #ff0000;">指定分类</span>指定<span style="color: #ff0000;">数量</span>的<span style="color: #ff0000;">随机顺序</span>文章标题及其链接</p>
+<pre>&lt;?php $rand_posts = get_posts('numberposts=5&amp;orderby=rand&amp;category=1');  foreach( $rand_posts as $post ) : ?&gt;
+   &lt;li&gt;&lt;a href="&lt;?php the_permalink(); ?&gt;"&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;?php endforeach; ?&gt;</pre>
+WordPress 非首页显示文章列表
+<pre>&lt;?php
+/*
+Template Name: News
+*/
+?&gt;
+&lt;?php get_header(); ?&gt;
+&lt;div id="content" role="main"&gt;
+&lt;?php
+$limit = get_option('posts_per_page');
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+query_posts('&amp;showposts=' . $limit . '&amp;paged=' . $paged);
+$wp_query-&gt;is_archive = true; $wp_query-&gt;is_home = false;
+?&gt;
+&lt;?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?&gt;
+    &lt;!-- Do stuff... --&gt;
+&lt;?php endwhile; else: ?&gt;
+    &lt;p&gt;Sorry, nothing here.&lt;/p&gt;
+&lt;?php endif; ?&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;?php previous_posts_link(); ?&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;?php next_posts_link(); ?&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;?php get_sidebar(); ?&gt;
+&lt;?php get_footer(); ?&gt;</pre>
+页面title部分实例
+<pre>&lt;?php if ( is_home() ) {
+        bloginfo('name'); echo " - "; bloginfo('description');
+    } elseif ( is_category() ) {
+        single_cat_title(); echo " - "; bloginfo('name');
+    } elseif (is_single() || is_page() ) {
+        single_post_title();
+    } elseif (is_search() ) {
+        echo "搜索结果"; echo " - "; bloginfo('name');
+    } elseif (is_404() ) {
+        echo '页面未找到!';
+    } else {
+        wp_title('',true);
+    } ?&gt;</pre>
+链入css部分
+<pre>&lt;link rel="stylesheet" href="&lt;?php bloginfo('stylesheet_url'); ?&gt;" type="text/css" media="screen" /&gt;</pre>
+头部的系统信息和清除缓存
+<pre>&lt;?php wp_head(); ?&gt;
+&lt;/head&gt;
+&lt;?php flush(); ?&gt;
+&lt;body&gt;</pre>
+博客名称logo
+<pre>&lt;a href="&lt;?php echo get_option('home'); ?&gt;/"&gt;&lt;?php bloginfo('name'); ?&gt;&lt;/a&gt;</pre>
+头部导航设置
+<pre>&lt;?php
+$currentcategory = '';
+
+// 以下这行代码用于在导航栏添加分类列表，
+// 如果你不想添加分类到导航中，
+// 请删除 54 - 64 行代码
+if  (!is_page() &amp;&amp; !is_home()) {
+    $catsy = get_the_category();
+    $myCat = $catsy[0]-&gt;cat_ID;
+    $currentcategory = '&amp;current_category='.$myCat;
+}
+//目录列表(已屏蔽)
+wp_list_tags('depth=1&amp;title_li=&amp;show_count=0&amp;hide_empty=0&amp;child_of=0'.$currentcategory);
+// 以下这行代码用于在导航栏添加页面列表
+// 如果你不想添加页面到导航中，
+// 请删除63 - 64行代码
+wp_list_pages('depth=1&amp;title_li=&amp;exclude=68&amp;sort_column=menu_order');
+?&gt;</pre>
+获取指定页面或文章的信息
+<pre>&lt;?php wp_list_pages('depth=1&amp;include=68&amp;title_li='); ?&gt;</pre>
+在function.php中注册侧边栏
+<pre>&lt;?php
+if( function_exists('register_sidebar') ) {
+    register_sidebar(array(
+        'before_widget' =&gt; '&lt;div class="side_block"&gt;', // widget 的开始标签
+        'after_widget' =&gt; '&lt;/div&gt;', // widget 的结束标签
+        'before_title' =&gt; '&lt;h3 class="side_block_menu"&gt;&lt;span class="menu_icon_1"&gt;&lt;/span&gt;', // 标题的开始标签
+        'after_title' =&gt; '&lt;/h3&gt;' // 标题的结束标签
+    ));
+}
+?&gt;</pre>
+在sitebar.php中调用侧边栏
+<pre>  &lt;?php // 如果没有使用 Widget 才显示以下内容, 否则会显示 Widget 定义的内容
+                        if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar() ) :
+                        ?&gt;
+                            &lt;!-- widget 1 --&gt;
+                           &lt;div class="side_block"&gt;
+                               &lt;h3 class="side_block_menu"&gt;娱乐新闻&lt;/h3&gt;
+                               &lt;ul&gt;
+                                   &lt;li class="side_block_li"&gt;&lt;a href="#"&gt;第1个信息&lt;/a&gt;&lt;/li&gt;
+                                   &lt;li class="side_block_li"&gt;&lt;a href="#"&gt;第2个信息&lt;/a&gt;&lt;/li&gt;
+                                   &lt;li class="side_block_li"&gt;&lt;a href="#"&gt;第3个信息&lt;/a&gt;&lt;/li&gt;
+                                   &lt;li class="side_block_li side_block_last"&gt;&lt;a href="#"&gt;第4个信息&lt;/a&gt;&lt;/li&gt;
+                               &lt;/ul&gt;
+                           &lt;/div&gt;
+
+   &lt;?php endif; ?&gt;</pre>
+显示友情链接
+<pre>&lt;ul&gt;&lt;?php get_links_list(); ?&gt;&lt;/ul&gt;</pre>
+显示Wordpress标签
+<pre> &lt;?php the_tags(); ?&gt;</pre>
+显示Wordpress标签云
+<pre>&lt;?php wp_tag_cloud(’smallest=8&amp;largest=36&amp;’); ?&gt;</pre>
+调用Gravatar(只适应2.5以上)
+<pre>&lt;?php if(function_exists(’get_avatar’)){ echo get_avatar($comment, ‘50?);} ?&gt;</pre>
+<pre></pre>
+显示文章分类
+<pre>&lt;h2&gt;Categories&lt;/h2&gt;
+&lt;ul&gt;&lt;?php wp_list_cats(’sort_column=name’); ?&gt;&lt;/ul&gt;</pre>
+显示归档
+<pre>&lt;h2&gt;Archives&lt;/h2&gt;
+&lt;ul&gt;&lt;?php wp_get_archives(’type=monthly’); ?&gt;&lt;/ul&gt;</pre>
+在侧栏显示页面列表
+<pre>&lt;h2&gt;Pages&lt;/h2&gt;
+&lt;ul&gt;&lt;?php wp_list_pages(’title_li=’); ?&gt;&lt;/ul&gt;</pre>
+显示热评文章
+<pre>&lt;?php $result = $wpdb-&gt;get_results(”SELECT comment_count,ID,post_title FROM $wpdb-&gt;posts ORDER BY comment_count DESC LIMIT 0 , 10″); foreach ($result as $topten) { $postid = $topten-&gt;ID; $title = $topten-&gt;post_title; $commentcount = $topten-&gt;comment_count; if ($commentcount != 0) { ?&gt;
+&lt;li&gt;&lt;a href=”&lt;?php echo get_permalink($postid); ?&gt;” title=”&lt;?php echo $title ?&gt;”&gt;&lt;?php echo $title ?&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;?php } } ?&gt;</pre>
+显示最新文章列表
+<pre>&lt;?php query_posts(’showposts=5′); ?&gt;
+&lt;ul&gt;
+&lt;?php while (have_posts()) : the_post(); ?&gt;
+&lt;li&gt;&lt;a href=”&lt;?php the_permalink() ?&gt;”&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;?php endwhile;?&gt;
+&lt;/ul&gt;</pre>
+其他常用函数
+<pre>（一）WordPress基本模板文件，一套完整的WordPress模板包括如下文件，但是只有index.php和style.css是不能缺少的：
+
+style.css : CSS(样式表)文件，不可缺少版权部分，真正CSS样式表可以放在其他文件；
+index.php : 主页模板，不可缺少；
+archive.php : Archive/Category模板，如果缺少，默认为index.php的显示；
+404.php : Not Found 错误页模板，如果缺少，默认为index.php的显示；
+comments.php : 留言/回复模板，不可缺少；
+footer.php : Footer模板，可合并到index.php；
+header.php : Header模板，可合并到index.php；
+sidebar.php : 侧栏模板，可合并到index.php；
+page.php : 内容页(Page)模板，如果缺少，默认为index.php的显示；
+single.php : 内容页(Post)模板，如果缺少，默认为index.php的显示；
+searchform.php : 搜索表单模板，可合并到index.php；
+search.php : 搜索结果模板，如果缺少，默认为index.php的显示；
+
+（二）基本条件判断Tag
+
+is_home() : 是否为主页
+is_single() : 是否为内容页(Post)
+is_page() : 是否为内容页(Page)
+is_category() : 是否为Category/Archive页
+is_tag() : 是否为Tag存档页
+is_date() : 是否为指定日期存档页
+is_year() : 是否为指定年份存档页
+is_month() : 是否为指定月份存档页
+is_day() : 是否为指定日存档页
+is_time() : 是否为指定时间存档页
+is_archive() : 是否为存档页
+is_search() : 是否为搜索结果页
+is_404() : 是否为 “HTTP 404: Not Found” 错误页
+is_paged() : 主页/Category/Archive页是否以多页显示
+（三）Header部分常用到的PHP函数
+
+&lt;?php bloginfo(’name’); ?&gt; : 博客名称(Title)
+&lt;?php bloginfo(’stylesheet_url’); ?&gt; : CSS文件路径
+&lt;?php bloginfo(’pingback_url’); ?&gt; : PingBack Url
+&lt;?php bloginfo(’template_url’); ?&gt; : 模板文件路径
+&lt;?php bloginfo(’version’); ?&gt; : WordPress版本
+&lt;?php bloginfo(’atom_url’); ?&gt; : Atom Url
+&lt;?php bloginfo(’rss2_url’); ?&gt; : RSS 2.o Url
+&lt;?php bloginfo(’url’); ?&gt; : 博客 Url
+&lt;?php bloginfo(’html_type’); ?&gt; : 博客网页Html类型
+&lt;?php bloginfo(’charset’); ?&gt; : 博客网页编码
+&lt;?php bloginfo(’description’); ?&gt; : 博客描述
+&lt;?php wp_title(); ?&gt; : 特定内容页(Post/Page)的标题
+（四）模板常用的PHP函数及命令
+
+&lt;?php get_header(); ?&gt; : 调用Header模板
+&lt;?php get_sidebar(); ?&gt; : 调用Sidebar模板
+&lt;?php get_footer(); ?&gt; : 调用Footer模板
+&lt;?php the_content(); ?&gt; : 显示内容(Post/Page)
+&lt;?php if(have_posts()) : ?&gt; : 检查是否存在Post/Page
+&lt;?php while(have_posts()) : the_post(); ?&gt; : 如果存在Post/Page则予以显示
+&lt;?php endwhile; ?&gt; : While 结束
+&lt;?php endif; ?&gt; : If 结束
+&lt;?php the_time(’字符串’) ?&gt; : 显示时间，时间格式由“字符串”参数决定，具体参考PHP手册
+&lt;?php comments_popup_link(); ?&gt; : 正文中的留言链接。如果使用 comments_popup_script() ，则留言会在新窗口中打开，反之，则在当前窗口打开
+&lt;?php the_title(); ?&gt; : 内容页(Post/Page)标题
+&lt;?php the_permalink() ?&gt; : 内容页(Post/Page) Url
+&lt;?php the_category(’,’) ?&gt; : 特定内容页(Post/Page)所属Category
+&lt;?php the_author(); ?&gt; : 作者
+&lt;?php the_ID(); ?&gt; : 特定内容页(Post/Page) ID
+&lt;?php edit_post_link(); ?&gt; : 如果用户已登录并具有权限，显示编辑链接
+&lt;?php get_links_list(); ?&gt; : 显示Blogroll中的链接
+&lt;?php comments_template(); ?&gt; : 调用留言/回复模板
+&lt;?php wp_list_pages(); ?&gt; : 显示Page列表
+&lt;?php wp_list_tags(); ?&gt; : 显示Categories列表
+&lt;?php next_post_link(’%link’); ?&gt; : 下一篇文章链接
+&lt;?php previous_post_link(’%link’); ?&gt; : 上一篇文章链接
+&lt;?php get_calendar(); ?&gt; : 日历
+&lt;?php wp_get_archives() ?&gt; : 显示内容存档
+&lt;?php posts_nav_link(); ?&gt; : 导航，显示上一篇/下一篇文章链接
+&lt;?php include(TEMPLATEPATH . ‘/文件名’); ?&gt; : 嵌入其他文件，可为定制的模板或其他类型文件
+（五）与模板相关的其他函数
+
+&lt;?php the_search_query(); ?&gt; 搜索表单的值
+&lt;?php _e(’Message’); ?&gt; : 输出相应信息
+&lt;?php wp_register(); ?&gt; : 显示注册链接
+&lt;?php wp_loginout(); ?&gt; : 显示登录/注销链接
+&lt;?php wp_meta(); ?&gt; 显示管理员的相关控制信息(为插件API HOOK用)
+&lt;!–next page–&gt; : 将当前内容分页
+&lt;!–more–&gt; : 将当前内容截断，以不在主页/目录页显示全部内容
+&lt;?php timer_stop(1); ?&gt; : 网页加载时间(秒)
+&lt;?php echo get_num_queries(); ?&gt; : 网页加载查询量</pre>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-theme-elegant-gnome-pack.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Ubuntu主题Elegant Gnome Pack</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/lightbox-zh_cn-zip-chinese-version.html">
+        <span class="next-text nav-default">wordpress插件lightbox-zh_CN.zip灯箱效果汉化版</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/wp-templates-functions-notes.html';
+
+  var disqus_title = "wordpress 模板制作手记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

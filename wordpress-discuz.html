@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="WordPress整合Discuz论坛的解决办法">
+
+
+
+
+  <meta name="keywords" content="wordpress,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/wordpress-discuz.html">
+
+
+<meta name="description" content="插件为discuz-integration(点击下载)如何使用:将文件放置在 Wordpress 的插件文件夹中在文件中设定数据表的前缀和名称.在Wordpress中激活本插件.用户在Wordpress登录时, 将在Discuz!的数据库中查找相同用户, 并验证密码. 如果成功则在 WP 中创建新用户.非ASCII用户名支持:在 50 行处, 将 // add_filter(‘sanitize_u">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WordPress整合Discuz论坛的解决办法">
+<meta property="og:url" content="http://rmingwang.com/wordpress-discuz.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="插件为discuz-integration(点击下载)如何使用:将文件放置在 Wordpress 的插件文件夹中在文件中设定数据表的前缀和名称.在Wordpress中激活本插件.用户在Wordpress登录时, 将在Discuz!的数据库中查找相同用户, 并验证密码. 如果成功则在 WP 中创建新用户.非ASCII用户名支持:在 50 行处, 将 // add_filter(‘sanitize_u">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WordPress整合Discuz论坛的解决办法">
+<meta name="twitter:description" content="插件为discuz-integration(点击下载)如何使用:将文件放置在 Wordpress 的插件文件夹中在文件中设定数据表的前缀和名称.在Wordpress中激活本插件.用户在Wordpress登录时, 将在Discuz!的数据库中查找相同用户, 并验证密码. 如果成功则在 WP 中创建新用户.非ASCII用户名支持:在 50 行处, 将 // add_filter(‘sanitize_u">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> WordPress整合Discuz论坛的解决办法 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          WordPress整合Discuz论坛的解决办法
+        
+      </h1>
+
+      <time class="post-time">
+          10月 9 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>插件为<a title="wordpress整合discuz插件" href="http://downloads.wordpress.org/plugin/discuz-integration.0.2.1.zip" target="_blank">discuz-integration</a>(点击下载)<br>如何使用:将文件放置在 Wordpress 的插件文件夹中在文件中设定数据表的前缀和名称.在Wordpress中激活本插件.用户在Wordpress登录时, 将在Discuz!的数据库中查找相同用户, 并验证密码. 如果成功则在 WP 中创建新用户.<br>非ASCII用户名支持:在 50 行处, 将</p>
+<p>// add_filter(‘sanitize_user’, ‘loose_sanitize’, 1, 2);</p>
+<p>修改为</p>
+<p>add_filter(‘sanitize_user’, ‘loose_sanitize’, 1, 2);</p>
+<p>修改好上传并启用插件后就可以调用DZ论坛的登陆数据库了，当wp没有该用户时，还会在wp自动增加一个用户。<br>当然，wp不支持中文名…可以用<a title="wp使用中文名插件" href="http://leofly.org/dig/chinese-username.htm" target="_blank">chinese-username</a>插件实现允许a~z0~9_.-@和汉字作为用户名。<br>这样，就完成了wp上dz用户登陆了（登陆为订阅者）<br>另外，可以在WordPress中实现显示论坛新帖功能。有两种方法，一是使用WordPress的Feed函数，再就是用Discuz的Javascript代码。<br>用Feed很简单，在你要显示的地方加入下面的代码就可以了</p>
+<p>&lt;?php require_once(ABSPATH . WPINC . ‘/rss.php’); wp_widget_rss_output(‘<a href="http://abitno.linpie.com/feed&#39;" target="_blank" rel="noopener">http://abitno.linpie.com/feed&#39;</a>, ‘items=10’);  ?&gt;</p>
+<p>如果想用Discuz的JS代码，要先到DZ中设置一下，在Discuz的后台通过工具－&gt;数据调用来添加一个主题列表调用模版，然后把生成的JS代码复制到需要的位置即可。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/software-photoshop-cs5-stable-version-available-to-download.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">【软件】photoshop cs5 稳定可用版本下载</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/wordpress-mingle-forum.html">
+        <span class="next-text nav-default">WordPress 论坛插件-Mingle Forum</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/wordpress-discuz.html';
+
+  var disqus_title = "WordPress整合Discuz论坛的解决办法";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

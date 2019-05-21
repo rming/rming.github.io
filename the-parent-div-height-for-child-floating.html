@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="子级全浮动，父div无法确定高度的解决方法">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/the-parent-div-height-for-child-floating.html">
+
+
+<meta name="description" content="当子级都为浮动时，那么父级的高度就无法完全的包住整个子级，那么这时用这个清除浮动的HACK来对父级做一次定义，那么就可以解决这个问题。个人理解就是一个div属性里没有设置float属性，但是它的子div里面都设置了float属性，这样导致了父div的高度没办法确定，解决方法就是给父div设置clear:both;属性。举个例子来说：.head{width:100%;height:100px;flo">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="子级全浮动，父div无法确定高度的解决方法">
+<meta property="og:url" content="http://rmingwang.com/the-parent-div-height-for-child-floating.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="当子级都为浮动时，那么父级的高度就无法完全的包住整个子级，那么这时用这个清除浮动的HACK来对父级做一次定义，那么就可以解决这个问题。个人理解就是一个div属性里没有设置float属性，但是它的子div里面都设置了float属性，这样导致了父div的高度没办法确定，解决方法就是给父div设置clear:both;属性。举个例子来说：.head{width:100%;height:100px;flo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="子级全浮动，父div无法确定高度的解决方法">
+<meta name="twitter:description" content="当子级都为浮动时，那么父级的高度就无法完全的包住整个子级，那么这时用这个清除浮动的HACK来对父级做一次定义，那么就可以解决这个问题。个人理解就是一个div属性里没有设置float属性，但是它的子div里面都设置了float属性，这样导致了父div的高度没办法确定，解决方法就是给父div设置clear:both;属性。举个例子来说：.head{width:100%;height:100px;flo">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 子级全浮动，父div无法确定高度的解决方法 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          子级全浮动，父div无法确定高度的解决方法
+        
+      </h1>
+
+      <time class="post-time">
+          6月 3 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>当子级都为浮动时，那么父级的高度就无法完全的包住整个子级，那么这时用这个清除浮动的HACK来对父级做一次定义，那么就可以解决这个问题。</blockquote><br>个人理解就是一个div属性里没有设置float属性，但是它的子div里面都设置了float属性，这样导致了父div的高度没办法确定，解决方法就是给父div设置clear:both;属性。<br>举个例子来说：<br><br><blockquote>.head{<br><br>width:100%;<br><br>height:100px;<br><br>float:left;<br><br>background:#000eee;<br><br>}</blockquote><br><blockquote>.content{<br><br>width:980px;<br><br>height:600px;<br><br>margin:0 auto;<br><br>background:#000eee;<br><br>}</blockquote><br><blockquote>.foot{<br><br>width:100%;<br><br>height:60px;<br><br>float:left;<br><br>background:#000eee;<br><br>｝</blockquote><br>在这个页面的content中就会出现高度不定的情况，导致foot 层的向上漂移，使页面底部位置发生错乱。<br>解决办法就是给content 层加上clear:both;的属性。<br>即：<br><blockquote>.content{<br><br>width:980px;<br><br>height:600px;<br><br>margin:0 auto;<br><br>clear:both;<br>background:#000eee;<br><br>}</blockquote><br>这样页尾的位置就不会发生错乱了。<br><blockquote>最后，再附加一点前台css常识：<br>即：margin : auto | length 由浮点数字和单位标识符组成的长度值 | 百分数。百分数是基于父对象的高度。对于内联对象来说，左右外延边距可以是负数值。<br><br>padding : length 由浮点数字和单位标识符组成的长度值 | 或者百分数。百分数是基于父对象的宽度。<br><br>float : none | left |right 这个是浮动，在定义布局中必定用到的属性，在使用它的时候要注意产生的走位和浏览器兼容性问题，要在很多的实践操作中多了解这个属性。有这个属性就要了解以下这个配套使用的属性“清除”<br><br>clear : none | left |right | both； none 允许两边都可以有浮动对象both不允许有浮动对象；left不允许左边有浮动对象 right不允许右边有浮动对象。<br><br>background:url(images/aardvark.gif) left top no-repeat | repeat-x | repeat-y 定义背景图片来美化版面也是我们很常用到的属性。<br><br>overflow : visible | auto | hidden | scroll 这个作用在布局中我通常利用他来防止、解决浏览器兼容出现问题<br><br>border:1px solid #CCCCC 这个是定义边框大小，线条，颜色的属性。<br><br>list-style-image list-style-position list-stle-type 这个列表属性通常使用在有序列表和无序列表当中，列表在定义网页标题索引文字连接中经常使用，这是验证CSS定义优越于表格的典型代表。</blockquote>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/enjoy-microsoft-future-vision-windows-8-demo.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Microsoft future vision & windows 8 demo</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/a-psd-company-page-for-freshman.html">
+        <span class="next-text nav-default">大一时候临摹的一个企业网站页面</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/the-parent-div-height-for-child-floating.html';
+
+  var disqus_title = "子级全浮动，父div无法确定高度的解决方法";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP输出控制">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/How-to-make-Vagrant-performance-not-suck.html">
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;当PHP脚本有输出时，输出控制函数可以用这些来控制输出。这在多种不同情况中非常有用，尤其是用来在脚本开始输出 数据后，发送http头信息到浏览器。   &amp;emsp;&amp;emsp;输出控制函数不影响由 header() 或 setcookie()发送的文件头信息，仅影响象 echo这样的函数和PHP代码块间的数据。   &amp;emsp;&amp;emsp;PHP输出控制扩展为PHP核心的一">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP输出控制">
+<meta property="og:url" content="http://rmingwang.com/How-to-make-Vagrant-performance-not-suck.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;当PHP脚本有输出时，输出控制函数可以用这些来控制输出。这在多种不同情况中非常有用，尤其是用来在脚本开始输出 数据后，发送http头信息到浏览器。   &amp;emsp;&amp;emsp;输出控制函数不影响由 header() 或 setcookie()发送的文件头信息，仅影响象 echo这样的函数和PHP代码块间的数据。   &amp;emsp;&amp;emsp;PHP输出控制扩展为PHP核心的一">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-01-11T16:51:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP输出控制">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;当PHP脚本有输出时，输出控制函数可以用这些来控制输出。这在多种不同情况中非常有用，尤其是用来在脚本开始输出 数据后，发送http头信息到浏览器。   &amp;emsp;&amp;emsp;输出控制函数不影响由 header() 或 setcookie()发送的文件头信息，仅影响象 echo这样的函数和PHP代码块间的数据。   &amp;emsp;&amp;emsp;PHP输出控制扩展为PHP核心的一">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP输出控制 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP输出控制
+        
+      </h1>
+
+      <time class="post-time">
+          1月 11 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>&emsp;&emsp;当PHP脚本有输出时，输出控制函数可以用这些来控制输出。这在多种不同情况中非常有用，尤其是用来在脚本开始输出 数据后，发送http头信息到浏览器。  </p>
+<p>&emsp;&emsp;<strong>输出控制函数不影响由 header() 或 setcookie()发送的文件头信息，仅影响象 echo这样的函数和PHP代码块间的数据。</strong>  </p>
+<p>&emsp;&emsp;PHP输出控制扩展为PHP核心的一部分，不需要额外的安装，但是在php.ini中有一些参数来配置它，当然也可以在运行时通过<code>ini_set()</code>来实现运行时控制。  </p>
+<h2><span id="输出控制配置选项">输出控制配置选项</span></h2><ul>
+<li><code>output_buffering</code> 默认<code>0</code>，可以通过设置数值来打开输出缓冲区 并 限制缓冲区大小。</li>
+<li><code>output_handler</code>，默认<code>NULL</code>，该选项可将脚本所有的输出，<a href="http://php.net/manual/zh/outcontrol.configuration.php" target="_blank" rel="noopener">重定向到一个函数</a>。</li>
+<li><code>implicit_flush</code>，默认<code>0</code>，默认为 FALSE。如将该选项改为 TRUE，PHP 将使输出层，在每段信息块输出后，自动刷新。这等同于在每次使用 print、echo 等函数或每个 HTML 块之后，调用 PHP 中的 <code>flush()</code> 函数。</li>
+</ul>
+<h2><span id="output-control-函数">Output Control 函数</span></h2><ul>
+<li>flush — 刷新输出缓冲</li>
+<li>ob_clean — 清空（擦掉）输出缓冲区</li>
+<li>ob_end_clean — 清空（擦除）缓冲区并关闭输出缓冲</li>
+<li>ob_end_flush — 冲刷出（送出）输出缓冲区内容并关闭缓冲</li>
+<li>ob_flush — 冲刷出（送出）输出缓冲区中的内容</li>
+<li>ob_get_clean — 得到当前缓冲区的内容并删除当前输出缓。</li>
+<li>ob_get_contents — 返回输出缓冲区的内容</li>
+<li>ob_get_flush — 刷出（送出）缓冲区内容，以字符串形式返回内容，并关闭输出缓冲区。</li>
+<li>ob_get_length — 返回输出缓冲区内容的长度</li>
+<li>ob_get_level — 返回输出缓冲机制的嵌套级别</li>
+<li>ob_get_status — 得到所有输出缓冲区的状态</li>
+<li>ob_gzhandler — 在ob_start中使用的用来压缩输出缓冲区中内容的回调函数。ob_start callback function to gzip output buffer</li>
+<li>ob_implicit_flush — 打开/关闭绝对刷送</li>
+<li>ob_list_handlers — 列出所有使用中的输出处理程序。</li>
+<li>ob_start — 打开输出控制缓冲</li>
+<li>output_add_rewrite_var — 添加URL重写器的值（Add URL rewriter values）</li>
+<li>output_reset_rewrite_vars — 重设URL重写器的值（Reset URL rewriter values）</li>
+</ul>
+<h2><span id="举个栗子">举个栗子</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ob_start();</span><br><span class="line">echo &apos;aaa&apos;;</span><br><span class="line">$string = ob_get_contents();</span><br><span class="line">file_put_contents(&apos;a.html&apos;, $string);</span><br><span class="line">ob_flush();</span><br><span class="line">flush();</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-20150131.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记20150131</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/vagrant-commands-and-config.html">
+        <span class="next-text nav-default">Vagrant简介和安装配置</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/How-to-make-Vagrant-performance-not-suck.html';
+
+  var disqus_title = "PHP输出控制";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

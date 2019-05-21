@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP慢脚本日志和Mysql的慢查询日志">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-slowlog-mysql-slowlog.html">
+
+
+<meta name="description" content="1、PHP慢脚本日志 间歇性的502，是后端 PHP-FPM 不可用造成的，间歇性的502一般认为是由于 PHP-FPM 进程重启造成的。 在 PHP-FPM 的子进程数目超过的配置中的数量时候，会出现间歇性的502错误，如果在配置中设置了max_requests的话，超过数量也会出现502错误，而max_requests的设置，正是为了防止不安全的第三方library脚本的 内存泄露 ，当然你自">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP慢脚本日志和Mysql的慢查询日志">
+<meta property="og:url" content="http://rmingwang.com/php-slowlog-mysql-slowlog.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="1、PHP慢脚本日志 间歇性的502，是后端 PHP-FPM 不可用造成的，间歇性的502一般认为是由于 PHP-FPM 进程重启造成的。 在 PHP-FPM 的子进程数目超过的配置中的数量时候，会出现间歇性的502错误，如果在配置中设置了max_requests的话，超过数量也会出现502错误，而max_requests的设置，正是为了防止不安全的第三方library脚本的 内存泄露 ，当然你自">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-04-20T21:37:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP慢脚本日志和Mysql的慢查询日志">
+<meta name="twitter:description" content="1、PHP慢脚本日志 间歇性的502，是后端 PHP-FPM 不可用造成的，间歇性的502一般认为是由于 PHP-FPM 进程重启造成的。 在 PHP-FPM 的子进程数目超过的配置中的数量时候，会出现间歇性的502错误，如果在配置中设置了max_requests的话，超过数量也会出现502错误，而max_requests的设置，正是为了防止不安全的第三方library脚本的 内存泄露 ，当然你自">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP慢脚本日志和Mysql的慢查询日志 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP慢脚本日志和Mysql的慢查询日志
+        
+      </h1>
+
+      <time class="post-time">
+          4月 19 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="1-php慢脚本日志">1、PHP慢脚本日志</span></h2><ul>
+<li>间歇性的502，是后端 PHP-FPM 不可用造成的，间歇性的502一般认为是由于 PHP-FPM 进程重启造成的。</li>
+<li><p>在 PHP-FPM 的子进程数目超过的配置中的数量时候，会出现间歇性的502错误，如果在配置中设置了<strong>max_requests</strong>的话，超过数量也会出现502错误，而max_requests的设置，正是为了防止不安全的第三方library脚本的 <strong>内存泄露</strong> ，当然你自己编写的脚本存在 <strong>死锁</strong> 的话，也会出现502现象。</p>
+</li>
+<li><p>如果你发现mysql负载并不高，但是php-fpm的进程数和内存占用过高的话，恭喜你，大多数情况下是因为脚本存在死锁。</p>
+</li>
+</ul>
+<p>既然找到了是php的问题，如何去定位php脚本呢？</p>
+<p><strong>开启php慢查询日志：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /usr/loal/php/etc/php-fpm.conf</span><br><span class="line">; Default Value: 0</span><br><span class="line">request_slowlog_timeout = 1s</span><br><span class="line"></span><br><span class="line">; The log file for slow requests</span><br><span class="line">; Default Value: /usr/local/php/log/php-fpm.log.slow</span><br><span class="line">slowlog = /usr/local/php/log/php-fpm.log.slow</span><br></pre></td></tr></table></figure>
+<p>默认的 request_slowlog_timeout 是0，php的慢脚本日志是关闭的，因此设置为大于0的n，表示执行时间超过n的脚本将记录进入slowlog里。<br>然后监测到网站存在问题的时候查看下slowlog即可发现慢脚本，对脚本进行检查处理即可。</p>
+<h2><span id="2-mysql的慢查询日志">2、Mysql的慢查询日志</span></h2><p>mysql慢查询日志对于跟踪有问题的查询非常有用,可以分析出当前程序里有很耗费资源的sql语句,那如何打开mysql的慢查询日志记录呢?</p>
+<p>其实打开mysql的慢查询日志很简单,只需要在mysql的配置文件里(windows系统是my.ini,linux系统是my.cnf)的[mysqld]下面加上如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log-slow-queries=/var/lib/mysql/slowquery.log </span><br><span class="line">long_query_time=2</span><br></pre></td></tr></table></figure>
+<p>long_query_time=2中的2表示查询超过两秒才记录.<br>如果日志内容很多，用眼睛一条一条去看会累死，mysql自带了分析的工具，使用方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/mysql/bin</span><br><span class="line">$ mysqldumpslow –help</span><br><span class="line">-s，是order的顺序，主要有c,t,l,r和ac,at,al,ar，分别是按照query次数，时间，lock的时间和返回的记录数来排序，前面加了a的时倒叙 </span><br><span class="line">-t，是top n的意思，即为返回前面多少条的数据 </span><br><span class="line">-g，后边可以写一个正则匹配模式，大小写不敏感的 </span><br><span class="line"></span><br><span class="line">$ mysqldumpslow -s c -t 20 host-slow.log   #访问次数最多的20个sql语句</span><br><span class="line">$ mysqldumpslow -s r -t 20 host-slow.log  #返回记录集最多的20个sql</span><br><span class="line">$ mysqldumpslow -t 10 -s t -g “left join” host-slow.log  #按照时间返回前10条里面含有左连接的sql语句</span><br></pre></td></tr></table></figure>
+<p>参考： <a href="http://dev.mysql.com/doc/refman/5.1/en/mysqldumpslow.html" target="_blank" rel="noopener">mysql慢查询日志查询手册</a> </p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/How-bad-do-you-want-it.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">你到底多想成功？</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/using-git-to-deploy-a-web-site.html">
+        <span class="next-text nav-default">使用Git来部署一个Web站点笔记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-slowlog-mysql-slowlog.html';
+
+  var disqus_title = "PHP慢脚本日志和Mysql的慢查询日志";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

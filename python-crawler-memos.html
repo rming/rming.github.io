@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Python爬虫学习笔记">
+
+
+
+
+  <meta name="keywords" content="Python编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/python-crawler-memos.html">
+
+
+<meta name="description" content="我想说urllib2确实很难用,直到有人跟我提到一个 requests的东西, 还是去玩 requests 吧. 2014.10.19  连通性测试12345678910111213141516#!/usr/bin/env python#coding=utf-8import urllib2def check(url = &apos;http://m.baidu.com&apos; ):	request = urlli">
+<meta name="keywords" content="Python编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫学习笔记">
+<meta property="og:url" content="http://rmingwang.com/python-crawler-memos.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="我想说urllib2确实很难用,直到有人跟我提到一个 requests的东西, 还是去玩 requests 吧. 2014.10.19  连通性测试12345678910111213141516#!/usr/bin/env python#coding=utf-8import urllib2def check(url = &apos;http://m.baidu.com&apos; ):	request = urlli">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-11-19T07:16:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫学习笔记">
+<meta name="twitter:description" content="我想说urllib2确实很难用,直到有人跟我提到一个 requests的东西, 还是去玩 requests 吧. 2014.10.19  连通性测试12345678910111213141516#!/usr/bin/env python#coding=utf-8import urllib2def check(url = &apos;http://m.baidu.com&apos; ):	request = urlli">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Python爬虫学习笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Python爬虫学习笔记
+        
+      </h1>
+
+      <time class="post-time">
+          10月 13 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <div class="attention"><br><span>我想说<code>urllib2</code>确实很难用,直到有人跟我提到一个 <code>requests</code>的东西, 还是去玩 <a href="http://docs.python-requests.org/en/latest/" target="_blank">requests</a> 吧.</span> <span class="pull-right">2014.10.19</span><br></div>
+
+<h2><span id="连通性测试">连通性测试</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(url = <span class="string">'http://m.baidu.com'</span> )</span>:</span></span><br><span class="line"></span><br><span class="line">	request = urllib2.Request(url)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		urllib2.urlopen(request)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">except</span> urllib2.URLError , e:</span><br><span class="line">		<span class="keyword">if</span> hasattr(e, <span class="string">'code'</span>):</span><br><span class="line">			<span class="keyword">print</span> <span class="string">'error code:'</span> , e.code</span><br><span class="line">		<span class="keyword">if</span> hasattr(e, <span class="string">'reason'</span>):</span><br><span class="line">			<span class="keyword">print</span> <span class="string">'error reason:'</span>, e.reason</span><br></pre></td></tr></table></figure>
+<h2><span id="测试代码">测试代码</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> prepare</span><br><span class="line"></span><br><span class="line">prepare.check()</span><br><span class="line"></span><br><span class="line"><span class="comment">#urllib2</span></span><br><span class="line">url     = <span class="string">'http://m.baidu.com'</span></span><br><span class="line">queries = &#123;</span><br><span class="line">	<span class="string">'name'</span>: <span class="string">'rming'</span>,</span><br><span class="line">	<span class="string">'passwd'</span>: <span class="string">'password'</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">data       = urllib.urlencode(queries)</span><br><span class="line"></span><br><span class="line">headers    = &#123;</span><br><span class="line">	<span class="string">'User-Agent'</span>: user_agent</span><br><span class="line">&#125;</span><br><span class="line">request  = urllib2.Request(url, data, headers)</span><br><span class="line"><span class="comment">#add header</span></span><br><span class="line">request.add_header(<span class="string">'Accept'</span>, <span class="string">'text/html'</span>)</span><br><span class="line">request.add_header(<span class="string">'Referer'</span>,<span class="string">'http://mail.qq.com'</span>)</span><br><span class="line"><span class="keyword">print</span> request.headers</span><br><span class="line"></span><br><span class="line">responce = urllib2.urlopen(request , timeout=<span class="number">10</span>)</span><br><span class="line">html     = responce.read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"info:"</span>,responce.info()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"geturl:"</span>,responce.geturl()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"length:"</span>,len(html)</span><br><span class="line"></span><br><span class="line">pos =  html.find(<span class="string">'href'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> html[pos:pos+<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#debug</span></span><br><span class="line">httpHandler = urllib2.HTTPHandler(debuglevel=<span class="number">1</span>)</span><br><span class="line">httpsHandler = urllib2.HTTPSHandler(debuglevel=<span class="number">1</span>)</span><br><span class="line">opener = urllib2.build_opener(httpHandler, httpsHandler)</span><br><span class="line">urllib2.install_opener(opener)</span><br><span class="line">responce = urllib2.urlopen(<span class="string">'http://m.qq.com'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#cookielib</span></span><br><span class="line">cookie = cookielib.CookieJar()</span><br><span class="line"></span><br><span class="line">opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))</span><br><span class="line"></span><br><span class="line">responce = opener.open(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> cookie:</span><br><span class="line">	<span class="keyword">print</span> item.name,<span class="string">'=&gt;'</span>,item.value</span><br><span class="line"></span><br><span class="line"><span class="comment">#utf8编码</span></span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</span><br><span class="line"><span class="keyword">print</span> sys.getdefaultencoding();</span><br><span class="line"></span><br><span class="line"><span class="comment">#raw_input</span></span><br><span class="line">name = str(raw_input(<span class="string">u'请输入你的名字:\n'</span>))</span><br><span class="line">age = int(raw_input(<span class="string">u'请输入你的年龄:\n'</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">u"名字:"</span>,name</span><br><span class="line"><span class="keyword">print</span> <span class="string">u"年龄:"</span>,age</span><br></pre></td></tr></table></figure>
+<h2><span id="qa">QA:</span></h2><h3><span id="1编码错误报错non-ascii-character-xe8-in-file">1.编码错误,报错:Non-ASCII character ‘\xe8’ in file</span></h3><p>&emsp;&emsp;缺少声明: #coding:utf-8</p>
+<h3><span id="2编码错误报错ascii-codec-cant-encode-characters-in-position">2.编码错误,报错:’ascii’ codec can’t encode characters in position</span></h3><p>&emsp;&emsp;如果设置了上面的编码生命,则在中文字符串(u”字符串”)前省略 “u” 试试.<br>&emsp;&emsp;如果不行,则试用string 的 decode() 和 encode()</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Python编程/">Python编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/why-ok-buttons-on-the-left.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">确定在左，取消在右？</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/python-quick-start.html">
+        <span class="next-text nav-default">Python 快速入门</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/python-crawler-memos.html';
+
+  var disqus_title = "Python爬虫学习笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

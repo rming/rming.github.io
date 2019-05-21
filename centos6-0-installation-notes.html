@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="centos6.0安装手记">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/centos6-0-installation-notes.html">
+
+
+<meta name="description" content="看了鸟哥的私房菜，于是想尝试一下centos 于是上网搜索centos6.0。 习惯了u盘安装，于是下载了一个 CentOS-6.0-x86_64-netinstall.iso(网络安装镜像) ，【CentOS提供了网络安装“netinstall.iso”这是一个非常小的ISO，让你的系统引导安装选项，并从那里通过HTTP选项，它会从另一个源下载所需的所有文件，通常的镜像文件。】 上网搜索了一下，">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos6.0安装手记">
+<meta property="og:url" content="http://rmingwang.com/centos6-0-installation-notes.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="看了鸟哥的私房菜，于是想尝试一下centos 于是上网搜索centos6.0。 习惯了u盘安装，于是下载了一个 CentOS-6.0-x86_64-netinstall.iso(网络安装镜像) ，【CentOS提供了网络安装“netinstall.iso”这是一个非常小的ISO，让你的系统引导安装选项，并从那里通过HTTP选项，它会从另一个源下载所需的所有文件，通常的镜像文件。】 上网搜索了一下，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos6.0安装手记">
+<meta name="twitter:description" content="看了鸟哥的私房菜，于是想尝试一下centos 于是上网搜索centos6.0。 习惯了u盘安装，于是下载了一个 CentOS-6.0-x86_64-netinstall.iso(网络安装镜像) ，【CentOS提供了网络安装“netinstall.iso”这是一个非常小的ISO，让你的系统引导安装选项，并从那里通过HTTP选项，它会从另一个源下载所需的所有文件，通常的镜像文件。】 上网搜索了一下，">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> centos6.0安装手记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          centos6.0安装手记
+        
+      </h1>
+
+      <time class="post-time">
+          7月 19 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>看了鸟哥的私房菜，于是想尝试一下centos 于是上网搜索centos6.0。</p>
+<p>习惯了u盘安装，于是下载了一个 <a href="http://centos.hitme.net.pl/6.0/isos/x86_64/CentOS-6.0-x86_64-netinstall.iso" target="_blank">CentOS-6.0-x86_64-netinstall.iso</a>(网络安装镜像) ，【CentOS提供了网络安装“netinstall.iso”这是一个非常小的ISO，让你的系统引导安装选项，并从那里通过HTTP选项，它会从另一个源下载所需的所有文件，通常的镜像文件。】</p>
+<p>上网搜索了一下，发现东大的服务器速度还可以</p>
+<p><blockquote>东大的源：<a href="http://mirror.neu.edu.cn/centos/6.0/" target="_blank">http://mirror.neu.edu.cn/centos/6.0/</a></blockquote></p>
+<p>镜像下载：<a href="http://mirror.neu.edu.cn/centos/6.0/isos/i386/" target="_blank" rel="noopener">http://mirror.neu.edu.cn/centos/6.0/isos/i386/</a></p>
+<p>网络安装镜像：<a href="http://mirror.neu.edu.cn/centos/6.0/isos/i386/CentOS-6.0-i386-netinstall.iso" target="_blank">http://mirror.neu.edu.cn/centos/6.0/isos/i386/CentOS-6.0-i386-netinstall.iso</a></p>
+<p>网络安装32位源：<a href="http://mirror.neu.edu.cn/centos/6.0/os/i386/" target="_blank" rel="noopener">http://mirror.neu.edu.cn/centos/6.0/os/i386/</a><br>然后用自己的U盘量产工具做个启动盘，好了，准备工作都做好了，现在开始安装吧。</p>
+<p>设置第一启动为usb-cdrom，成功进入u盘安装，选择第一项全新安装centos，然后进入了安装过程，检测设备，选择时区，选择安装介质，为你服务器起名字，设置密码……</p>
+<p>0.进入界面后直接选者第一个</p>
+<p>1.然后下一步是选择安装文件的来源，这里列出来了四个来源，选择URL（你懂的不解释）</p>
+<p>2.这里选择手动分配IP 去掉IPV6  现在IPV6还是在实验室里面用呢！咱们还用不上！嘎嘎。。</p>
+<p>3.这里要提醒的是一定要配置DNS 也就是Name Server 我开始就是习惯性的不配置所以后面老是提示无法验证，就配置谷歌的DNS吧8.8.8.8以为是网络安装所有这个是必须的。嘎嘎。。</p>
+<p>4.这里也忘记切图了非常抱歉，其实只要在最上面输入<a href="http://mirror.centos.org/centos/6.0/os/i386/" target="_blank">http://mirror.neu.edu.cn/centos/6.0/os/i386/</a>这个URL就可以了下面的不要选（运气好到了一张干净的切图，在——里面输入上面那的URL后直接下一步就可以了）</p>
+<p>5.接下来就会自动去网源下载最基本的文件</p>
+<p>6.然后就是我们熟悉的界面了选者安装语言</p>
+<p>7.选择键盘模式(美式键盘，默认）</p>
+<p>8.然后选择默认就可以了</p>
+<p>9.然选择re-initialize all</p>
+<p>10.选择时区</p>
+<p>11.选择分区方式，如果是一块硬盘的话可以使用整个硬盘自动分区 ，我这里有三块硬盘，想了一下可以做个raid，于是选择了手动分区，先在每一块硬盘上创建raid分区，然后再创建raid设备，注意的是/boot是不能挂载到raid分区的，毕竟这里使用的是softraid。</p>
+<p>具体的分区过程，和分区设置，raid设备创建方法可以参考一下：</p>
+<p></p><h2><span id="图文两块硬盘raid0安装ubuntu-server1104"></span></h2><br>12.分区进行中……<p></p>
+<p>12.选择安装方式 一般都是选择最小安装方式也就是minimal</p>
+<p>13.接着就是漫长的等待了 下载安装完后会自动提示你重启直接点击reboot</p>
+<p>安装就完成了</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2011-univs-camp-closed.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">中大在线共建精英夏令营圆满闭营</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/welcome-sdut-2011-freshman-topic-psd-file.html">
+        <span class="next-text nav-default">山东理工大学2011级新生专题</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/centos6-0-installation-notes.html';
+
+  var disqus_title = "centos6.0安装手记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32 SysTick定时器常见问题及延时函数的实现">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-systick-timer-and-time-delay-function.html">
+
+
+<meta name="description" content="Q：什么是SYSTick定时器？ SysTick 是一个24 位的倒计数定时器，当计到0 时，将从RELOAD 寄存器中自动重装载定时初值。只要不把它在SysTick 控制及状态寄存器中的使能位清除，就永不停息。 Q：为什么要设置SysTick定时器？ （1）产生操作系统的时钟节拍 SysTick定时器被捆绑在NVIC中，用于产生SYSTICK异常（异常号：15）。在以前，大多操作系统需要一个硬件">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 SysTick定时器常见问题及延时函数的实现">
+<meta property="og:url" content="http://rmingwang.com/stm32-systick-timer-and-time-delay-function.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="Q：什么是SYSTick定时器？ SysTick 是一个24 位的倒计数定时器，当计到0 时，将从RELOAD 寄存器中自动重装载定时初值。只要不把它在SysTick 控制及状态寄存器中的使能位清除，就永不停息。 Q：为什么要设置SysTick定时器？ （1）产生操作系统的时钟节拍 SysTick定时器被捆绑在NVIC中，用于产生SYSTICK异常（异常号：15）。在以前，大多操作系统需要一个硬件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-11-19T02:45:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32 SysTick定时器常见问题及延时函数的实现">
+<meta name="twitter:description" content="Q：什么是SYSTick定时器？ SysTick 是一个24 位的倒计数定时器，当计到0 时，将从RELOAD 寄存器中自动重装载定时初值。只要不把它在SysTick 控制及状态寄存器中的使能位清除，就永不停息。 Q：为什么要设置SysTick定时器？ （1）产生操作系统的时钟节拍 SysTick定时器被捆绑在NVIC中，用于产生SYSTICK异常（异常号：15）。在以前，大多操作系统需要一个硬件">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32 SysTick定时器常见问题及延时函数的实现 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32 SysTick定时器常见问题及延时函数的实现
+        
+      </h1>
+
+      <time class="post-time">
+          5月 21 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>Q</strong><strong>：什么是</strong><strong>SYSTick</strong><strong>定时器？</strong><strong></strong></p>
+<p>SysTick 是一个24 位的倒计数定时器，当计到0 时，将从RELOAD 寄存器中自动重装载定时初值。只要不把它在SysTick 控制及状态寄存器中的使能位清除，就永不停息。</p>
+<p><strong>Q</strong><strong>：为什么要设置</strong><strong>SysTick</strong><strong>定时器？</strong><strong></strong></p>
+<p><strong>（</strong><strong>1</strong><strong>）产生操作系统的时钟节拍</strong><strong></strong></p>
+<p><span style="text-decoration: underline;">SysTick</span><span style="text-decoration: underline;">定时器被捆绑在</span><span style="text-decoration: underline;">NVIC</span><span style="text-decoration: underline;">中</span>，<span style="text-decoration: underline;">用于<strong>产生</strong></span><strong><span style="text-decoration: underline;">SYSTICK</span></strong><strong><span style="text-decoration: underline;">异常</span></strong>（异常号：15）。在以前，大多操作系统需要一个硬件定时器来产生操作系统需要的滴答中断，作为整个系统的时基。因此，需要一个定时器来产生周期性的中断，而且最好还让用户程序不能随意访问它的寄存器，以维持操作系统“心跳”的节律。</p>
+<p><strong>（</strong><strong>2</strong><strong>）便于不同处理器之间程序移植。</strong><strong></strong></p>
+<p><span style="text-decoration: underline;">Cortex</span><span style="text-decoration: underline;">‐</span><span style="text-decoration: underline;">M3</span><span style="text-decoration: underline;">处理器内部包含了一个<strong>简单的定时器</strong></span>。因为所有的CM3芯片都带有这个定时器，软件在不同 CM3器件间的移植工作得以化简。该定时器的时钟源可以是内部时钟（FCLK，CM3上的自由运行时钟），或者是外部时钟（ CM3处理器上的STCLK信号）。</p>
+<p>不过，STCLK的具体来源则由芯片设计者决定，因此不同产品之间的时钟频率可能会大不相同，你需要检视芯片的器件手册来决定选择什么作为时钟源。<span style="text-decoration: underline;">SysTick</span><span style="text-decoration: underline;">定时器能产生中断</span>，CM3为它专门开出一个异常类型，并且在向量表中有它的一席之地。它使操作系统和其它系统软件在CM3器件间的移植变得简单多了，因为<span style="text-decoration: underline;">在所有</span><span style="text-decoration: underline;">CM3</span><span style="text-decoration: underline;">产品间对其处理都是相同的</span>。</p>
+<p><strong>（</strong><strong>3</strong><strong>）作为一个闹铃测量时间。</strong><strong></strong></p>
+<p><span style="text-decoration: underline;">SysTick</span><span style="text-decoration: underline;">定时器除了能服务于操作系统之外，还能用于其它目的：如作为一个<strong>闹铃</strong></span>，用于测量时间等。要注意的是，当处理器在调试期间被喊停（halt）时，则SysTick定时器亦将暂停运作。</p>
+<p><strong>Q</strong><strong>：</strong><strong>Systick</strong><strong>如何运行？</strong><strong></strong></p>
+<p>首先设置计数器时钟源，CTRL-&gt;CLKSOURCE（控制寄存器）。设置重载值（RELOAD寄存器），清空计数寄存器VAL（就是下图的CURRENT）。置CTRL-&gt;ENABLE位 开始计时。</p>
+<p>如果是中断则允许Systick中断，在中断例程中处理。如采用查询模式则不断读取控制寄存器的COUNTFLAG标志位，判断是否计时至零。或者采取下列一种方法</p>
+<p>当SysTick 定时器从1 计到0 时，它将把COUNTFLAG 位置位；而下述方法可以清零之：</p>
+<ol>
+<li><p>读取SysTick 控制及状态寄存器（STCSR）</p>
+</li>
+<li><p>往SysTick 当前值寄存器（STCVR）中写任何数据</p>
+</li>
+</ol>
+<p>只有当VAL值为0时，计数器自动重载RELOAD。</p>
+<p><strong>Q</strong><strong>：如何使用</strong><strong>SysTicks</strong><strong>作为系统时钟？</strong><strong></strong></p>
+<p>SysTick 的最大使命，就是定期地产生异常请求，作为系统的时基。OS 都需要这种“滴答”来推动任务和时间的管理。如欲使能SysTick 异常，则把STCSR.TICKINT 置位。另外，如果向量表被重定位到SRAM 中，还需要为SysTick 异常建立向量，提供其服务例程的入口地址。</p>
+<p><strong>Q</strong><strong>：如何使用</strong><strong>SysTick</strong><strong>完成一段延时？</strong></p>
+<p>查询方式 参考：<a href="http://blog.ednchina.com/atom6037/188271/message.aspx" target="_blank" rel="noopener">http://blog.ednchina.com/atom6037/188271/message.aspx</a></p>
+<p>中断方式 参考：</p>
+<p>初始化函数SysTick_Configuration(void)放在while()循环外，执行一次：</p>
+<div><br><blockquote>void SysTick_Configuration(void)<br>{<br>/<em> Select AHB clock(HCLK) as SysTick clock source 设置AHB时钟为SysTick时钟</em>/<br>SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK);<br><br>/<em> Set SysTick Priority to 3 设置SysTicks中断抢占优先级 3， 从优先级0</em>/<br>NVIC_SystemHandlerPriorityConfig(SystemHandler_SysTick, 3, 0);<br><br>/<em> SysTick interrupt each 1ms with HCLK equal to 72MHz 每1ms发生一次SysTick中断</em>/<br>SysTick_SetReload(72000);<br><br>/<em> Enable the SysTick Interrupt </em>/<br>SysTick_ITConfig(ENABLE);<br>}</blockquote><br></div><br>延时函数，需要延时处调用：<br><div><br><blockquote>void Delay(u32 nTime)<br>{<br>/<em> Enable the SysTick Counter 允许SysTick计数器</em>/<br>SysTick_CounterCmd(SysTick_Counter_Enable);<br><br>TimingDelay = nTime;<br><br>while(TimingDelay != 0)<br>; //等待计数至0<br><br>/<em> Disable the SysTick Counter 禁止SysTick计数器</em>/<br>SysTick_CounterCmd(SysTick_Counter_Disable);<br>/<em> Clear the SysTick Counter 清零SysTick计数器</em>/<br>SysTick_CounterCmd(SysTick_Counter_Clear);<br>}</blockquote><br></div><br>中断函数，定时器减至零时调用，放在stm32f10x_it.c文件中<br><div><br><blockquote>void SysTickHandler(void)<br>{<br>TimingDelay–;<br>}</blockquote><br><br><br>文章来源 ：<a href="http://tigerwang202.blogbus.com/logs/35901649.html" target="_blank" rel="noopener">http://tigerwang202.blogbus.com/logs/35901649.html</a><br></div>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/details-on-the-stm32-systick-timer.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">关于STM32的systick定时器的详细说明</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/more-and-more-lazy.html">
+        <span class="next-text nav-default">最近越来越懒了</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-systick-timer-and-time-delay-function.html';
+
+  var disqus_title = "STM32 SysTick定时器常见问题及延时函数的实现";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

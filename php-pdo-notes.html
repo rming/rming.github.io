@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP PDO 笔记">
+
+
+
+
+  <meta name="keywords" content="数据库技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-pdo-notes.html">
+
+
+<meta name="description" content="测试PDO是否安装成功 连接数据库 基本查询 获取行数 遍历结果集 转义用户输入的特殊字符 exec() 预处理语句 事务 开启事务   其它有用的选项 PDO::ATTR_DEFAULT_FETCH_MODE PDO::ATTR_ERRMODE PDO::ATTR_TIMEOUT     测试PDO是否安装成功运行如下代码，如果提示参数错误，说明PDO已经安装，如果说明对象不存在，则修改PH">
+<meta name="keywords" content="数据库技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP PDO 笔记">
+<meta property="og:url" content="http://rmingwang.com/php-pdo-notes.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="测试PDO是否安装成功 连接数据库 基本查询 获取行数 遍历结果集 转义用户输入的特殊字符 exec() 预处理语句 事务 开启事务   其它有用的选项 PDO::ATTR_DEFAULT_FETCH_MODE PDO::ATTR_ERRMODE PDO::ATTR_TIMEOUT     测试PDO是否安装成功运行如下代码，如果提示参数错误，说明PDO已经安装，如果说明对象不存在，则修改PH">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-10-07T07:39:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP PDO 笔记">
+<meta name="twitter:description" content="测试PDO是否安装成功 连接数据库 基本查询 获取行数 遍历结果集 转义用户输入的特殊字符 exec() 预处理语句 事务 开启事务   其它有用的选项 PDO::ATTR_DEFAULT_FETCH_MODE PDO::ATTR_ERRMODE PDO::ATTR_TIMEOUT     测试PDO是否安装成功运行如下代码，如果提示参数错误，说明PDO已经安装，如果说明对象不存在，则修改PH">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP PDO 笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP PDO 笔记
+        
+      </h1>
+
+      <time class="post-time">
+          7月 25 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#测试pdo是否安装成功">测试PDO是否安装成功</a></li>
+<li><a href="#连接数据库">连接数据库</a></li>
+<li><a href="#基本查询">基本查询</a></li>
+<li><a href="#获取行数">获取行数</a></li>
+<li><a href="#遍历结果集">遍历结果集</a></li>
+<li><a href="#转义用户输入的特殊字符">转义用户输入的特殊字符</a></li>
+<li><a href="#exec">exec()</a></li>
+<li><a href="#预处理语句">预处理语句</a></li>
+<li><a href="#事务">事务</a><ul>
+<li><a href="#开启事务">开启事务</a></li>
+</ul>
+</li>
+<li><a href="#其它有用的选项">其它有用的选项</a><ul>
+<li><a href="#pdoattr_default_fetch_mode">PDO::ATTR_DEFAULT_FETCH_MODE</a></li>
+<li><a href="#pdoattr_errmode">PDO::ATTR_ERRMODE</a></li>
+<li><a href="#pdoattr_timeout">PDO::ATTR_TIMEOUT</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="测试pdo是否安装成功">测试PDO是否安装成功</span></h2><p>运行如下代码，如果提示参数错误，说明PDO已经安装，如果说明对象不存在，则修改PHP配置文件php.ini，取消php_pdo_yourssqlserverhere.extis前面的注释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$test=new PDO();</span><br></pre></td></tr></table></figure>
+<h2><span id="连接数据库">连接数据库</span></h2><p>运行Apache服务器，确定服务器已经运行并且PDO安装成功，那么下面我们就来连接数据库吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$dsn = &apos;mysql:dbname=demo;host=localhost;port=3306&apos;;</span><br><span class="line">$username = &apos;root&apos;;</span><br><span class="line">$password = &apos;password_here&apos;;</span><br><span class="line">try &#123;</span><br><span class="line">    $db = new PDO($dsn, $username, $password);</span><br><span class="line">&#125; catch(PDOException $e) &#123;</span><br><span class="line">    die(&apos;Could not connect to the database:&apos; . $e);</span><br></pre></td></tr></table></figure>
+<h2><span id="基本查询">基本查询</span></h2><p>在PDO中使用query和exec两种方法使得对数据库查询变得非常简单。如果你想得到查询结果的行数exec是非常好用的，因此对SELECT查询语句是非常有用的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$statement = &lt;&lt;&lt;SQL</span><br><span class="line">    SELECT *</span><br><span class="line">    FROM `foods`</span><br><span class="line">    WHERE `healthy` = 0</span><br><span class="line">SQL;</span><br><span class="line">$foods = $db-&gt;query($statement);</span><br></pre></td></tr></table></figure>
+<p>如果上面的查询是正确的，则$foods现在是一个PDO Statement对象，我们可以从这个对象中获取我们需要的结果和一共查询到了多少结果集。</p>
+<h2><span id="获取行数">获取行数</span></h2><p>如果利用的是Mysql数据库，PDO Statement中包含了一个rowCount的方法可以获取结果集中的行数，如下代码所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $foods-&gt;rowCount;</span><br></pre></td></tr></table></figure>
+<h2><span id="遍历结果集">遍历结果集</span></h2><p>PDO Statment可以使用forech语句进行遍历，如下面代码所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foreach($foods-&gt;FetchAll() as $food) &#123;</span><br><span class="line">    echo $food[&apos;name&apos;] . &apos; &apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PDO也支持Fetch方法，这个方法只返回第一条结果。</p>
+<h2><span id="转义用户输入的特殊字符">转义用户输入的特殊字符</span></h2><p>PDO提供了一个方法叫做quote，这个方法可以把输入字符串中带有引号的地方进行特殊字符转义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    $input= this is&apos;s&apos; a &apos;&apos;&apos;pretty dange&apos;rous str&apos;ing</span><br><span class="line">使用quote方法转移后：</span><br><span class="line">    $db-&gt;quote($input): &apos;this is\&apos;s\&apos; a \&apos;\&apos;\&apos;pretty dange\&apos;rous str\&apos;ing&apos;</span><br></pre></td></tr></table></figure>
+<h2><span id="exec">exec()</span></h2><p>PDO可以使用exec()方法实现UPDATE,DELETE和INSERT 操作，执行后它会返回受影响行数的数量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$statement = &lt;&lt;&lt;SQL</span><br><span class="line">    DELETE FROM `foods`</span><br><span class="line">    WHERE `healthy` = 1;</span><br><span class="line">SQL;</span><br><span class="line">echo $db-&gt;exec($statement);</span><br></pre></td></tr></table></figure>
+<h2><span id="预处理语句">预处理语句</span></h2><p>&emsp;&emsp;尽管exec方法和查询在PHP中仍然被大量使用和支持，但是PHP官网上还是要求大家用预处理语句的方式来替代。为什么呢？主要是因为：它更安全。预处理语句不会直接在实际查询中插入参数，这就避免了许多潜在的SQL注入。</p>
+<p>&emsp;&emsp;然而出于某种原因，PDO实际上并没有真正的使用预处理，它是在模拟预处理方式，在将语句传给SQL服务器之前会把参数数据插入到语句中，这使得某些系统容易受到SQL注入。</p>
+<p>如果你的SQL服务器不真正的支持预处理,我们可以很容易的通过如下方式在PDO初始化时传参来修复这个问题:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$db-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);</span><br></pre></td></tr></table></figure>
+<p>下面是我们的第一个预处理语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$statement = $db-&gt;prepare(&apos;SELECT * FROM foods WHERE `name`=? AND `healthy`=?&apos;);</span><br><span class="line">$statement2 = $db-&gt;prepare(&apos;SELECT * FROM foods WHERE `name`=:name AND `healthy`=:healthy)&apos;;</span><br></pre></td></tr></table></figure>
+<p>如上面的代码所示，有两种创建参数的方法，命名的与匿名的（不可以同时出现在一个语句中）。然后你可以使用bindValue来敲进你的输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;bindValue(1, &apos;Cake&apos;);</span><br><span class="line">$statement-&gt;bindValue(2, true);</span><br><span class="line">$statement2-&gt;bindValue(&apos;:name&apos;, &apos;Pie&apos;);</span><br><span class="line">$statement2-&gt;bindValue(&apos;:healthy&apos;, false);</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;注意使用命名参数的时候你要包含进冒号(:)。PDO还有一个bindParam方法，可以通过引用绑定数值，也就是说它只在语句执行的时候查找相应数值。</p>
+<p>现在剩下的唯一要做的事情，就是执行我们的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute();</span><br><span class="line">$statement2-&gt;execute();</span><br><span class="line"></span><br><span class="line">//获取我们的结果:</span><br><span class="line">$cake = $statement-&gt;Fetch();</span><br><span class="line">$pie  = $statement2-&gt;Fetch();</span><br></pre></td></tr></table></figure>
+<p>为了避免只使用bindValue带来的代码碎片，你可以用数组给execute方法作为参数，像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute(array(1 =&gt; &apos;Cake&apos;, 2 =&gt; true));</span><br><span class="line">$statement2-&gt;execute(array(&apos;:name&apos; =&gt; &apos;Pie&apos;, &apos;:healthy&apos; =&gt; false));</span><br></pre></td></tr></table></figure>
+<h2><span id="事务">事务</span></h2><p>&emsp;&emsp;一个事务就是执行一组查询,但是并不保存他们的影响到数据库中。这样做的好处是如果你执行了4条相互依赖的插入语句,当有一条失败后,你可以回滚使得其他的数据不能够插入到数据库中,确保相互依赖的字段能够正确的插入。你需要确保你使用的数据库引擎支持事务。</p>
+<h3><span id="开启事务">开启事务</span></h3><p>你可以很简单的使用beginTransaction()方法开启一个事务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$db-&gt;beginTransaction();</span><br><span class="line">$db-&gt;inTransaction(); // true!</span><br></pre></td></tr></table></figure>
+<p>然后你可以继续执行你的数据库操作语句，在最后提交事务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$db-&gt;commit();</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;还有类似MySQLi中的rollBack()方法，但是它并不是回滚所有的类型（例如在MySQL中使用DROP TABLE）,这个方法并不是真正的可靠，我建议尽量避免依赖此方法。</p>
+<h2><span id="其它有用的选项">其它有用的选项</span></h2><hr>
+<hr>
+<p>有几个选项你可以考虑用一下。这些可以作为你的对象初始化时候的第四个参数输入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$options = array($option1 =&gt; $value1, $option[..]);</span><br><span class="line">$db = new PDO($dsn, $username, $password, $options);</span><br></pre></td></tr></table></figure>
+<h3><span id="pdoattr_default_fetch_mode">PDO::ATTR_DEFAULT_FETCH_MODE</span></h3><p>&emsp;&emsp;你可以选择PDO将返回的是什么类型的结果集，如PDO::FETCH_ASSOC，会允许你使用$result[‘column_name’]，或者PDO::FETCH_OBJ，会返回一个匿名对象，以便你使用$result-&gt;column_name</p>
+<p>你还可以将结果放入一个特定的类（模型），可以通过给每一个单独的查询设置一个读取模式，就像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$query = $db-&gt;query(&apos;SELECT * FROM `foods`&apos;);</span><br><span class="line">$foods = $query-&gt;fetchAll(PDO::FETCH_CLASS, &apos;Food&apos;);</span><br></pre></td></tr></table></figure>
+<h3><span id="pdoattr_errmode">PDO::ATTR_ERRMODE</span></h3><p>&emsp;&emsp;上面我们已经解释过这一条了，但喜欢TryCatch的人需要用到：PDO::ERRMODE_EXCEPTION。如果不论什么原因你想抛出PHP警告，就使用PDO::ERRMODE_WARNING。</p>
+<h3><span id="pdoattr_timeout">PDO::ATTR_TIMEOUT</span></h3><p>当你为载入时间而着急时,你可以使用此属性来为你的查询指定一个超时时间，单位是秒. 注意，如果超过你设置的时间，缺省会抛出E_WARNING异常, 除非 PDO::ATTR_ERRMODE 被改变.</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/数据库技术/">数据库技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-static-variable.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP中static静态变量的使用方法详解</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/pdo-tutorial-for-mysql-developers.html">
+        <span class="next-text nav-default">MySQL数据库PDO教程</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-pdo-notes.html';
+
+  var disqus_title = "PHP PDO 笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

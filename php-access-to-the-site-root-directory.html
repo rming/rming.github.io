@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP获取站点根目录">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-access-to-the-site-root-directory.html">
+
+
+<meta name="description" content="将下面的代码放在网站根目录下的一个文件中，以便在其它文件中引用。 路径方式： 123define(&amp;apos;BASE_PATH&amp;apos;,str_replace(&amp;apos;\\&amp;apos;,&amp;apos;/&amp;apos;,realpath(dirname(__FILE__).&amp;apos;/&amp;apos;)).&amp;quot;/&amp;quot;);echo BASE_PATH; 输出结果：E:/wwwroo">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP获取站点根目录">
+<meta property="og:url" content="http://rmingwang.com/php-access-to-the-site-root-directory.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="将下面的代码放在网站根目录下的一个文件中，以便在其它文件中引用。 路径方式： 123define(&amp;apos;BASE_PATH&amp;apos;,str_replace(&amp;apos;\\&amp;apos;,&amp;apos;/&amp;apos;,realpath(dirname(__FILE__).&amp;apos;/&amp;apos;)).&amp;quot;/&amp;quot;);echo BASE_PATH; 输出结果：E:/wwwroo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-26T02:27:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP获取站点根目录">
+<meta name="twitter:description" content="将下面的代码放在网站根目录下的一个文件中，以便在其它文件中引用。 路径方式： 123define(&amp;apos;BASE_PATH&amp;apos;,str_replace(&amp;apos;\\&amp;apos;,&amp;apos;/&amp;apos;,realpath(dirname(__FILE__).&amp;apos;/&amp;apos;)).&amp;quot;/&amp;quot;);echo BASE_PATH; 输出结果：E:/wwwroo">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP获取站点根目录 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP获取站点根目录
+        
+      </h1>
+
+      <time class="post-time">
+          3月 13 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>将下面的代码放在网站根目录下的一个文件中，以便在其它文件中引用。</p>
+<p>路径方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;BASE_PATH&apos;,str_replace(&apos;\\&apos;,&apos;/&apos;,realpath(dirname(__FILE__).&apos;/&apos;)).&quot;/&quot;);</span><br><span class="line"></span><br><span class="line">echo BASE_PATH;</span><br></pre></td></tr></table></figure>
+<p>输出结果：E:/wwwroot/</p>
+<p>url方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$PHP_SELF=$_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line"></span><br><span class="line">$url=&apos;http://&apos;.$_SERVER[&apos;HTTP_HOST&apos;].substr($PHP_SELF,0,strrpos($PHP_SELF,&apos;/&apos;)+1);</span><br><span class="line"></span><br><span class="line">echo $url;</span><br><span class="line">#http://localhost/</span><br></pre></td></tr></table></figure>
+<p>PHP取得站点根目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//当前请求的 Host: 头部的内容 即域名信信息</span><br><span class="line">echo $_SERVER[&apos;HTTP_HOST&apos;];</span><br><span class="line"></span><br><span class="line">//当前正在执行脚本的文件相对网站根目录地址，就算该文件被其他文件引用也可以正确得到地址</span><br><span class="line">echo $_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line"></span><br><span class="line">//当前正在执行脚本的文件相对网站根目录地址，但当该文件被其他文件引用时，只显示引用文件的相对地址，不显示该被引用脚本的相对地址。</span><br><span class="line">echo $_SERVER[&apos;SCRIPT_NAME&apos;];</span><br><span class="line"></span><br><span class="line">//网站相对服务器地址即网站的绝对路径名 #当前运行脚本所在的文档根目录。在服务器配置文件中定义</span><br><span class="line">echo $_SERVER[&apos;DOCUMENT_ROOT&apos;];</span><br><span class="line"></span><br><span class="line">//当前执行脚本的绝对路径名。</span><br><span class="line">echo $_SERVER[&apos;SCRIPT_FILENAME&apos;];</span><br></pre></td></tr></table></figure>
+<p>方法一：</p>
+<p>今天讲了大致的站点目录结构，其中说到了怎样取得站点根目录，好多同学不是很理解，下面一步一步道来：</p>
+<p>我的站点目录据对路径：D:\www\message2011，测试文件路径：D:\www\message2011\include\config.inc.php</p>
+<p>在根目录下新建一个文件，也可以隔一层目录创建，就以上面为例，我要在config.inc.php中取得站点的根目录。</p>
+<p>1、取得当前文件的路径：用魔术常量<strong>FILE</strong>。这里的路径包含了文件名，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\www\message2011\include\config.inc.php</span><br></pre></td></tr></table></figure>
+<p>2、去掉上面路径的文件名，得到纯路径：dirname(<strong>FILE</strong>)，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\www\message2011\include</span><br></pre></td></tr></table></figure>
+<p>3、返回一层目录到根目录：realpath(dirname(<strong>FILE</strong>).’/../‘)，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">D:\www\message2011</span><br></pre></td></tr></table></figure>
+<p>4、把向左的”\“转化成向右的”/“：str_replace( ‘\‘ , ‘/‘ , realpath(dirname(<strong>FILE</strong>).’/../‘))，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:/www/message2011</span><br></pre></td></tr></table></figure>
+<p>到这就是我们想要的站点根目录了，可以根据需求设定第三步返回目录层数，比如：返回2层就是 /../../，那么就会得到 D:\www\，以此类推。</p>
+<p>方法二：</p>
+<p>在global.inc   里定义根目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">define(&quot;APP_ROOT&quot;,dirname(__FILE__));</span><br></pre></td></tr></table></figure>
+<p>在任何PHP文件中可以引用该常量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">require_once(APP_ROOT.&quot;/inc/head.php&quot;);</span><br></pre></td></tr></table></figure>
+<p>方法三：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">$PHP_SELF=$_SERVER[&apos;PHP_SELF&apos;] ? $_SERVER[&apos;PHP_SELF&apos;] : $_SERVER[&apos;SCRIPT_NAME&apos;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$url=&apos;http://&apos;.$_SERVER[&apos;HTTP_HOST&apos;].substr($PHP_SELF,0,strrpos($PHP_SELF, &apos;/&apos;)+1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo $url;</span><br></pre></td></tr></table></figure>
+<p>方法四：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$basepath=$_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$basepath=substr($basepath,0,strpos($basepath,&quot;文件夹名称&quot;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo $basepath;</span><br></pre></td></tr></table></figure>
+<p>如:你把文件保存为a.php并路径为：/wjj/wjj1/wjj2/a.php</p>
+<p>上面的例子就写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$basepath=$_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$basepath=substr($basepath,0,strpos($basepath,&quot;wjj1&quot;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo $basepath;</span><br></pre></td></tr></table></figure>
+<p>方法五：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$basepath=$_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">preg_match(&quot;/(\/)?([^\/]+)/&quot;,$basepath,$wjm);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo $wjm[0];</span><br></pre></td></tr></table></figure>
+<p>注意，第二种方法我不太会，如文件路径为：/wjj/wjj1/wjj2/a.php，它只返回 /wjj 后面的/自己加！</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-topic-weekly.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">《topic weekly》随笔</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/university-final-plan.html">
+        <span class="next-text nav-default">大学最后的计划</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-access-to-the-site-root-directory.html';
+
+  var disqus_title = "PHP获取站点根目录";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

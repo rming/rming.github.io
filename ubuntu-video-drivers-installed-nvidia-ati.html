@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="ubuntu显卡驱动安装Nvidia/ATI">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-video-drivers-installed-nvidia-ati.html">
+
+
+<meta name="description" content="众所周知，ubuntu下的xwindow桌面特效实在好玩，不少人刚开始接触ubuntu 的时候就是奔着这个好玩好看的桌面而来的，可是如果由于驱动原因而导致桌面特效无法启用呢？那岂不是无趣……简单的驱动安装问题可以通过搜索相关问题得到答案，如果你的wubi实在是水土不服……那么请看下面这个较为全面的安装教程！ Nvidia显卡驱动的安装方法：　　步骤如下： 　　1. 到Nvidia官方去下载ubun">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu显卡驱动安装Nvidia&#x2F;ATI">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-video-drivers-installed-nvidia-ati.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="众所周知，ubuntu下的xwindow桌面特效实在好玩，不少人刚开始接触ubuntu 的时候就是奔着这个好玩好看的桌面而来的，可是如果由于驱动原因而导致桌面特效无法启用呢？那岂不是无趣……简单的驱动安装问题可以通过搜索相关问题得到答案，如果你的wubi实在是水土不服……那么请看下面这个较为全面的安装教程！ Nvidia显卡驱动的安装方法：　　步骤如下： 　　1. 到Nvidia官方去下载ubun">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu显卡驱动安装Nvidia&#x2F;ATI">
+<meta name="twitter:description" content="众所周知，ubuntu下的xwindow桌面特效实在好玩，不少人刚开始接触ubuntu 的时候就是奔着这个好玩好看的桌面而来的，可是如果由于驱动原因而导致桌面特效无法启用呢？那岂不是无趣……简单的驱动安装问题可以通过搜索相关问题得到答案，如果你的wubi实在是水土不服……那么请看下面这个较为全面的安装教程！ Nvidia显卡驱动的安装方法：　　步骤如下： 　　1. 到Nvidia官方去下载ubun">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> ubuntu显卡驱动安装Nvidia/ATI - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ubuntu显卡驱动安装Nvidia/ATI
+        
+      </h1>
+
+      <time class="post-time">
+          2月 23 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>众所周知，ubuntu下的xwindow桌面特效实在好玩，不少人刚开始接触ubuntu 的时候就是奔着这个好玩好看的桌面而来的，可是如果由于驱动原因而导致桌面特效无法启用呢？那岂不是无趣……简单的驱动安装问题可以通过搜索相关问题得到答案，如果你的wubi实在是水土不服……那么请看下面这个较为全面的安装教程！</p>
+<p></p><h3><span id="nvidia显卡驱动的安装方法">Nvidia显卡驱动的安装方法：</span></h3><br>　　步骤如下：<p></p>
+<p>　　1. 到Nvidia官方去下载ubuntu的驱动，下载的文件存盘备用。</p>
+<p>　　2. 完全删除原驱动，包括Ubuntu自带的nv驱动和nvidia-glx-new驱动：</p>
+<p>　　此步骤非常重要。</p>
+<p>　　3. 重新启动，并关闭xserver：</p>
+<p>　　关闭xserver命令(gnome)：</p>
+<p>　　sudo /etc/init.d/gdm stop</p>
+<p>　　4. 安装驱动：</p>
+<p>　　sudo sh ./NVIDIA-Linux-x86_64-173.14.05-pkg2.run</p>
+<p>　　5. 启动xserver：</p>
+<p>　　sudo /etc/init.d/gdm start</p>
+<p>　　6. 调整分辨率：</p>
+<p>　　如果启动后显示分辨率不正常，需要修改xorg.conf。</p>
+<p>　　cd /etc/X11</p>
+<p>　　sudo cp xorg.conf xorg.conf.mybackup</p>
+<p>　　sudo vi /etc/X11/xorg.conf</p>
+<p>　　确认Device里面的Driver一项定义是“nvidia;</p>
+<p>　　删除Monitor定义里面的Modeline一行;</p>
+<p>　　Screen里面Modes一行改为</p>
+<p>　　Modes ”nvidia-auto-select“</p>
+<p>　　修改后重新启动xserver。Ctrl-Alt-Backspace。</p>
+<p>　　7. 调整个人分辨率配置：</p>
+<p>　　如果登录界面分辨率正常，但用户登录后变为低分辨率，需要在个人选项里面调整：</p>
+<p>　　System -&gt; Preferences -&gt; Screen Resolutions</p>
+<p>　　8. 显示驱动细节调整：</p>
+<p>　　sudo nvidia-settings</p>
+<p>　　必须用root权限运行，否则配置无法保存到xorg.conf里面。</p>
+<p>　　搞定。</p>
+<p></p><h3><span id="ati驱动的安装">ATI驱动的安装：</span></h3><br>　　ATI的驱动要麻烦一点，因为非官方的驱动会使显卡的性能大受影响。很多网友装过驱动之后direct rending还是显示为no。笔者也是同样的遭遇，不过方法是有的，笔者参考了Ubuntu官方的资料后，终于成功。下面就是我的解决方法：<p></p>
+<p>　　首先先从ATI官网上将驱动文件包下载到电脑上。</p>
+<p>　　本例使用的是ati-driver-installer-8-9-x86-x86_64.run</p>
+<p>　　在终端中执行：</p>
+<p>　　sudo apt-get install build-essential cdbs fakeroot dh-make debhelper debconf libstdc 5 dkms linux-headers-$(uname -r)</p>
+<p>　　切换目录到你下载的安装包位置，在终端中执行：</p>
+<p>　　sh ati-driver-installer-8-9-x86.x86_64.run –buildpkg</p>
+<p>　　Ubuntu/hardy</p>
+<p>　　在/usr/lib中找到一个名为libGL.so的文件。</p>
+<p>　　然后在终端中执行：</p>
+<p>　　sudo ln -s /usr/lib/libGL.so /usr/lib/libGL.so.1</p>
+<p>　　可能需要重新执行：(一般跳过这一步)</p>
+<p>　　sh ati-driver-installer-8-9-x86.x86_64.run –buildpkg Ubuntu/hardy 然后对文件进行设置：</p>
+<p>　　sudo gedit /etc/default/linux-restricted-modules-common</p>
+<p>　　将DISABLED_MODULES=”“ 改为DISABLED_MODULES=”fglrx“</p>
+<p>　　按照原文在这里的意思，是说修改完上一句后，可以在受限驱动管理器中看到，受限驱动虽没有被选中，但在安装的后期，可发现状态是”使用中“。这说明受限驱动中的fglrx模块虽被禁用，但你下载的安装包中的fglrx模块正在起作用。</p>
+<p>　　然后对文件进行设置：</p>
+<p>　　sudo gedit /etc/modprobe.d/blacklist-restricted</p>
+<p>　　sudo gedit /etc/modprobe.d/blacklist-local</p>
+<p>　　上两个文件可能不存在，如果不存在的话就不用新建再更改。只有第2个文件，即blacklist-local文件。在其中可发现有”blacklist fglrx“字样，在这前面加上一个#字。保存退出。</p>
+<p>　　好，接下来可以安装刚刚生成的五个DEB包了：</p>
+<p>　　sudo dpkg -i xorg-driver-fglrx_<em>.deb fglrx-kernel-source_</em>.deb fglrx-amdcccle_*.deb</p>
+<p>　　最后进入扫尾阶段：</p>
+<p>　　先修改xorg.conf中的设置：</p>
+<p>　　sudo gedit /etc/X11/xorg.conf</p>
+<p>　　在其中找到Section ”Device“字段，其中有个Driver，把它后面的参数改为”fglrx“。如果没有找到改字段，直接将下段代码复制到文件中：</p>
+<p>　　Section ”Device“ […]</p>
+<p>　　Driver ”fglrx“</p>
+<p>　　[…]</p>
+<p>　　EndSection</p>
+<p>　　保存退出。</p>
+<p>　　在终端中执行：</p>
+<p>　　sudo aticonfig –initial -f</p>
+<p>　　sudo aticonfig –input=/etc/X11/xorg.conf –tls=1</p>
+<p>　　重启。</p>
+<p>　　可以使用DISPLAY=:0 glxinfo | grep render 命令查看结果，如果显示的是direct rending为yes。那么恭喜你，你已经安装成功了。如果仍为no，请继续阅读下文。</p>
+<p>　　首先删除xserver-xgl</p>
+<p>　　sudo apt-get remove xserver-xgl</p>
+<p>　　再把这一段加进/etc/X11/xorg.conf里：</p>
+<p>　　Section ”Extensions“</p>
+<p>　　Option ”Composite“ ”Enable“</p>
+<p>　　EndSection</p>
+<p>　　最后这一步非常重要，在加上这一段后，direct rending终于变为了yes。至此，大功告成了!</p>
+<p>　　通过上面文章介绍，我们知道了在Ubuntu下安装Nvidia和ATI的显卡驱动方法，希望对大家有帮助。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/open-open-network-k-ai-the-true-location-based-social-network.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">开开网（k.ai）基于位置的真实社交网络</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/about-site-map.html">
+        <span class="next-text nav-default">关于网站地图</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-video-drivers-installed-nvidia-ati.html';
+
+  var disqus_title = "ubuntu显卡驱动安装Nvidia/ATI";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

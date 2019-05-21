@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="js弹出(可移动)层/窗口源码"/>
+
+
+
+
+  <meta name="keywords" content="前端技术," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2" />
+
+
+
+<link rel="canonical" href="http://rmingwang.com/js-pop-up-div-layer-source-code.html"/>
+
+
+<meta name="description" content="最近想再学习一下前台代码的东西，于是乎给力的练习css，上一周的时候写了一个利用一张很有创意的图片编写的一个简单页面，这周想做个漂亮一点的ui的小东西，今天突然很对网页上弹出的窗口感兴趣，特别是那种半透明的窗口，我觉得这个一般是用jquery和js做的吧，于是乎和往常一样去谷歌查找了一下，果然在kekaku的博客上找到了一篇文章。自己根据自己搜索的结果在这里总结一下吧，js在前台打造弹出div的效">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js弹出(可移动)层&#x2F;窗口源码">
+<meta property="og:url" content="http://rmingwang.com/js-pop-up-div-layer-source-code.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="最近想再学习一下前台代码的东西，于是乎给力的练习css，上一周的时候写了一个利用一张很有创意的图片编写的一个简单页面，这周想做个漂亮一点的ui的小东西，今天突然很对网页上弹出的窗口感兴趣，特别是那种半透明的窗口，我觉得这个一般是用jquery和js做的吧，于是乎和往常一样去谷歌查找了一下，果然在kekaku的博客上找到了一篇文章。自己根据自己搜索的结果在这里总结一下吧，js在前台打造弹出div的效">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js弹出(可移动)层&#x2F;窗口源码">
+<meta name="twitter:description" content="最近想再学习一下前台代码的东西，于是乎给力的练习css，上一周的时候写了一个利用一张很有创意的图片编写的一个简单页面，这周想做个漂亮一点的ui的小东西，今天突然很对网页上弹出的窗口感兴趣，特别是那种半透明的窗口，我觉得这个一般是用jquery和js做的吧，于是乎和往常一样去谷歌查找了一下，果然在kekaku的博客上找到了一篇文章。自己根据自己搜索的结果在这里总结一下吧，js在前台打造弹出div的效">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> js弹出(可移动)层/窗口源码 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          js弹出(可移动)层/窗口源码
+        
+      </h1>
+
+      <time class="post-time">
+          3月 12 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>最近想再学习一下前台代码的东西，于是乎给力的练习css，上一周的时候写了一个利用一张很有创意的图片编写的一个简单页面，这周想做个漂亮一点的ui的小东西，今天突然很对网页上弹出的窗口感兴趣，特别是那种半透明的窗口，我觉得这个一般是用jquery和js做的吧，于是乎和往常一样去谷歌查找了一下，果然在kekaku的博客上找到了一篇文章。自己根据自己搜索的结果在这里总结一下吧，js在前台打造弹出div的效果。</p>
+<p>第一种效果：<br>弹出效果很棒，可以加载到连接上，不过在弹出层上写div还没尝试，据@lds同学介绍，估计没什么问题。<br>代码如下：</p>
+<p><pre lang="html" line="1"><br>﻿&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" target="_blank" rel="noopener">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</a></pre></p>
+<html xmlns="http://www.w3.org/1999/xhtml"><br><br><head><meta name="generator" content="Hexo 3.8.0"><title>-</title><br><br><style><br><br>body {margin:0px}<br><br>#Loading {position:absolute;z-index:10;left:10px;top:10px;border:1px #666666 solid;background:#eeeeee;width:10px;height:10px}<br><br>.LoadContent {width:100%;height:100%;overflow:auto}<br><br></style><br><br><script language="JavaScript"><br><br><!-- 
+
+function $(){return document.getElementById?document.getElementById(arguments[0]):eval(arguments[0]);}
+
+var OverH,OverW,ChangeDesc,ChangeH=50,ChangeW=50;
+
+function OpenDiv(_Dw,_Dh,_Desc) {
+
+$("Loading").innerHTML="Loading...";
+
+OverH=_Dh;OverW=_Dw;ChangeDesc=_Desc;
+
+$("Loading").style.display='';
+
+if(_Dw>_Dh){ChangeH=Math.ceil((_Dh-10)/((_Dw-10)/50))}else if(_Dw<_Dh){ChangeW=Math.ceil((_Dw-10)/((_Dh-10)/50))}
+
+$("Loading").style.top=(document.documentElement.clientHeight-10)/2+"px";
+
+$("Loading").style.left=(document.documentElement.clientWidth-10)/2+"px";
+
+OpenNow()
+
+}
+
+var Nw=10,Nh=10;
+
+function OpenNow() {
+
+if (Nw>OverW-ChangeW)ChangeW=2;
+
+if (Nh>OverH-ChangeH)ChangeH=2;
+
+Nw=Nw+ChangeW;Nh=Nh+ChangeH;
+
+
+
+if(OverW>Nw||OverH>Nh) {
+
+    if(OverW>Nw) {
+
+    $("Loading").style.width=Nw+"px";
+
+    $("Loading").style.left=(document.documentElement.clientWidth-Nw)/2+"px";
+
+    }
+
+    if(OverH>Nh) {
+
+    $("Loading").style.height=Nh+"px";
+
+    $("Loading").style.top=(document.documentElement.clientHeight-Nh)/2+"px"
+
+    }
+
+    window.setTimeout("OpenNow()",10)
+
+    }else{
+
+    Nw=10;Nh=10;ChangeH=50;ChangeW=50;
+
+    AjaxGet(ChangeDesc)
+
+    }
+
+}
+
+
+
+//创建XML对象
+
+function createXMLHttps(){
+
+var ret = null;
+
+try {ret = new ActiveXObject('Msxml2.XMLHTTP')}
+
+catch (e) {
+
+    try {ret = new ActiveXObject('Microsoft.XMLHTTP')}
+
+        catch (ee) {ret = null}
+
+    }
+
+if (!ret&&typeof XMLHttpRequest !='undefined') ret = new XMLHttpRequest();
+
+return ret;
+
+}
+
+
+
+function AjaxGet(URL) {
+
+var xmlhttp = createXMLHttps();
+
+xmlhttp.open("Get",URL,true);
+
+xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+xmlhttp.onreadystatechange = function() {
+
+if (xmlhttp.readyState == 4 && xmlhttp.status==404) {$("Loading").innerHTML='读取页面失败,文件'+URL+'不存在!';return}
+
+if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+        $("Loading").innerHTML="<div class='LoadContent'>"+xmlhttp.responseText+"</div>";
+
+        }
+
+    }
+
+xmlhttp.send(null);
+
+}
+
+//--><br><br></script><br><br></head><br><br><body><br><br>由于不能跨域,读取的文件须在同一域名下,如果出现错误,<br>原因是在目标文件上的,本例代码本身没有错误<br><br><br><font color="red">如果目标文件数据过大,花费的时间也相对较长,外部文件需用utf-8编码,否则中文可能显示为乱码</font><br><br><br><br><br><br>  <a href="javascript:OpenDiv(500,300,'forum-1-1.html')" target="_blank" rel="noopener">forum-1-1.html 500<em>300</em></a><br><br><br><br>  <a href="javascript:OpenDiv(500,200,'faq.php')" target="_blank" rel="noopener">faq.php 500200</a><br><br><br><br>  <a href="javascript:OpenDiv(200,500,'1.html')" target="_blank" rel="noopener">1.html 200<em>500</em></a><br><br><br><br>  <a href="javascript:OpenDiv(500,500,'2.html')" target="_blank" rel="noopener">2.html 500500</a><br><br><br><br>双击关闭层<br><br><div id="Loading" style="display:none" ondblclick="this.style.display='none'"></div><br><br></body><br><br></html><br><br>然后下面是第二种效果：<br>下面的这种效果还是很令人满意的，可以自由的编写div，可以自由的设置弹出内容，不过样式可以自己修改一下，这个十分的有必要啊，哈哈。<br>代码如下：<br><pre lang="html" line="1"><br>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" target="_blank" rel="noopener">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</a><br><html xmlns="http://www.w3.org/1999/xhtml"><br><head><meta name="generator" content="Hexo 3.8.0"><br><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><br><title>JS弹出层</title><br><script language="javascript"><br>function BOX_show(e)//显示<br>{<br>    if(document.getElementById(e)==null)<br>    {<br>        return ;<br>    }<br>    var selects = document.getElementsByTagName(‘select’);<br>    for(i = 0; i &lt; selects.length; i++)<br>    {<br>        selects[i].style.visibility = “hidden”;<br>    }<br><br>    BOX_layout(e);<br>    window.onresize = function(){BOX_layout(e);} //改变窗体重新调整位置<br>    window.onscroll = function(){BOX_layout(e);} //滚动窗体重新调整位置<br>    document.onkeyup = function(event)<br>    {<br>        var evt = window.event || event;<br>        var code = evt.keyCode?evt.keyCode : evt.which;<br>        //alert(code);<br><br>        if(code == 27)<br>        {<br>            BOX_remove(e);<br>        }<br>    }<br><br>}<br><br>function BOX_remove(e)//移除<br>{<br>    window.onscroll = null;<br>    window.onresize = null;<br>    document.getElementById(‘BOX_overlay’).style.display=”none”;<br>    document.getElementById(e).style.display=”none”;<br><br>    var selects = document.getElementsByTagName(‘select’);<br>    for(i = 0; i &lt; selects.length; i++)<br>    {<br>        selects[i].style.visibility = “visible”;<br>    }<br>}<br><br>function BOX_layout(e)//调整位置<br>{<br>    var a = document.getElementById(e);<br><br>    if (document.getElementById(‘BOX_overlay’)==null)//判断是否新建遮掩层<br>    {<br><br>        var overlay = document.createElement(“div”);<br>        overlay.setAttribute(‘id’,’BOX_overlay’);<br><br>        //overlay.onclick=function(){BOX_remove(e);};<br>        //a.parentNode.appendChild(overlay);<br>        document.body.appendChild(overlay);<br>    }<br><br>    document.getElementById(‘BOX_overlay’).ondblclick=function(){BOX_remove(e);};<br>    //取客户端左上坐标，宽，高<br>    var scrollLeft = (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);<br>    var scrollTop = (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);<br><br>    var clientWidth;<br>    if (window.innerWidth)<br>    {<br>        clientWidth = window.innerWidth;<br>       // clientWidth = ((Sys.Browser.agent === Sys.Browser.Safari) ? window.innerWidth : Math.min(window.innerWidth, document.documentElement.clientWidth));<br>    }<br>    else<br>    {<br>        clientWidth = document.documentElement.clientWidth;<br>    }<br><br>    var clientHeight;<br>    if (window.innerHeight)<br>    {<br>        clientHeight = window.innerHeight;<br>        //clientHeight = ((Sys.Browser.agent === Sys.Browser.Safari) ? window.innerHeight : Math.min(window.innerHeight, document.documentElement.clientHeight));<br>    }<br>    else<br>    {<br>        clientHeight = document.documentElement.clientHeight;<br>    }<br><br>    var bo = document.getElementById(‘BOX_overlay’);<br>    bo.style.left = scrollLeft+’px’;<br>    bo.style.top = scrollTop+’px’;<br>    bo.style.width = clientWidth+’px’;<br>    bo.style.height = clientHeight+’px’;<br>    bo.style.display=””;<br>    //Popup窗口定位<br>    a.style.position = ‘absolute’;<br>    a.style.zIndex=999;<br>    a.style.display=””;<br>    //a.style.left = scrollLeft+((clientWidth-a.offsetWidth)/2)+’px’;<br>    //a.style.top = scrollTop+((clientHeight-a.offsetHeight)/2)+’px’;<br>}<br><br>function HiddenButton(e)<br>{<br>    e.style.visibility=’hidden’;<br>    e.coolcodeviousSibling.style.visibility=’visible’<br>}<br></script><br><style type="text/css"><br><br>body{}<br><br>#BOX_overlay{position: absolute;z-index: 100;top: 0px;left: 0px;background-color:#ccc;filter: alpha(opacity=70);-moz-opacity: 0.7;opacity: 0.7;}<br><br></style><br></head><br><br><body><br><p onclick="BOX_show('messdiv')" style="cursor:pointer;">点我就出来</p><br><div id="messdiv" style="position:absolute; display:none; top:135px; left:350px; width:560px; padding:10px 20px 0; background:#f8e2a0;text-align:left; border:2px solid #5d3f0c;z-index:999; font-size:12px;"><br>        <p style="text-align:right; margin:0; padding:0; line-height:14px; float:right;"><a href="javascript:void(0)" title="关闭" style="line-height:14px;font-size:12px; color:#333;" onclick="BOX_remove('messdiv')" target="_self">关闭</a></p><br><br><br><br><br>这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容<br><br><br><br><br><br><br><br><br>                   <div style="width:176px;padding:0 120px;overflow:hidden;margin:10px auto 20px;"><br>                <a title="关闭窗口" href="javascript:void(0)" onclick="BOX_remove('messdiv')" target="_self" style=" background:#fff;float:left; width:70px;height:20px;padding:5px 0 0 10px;color:#feeba9;margin-right:10px;"><span style="color:#ffd014;">关闭窗口</span></a><br><br>                <a title="收藏页面" href="javascript:void(0)" onclick="addbookmark()" target="_self" style=" background:#fff;float:left;width:70px;height:20px;padding:5px 0 0 10px;color:#feeba9;"><span style="color:#ffd014;">收藏页面</span></a><br>            </div><br>        <div style="clear:both;"></div><br></div><br><div id="BOX_overlay"></div><br><script type="text/javascript"><br>//添加收藏夹<br>function addbookmark()<br>{<br>    var nome_sito = “可咔酷”;<br>    var url_sito = “<a href="http://abc.com&quot;">http://abc.com&quot;</a>;<br>    if ((navigator.appName == “Microsoft Internet Explorer”) &amp;&amp; (parseInt<br>        (navigator.appVersion) &gt;= 4))<br>        window.external.AddFavorite(url_sito, nome_sito);<br>    else if (navigator.appName == “Netscape”)<br>        window.sidebar.addPanel(nome_sito, url_sito, ‘’);<br>    else<br>        alert(“Sorry!Cann’t Add this site to your favorite!.”);<br>}<br></script><br></body><br></html>
+
+<p></p></pre><br>网上还有几种显示的方法，不过js的写法大同小异，就总结这两个吧，感觉足以受用。<p></p>
+<p>部分代码来源：<a href="http://www.kekaku.com/archives/257" target="_blank" rel="noopener">http://www.kekaku.com/archives/257</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/css-sprite-tips.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">【web前端】CSS精灵图片(CSS sprite)使用技巧</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/ubuntu-minidwep-gtk.html">
+        <span class="next-text nav-default">Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/js-pop-up-div-layer-source-code.html';
+
+  var disqus_title = "js弹出(可移动)层/窗口源码";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

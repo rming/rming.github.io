@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Lua学习笔记">
+
+
+
+
+  <meta name="keywords" content="Lua编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/Programming-in-Lua.html">
+
+
+<meta name="description" content="LUA读书笔记 What’s in a name? Why choose Lua? LuaJIT-Lua即时编译器 下载源码 INSTALL     LUA读书笔记 在Lua中，一切都是变量，除了关键字。请记住这句话。   语句块在C++中是用”{“和”}”括起来的，在Lua中，它是用do 和 end 括起来的   请先记住，在Lua中，只有false和nil才计算为false，其它任何数据都">
+<meta name="keywords" content="Lua编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua学习笔记">
+<meta property="og:url" content="http://rmingwang.com/Programming-in-Lua.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="LUA读书笔记 What’s in a name? Why choose Lua? LuaJIT-Lua即时编译器 下载源码 INSTALL     LUA读书笔记 在Lua中，一切都是变量，除了关键字。请记住这句话。   语句块在C++中是用”{“和”}”括起来的，在Lua中，它是用do 和 end 括起来的   请先记住，在Lua中，只有false和nil才计算为false，其它任何数据都">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.lua.org/images/logo.gif">
+<meta property="og:updated_time" content="2015-08-08T07:26:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lua学习笔记">
+<meta name="twitter:description" content="LUA读书笔记 What’s in a name? Why choose Lua? LuaJIT-Lua即时编译器 下载源码 INSTALL     LUA读书笔记 在Lua中，一切都是变量，除了关键字。请记住这句话。   语句块在C++中是用”{“和”}”括起来的，在Lua中，它是用do 和 end 括起来的   请先记住，在Lua中，只有false和nil才计算为false，其它任何数据都">
+<meta name="twitter:image" content="http://www.lua.org/images/logo.gif">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Lua学习笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Lua学习笔记
+        
+      </h1>
+
+      <time class="post-time">
+          6月 2 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#lua读书笔记">LUA读书笔记</a></li>
+<li><a href="#whats-in-a-name">What’s in a name?</a></li>
+<li><a href="#why-choose-lua">Why choose Lua?</a></li>
+<li><a href="#luajit-lua即时编译器">LuaJIT-Lua即时编译器</a><ul>
+<li><a href="#下载源码">下载源码</a></li>
+<li><a href="#install">INSTALL</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="lua读书笔记">LUA读书笔记</span></h2><ol>
+<li>在Lua中，一切都是变量，除了关键字。请记住这句话。  </li>
+<li>语句块在C++中是用”{“和”}”括起来的，在Lua中，它是用do 和 end 括起来的  </li>
+<li>请先记住，在Lua中，只有false和nil才计算为false，其它任何数据都计算为true，0也是true!的  </li>
+<li>赋值语句在Lua被强化了。它可以同时给多个变量赋值。例如：a,b,c,d=1,2,3,4甚至是：a,b=b,a – 多么方便的交换变量功能啊。</li>
+</ol>
+<h2><span id="whats-in-a-name">What’s in a name?</span></h2><p><img src="http://www.lua.org/images/logo.gif" align="left" style="margin:0px 10px;">“Lua” (pronounced LOO-ah) means “Moon” in Portuguese. As such, it is neither an acronym nor an abbreviation, but a noun. More specifically, “Lua” is a name, the name of the Earth’s moon and the name of the language. Like most names, it should be written in lower case with an initial capital, that is, “Lua”. Please do not write it as “LUA”, which is both ugly and confusing, because then it becomes an acronym with different meanings for different people. So, please, write “Lua” right!</p>
+
+<h2><span id="why-choose-lua">Why choose Lua?</span></h2><ul>
+<li>Lua is a proven, robust language</li>
+<li>Lua is fast</li>
+<li>Lua is portable</li>
+<li>Lua is embeddable</li>
+<li>Lua is powerful (but simple)</li>
+<li>Lua is small</li>
+</ul>
+<h2><span id="luajit-lua即时编译器">LuaJIT-Lua即时编译器</span></h2><p>JIT编译器，英文写作Just-In-Time Compiler，中文意思是即时编译器。<br>JIT编译器能够将MSIL编译成为各种不同的机器代码，以适应对应的系统平台，最终使得程序在目标系统中得到顺利地运行。</p>
+<p><strong>安装实例: ubuntu 14.04/gcc 4.8.2</strong> </p>
+<h3><span id="下载源码">下载源码</span></h3><p style="text-indent:0px;"><a href="http://luajit.org/download.html" title="LuaJIT下载地址" target="_blank">LuaJIT下载地址</a></p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line">$ wget http://luajit.org/download/LuaJIT-2.0.3.tar.gz</span><br><span class="line">$ tar zxvf  LuaJIT-2.0.3.tar.gz</span><br><span class="line">$ cd LuaJIT-2.0.3</span><br></pre></td></tr></table></figure>
+<h3><span id="install">INSTALL</span></h3><p style="text-indent:0px;"><a href="http://luajit.org/install.html" title="LuaJIT安装文档" target="_blank">LuaJIT安装文档</a></p>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make &amp;&amp; sudo make install </span><br><span class="line">...</span><br><span class="line">ln -sf luajit-2.0.3 /usr/local/bin/luajit</span><br><span class="line">==== Successfully installed LuaJIT 2.0.3 to /usr/local ====</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ luajit</span><br><span class="line">LuaJIT 2.0.3 -- Copyright (C) 2005-2014 Mike Pall. http://luajit.org/</span><br><span class="line">JIT: ON CMOV SSE2 SSE3 SSE4.1 fold cse dce fwd dse narrow loop abc sink fuse</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Lua编程/">Lua编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/The-Programming-Language-Lua.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Lua-简洁、轻量、可扩展的脚本语言</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/How-bad-do-you-want-it.html">
+        <span class="next-text nav-default">你到底多想成功？</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/Programming-in-Lua.html';
+
+  var disqus_title = "Lua学习笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

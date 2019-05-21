@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Memcached 踩坑小记">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/memcached-expired-time-problems.html">
+
+
+<meta name="description" content="场景 发现问题 为什么？ 原来是这样 解决 参考   场景&amp;emsp;&amp;emsp;公司的开发环境情况比较混乱，有人在使用开发机上（局域网共享）开发，有人在本机vagrant，而代码版本管理上也存在同样的情况，大多数项目在使用svn，仅有几个在使用 git，而在 git 项目的开发工作流中，缺少 pull-request 的 review ，有人直接在 master 分支上开发，有人单开分支开发">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memcached 踩坑小记">
+<meta property="og:url" content="http://rmingwang.com/memcached-expired-time-problems.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="场景 发现问题 为什么？ 原来是这样 解决 参考   场景&amp;emsp;&amp;emsp;公司的开发环境情况比较混乱，有人在使用开发机上（局域网共享）开发，有人在本机vagrant，而代码版本管理上也存在同样的情况，大多数项目在使用svn，仅有几个在使用 git，而在 git 项目的开发工作流中，缺少 pull-request 的 review ，有人直接在 master 分支上开发，有人单开分支开发">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-05-16T07:09:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Memcached 踩坑小记">
+<meta name="twitter:description" content="场景 发现问题 为什么？ 原来是这样 解决 参考   场景&amp;emsp;&amp;emsp;公司的开发环境情况比较混乱，有人在使用开发机上（局域网共享）开发，有人在本机vagrant，而代码版本管理上也存在同样的情况，大多数项目在使用svn，仅有几个在使用 git，而在 git 项目的开发工作流中，缺少 pull-request 的 review ，有人直接在 master 分支上开发，有人单开分支开发">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Memcached 踩坑小记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Memcached 踩坑小记
+        
+      </h1>
+
+      <time class="post-time">
+          5月 16 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#场景">场景</a></li>
+<li><a href="#发现问题">发现问题</a></li>
+<li><a href="#为什么">为什么？</a></li>
+<li><a href="#原来是这样">原来是这样</a></li>
+<li><a href="#解决">解决</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="场景">场景</span></h2><p>&emsp;&emsp;公司的开发环境情况比较混乱，有人在使用开发机上（局域网共享）开发，有人在本机vagrant，而代码版本管理上也存在同样的情况，大多数项目在使用svn，仅有几个在使用 git，而在 git 项目的开发工作流中，缺少 pull-request 的 review ，有人直接在 master 分支上开发，有人单开分支开发后合并到 master，可以说，情况之混乱简直罕见。</p>
+<p>&emsp;&emsp;正是因为开发环境的不同导致了这次的问题。</p>
+<h2><span id="发现问题">发现问题</span></h2><ul>
+<li>我发现在 vagrant 中的 memcached 设置的缓存在过期时间后仍然还在，不能过期销毁！？</li>
+<li>把 vagrant 中的 memcached server 设置为开发机，发现缓存的销毁时间总会提前几十秒！？</li>
+</ul>
+<h2><span id="为什么">为什么？</span></h2><p>&emsp;&emsp;查看代码，代码是 PHP Yii 框架的，Yii框架的 CMemCache 类调用 PHP 的 memcached 扩展，最终操作 memcached。</p>
+<p><strong>Yii 框架代码：</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CMemCache +118</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">$this</span>-&gt;_cache=<span class="keyword">$this</span>-&gt;useMemcached ? <span class="keyword">new</span> Memcached : <span class="keyword">new</span> Memcache;</span><br><span class="line"></span><br><span class="line"><span class="comment">//CMemCache +171</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">setValue</span><span class="params">($key,$value,$expire)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>($expire&gt;<span class="number">0</span>)</span><br><span class="line">		$expire+=time();</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		$expire=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">$this</span>-&gt;useMemcached ? <span class="keyword">$this</span>-&gt;_cache-&gt;set($key,$value,$expire) : <span class="keyword">$this</span>-&gt;_cache-&gt;set($key,$value,<span class="number">0</span>,$expire);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;从代码中可以看出来，PHP memcache 扩展 和 memcached 扩展在设置有效期的时候<strong>参数顺序</strong>是有差别的，但是问题不在这，因为框架代码为我们填了这个坑。</p>
+<p><strong>PHP Memcached 超时时间 文档：</strong></p>
+<blockquote>
+<p>一些存储命令在发送时会包含一个失效值（与一个元素或一个客户端操作请求相关）到服务端。所有这类用法，实际发送的值可以是一个Unix时间戳（自1970年1月1日起至失效时间的整型秒数），或者是一个从现在算起的以秒为单位的数字。对于后一种情况，这个秒数不能超过60×60×24×30（30天时间的秒数）;如果失效的值大于这个值， 服务端会将其作为一个真实的Unix时间戳来处理而不是自当前时间的偏移。<br>如果失效值被设置为0（默认），此元素永不过期（但是它可能由于服务端为了给其他新的元素分配空间而被删除）。</p>
+</blockquote>
+<p>从文档中得知，PHP 扩展：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> bool Memcached::set ( string $key , mixed $value [, int $expiration ] )</span><br></pre></td></tr></table></figure>
+<p>中的 <code>$expiration</code> 既可以是 offset 的秒数 ，也可以是 过期时间时间戳，最终 Memcached 服务中存储的时 过期时间戳。</p>
+<p>但是在 Yii 框架代码中，只实现了 offset 秒数的过期时间设置方法。</p>
+<p><strong>查看 Memcached 服务中的数据</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&gt; telnet 127.0.0.1 11211</span><br><span class="line"></span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is &apos;^]&apos;.</span><br><span class="line"></span><br><span class="line">&gt; stats</span><br><span class="line"></span><br><span class="line">STAT pid 13018</span><br><span class="line">STAT uptime 4671</span><br><span class="line">STAT time 1431720918</span><br><span class="line">STAT version 1.4.13</span><br><span class="line">STAT libevent 2.0.16-stable</span><br><span class="line"></span><br><span class="line">&gt; stats items</span><br><span class="line"></span><br><span class="line">STAT items:5:number 1</span><br><span class="line">STAT items:5:age 4123</span><br><span class="line">STAT items:5:evicted 0</span><br><span class="line">STAT items:5:evicted_nonzero 0</span><br><span class="line">STAT items:5:evicted_time 0</span><br><span class="line">STAT items:5:outofmemory 0</span><br><span class="line">STAT items:5:tailrepairs 0</span><br><span class="line">STAT items:5:reclaimed 0</span><br><span class="line">STAT items:5:expired_unfetched 0</span><br><span class="line">STAT items:5:evicted_unfetched 0</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">&gt; stats cachedump 5 0</span><br><span class="line"></span><br><span class="line">ITEM wechat_access_tokenwxc764b33902bf79d2 [107 b; 1431745507 s]</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;查看发现 Memcached 的时间戳慢了8个小时，显然是本地 locale 或者时区设置出了问题，而 缓存的过期时间设置是正确地。</p>
+<p><strong>查阅资料后发现：</strong></p>
+<blockquote>
+<p>If you use memcached with the Identity Service—for example, using  thememcache token driver or the auth_token middleware—ensure that the system time of memcached hosts is set to UTC. Memcached uses the host’s system time in determining whether a key has expired, whereas the Identity Service sets key expiry in UTC. The timezone used by the  Identity Service and memcached must match if key expiry is to behave as expected.</p>
+</blockquote>
+<h2><span id="原来是这样">原来是这样</span></h2><p><strong>&emsp;&emsp;过期时间在 Memcached 中存储是以 <code>过期时间戳</code> 存储的，Memcached 的过期时间计算是基于系统时间的，当 PHP 时间基准与 Memcached 时间基准 存在不同时，将导致 过期时间 时间戳 设置出问题。</strong></p>
+<h2><span id="解决">解决</span></h2><p>问题可能出现在以下场景：</p>
+<ul>
+<li>PHP 代码执行 与 Memcached 服务不在同一服务器，且两个服务器系统时间有差异</li>
+<li>PHP 的 timezone 是单独设置的 与系统时间有差异</li>
+<li>因为本地 locale 或者 timezone 设置问题，导致 Memcached 取到的系统时间有问题</li>
+</ul>
+<p>正确设置 PHP 时区，Memcached 服务系统时间，时区，locale，保证两者基准时间已知，确保启动 Memcached 服务配置启动没有报错警告。</p>
+<p><strong>我始终觉得同一开发环境（本地 Vagrant 或者 开发机 Docker），可以有效避免这些杂七杂八的问题。</strong></p>
+<h2><span id="参考">参考</span></h2><ul>
+<li><a href="http://docs.openstack.org/cloud-admin/admin-guide-cloud/content/section_memcached-and-system-time.html" target="_blank" rel="noopener">Memcached and system time</a></li>
+<li><a href="http://php.net/manual/zh/memcached.set.php" target="_blank" rel="noopener">PHP 手册 Memcached::set</a></li>
+<li><a href="http://lzone.de/cheat-sheet/memcached" target="_blank" rel="noopener">Memcached Cheat Sheet</a></li>
+<li><a href="https://github.com/memcached/memcached/blob/master/doc/protocol.txt" target="_blank" rel="noopener">memcached/doc/protocol.txt</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/lua-tips.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Lua 有趣的语法特性</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/svn-quick-start.html">
+        <span class="next-text nav-default">SVN快速入门</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/memcached-expired-time-problems.html';
+
+  var disqus_title = "Memcached 踩坑小记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP中PDO的MYSQL事务处理实例">
+
+
+
+
+  <meta name="keywords" content="数据库技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-mysql-pdo.html">
+
+
+<meta name="description" content="事务(transaction)是由查询和/或更新语句的序列组成。 用 begin、start transaction 开始一个事务，rollback 回滚事务，commit 提交事务。 在开始一个事务后，可以有若干个 SQL 查询或更新语句，每个 SQL 递交执行后，还应该有判断是否正确执行的语句，以确定下一步是否回滚，若都被正确执行则最后提交事务。事务一旦回滚，数据库则保持开始事务前状态。就好">
+<meta name="keywords" content="数据库技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP中PDO的MYSQL事务处理实例">
+<meta property="og:url" content="http://rmingwang.com/php-mysql-pdo.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="事务(transaction)是由查询和/或更新语句的序列组成。 用 begin、start transaction 开始一个事务，rollback 回滚事务，commit 提交事务。 在开始一个事务后，可以有若干个 SQL 查询或更新语句，每个 SQL 递交执行后，还应该有判断是否正确执行的语句，以确定下一步是否回滚，若都被正确执行则最后提交事务。事务一旦回滚，数据库则保持开始事务前状态。就好">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-22T09:21:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP中PDO的MYSQL事务处理实例">
+<meta name="twitter:description" content="事务(transaction)是由查询和/或更新语句的序列组成。 用 begin、start transaction 开始一个事务，rollback 回滚事务，commit 提交事务。 在开始一个事务后，可以有若干个 SQL 查询或更新语句，每个 SQL 递交执行后，还应该有判断是否正确执行的语句，以确定下一步是否回滚，若都被正确执行则最后提交事务。事务一旦回滚，数据库则保持开始事务前状态。就好">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP中PDO的MYSQL事务处理实例 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP中PDO的MYSQL事务处理实例
+        
+      </h1>
+
+      <time class="post-time">
+          7月 22 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>事务(transaction)是由查询和/或更新语句的序列组成。 用 begin、start transaction 开始一个事务，rollback 回滚事务，commit 提交事务。<br> 在开始一个事务后，可以有若干个 SQL 查询或更新语句，每个 SQL 递交执行后，还应该有判断是否正确执行的语句，以确定下一步是否回滚，若都被正确执行则最后提交事务。<br>事务一旦回滚，数据库则保持开始事务前状态。就好象一个被编辑的文件不存盘退出，自然还是保持文件原来的样子。<br>所以，事务可被视为原子操作，事务中的 SQL，要么全部执行，要不一句都不执行。</p>
+</blockquote>
+<h2><span id="php中pdo的mysql事务处理实例">PHP中PDO的MYSQL事务处理实例:</span></h2><p>1.关闭自动提交</p>
+<p>2.开启事务处理</p>
+<p>3.有异常就自动抛出异常提示再回滚</p>
+<p>4.开启自动提交</p>
+<h2><span id="注意">注意:</span></h2><blockquote>
+<p>mysql只有这个InnoDB驱动是支持事务处理的，默认MyIsAM驱动不支持.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">    //最后是关闭自动提交</span><br><span class="line">    $pdo=new pdo(&quot;mysql:host=localhost;dbname=mydb&quot;, &quot;root&quot;, &quot;root&quot;, array(PDO::ATTR_AUTOCOMMIT=&gt;0));</span><br><span class="line">    //这个是通过设置属性方法进行关闭自动提交和上面的功能一样</span><br><span class="line">    //$pdo-&gt;setAttribute(PDO::ATTR_AUTOCOMMIT, 0);</span><br><span class="line">    //开启异常处理</span><br><span class="line">    $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE,  PDO::ERRMODE_EXCEPTION);</span><br><span class="line">&#125;catch(PDOException $e)&#123;</span><br><span class="line">    echo &quot;数据库连接失败：&quot;.$e-&gt;getMessage();</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line"> * 事务处理</span><br><span class="line"> *</span><br><span class="line"> *   张三从李四那里买了一台 2000 元的电脑</span><br><span class="line"> *     从张三帐号中扣出 2000元</span><br><span class="line"> *     向李四账号中加入 2000元</span><br><span class="line"> *     从商品表中减少一台电脑</span><br><span class="line"> *     MyIsAM  InnoDB</span><br><span class="line"> */</span><br><span class="line">try&#123;</span><br><span class="line">    $pdo-&gt;beginTransaction();//开启事务处理       </span><br><span class="line">    $price=500;</span><br><span class="line">    $sql=&quot;update zhanghao set price=price-&#123;$price&#125; where id=1&quot;;</span><br><span class="line">    $affected_rows=$pdo-&gt;exec($sql);</span><br><span class="line">    if(!$affected_rows)</span><br><span class="line">        throw new PDOException(&quot;张三转出失败&quot;);//那个错误抛出异常</span><br><span class="line">    $sql=&quot;update zhanghao set price=price+&#123;$price&#125; where id=3&quot;;</span><br><span class="line">    $affected_rows=$pdo-&gt;exec($sql);      </span><br><span class="line">    if(!$affected_rows)</span><br><span class="line">        throw new PDOException(&quot;向李四转入失败&quot;);</span><br><span class="line">    echo &quot;交易成功！&quot;;</span><br><span class="line">    $pdo-&gt;commit();//交易成功就提交</span><br><span class="line">&#125;catch(PDOException $e)&#123;</span><br><span class="line">    echo $e-&gt;getMessage();</span><br><span class="line">    $pdo-&gt;rollback();</span><br><span class="line">&#125;  </span><br><span class="line">//自动提交，如果最后不自动提交，转账是不成功的  </span><br><span class="line">$pdo-&gt;setAttribute(PDO::ATTR_AUTOCOMMIT, 1);</span><br><span class="line">//设置错误报告模式 ERRMODE_SILENT    ERRMODE_WARNING</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/数据库技术/">数据库技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/mysql-details.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">视图、索引、存储过程 、触发器、游标及事务详解</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-random-string.html">
+        <span class="next-text nav-default">PHP生成随机字符串的几种方法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-mysql-pdo.html';
+
+  var disqus_title = "PHP中PDO的MYSQL事务处理实例";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

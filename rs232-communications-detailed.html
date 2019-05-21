@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="RS232通信详解">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/rs232-communications-detailed.html">
+
+
+<meta name="description" content="与单片机连接时常常需要加入电平转换芯片：max232 串口是计算机上一种非常通用的设备通信协议。  两个串口连接时，接收数据针脚与发送数据针脚相连，彼此交叉，信号地对应相接即可.串口的引脚定义：    9芯 信号方向来自 缩写 描述  1 调制解调器 CD 载波检测  2 调制解调器 RXD 接收数据  3 PC TXD 发送数据  4 PC DTR 数据终端准备好  5  GND 信号地  6">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RS232通信详解">
+<meta property="og:url" content="http://rmingwang.com/rs232-communications-detailed.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="与单片机连接时常常需要加入电平转换芯片：max232 串口是计算机上一种非常通用的设备通信协议。  两个串口连接时，接收数据针脚与发送数据针脚相连，彼此交叉，信号地对应相接即可.串口的引脚定义：    9芯 信号方向来自 缩写 描述  1 调制解调器 CD 载波检测  2 调制解调器 RXD 接收数据  3 PC TXD 发送数据  4 PC DTR 数据终端准备好  5  GND 信号地  6">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RS232通信详解">
+<meta name="twitter:description" content="与单片机连接时常常需要加入电平转换芯片：max232 串口是计算机上一种非常通用的设备通信协议。  两个串口连接时，接收数据针脚与发送数据针脚相连，彼此交叉，信号地对应相接即可.串口的引脚定义：    9芯 信号方向来自 缩写 描述  1 调制解调器 CD 载波检测  2 调制解调器 RXD 接收数据  3 PC TXD 发送数据  4 PC DTR 数据终端准备好  5  GND 信号地  6">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> RS232通信详解 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          RS232通信详解
+        
+      </h1>
+
+      <time class="post-time">
+          9月 5 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>与单片机连接时常常需要加入电平转换芯片：max232</p>
+<p>串口是计算机上一种非常通用的设备通信协议。</p>
+<hr>
+<p>两个串口连接时，接收数据针脚与发送数据针脚相连，彼此交叉，信号地对应相接即可.<br>串口的引脚定义：</p>
+<p><table></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">9芯</td></p>
+<p><td valign="top" width="124">信号方向来自</td></p>
+<p><td valign="top" width="69">缩写</td></p>
+<p><td valign="top" width="150">描述</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">1</td></p>
+<p><td valign="top" width="124">调制解调器</td></p>
+<p><td valign="top" width="69">CD</td></p>
+<p><td valign="top" width="150">载波检测</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">2</td></p>
+<p><td valign="top" width="124">调制解调器</td></p>
+<p><td valign="top" width="69">RXD</td></p>
+<p><td valign="top" width="150">接收数据</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">3</td></p>
+<p><td valign="top" width="124">PC</td></p>
+<p><td valign="top" width="69">TXD</td></p>
+<p><td valign="top" width="150">发送数据</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">4</td></p>
+<p><td valign="top" width="124">PC</td></p>
+<p><td valign="top" width="69">DTR</td></p>
+<p><td valign="top" width="150">数据终端准备好</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">5</td></p>
+<p><td valign="top" width="124"></td></p>
+<p><td valign="top" width="69">GND</td></p>
+<p><td valign="top" width="150">信号地</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">6</td></p>
+<p><td valign="top" width="124">调制解调器</td></p>
+<p><td valign="top" width="69">DSR</td></p>
+<p><td valign="top" width="150">通讯设备准备好</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">7</td></p>
+<p><td valign="top" width="124">PC</td></p>
+<p><td valign="top" width="69">RTS</td></p>
+<p><td valign="top" width="150">请求发送</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">8</td></p>
+<p><td valign="top" width="124">调制解调器</td></p>
+<p><td valign="top" width="69">CTS</td></p>
+<p><td valign="top" width="150">允许发送</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="53">9</td></p>
+<p><td valign="top" width="124">调制解调器</td></p>
+<p><td valign="top" width="69">RI</td></p>
+<p><td valign="top" width="150">响铃指示器</td><br><br></p>
+<h2><span id></span></h2><p>串口的电气特性：<br>1）RS-232串口通信最远距离是50英尺<br>2）RS232可做到双向传输，全双工通讯，最高传输速率20kbps<br>3）RS-232C上传送的数字量采用负逻辑，且与地对称 逻辑1：-3 ∼-15V<br>逻辑0：+3∼+15V<br>所以与单片机连接时常常需要加入电平转换芯片：</p>
+<hr>
+<p>串口通信参数：<br>a）波特率：RS-232-C标准规定的数据传输速率为每秒50、75、 100、150、300、600、1200、2400、<br>4800、9600、19200波特。 b）数据位：标准的值是5、7和8位，如何设置取决于你想传送的信息。比如，标准的ASCII码是0∼127（7位）；扩 展的ASCII码是0∼255（8位）。<br>c）停止位：用于表示单个包的最后一位，典型的值为1，1.5和2位。由于数是在传输线上定时的，并且每一个设备 有其自己的时钟，很可能在通信中两台设备间出现了小小的不同步。因此停止位不仅仅是表示传输的结束，并且提 供计算机校正时钟同步的机会。 d）奇偶校验位：在串口通信中一种简单的检错方式。对于偶和奇校验的情况，串口会设置校验位（数据位后面的 一位），用一个值确保传输的数据有偶个或者奇个逻辑高位。例如，如果数据是011，那么对于偶校验，校验位为<br>0，保证逻辑高的位数是偶数个。如果是奇校验，校验位位1，这样就有3个逻辑高位。<br>——————————— 串口通信的传输格式： 串行通信中，线路空闲时，线路的TTL电平总是高，经反向RS232的电平总是低。一个数据的开始RS232线路为高 电平，结束时Rs232为低电平。数据总是从低位向高位一位一位的传输。示波器读数时，左边是数据的高位。<br>例如，对于16进制数据55aaH，当采用8位数据位、1位停止位传输时，它在信号线上的波形如图1(TTL电平)和图<br>2(RS-232电平)所示。<br>55H=01010101B，取反后10101010B，加入一个起始位1，一个停止位0，55H的数据格式为1010101010B；<br>aaH=10101010B，取反后01010101B，加入一个起始位1，一个停止位0，55H的数据格式为1101010100B；</p>
+<hr>
+<p>串口通信的接收过程：<br>（异步通信：接收器和发送器有各自的时钟；同步通信：发送器和接收器由同一个时钟源控制。RS232是异步通信）<br>（1）开始通信时，信号线为空闲（逻辑1）,当检测到由1到0的跳变时，开始对“接收时钟”计数。<br>（2）当计到8个时钟时，对输入信号进行检测，若仍为低电平，则确认这是“起始位”，而不是干扰信号。<br>（3）接收端检测到起始位后，隔16个接收时钟，对输入信号检测一次，把对应的值作为D0位数据。若为逻辑1, 作<br>为数据位1；若为逻辑0，作为数据位0。<br>（4）再隔16个接收时钟，对输入信号检测一次，把对应的值作为D1位数据。….，直到全部数据位都输入。<br>（5）检测校验位P（如果有的话）。<br>（6）接收到规定的数据位个数和校验位后,通信接口电路希望收到停止位S(逻辑1)，若此时未收到逻辑1，说明出现 了错误，在状态寄存器中置“帧错误”标志。若没有错误，对全部数据位进行奇偶校验，无校验错时，把数据位从移 位寄存器中送数据输入寄存器。若校验错，在状态寄存器中置奇偶错标志。<br>（7）本幀信息全部接收完，把线路上出现的高电平作为空闲位。<br>（8）当信号再次变为低时，开始进入下一幀的检测。</p>
+<p>——————————— 单片机常用11.0592M的的晶振，这个奇怪数字是有来历的： 波特率为9600BPS每位位宽t1=1/9600s 晶振周期t2=1/11.0592/1000000S<br>单片机机器周期t3=12*t2 t1/t3=96<br>即对于9600BPS的串口，单片机对其以96倍的速率进行采样。</p>
+<h2><span id="如果单片机晶振用的不正确会对串口接受产生误码">如果单片机晶振用的不正确，会对串口接受产生误码。</span></h2><p>RS485和RS422<br>RS485总线,在要求通信距离为几十米到上千米时，广泛采用RS-485 串行总线标准。RS485采用平衡发送和差分接 收，因此具有抑制共模干扰的能力。加上总线收发器具有高灵敏度，能检测低至200mV的电压，故传输信号能在千 米以外得到恢复。RS485采用半双工工作方式，任何时候只能有一点处于发送状态，因此，发送电路须由使能信号 加以控制。RS485用于多点互连时非常方便，可以省掉许多信号线。应用RS485可以联网构成分布式系统，其允许 最多并联32台驱动器和32台接收器。<br>RS422总线,RS485和RS422电路原理基本相同，都是以差动方式发送和接受，不需要数字地线。差动工作是同速率 条件下传输距离远的根本原因，这正是二者与RS232的根本区别，因为RS232是单端输入输出，双工工作时至少需 要数字地线发送线和接受线三条线（异步传输），还可以加其它控制线完成同步等功能。RS422通过两对双绞线可 以全双工工作收发互不影响，而RS485只能半双工工作，发收不能同时进行，但它只需要一对双绞线。RS422 和RS485在19kpbs下能传输1200米。用新型收发器线路上可连接台设备。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/web3d-panoramic-photos.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">全景照片拍摄Web3D网页浏览</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/usb-to-serial-port-pl2303-document-and-driver.html">
+        <span class="next-text nav-default">USB转串口PL2303文档及其驱动</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/rs232-communications-detailed.html';
+
+  var disqus_title = "RS232通信详解";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

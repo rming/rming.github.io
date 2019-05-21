@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="【web前端】CSS精灵图片(CSS sprite)使用技巧">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/css-sprite-tips.html">
+
+
+<meta name="description" content="提高网页显示速度最有效的一个方法是减少页面的HTTP请求次数，为了减少HTTP请求次数，最直接有效的方法是使用精灵图片（CSS sprites），精灵图片是把许多图片放到一张大图片里面，通过CSS来显示图片的一部分。 本文的目的不是阐述精灵图片如何让网页下载更快，而是介绍在创建精灵图片时的一些实战经验。 下面是一张精灵图片不要等你完成所有工作后再开始使用CSS精灵在网站全部完成后，你的CSS和图片">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【web前端】CSS精灵图片(CSS sprite)使用技巧">
+<meta property="og:url" content="http://rmingwang.com/css-sprite-tips.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="提高网页显示速度最有效的一个方法是减少页面的HTTP请求次数，为了减少HTTP请求次数，最直接有效的方法是使用精灵图片（CSS sprites），精灵图片是把许多图片放到一张大图片里面，通过CSS来显示图片的一部分。 本文的目的不是阐述精灵图片如何让网页下载更快，而是介绍在创建精灵图片时的一些实战经验。 下面是一张精灵图片不要等你完成所有工作后再开始使用CSS精灵在网站全部完成后，你的CSS和图片">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【web前端】CSS精灵图片(CSS sprite)使用技巧">
+<meta name="twitter:description" content="提高网页显示速度最有效的一个方法是减少页面的HTTP请求次数，为了减少HTTP请求次数，最直接有效的方法是使用精灵图片（CSS sprites），精灵图片是把许多图片放到一张大图片里面，通过CSS来显示图片的一部分。 本文的目的不是阐述精灵图片如何让网页下载更快，而是介绍在创建精灵图片时的一些实战经验。 下面是一张精灵图片不要等你完成所有工作后再开始使用CSS精灵在网站全部完成后，你的CSS和图片">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 【web前端】CSS精灵图片(CSS sprite)使用技巧 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          【web前端】CSS精灵图片(CSS sprite)使用技巧
+        
+      </h1>
+
+      <time class="post-time">
+          3月 16 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>提高网页显示速度最有效的一个方法是减少页面的HTTP请求次数，为了减少HTTP请求次数，最直接有效的方法是使用精灵图片（CSS sprites），精灵图片是把许多图片放到一张大图片里面，通过CSS来显示图片的一部分。 本文的目的不是阐述精灵图片如何让网页下载更快，而是介绍在创建精灵图片时的一些实战经验。</p>
+<h5><span id="下面是一张精灵图片">下面是一张精灵图片</span></h5><h5><span id="不要等你完成所有工作后再开始使用css精灵">不要等你完成所有工作后再开始使用CSS精灵</span></h5><p>在网站全部完成后，你的CSS和图片也都已经创建好了，这时候你再使用CSS精灵，也就意味着你要返回重写CSS，并且还要把用到的一大堆图片再丢到Photoshop里拼合成一张图片，这是非常痛苦和乏味的。如果在刚开始构建页面时就着手使用CSS精灵，那么一切都会变得简单。</p>
+<h5><span id="按图片显示相反的方向放置图片">按图片显示相反的方向放置图片</span></h5><p>这一条有点难以理解，我是在创建一张大的精灵图片中途失败后才意识到它的。假如一张图片应该出现在一个元素的左边，如下图 请将这张图片放在精灵的右边（看上面的示例精灵图片）。用这种方式处理后，当你用CSS移动背景图片时，不可能会有别的图片会（错误的）显示处理。</p>
+<h5><span id="避免在css使用bottom或right定位">避免在CSS使用bottom或right定位</span></h5><p>当定位CSS精灵中靠后的图片时，使用类似background-position: bottom -300px; 或者 background-position: right -200px;的方式定位非常容易。最初，这一切都能正常工作，但是，一旦你的CSS精灵宽度或高度增加时，你刚才使用的定位方式就发现了错误，因为图片相对右边或者底边的距离已经发生了变化。所以，请使用left和top来定位。</p>
+<h5><span id="为每张图片留出足够空隙">为每张图片留出足够空隙</span></h5><p>正如你所看到文章中提供的例子精灵图片一样，许多小图片间都预留了很多空白。为什么不把图片挤得紧凑点让精灵图片尺寸更小点呢？因为使用元素的地方可能包含各种不同的内容，这些内容会导致容器变宽变高，预留了足够的空白的话，在容器大小发生变化时，可以避免其他的图片显示出来。 这有一个例子： 每个列表都使用一个数字图片作为背景。看看上面的示例CSS精灵，你会发现这几张图片是交错排列的，这样处理后，不管怎么增加，其他的图片都不会显示出来。</p>
+<h5><span id="不要担心css精灵的尺寸大小">不要担心CSS精灵的尺寸大小</span></h5><p>如果你有机会以标准的web设计来设计你的网站，那么你必定要将把很多图片放到精灵图片上，并且为这些图片预览出合适的空隙，这很好。精灵图片中的空白空隙不会增加太多文件的体积，在addons.mozilla.org网站上使用的精灵图片尺寸是1,000×2,000，但它仅16.7kb！</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/nofollow-link-favorites.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">为你的链接收藏夹添加nofollow标签</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/js-pop-up-div-layer-source-code.html">
+        <span class="next-text nav-default">js弹出(可移动)层/窗口源码</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/css-sprite-tips.html';
+
+  var disqus_title = "【web前端】CSS精灵图片(CSS sprite)使用技巧";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

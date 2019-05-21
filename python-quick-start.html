@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Python 快速入门">
+
+
+
+
+  <meta name="keywords" content="Python编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/python-quick-start.html">
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;假设你希望学习Python这门语言，却苦于找不到一个简短而全面的入门教程。那么本教程将花费十分钟的时间带你走入Python的大门。本文的内容介于教程(Toturial)和速查手册(CheatSheet)之间，因此只会包含一些基本概念。很显然，如果你希望真正学好一门语言，你还是需要亲自动手实践的。在此，我会假定你已经有了一定的编程基础，因此我会跳过大部分非Python语言的相">
+<meta name="keywords" content="Python编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 快速入门">
+<meta property="og:url" content="http://rmingwang.com/python-quick-start.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;假设你希望学习Python这门语言，却苦于找不到一个简短而全面的入门教程。那么本教程将花费十分钟的时间带你走入Python的大门。本文的内容介于教程(Toturial)和速查手册(CheatSheet)之间，因此只会包含一些基本概念。很显然，如果你希望真正学好一门语言，你还是需要亲自动手实践的。在此，我会假定你已经有了一定的编程基础，因此我会跳过大部分非Python语言的相">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-02-01T17:06:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 快速入门">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;假设你希望学习Python这门语言，却苦于找不到一个简短而全面的入门教程。那么本教程将花费十分钟的时间带你走入Python的大门。本文的内容介于教程(Toturial)和速查手册(CheatSheet)之间，因此只会包含一些基本概念。很显然，如果你希望真正学好一门语言，你还是需要亲自动手实践的。在此，我会假定你已经有了一定的编程基础，因此我会跳过大部分非Python语言的相">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Python 快速入门 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Python 快速入门
+        
+      </h1>
+
+      <time class="post-time">
+          10月 7 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>&emsp;&emsp;假设你希望学习Python这门语言，却苦于找不到一个简短而全面的入门教程。那么本教程将花费十分钟的时间带你走入Python的大门。本文的内容介于教程(Toturial)和速查手册(CheatSheet)之间，因此只会包含一些基本概念。很显然，如果你希望真正学好一门语言，你还是需要亲自动手实践的。在此，我会假定你已经有了一定的编程基础，因此我会跳过大部分非Python语言的相关内容。本文将高亮显示重要的关键字，以便你可以很容易看到它们。另外需要注意的是，由于本教程篇幅有限，有很多内容我会直接使用代码来说明加以少许注释。  </p>
+<h2><span id="python的语言特性">Python的语言特性</span></h2><p>&emsp;&emsp;Python是一门具有强类型(即变量类型是强制要求的)、动态性、隐式类型(不需要做变量声明)、大小写敏感(var和VAR代表了不同的变量)以及面向对象(一切皆为对象)等特点的编程语言。</p>
+<h2><span id="获取帮助">获取帮助</span></h2><p>&emsp;&emsp;你可以很容易的通过Python解释器获取帮助。如果你想知道一个对象(object)是如何工作的，那么你所需要做的就是调用<code>help(&lt;object&gt;)！</code>另外还有一些有用的方法，dir()会显示该对象的所有方法，还有<code>&lt;object&gt;.__doc__</code>会显示其文档：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>help(<span class="number">5</span>)</span><br><span class="line">Help on int object:</span><br><span class="line">(etc etc)</span><br><span class="line">  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dir(<span class="number">5</span>)</span><br><span class="line">[<span class="string">'__abs__'</span>, <span class="string">'__add__'</span>, ...]</span><br><span class="line">  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>abs.__doc__</span><br><span class="line"><span class="string">'abs(number) -&gt; number</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">Return the absolute value of the argument.'</span></span><br></pre></td></tr></table></figure>
+<h2><span id="语法">语法</span></h2><p>&emsp;&emsp;Python中没有强制的语句终止字符，且代码块是通过缩进来指示的。缩进表示一个代码块的开始，逆缩进则表示一个代码块的结束。声明以冒号(:)字符结束，并且开启一个缩进级别。单行注释以井号字符(#)开头，多行注释则以多行字符串的形式出现。赋值（事实上是将对象绑定到名字）通过等号(“=”)实现，双等号(“==”)用于相等判断，”+=”和”-=”用于增加/减少运算(由符号右边的值确定增加/减少的值)。这适用于许多数据类型，包括字符串。你也可以在一行上使用多个变量。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar = <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar += <span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar -= <span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar</span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="string">"""This is a multiline comment.</span></span><br><span class="line"><span class="string">The following lines concatenate the two strings."""</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mystring = <span class="string">"Hello"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mystring += <span class="string">" world."</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mystring</span><br><span class="line">Hello world.</span><br><span class="line"><span class="comment"># This swaps the variables in one line(!).</span></span><br><span class="line"><span class="comment"># It doesn't violate strong typing because values aren't</span></span><br><span class="line"><span class="comment"># actually being assigned, but new objects are bound to</span></span><br><span class="line"><span class="comment"># the old names.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myvar, mystring = mystring, myvar</span><br></pre></td></tr></table></figure>
+<h2><span id="数据类型">数据类型</span></h2><p>&emsp;&emsp;Python具有列表（list）、元组（tuple）和字典（dictionaries）三种基本的数据结构，而集合(sets)则包含在集合库中(但从Python2.5版本开始正式成为Python内建类型)。列表的特点跟一维数组类似（当然你也可以创建类似多维数组的“列表的列表”），字典则是具有关联关系的数组（通常也叫做哈希表），而元组则是不可变的一维数组（Python中“数组”可以包含任何类型的元素，这样你就可以使用混合元素，例如整数、字符串或是嵌套包含列表、字典或元组）。数组中第一个元素索引值(下标)为0，使用负数索引值能够从后向前访问数组元素，-1表示最后一个元素。数组元素还能指向函数。来看下面的用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sample = [<span class="number">1</span>, [<span class="string">"another"</span>, <span class="string">"list"</span>], (<span class="string">"a"</span>, <span class="string">"tuple"</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mylist = [<span class="string">"List item 1"</span>, <span class="number">2</span>, <span class="number">3.14</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mylist[<span class="number">0</span>] = <span class="string">"List item 1 again"</span></span><br><span class="line"><span class="comment"># We're changing the item.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mylist[<span class="number">-1</span>] = <span class="number">3.21</span></span><br><span class="line"><span class="comment"># Here, we refer to the last item.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mydict = &#123;<span class="string">"Key 1"</span>: <span class="string">"Value 1"</span>, <span class="number">2</span>: <span class="number">3</span>, <span class="string">"pi"</span>: <span class="number">3.14</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mydict[<span class="string">"pi"</span>] = <span class="number">3.15</span></span><br><span class="line"><span class="comment"># This is how you change dictionary values.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>mytuple = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>myfunction = len</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> myfunction(mylist)</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;你可以使用:运算符访问数组中的某一段，如果:左边为空则表示从第一个元素开始，同理:右边为空则表示到最后一个元素结束。负数索引则表示从后向前数的位置（-1是最后一个项目），例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>mylist = [<span class="string">"List item 1"</span>, <span class="number">2</span>, <span class="number">3.14</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mylist[:]</span><br><span class="line">[<span class="string">'List item 1'</span>, <span class="number">2</span>, <span class="number">3.1400000000000001</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mylist[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">[<span class="string">'List item 1'</span>, <span class="number">2</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mylist[<span class="number">-3</span>:<span class="number">-1</span>]</span><br><span class="line">[<span class="string">'List item 1'</span>, <span class="number">2</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mylist[<span class="number">1</span>:]</span><br><span class="line">[<span class="number">2</span>, <span class="number">3.14</span>]</span><br><span class="line"><span class="comment"># Adding a third parameter, "step" will have Python step in</span></span><br><span class="line"><span class="comment"># N item increments, rather than 1.</span></span><br><span class="line"><span class="comment"># E.g., this will return the first item, then go to the third and</span></span><br><span class="line"><span class="comment"># return that (so, items 0 and 2 in 0-indexing).</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> mylist[::<span class="number">2</span>]</span><br><span class="line">[<span class="string">'List item 1'</span>, <span class="number">3.14</span>]</span><br></pre></td></tr></table></figure>
+<h2><span id="字符串">字符串</span></h2><p>&emsp;&emsp;Python中的字符串使用单引号(‘)或是双引号(“)来进行标示，并且你还能够在通过某一种标示的字符串中使用另外一种标示符(例如 “He said ‘hello’.”)。而多行字符串可以通过三个连续的单引号(”’)或是双引号(“””)来进行标示。Python可以通过u”This is a unicode string”这样的语法使用Unicode字符串。如果想通过变量来填充字符串，那么可以使用取模运算符(%)和一个元组。使用方式是在目标字符串中从左至右使用%s来指代变量的位置，或者使用字典来代替，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="keyword">print</span> <span class="string">"Name: %s\</span></span><br><span class="line"><span class="string">Number: %s\</span></span><br><span class="line"><span class="string">String: %s"</span> % (myclass.name, <span class="number">3</span>, <span class="number">3</span> * <span class="string">"-"</span>)</span><br><span class="line">Name: Poromenos</span><br><span class="line">Number: <span class="number">3</span></span><br><span class="line">String: ---</span><br><span class="line">  </span><br><span class="line">strString =</span><br><span class="line"><span class="string">"""This is</span></span><br><span class="line"><span class="string">a multiline</span></span><br><span class="line"><span class="string">string."""</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># WARNING: Watch out for the trailing s in "%(key)s".</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">"This %(verb)s a %(noun)s."</span> % &#123;<span class="string">"noun"</span>: <span class="string">"test"</span>, <span class="string">"verb"</span>: <span class="string">"is"</span>&#125;</span><br><span class="line">This <span class="keyword">is</span> a test.</span><br></pre></td></tr></table></figure>
+<h2><span id="流程控制">流程控制</span></h2><p>&emsp;&emsp;Python中可以使用if、for和while来实现流程控制。Python中并没有select，取而代之使用if来实现。使用for来枚举列表中的元素。如果希望生成一个由数字组成的列表，则可以使用range(<number>)函数。以下是这些声明的语法示例：</number></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">rangelist = range(<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> rangelist</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> rangelist:</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Check if number is one of</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># the numbers in the tuple.</span></span><br><span class="line">    <span class="keyword">if</span> number <span class="keyword">in</span> (<span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">9</span>):</span><br><span class="line">        </span><br><span class="line"><span class="comment"># "Break" terminates a for without</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># executing the "else" clause.</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        </span><br><span class="line"><span class="comment"># "Continue" starts the next iteration</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># of the loop. It's rather useless here,</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># as it's the last statement of the loop.</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    </span><br><span class="line"><span class="comment"># The "else" clause is optional and is</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># executed only if the loop didn't "break".</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># Do nothing</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> rangelist[<span class="number">1</span>] == <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"The second item (lists are 0-based) is 2"</span></span><br><span class="line"><span class="keyword">elif</span> rangelist[<span class="number">1</span>] == <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"The second item (lists are 0-based) is 3"</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Dunno"</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">while</span> rangelist[<span class="number">1</span>] == <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h2><span id="函数">函数</span></h2><p>&emsp;&emsp;函数通过“def”关键字进行声明。可选参数以集合的方式出现在函数声明中并紧跟着必选参数，可选参数可以在函数声明中被赋予一个默认值。已命名的参数需要赋值。函数可以返回一个元组（使用元组拆包可以有效返回多个值）。Lambda函数是由一个单独的语句组成的特殊函数，参数通过引用进行传递，但对于不可变类型(例如元组，整数，字符串等)则不能够被改变。这是因为只传递了该变量的内存地址，并且只有丢弃了旧的对象后，变量才能绑定一个对象，所以不可变类型是被替换而不是改变（译者注：虽然Python传递的参数形式本质上是引用传递，但是会产生值传递的效果）。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用等同于 def funcvar(x): return x + 1</span></span><br><span class="line">funcvar = <span class="keyword">lambda</span> x: x + <span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> funcvar(<span class="number">1</span>)</span><br><span class="line"><span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># an_int 和 a_string 是可选参数，它们有默认值</span></span><br><span class="line"><span class="comment"># 如果调用 passing_example 时只指定一个参数，那么 an_int 缺省为 2 ，a_string 缺省为 A default string。如果调用 passing_example 时指定了前面两个参数，a_string 仍缺省为 A default string。</span></span><br><span class="line"><span class="comment"># a_list 是必备参数，因为它没有指定缺省值。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">passing_example</span><span class="params">(a_list, an_int=<span class="number">2</span>, a_string=<span class="string">"A default string"</span>)</span>:</span></span><br><span class="line">    a_list.append(<span class="string">"A new item"</span>)</span><br><span class="line">    an_int = <span class="number">4</span></span><br><span class="line">    <span class="keyword">return</span> a_list, an_int, a_string</span><br><span class="line">  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>my_int = <span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> passing_example(my_list, my_int)</span><br><span class="line">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="string">'A new item'</span>], <span class="number">4</span>, <span class="string">"A default string"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>my_list</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="string">'A new item'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>my_int</span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2><span id="类">类</span></h2><p>&emsp;&emsp;Python支持有限的多继承形式。私有变量和方法可以通过添加至少两个前导下划线和最多尾随一个下划线的形式进行声明（如“__spam”，这只是惯例，而不是Python的强制要求）。当然，我们也可以给类的实例取任意名称。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(object)</span>:</span></span><br><span class="line">    common = <span class="number">10</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.myvariable = <span class="number">3</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myfunction</span><span class="params">(self, arg1, arg2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.myvariable</span><br><span class="line">  </span><br><span class="line">    </span><br><span class="line"><span class="comment"># This is the class instantiation</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance = MyClass()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.myfunction(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="comment"># This variable is shared by all classes.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance2 = MyClass()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.common</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance2.common</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="comment"># Note how we use the class name</span></span><br><span class="line"><span class="comment"># instead of the instance.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>MyClass.common = <span class="number">30</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.common</span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance2.common</span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="comment"># This will not update the variable on the class,</span></span><br><span class="line"><span class="comment"># instead it will bind a new object to the old</span></span><br><span class="line"><span class="comment"># variable name.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.common = <span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.common</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance2.common</span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>MyClass.common = <span class="number">50</span></span><br><span class="line"><span class="comment"># This has not changed, because "common" is</span></span><br><span class="line"><span class="comment"># now an instance variable.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.common</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance2.common</span><br><span class="line"><span class="number">50</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># This class inherits from MyClass. The example</span></span><br><span class="line"><span class="comment"># class above inherits from "object", which makes</span></span><br><span class="line"><span class="comment"># it what's called a "new-style class".</span></span><br><span class="line"><span class="comment"># Multiple inheritance is declared as:</span></span><br><span class="line"><span class="comment"># class OtherClass(MyClass1, MyClass2, MyClassN)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OtherClass</span><span class="params">(MyClass)</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># The "self" argument is passed automatically</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># and refers to the class instance, so you can set</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># instance variables as above, but from inside the class.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, arg1)</span>:</span></span><br><span class="line">        self.myvariable = <span class="number">3</span></span><br><span class="line">        <span class="keyword">print</span> arg1</span><br><span class="line">  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance = OtherClass(<span class="string">"hello"</span>)</span><br><span class="line">hello</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.myfunction(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="comment"># This class doesn't have a .test member, but</span></span><br><span class="line"><span class="comment"># we can add one to the instance anyway. Note</span></span><br><span class="line"><span class="comment"># that this will only be a member of classinstance.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.test = <span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>classinstance.test</span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2><span id="异常">异常</span></h2><p>Python中的异常由 try-except [exceptionname] 块处理，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">some_function</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        </span><br><span class="line"><span class="comment"># Division by zero raises an exception</span></span><br><span class="line">        <span class="number">10</span> / <span class="number">0</span></span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Oops, invalid."</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        </span><br><span class="line"><span class="comment"># Exception didn't occur, we're good.</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        </span><br><span class="line"><span class="comment"># This is executed after the code block is run</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># and all exceptions have been handled, even</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># if a new exception is raised while handling.</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"We're done with that."</span></span><br><span class="line">  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>some_function()</span><br><span class="line">Oops, invalid.</span><br><span class="line">We<span class="string">'re done with that.</span></span><br></pre></td></tr></table></figure>
+<h2><span id="导入">导入</span></h2><p>外部库可以使用 import [libname] 关键字来导入。同时，你还可以用 from [libname] import [funcname] 来导入所需要的函数。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> clock</span><br><span class="line">  </span><br><span class="line">randomint = random.randint(<span class="number">1</span>, <span class="number">100</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> randomint</span><br><span class="line"><span class="number">64</span></span><br></pre></td></tr></table></figure>
+<h2><span id="文件i-o">文件I / O</span></h2><p>Python针对文件的处理有很多内建的函数库可以调用。例如，这里演示了如何序列化文件(使用pickle库将数据结构转换为字符串)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">mylist = [<span class="string">"This"</span>, <span class="string">"is"</span>, <span class="number">4</span>, <span class="number">13327</span>]</span><br><span class="line"><span class="comment"># Open the file C:\\binary.dat for writing. The letter r before the</span></span><br><span class="line"><span class="comment"># filename string is used to prevent backslash escaping.</span></span><br><span class="line">myfile = open(<span class="string">r"C:\\binary.dat"</span>, <span class="string">"w"</span>)</span><br><span class="line">pickle.dump(mylist, myfile)</span><br><span class="line">myfile.close()</span><br><span class="line">  </span><br><span class="line">myfile = open(<span class="string">r"C:\\text.txt"</span>, <span class="string">"w"</span>)</span><br><span class="line">myfile.write(<span class="string">"This is a sample string"</span>)</span><br><span class="line">myfile.close()</span><br><span class="line">  </span><br><span class="line">myfile = open(<span class="string">r"C:\\text.txt"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> myfile.read()</span><br><span class="line"><span class="string">'This is a sample string'</span></span><br><span class="line">myfile.close()</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Open the file for reading.</span></span><br><span class="line">myfile = open(<span class="string">r"C:\\binary.dat"</span>)</span><br><span class="line">loadedlist = pickle.load(myfile)</span><br><span class="line">myfile.close()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> loadedlist</span><br><span class="line">[<span class="string">'This'</span>, <span class="string">'is'</span>, <span class="number">4</span>, <span class="number">13327</span>]</span><br></pre></td></tr></table></figure>
+<h2><span id="其它杂项">其它杂项</span></h2><p>数值判断可以链接使用，例如 1&lt;a&lt;3 能够判断变量 a 是否在1和3之间。  </p>
+<p>可以使用 del 删除变量或删除数组中的元素。  </p>
+<p>列表推导式(List Comprehension)提供了一个创建和操作列表的有力工具。列表推导式由一个表达式以及紧跟着这个表达式的for语句构成，for语句还可以跟0个或多个if或for语句，来看下面的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>lst1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>lst2 = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> [x * y <span class="keyword">for</span> x <span class="keyword">in</span> lst1 <span class="keyword">for</span> y <span class="keyword">in</span> lst2]</span><br><span class="line">[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">15</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> [x <span class="keyword">for</span> x <span class="keyword">in</span> lst1 <span class="keyword">if</span> <span class="number">4</span> &gt; x &gt; <span class="number">1</span>]</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment"># Check if an item has a specific property.</span></span><br><span class="line"><span class="comment"># "any" returns true if any item in the list is true.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>any([i % <span class="number">3</span> <span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>]])</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="comment"># This is because 4 % 3 = 1, and 1 is true, so any()</span></span><br><span class="line"><span class="comment"># returns True.</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># Check how many items have this property.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sum(<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>] <span class="keyword">if</span> i == <span class="number">4</span>)</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> lst1[<span class="number">0</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> lst1</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> lst1</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;全局变量在函数之外声明，并且可以不需要任何特殊的声明即能读取，但如果你想要修改全局变量的值，就必须在函数开始之处用global关键字进行声明，否则Python会将此变量按照新的局部变量处理（请注意，如果不注意很容易被坑）。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">number = <span class="number">5</span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myfunc</span><span class="params">()</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># This will print 5.</span></span><br><span class="line">    <span class="keyword">print</span> number</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">anotherfunc</span><span class="params">()</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># This raises an exception because the variable has not</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># been bound before printing. Python knows that it an</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># object will be bound to it later and creates a new, local</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># object instead of accessing the global one.</span></span><br><span class="line">    <span class="keyword">print</span> number</span><br><span class="line">    number = <span class="number">3</span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">yetanotherfunc</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> number</span><br><span class="line">    </span><br><span class="line"><span class="comment"># This will correctly change the global.</span></span><br><span class="line">    number = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>原文地址：<a href="http://blog.jobbole.com/43922/" target="_blank" rel="noopener">快速入门：十分钟学会Python</a></p>
+<p>文章参考：</p>
+<ul>
+<li><a href="http://sebug.net/paper/python/" target="_blank" rel="noopener">简明 Python 教程</a></li>
+<li><a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000" target="_blank" rel="noopener">Python教程 - 廖雪峰的官方网站</a></li>
+<li><a href="http://blog.csdn.net/pleasecallmewhy/article/details/8922826" target="_blank" rel="noopener">[Python]网络爬虫</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">Python正则表达式操作指南</a></li>
+<li><a href="https://docs.python.org/2/library/index.html" target="_blank" rel="noopener">The Python Standard Library</a></li>
+<li><a href="https://docs.python.org/2/howto/urllib2.html" target="_blank" rel="noopener">HOWTO Fetch Internet Resources Using urllib2</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Python编程/">Python编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/python-crawler-memos.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Python爬虫学习笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20141005.html">
+        <span class="next-text nav-default">日记20141005</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/python-quick-start.html';
+
+  var disqus_title = "Python 快速入门";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

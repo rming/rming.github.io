@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="根据访问的域名，跳转到指定的子目录，实现“子目录绑定”"/>
+
+
+
+
+  <meta name="keywords" content="wordpress," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2" />
+
+
+
+<link rel="canonical" href="http://rmingwang.com/under-the-domain-name-to-jump-to-a-specific-subdirectory-and-sub-binding.html"/>
+
+
+<meta name="description" content="根据访问的域名，跳转到指定的子目录，实现url跳转如果 你的虚拟主机不支持子目录绑定，而域名现在大多不可以跳转，又不是linux主机可以使用.access 实现子目录绑定。 window主机下 可以使用js 跳转代码 实现智能域名选择跳转，例如bbs.blog.sdut.me 跳转到 /bbs目录 blog.blog.sdut.me跳转到 www.blog.sdut.me/blog 下面是代码：（">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="根据访问的域名，跳转到指定的子目录，实现“子目录绑定”">
+<meta property="og:url" content="http://rmingwang.com/under-the-domain-name-to-jump-to-a-specific-subdirectory-and-sub-binding.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="根据访问的域名，跳转到指定的子目录，实现url跳转如果 你的虚拟主机不支持子目录绑定，而域名现在大多不可以跳转，又不是linux主机可以使用.access 实现子目录绑定。 window主机下 可以使用js 跳转代码 实现智能域名选择跳转，例如bbs.blog.sdut.me 跳转到 /bbs目录 blog.blog.sdut.me跳转到 www.blog.sdut.me/blog 下面是代码：（">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="根据访问的域名，跳转到指定的子目录，实现“子目录绑定”">
+<meta name="twitter:description" content="根据访问的域名，跳转到指定的子目录，实现url跳转如果 你的虚拟主机不支持子目录绑定，而域名现在大多不可以跳转，又不是linux主机可以使用.access 实现子目录绑定。 window主机下 可以使用js 跳转代码 实现智能域名选择跳转，例如bbs.blog.sdut.me 跳转到 /bbs目录 blog.blog.sdut.me跳转到 www.blog.sdut.me/blog 下面是代码：（">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 根据访问的域名，跳转到指定的子目录，实现“子目录绑定” - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          根据访问的域名，跳转到指定的子目录，实现“子目录绑定”
+        
+      </h1>
+
+      <time class="post-time">
+          10月 4 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="根据访问的域名跳转到指定的子目录实现url跳转">根据访问的域名，跳转到指定的子目录，实现url跳转</span></h2><p>如果 你的虚拟主机不支持子目录绑定，而域名现在大多不可以跳转，又不是linux主机可以使用.access 实现子目录绑定。 window主机下 可以使用js 跳转代码 实现智能域名选择跳转，例如bbs.blog.sdut.me 跳转到 /bbs目录 blog.blog.sdut.me跳转到 <a href="http://www.blog.sdut.me/blog" target="_blank" rel="noopener">www.blog.sdut.me/blog</a> 下面是代码：（前提，bbs.blog.sdut.me,blog.blog.sdut.me <a href="http://www.blog.sdut.me" target="_blank" rel="noopener">www.blog.sdut.me</a> 均已经解析到主机） 保存以下为domain.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(location.host)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'bbs.blog.sdut.me'</span>: </span><br><span class="line">        location.href=<span class="string">"http://bbs.blog.sdut.me/bbs/"</span> <span class="keyword">break</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后 在网站首页里面<head><meta name="generator" content="Hexo 3.8.0"> 与 </head> 之间加入调用</p>
+<p>此外以下代码供大家测试 js多域名跳转 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (self.location == <span class="string">"http://玉米一/"</span>) &#123;</span><br><span class="line">        top.location.href = <span class="string">"http://玉米一/目录"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (self.location == <span class="string">"http://玉米二/"</span>) &#123;</span><br><span class="line">        top.location.href = <span class="string">"http://玉米二/目录"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (self.location == <span class="string">"http://玉米三/"</span>) &#123;</span><br><span class="line">        top.location.href = <span class="string">"http://玉米三/目录"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (self.location == <span class="string">"http://玉米四/"</span>) &#123;</span><br><span class="line">        top.location.href = <span class="string">"http://玉米四/目录"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">document</span>.write(<span class="string">"错误的访问地址"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span>(e) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>asp代码 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if request.serverVariables(&quot;server_name&quot;) = &quot;[域名](http://hi.baidu.com/zhouzichao1988)&quot;then response.redirect(&quot;/文件夹/&quot;)</span><br><span class="line">else if request.serverVariables(&quot;server_name&quot;) = &quot;bbs.iclass2.com&quot;then response.redirect(&quot;/bbs&quot;)</span><br><span class="line">else response.redirect(&quot;/bbs&quot;) </span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>php 代码 PHP </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>  ($_SERVER[<span class="string">"HTTP_HOST"</span>]) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"aaa.com"</span>:</span><br><span class="line">        header(<span class="string">"location:aaa.com"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"www.bbb.com"</span>:</span><br><span class="line">        header(<span class="string">"location:www.bbb.com"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"aii.net.ru"</span>:</span><br><span class="line">        header(<span class="string">"location:aii.net.ru"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"aii.org.ru"</span>:</span><br><span class="line">        header(<span class="string">"location:aii.org.ru"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"www.1111.com"</span>:</span><br><span class="line">        header(<span class="string">"location:www.1111.com"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"1111.com"</span>:</span><br><span class="line">        header(<span class="string">"location:1111.html"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/using-linux-host-htaccess-to-complete-sub-binding.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">linux主机利用.htaccess来完成子目录绑定</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/multi-user-blog-system-ah-the-long-premeditated-blog-finally-became.html">
+        <span class="next-text nav-default">【多用户博客系统】啊！！！预谋已久的博客终于建成了~</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/under-the-domain-name-to-jump-to-a-specific-subdirectory-and-sub-binding.html';
+
+  var disqus_title = "根据访问的域名，跳转到指定的子目录，实现“子目录绑定”";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Lua 有趣的语法特性">
+
+
+
+
+  <meta name="keywords" content="Lua编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/lua-tips.html">
+
+
+<meta name="description" content="使用函数作为函数返回 table关联数组的多种访问形式 table计数的问题 函数其实也是变量 local 和 global 函数在调用的时候会有所区别 可变参数（5.1） 参数默认值 三元表达式 不同变量类型比较时不存在自动转换 只有 nil 和 false 是假，0,{},&amp;quot;&amp;quot; 都是真 for循环 对象方法的调用 函数多个返回值 泛型调用和 unpack 高级函数 和">
+<meta name="keywords" content="Lua编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua 有趣的语法特性">
+<meta property="og:url" content="http://rmingwang.com/lua-tips.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="使用函数作为函数返回 table关联数组的多种访问形式 table计数的问题 函数其实也是变量 local 和 global 函数在调用的时候会有所区别 可变参数（5.1） 参数默认值 三元表达式 不同变量类型比较时不存在自动转换 只有 nil 和 false 是假，0,{},&amp;quot;&amp;quot; 都是真 for循环 对象方法的调用 函数多个返回值 泛型调用和 unpack 高级函数 和">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-09-04T16:13:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lua 有趣的语法特性">
+<meta name="twitter:description" content="使用函数作为函数返回 table关联数组的多种访问形式 table计数的问题 函数其实也是变量 local 和 global 函数在调用的时候会有所区别 可变参数（5.1） 参数默认值 三元表达式 不同变量类型比较时不存在自动转换 只有 nil 和 false 是假，0,{},&amp;quot;&amp;quot; 都是真 for循环 对象方法的调用 函数多个返回值 泛型调用和 unpack 高级函数 和">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Lua 有趣的语法特性 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Lua 有趣的语法特性
+        
+      </h1>
+
+      <time class="post-time">
+          6月 26 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#使用函数作为函数返回">使用函数作为函数返回</a></li>
+<li><a href="#table关联数组的多种访问形式">table关联数组的多种访问形式</a></li>
+<li><a href="#table计数的问题">table计数的问题</a></li>
+<li><a href="#函数其实也是变量">函数其实也是变量</a></li>
+<li><a href="#local-和-global-函数在调用的时候会有所区别">local 和 global 函数在调用的时候会有所区别</a></li>
+<li><a href="#可变参数51">可变参数（5.1）</a></li>
+<li><a href="#参数默认值">参数默认值</a></li>
+<li><a href="#三元表达式">三元表达式</a></li>
+<li><a href="#不同变量类型比较时不存在自动转换">不同变量类型比较时不存在自动转换</a></li>
+<li><a href="#只有-nil-和-false-是假0-都是真">只有 <code>nil</code> 和 <code>false</code> 是假，<code>0</code>,<code>{}</code>,<code>&quot;&quot;</code> 都是真</a></li>
+<li><a href="#for循环">for循环</a></li>
+<li><a href="#对象方法的调用">对象方法的调用</a></li>
+<li><a href="#函数多个返回值">函数多个返回值</a></li>
+<li><a href="#泛型调用和-unpack">泛型调用和 <code>unpack</code></a></li>
+<li><a href="#高级函数-和-函数的本质">高级函数 和 函数的本质</a></li>
+<li><a href="#多行字符串">多行字符串</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="使用函数作为函数返回">使用函数作为函数返回</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">list_iter</span> <span class="params">(t)</span></span></span><br><span class="line">    <span class="keyword">local</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">local</span> n = <span class="built_in">table</span>.<span class="built_in">getn</span>(t)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span></span></span><br><span class="line">        i=i+<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i &lt;= n <span class="keyword">then</span> <span class="keyword">return</span> t[i] <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">8</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> list_iter(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2><span id="table关联数组的多种访问形式">table关联数组的多种访问形式</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">u = &#123;name=rming,age=<span class="number">25</span>,hello=<span class="string">'hi~'</span>&#125;</span><br><span class="line"><span class="comment">-- c结构体形式</span></span><br><span class="line"><span class="built_in">print</span>(u.hello)</span><br><span class="line"><span class="comment">-- 关联数组形式</span></span><br><span class="line"><span class="built_in">print</span>(u[<span class="string">'hello'</span>])</span><br></pre></td></tr></table></figure>
+<h2><span id="table计数的问题">table计数的问题</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 一个nil元素的时候，碰到nil就停止计数了</span></span><br><span class="line">t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">nil</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(#t)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">getn</span>(t))</span><br><span class="line"><span class="comment">-- 多个nil的时候就没有规律了</span></span><br><span class="line">t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">nil</span>,<span class="literal">nil</span>,<span class="number">6</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(#t)</span><br><span class="line">t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">nil</span>,<span class="literal">nil</span>,<span class="number">6</span>,<span class="literal">nil</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(#t)</span><br><span class="line"><span class="comment">-- 这个key，不认识了，没有计数</span></span><br><span class="line">t = &#123;[<span class="number">2</span>]=<span class="number">1</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(#t)</span><br><span class="line"><span class="comment">-- 所以，计数还是自己写个吧</span></span><br><span class="line">t_count = <span class="function"><span class="keyword">function</span><span class="params">(t)</span></span></span><br><span class="line">    <span class="keyword">local</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> v <span class="keyword">then</span></span><br><span class="line">            count = count+<span class="number">1</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">print</span>(t_count(t))</span><br></pre></td></tr></table></figure>
+<h2><span id="函数其实也是变量">函数其实也是变量</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;p=<span class="built_in">print</span>&#125;</span><br><span class="line">s.p(<span class="string">'halo'</span>)</span><br></pre></td></tr></table></figure>
+<h2><span id="local-和-global-函数在调用的时候会有所区别">local 和 global 函数在调用的时候会有所区别</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> f</span><br><span class="line">f = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'this is a local function'</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'this is a local function'</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gf</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'this is a global function'</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2><span id="可变参数51">可变参数（5.1）</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> f = <span class="function"><span class="keyword">function</span><span class="params">( ... )</span></span></span><br><span class="line">    <span class="keyword">local</span> <span class="built_in">arg</span> = &#123;...&#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'------------------------'</span>)</span><br><span class="line">    <span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">pairs</span>(<span class="built_in">arg</span>) <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">print</span>(v)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'------------------------'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">--[[</span></span><br><span class="line"><span class="comment">    for v in ... do</span></span><br><span class="line"><span class="comment">        print(v)</span></span><br><span class="line"><span class="comment">    end</span></span><br><span class="line"><span class="comment">    ]]</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">f(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+<h2><span id="参数默认值">参数默认值</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">ff</span><span class="params">(name,age)</span></span></span><br><span class="line">    name = name <span class="keyword">or</span> <span class="string">'rming'</span></span><br><span class="line">    age  = age <span class="keyword">or</span> <span class="number">20</span></span><br><span class="line">    <span class="built_in">print</span>(name)</span><br><span class="line">    <span class="built_in">print</span>(age)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">ff()</span><br></pre></td></tr></table></figure>
+<h2><span id="三元表达式">三元表达式</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- a==b ? 'yes' : 'no'</span></span><br><span class="line">res = a==b <span class="keyword">and</span> <span class="string">'yes'</span> <span class="keyword">or</span> <span class="string">'no'</span></span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<h2><span id="不同变量类型比较时不存在自动转换">不同变量类型比较时不存在自动转换</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">'0'</span>==<span class="number">0</span>)</span><br><span class="line"><span class="comment">--false</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'2'</span>&lt;<span class="string">'15'</span>)</span><br><span class="line"><span class="comment">--false</span></span><br><span class="line"><span class="comment">--tostring() 和  tonumber() 是不错的解决办法    </span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">tonumber</span>(<span class="string">'0'</span>)==<span class="number">0</span>)</span><br><span class="line"><span class="comment">--true</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">tostring</span>(<span class="number">0</span>)==<span class="string">'0'</span>)   </span><br><span class="line"><span class="comment">--true</span></span><br></pre></td></tr></table></figure>
+<h2><span id="只有-nil-和-false-是假0quotquot-都是真">只有 <code>nil</code> 和 <code>false</code> 是假，<code>0</code>,<code>{}</code>,<code>&quot;&quot;</code> 都是真</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">if</span> <span class="literal">nil</span> <span class="keyword">then</span> <span class="built_in">print</span>(<span class="string">'true'</span>) <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">'false'</span>) <span class="keyword">end</span></span><br><span class="line"><span class="literal">false</span></span><br><span class="line">&gt; <span class="keyword">if</span> <span class="literal">false</span> <span class="keyword">then</span> <span class="built_in">print</span>(<span class="string">'true'</span>) <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">'false'</span>) <span class="keyword">end</span></span><br><span class="line"><span class="literal">false</span></span><br><span class="line">&gt; <span class="keyword">if</span> <span class="number">0</span> <span class="keyword">then</span> <span class="built_in">print</span>(<span class="string">'true'</span>) <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">'false'</span>) <span class="keyword">end</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line">&gt; <span class="keyword">if</span> &#123;&#125; <span class="keyword">then</span> <span class="built_in">print</span>(<span class="string">'true'</span>) <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">'false'</span>) <span class="keyword">end</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line">&gt; <span class="keyword">if</span> <span class="string">''</span> <span class="keyword">then</span> <span class="built_in">print</span>(<span class="string">'true'</span>) <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">'false'</span>) <span class="keyword">end</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span> <span class="literal">nil</span>) <span class="comment">--&gt; true</span></span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span> <span class="literal">false</span>) <span class="comment">--&gt; true</span></span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span> <span class="number">0</span>) <span class="comment">--&gt; false</span></span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span> <span class="keyword">not</span> <span class="literal">nil</span>) <span class="comment">--&gt; false</span></span><br></pre></td></tr></table></figure>
+<h2><span id="for循环">for循环</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- print all values of array 'a'</span></span><br><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span> <span class="built_in">print</span>(v) <span class="keyword">end</span></span><br><span class="line"><span class="comment">-- print all keys of table 't'</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span> <span class="built_in">print</span>(k) <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2><span id="对象方法的调用">对象方法的调用</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; a=&#123;p=<span class="built_in">print</span>&#125;</span><br><span class="line">&gt; a:p(<span class="string">'hello'</span>)</span><br><span class="line"><span class="built_in">table</span>: <span class="number">0x7fa95bf00510</span>   hello</span><br><span class="line">&gt; a.p(<span class="string">'hello'</span>)</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<h2><span id="函数多个返回值">函数多个返回值</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; s,e=<span class="built_in">string</span>.<span class="built_in">find</span>(<span class="string">'this is a string '</span>, <span class="string">'string'</span>)</span><br><span class="line">&gt; <span class="built_in">print</span>(s,e)</span><br><span class="line"><span class="number">11</span>      <span class="number">16</span></span><br></pre></td></tr></table></figure>
+<h2><span id="泛型调用和-unpack">泛型调用和 <code>unpack</code></span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; f = <span class="built_in">string</span>.<span class="built_in">find</span></span><br><span class="line">&gt; t = &#123;<span class="string">'this is a string'</span>, <span class="string">'is'</span>&#125;</span><br><span class="line">&gt; <span class="built_in">print</span>(f(<span class="built_in">unpack</span>(t)))</span><br><span class="line"><span class="number">3</span>       <span class="number">4</span></span><br><span class="line"><span class="comment">-- unpack的lua实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unpack</span><span class="params">(t, i)</span></span></span><br><span class="line">    i = i <span class="keyword">or</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> t[i] <span class="keyword">then</span></span><br><span class="line">       <span class="keyword">return</span> t[i], <span class="built_in">unpack</span>(t, i + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2><span id="高级函数-和-函数的本质">高级函数 和 函数的本质</span></h2><p>Lua中的函数是带有词法定界的第一类值().</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 高级函数</span></span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">sort</span>(network, <span class="function"><span class="keyword">function</span> <span class="params">(a,b)</span></span></span><br><span class="line">   <span class="keyword">return</span> (a.name &gt; b.name)</span><br><span class="line"><span class="keyword">end</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 函数定义仅仅是赋值</span></span><br><span class="line">func = <span class="function"><span class="keyword">function</span><span class="params">(v)</span></span></span><br><span class="line">    <span class="built_in">print</span> v</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2><span id="多行字符串">多行字符串</span></h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> page = <span class="string">[[</span></span><br><span class="line"><span class="string">     &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</span></span><br><span class="line"><span class="string">          &lt;head&gt;</span></span><br><span class="line"><span class="string">               &lt;title&gt;xxxx&lt;/title&gt;</span></span><br><span class="line"><span class="string">          &lt;/head&gt;</span></span><br><span class="line"><span class="string">          &lt;body&gt;</span></span><br><span class="line"><span class="string">          &lt;/body&gt;</span></span><br><span class="line"><span class="string">     &lt;/html&gt;</span></span><br><span class="line"><span class="string">]]</span></span><br><span class="line"><span class="built_in">print</span>(page)</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Lua编程/">Lua编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/openresty-lapis-env.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">OpenResty & Lapis</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/memcached-expired-time-problems.html">
+        <span class="next-text nav-default">Memcached 踩坑小记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/lua-tips.html';
+
+  var disqus_title = "Lua 有趣的语法特性";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

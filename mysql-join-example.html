@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="MySQL联合查询实例讲解">
+
+
+
+
+  <meta name="keywords" content="数据库技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/mysql-join-example.html">
+
+
+<meta name="description" content="#MySQL联合查询(MySQL Left Join,Right Join)&amp;amp;emsp:&amp;amp;emsp:在讲MySQL的Join语法前还是先回顾一下联结的语法，呵呵，其实连我自己都忘得差不多了，那就大家一起温习吧（如果内容有错误或有疑问，国内关于MySQL联结查询的资料十分少，相信大家在看了本文后会对MySQL联结语法有相当清晰的了解，也不会被Oracle的外联结的（“＋”号）弄得糊涂">
+<meta name="keywords" content="数据库技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL联合查询实例讲解">
+<meta property="og:url" content="http://rmingwang.com/mysql-join-example.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="#MySQL联合查询(MySQL Left Join,Right Join)&amp;amp;emsp:&amp;amp;emsp:在讲MySQL的Join语法前还是先回顾一下联结的语法，呵呵，其实连我自己都忘得差不多了，那就大家一起温习吧（如果内容有错误或有疑问，国内关于MySQL联结查询的资料十分少，相信大家在看了本文后会对MySQL联结语法有相当清晰的了解，也不会被Oracle的外联结的（“＋”号）弄得糊涂">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-10-07T08:21:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL联合查询实例讲解">
+<meta name="twitter:description" content="#MySQL联合查询(MySQL Left Join,Right Join)&amp;amp;emsp:&amp;amp;emsp:在讲MySQL的Join语法前还是先回顾一下联结的语法，呵呵，其实连我自己都忘得差不多了，那就大家一起温习吧（如果内容有错误或有疑问，国内关于MySQL联结查询的资料十分少，相信大家在看了本文后会对MySQL联结语法有相当清晰的了解，也不会被Oracle的外联结的（“＋”号）弄得糊涂">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> MySQL联合查询实例讲解 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          MySQL联合查询实例讲解
+        
+      </h1>
+
+      <time class="post-time">
+          7月 20 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="mysql联合查询mysql-left-joinright-join"><strong>#MySQL联合查询(MySQL Left Join,Right Join)</strong></span></h2><p>&amp;emsp:&amp;emsp:在讲MySQL的Join语法前还是先回顾一下联结的语法，呵呵，其实连我自己都忘得差不多了，那就大家一起温习吧（如果内容有错误或有疑问，国内关于MySQL联结查询的资料十分少，相信大家在看了本文后会对MySQL联结语法有相当清晰的了解，也不会被Oracle的外联结的（“＋”号）弄得糊涂了。</p>
+<p>在SQL标准中规划的（Join）联结大致分为下面四种：</p>
+<p>1． 内联结：将两个表中存在联结关系的字段符合联结关系的那些记录形成记录集的联结。</p>
+<p>2． 外联结：分为外左联结和外右联结。</p>
+<p>&emsp;&emsp;左联结A、B表的意思就是将表A中的全部记录和表B中联结的字段与表A的联结字段符合联结条件的那些记录形成的记录集的联结，这里注意的是最后出来的记录集会包括表A的全部记录。</p>
+<p>右联结A、B表的结果和左联结B、A的结果是一样的，也就是说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select A.name B.name From A Left Join B On A.id=B.id</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select A.name B.name From B Right Join A on B.id=A.id</span><br></pre></td></tr></table></figure>
+<p>执行后的结果是一样的。</p>
+<p>3．全联结：将两个表中存在联结关系的字段的所有记录取出形成记录集的联结（这个不需要记忆，只要是查询中提到了的表的字段都会取出，无论是否符合联结条件，因此意义不大）。</p>
+<p>4．无联结：不用解释了吧，就是没有使用联结功能呗，也有自联结的说法。</p>
+<p>&emsp;&emsp;这里我有个比较简便的记忆方法，内外联结的区别是内联结将去除所有不符合条件的记录，而外联结则保留其中部分。外左联结与外右联结的区别在于如果用A左联结B则A中所有记录都会保留在结果中，此时B中只有符合联结条件的记录，而右联结相反，这样也就不会混淆了。<br>如下面例子中的JOIN后面括号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM t1 LEFT JOIN (t2, t3, t4) ON (t2.a=t1.a AND t3.b=t1.b AND t4.c=t1.c)</span><br></pre></td></tr></table></figure>
+<p>这个语句的执行结果和下面语句其实是一样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM t1 LEFT JOIN (t2 CROSS JOIN t3 CROSS JOIN t4)</span><br><span class="line">ON (t2.a=t1.a AND t3.b=t1.b AND t4.c=t1.c)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这两个例子不仅让我们了解了MySQL中table_factor和table_reference含义，同时能理解一点CROSS JOIN的用法，我要补充的是在MySQL现有版本中CROSS JOIN的作用和INNER JOIN是一样的（虽然在SQL Standard中是不一样的，然而在MySQL中他们的区别仅仅是INNER JOIN需要附加ON参数的语句，而CROSS JOIN不需要）。  </p>
+<p>&emsp;&emsp;既然说到了ON语句，那就解释一下吧，ON语句其实和WHERE语句功能大致相当，只是这里的ON语句是专门针对联结表的，ON语句后面的条件的要求和书写方式和WHERE语句的要求是一样的，大家基本上可以把ON当作WHERE用。  </p>
+<h2><span id="mysql联合查询实例讲解"><strong>#MySQL联合查询实例讲解</strong></span></h2><p>首先我们假设有2个表A和B，他们的表结构和字段分别为：</p>
+<p>###表A:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ID	Name</span><br><span class="line">1	Tim</span><br><span class="line">2	Jimmy</span><br><span class="line">3	John</span><br><span class="line">4	Tom</span><br></pre></td></tr></table></figure>
+<p>###表B：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ID	Hobby</span><br><span class="line">1	Football</span><br><span class="line">2	Basketball</span><br><span class="line">2	Tennis</span><br><span class="line">4	Soccer</span><br></pre></td></tr></table></figure>
+<p>##1．  内联结：<br><code>Select A.Name, B.Hobby from A, B where A.id = B.id</code>，这是隐式的内联结，查询的结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name	Hobby</span><br><span class="line">Tim 	Football</span><br><span class="line">Jimmy	Basketball</span><br><span class="line">Jimmy	Tennis</span><br><span class="line">Tom	        Soccer</span><br></pre></td></tr></table></figure>
+<p>它的作用和 <code>Select A.Name from A INNER JOIN B ON A.id = B.id</code>是一样的。这里的INNER JOIN换成CROSS JOIN也是可以的。</p>
+<p>##2．  外左联结<br><code>Select A.Name from A Left JOIN B ON A.id = B.id</code>，典型的外左联结，这样查询得到的结果将会是保留所有A表中联结字段的记录，若无与其相对应的B表中的字段记录则留空，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name	Hobby</span><br><span class="line">Tim 	Football</span><br><span class="line">Jimmy	Basketball，Tennis</span><br><span class="line">John	</span><br><span class="line">Tom	        Soccer</span><br></pre></td></tr></table></figure>
+<p>所以从上面结果看出，因为A表中的John记录的ID没有在B表中有对应ID，因此为空，但Name栏仍有John记录。</p>
+<p>##3．  外右联结<br>如果把上面查询改成外右联结：<code>Select A.Name from A Right JOIN B ON A.id = B.id</code>，则结果将会是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name	Hobby</span><br><span class="line">Tim         Football</span><br><span class="line">Jimmy	Basketball</span><br><span class="line">Jimmy	Tennis</span><br><span class="line">Tom         Soccer</span><br></pre></td></tr></table></figure>
+<p>这样的结果都是我们可以从外左联结的结果中猜到的了。<br>&emsp;&emsp;说到这里大家是否对联结查询了解多了？这个原本看来高深的概念一下子就理解了，恍然大悟了吧（呵呵，开玩笑了）？最后给大家讲讲##MySQL联结查询中的某些参数的作用：<br>1．USING (column_list)：其作用是为了方便书写联结的多对应关系，大部分情况下USING语句可以用ON语句来代替，如下面例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a LEFT JOIN b USING (c1,c2,c3)，其作用相当于下面语句</span><br><span class="line">a LEFT JOIN b ON a.c1=b.c1 AND a.c2=b.c2 AND a.c3=b.c3</span><br></pre></td></tr></table></figure>
+<p>只是用ON来代替会书写比较麻烦而已。</p>
+<p>2．NATURAL [LEFT] JOIN：这个句子的作用相当于INNER JOIN，或者是在USING子句中包含了联结的表中所有字段的Left JOIN（左联结）。</p>
+<p>3．STRAIGHT_JOIN：由于默认情况下MySQL在进行表的联结的时候会先读入左表，当使用了这个参数后MySQL将会先读入右表，这是个MySQL的内置优化参数，大家应该在特定情况下使用，譬如已经确认右表中的记录数量少，在筛选后能大大提高查询速度。</p>
+<p>&emsp;&emsp;最后要说的就是，在MySQL5.0以后，运算顺序得到了重视，所以对多表的联结查询可能会错误以子联结查询的方式进行。譬如你需要进行多表联结，因此你输入了下面的联结查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT t1.id,t2.id,t3.id</span><br><span class="line">FROM t1,t2</span><br><span class="line">LEFT JOIN t3 ON (t3.id=t1.id)</span><br><span class="line">WHERE t1.id=t2.id;</span><br></pre></td></tr></table></figure>
+<p>###但是MySQL并不是这样执行的，其后台的真正执行方式是下面的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT t1.id,t2.id,t3.id</span><br><span class="line">FROM t1,(  t2 LEFT JOIN t3 ON (t3.id=t1.id)  )</span><br><span class="line">WHERE t1.id=t2.id;</span><br></pre></td></tr></table></figure>
+<p>###这并不是我们想要的效果，所以我们需要这样输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT t1.id,t2.id,t3.id</span><br><span class="line">FROM (t1,t2)</span><br><span class="line">LEFT JOIN t3 ON (t3.id=t1.id)</span><br><span class="line">WHERE t1.id=t2.id;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在这里括号是相当重要的，因此以后在写这样的查询的时候我们不要忘记了多写几个括号，至少这样能避免很多错误</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/数据库技术/">数据库技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/mysql-union.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL 之UNION详解</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/mysql-common-cmd-summary.html">
+        <span class="next-text nav-default">MySQL 常用命令总结</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/mysql-join-example.html';
+
+  var disqus_title = "MySQL联合查询实例讲解";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

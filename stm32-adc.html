@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32 ADC模数转换简介">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-adc.html">
+
+
+<meta name="description" content="ADC简介stm32f103最少有2个AD模数转换器，每个ADC都有18个通道，可以测量16个外部和2个内部模拟量。最大转换频率为1Mhz，也就是转换时间为1us（在 ADCCLK = 14Mhz,采样周期为1.5个时钟周期时）。最大时钟超过14Mhz，将导致ADC转换准确度降低。stm32的ADC是12位精度的。 stm32的ADC转换有两种通道，规则通道和注入通道，注入通道可以抢占式地打断规则">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 ADC模数转换简介">
+<meta property="og:url" content="http://rmingwang.com/stm32-adc.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="ADC简介stm32f103最少有2个AD模数转换器，每个ADC都有18个通道，可以测量16个外部和2个内部模拟量。最大转换频率为1Mhz，也就是转换时间为1us（在 ADCCLK = 14Mhz,采样周期为1.5个时钟周期时）。最大时钟超过14Mhz，将导致ADC转换准确度降低。stm32的ADC是12位精度的。 stm32的ADC转换有两种通道，规则通道和注入通道，注入通道可以抢占式地打断规则">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32 ADC模数转换简介">
+<meta name="twitter:description" content="ADC简介stm32f103最少有2个AD模数转换器，每个ADC都有18个通道，可以测量16个外部和2个内部模拟量。最大转换频率为1Mhz，也就是转换时间为1us（在 ADCCLK = 14Mhz,采样周期为1.5个时钟周期时）。最大时钟超过14Mhz，将导致ADC转换准确度降低。stm32的ADC是12位精度的。 stm32的ADC转换有两种通道，规则通道和注入通道，注入通道可以抢占式地打断规则">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32 ADC模数转换简介 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32 ADC模数转换简介
+        
+      </h1>
+
+      <time class="post-time">
+          7月 24 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="adc简介">ADC简介</span></h2><br>stm32f103最少有2个AD模数转换器，每个ADC都有18个通道，可以测量16个外部和2个内部模拟量。最大转换频率为1Mhz，也就是转换时间为1us（在 ADCCLK = 14Mhz,采样周期为1.5个时钟周期时）。最大时钟超过14Mhz，将导致ADC转换准确度降低。stm32的ADC是12位精度的。<p></p>
+<p>stm32的ADC转换有两种通道，规则通道和注入通道，注入通道可以抢占式地打断规则通道的采样，执行注入通道采样后，再执行之前的规则通道采样，和中断类似。本例只使用规则通道实现独立模式的中断采样，这里不再赘述两种通道区别。</p>
+<p>stm32的ADC可以由外部事件触发(例如定时器捕获，EXTI线)和软件触发(即在配置相关寄存器时，直接开启采样）。</p>
+<p>STM32的ADC在单次转换模式下，只执行一次转换，该模式可以通过ADC_CR2 寄存器的ADON 位（只适用于规则通道）启动，也可以通过外部触发启动（适用于规则通道和注入通道），这是CONT 位为0 。 以规则通道为例，一旦所选择的通道转换完成，转换结果将被存在ADC_DR 寄存器，EOC （转换结束）标志将被置位，如果设置了EOCIE ，则会产生中断。然后ADC将停止，直到下次启动。</p>
+<p></p><h2><span id="寄存器简介">寄存器简介</span></h2><p></p>
+<h3><span id="adc控制寄存器adc_cr1和adc_cr2">ADC控制寄存器（ADC_CR1和ADC_CR2）</span></h3>
+
+<p>ADC_CR1的<strong>SCAN 位</strong>，该位用于设置扫描模式，<strong>由软件设置和清除</strong>，<strong>如果设置为1 ，则使用扫描模式，如果为 0，则关闭扫描模式。</strong>在扫描模式下，由 ADC_SQRx或ADC_JSQRx寄存器选中的通道被转换。如果设置了 EOCIE 或JEOCIE，只在最后一个通道转换完毕后才会产生EOC 或JEOC 中断。</p>
+<p>ADC_CR1[19:16]用于设置 ADC的操作模式</p>
+<p>ADC_CR2</p>
+<p><strong>ADCON</strong> 位用于<strong>开关AD转换器</strong>。而<strong>CONT 位</strong>用于设置<strong>是否进行连续转换</strong>，我们使用单次转换，所以CONT 位必须为0。<strong>CAL 和RSTCAL</strong> 用于<strong>AD校准</strong>。<strong>ALIGN</strong>用于设置数据对齐，我们使用<strong>右对齐，该位设置为0</strong> 。</p>
+<p><strong>EXTSEL[2:0]</strong>用于<strong>选择启动规则转换组转换的外部事件</strong>，详细的设置关系如下：</p>
+<p>这里使用的是软件触发（SWSTART ），所以设置这3 个位为111 。ADC_CR2 的SWSTART 位用于开始规则通道的转换，我们每次转换（单次转换模式下）都需要向该位写 1 。AWDEN 为用于使能温度传感器和Vrefint 。</p>
+<h3><span id="adc采样事件寄存器adc_smpr1-和adc_smpr2">ADC采样事件寄存器（ADC_SMPR1 和ADC_SMPR2 ）</span></h3><br>这两个寄存器用于设置通道0~17的采样时间，每个通道占用 3 个位。<br><br><br>ADC_SMPR2 的各位描述如下<br><br><br>对于每个要转换的通道，采样时间建议尽量长一点，以获得较高的准确度，但是这样会降低ADC的转换速率。ADC的转换时间可以由下式计算：<br><p style="text-align: center;"><strong>Tcovn= 采样时间+12.5 个周期</strong></p><br>其中：Tcovn 为总转换时间，采样时间是根据每个通道的SMP位的设置来决定的。例如，当ADCCLK=14Mhz 的时候，并设置 1.5个周期的采样时间，则得到:Tcovn=1.5+12.5=14 个周期=1us 。<br><h3><span id="adc规则序列寄存器adc_sqr1~3">ADC规则序列寄存器（ADC_SQR1~3）</span></h3>
+
+<p>L[3：0] 用于存储规则序列的长度，我们这里只用了 1 个，所以设置这几个位的值为 0 。其他的SQ13~16 则存储了规则序列中第13~16 个通道的编号（0~17）。另外两个规则序列寄存器同ADC_SQR1大同小异，我们这里就不再介绍了，要说明一点的是：<strong>我们选择的是单次转换，所以只有一个通道在规则序列里面，这个序列就是SQ0 ，通过ADC_SQR3的最低5 位设置。</strong></p>
+<h3><span id="adc规则数据寄存器adc_dr">ADC规则数据寄存器(ADC_DR)</span></h3>
+
+<p>这里要提醒一点的是，该寄存器的数据可以通过ADC_CR2 的ALIGN位设置左对齐还是右对齐。在读取数据的时候要注意。</p>
+<h3><span id="adc状态寄存器adc_sr">ADC状态寄存器（ADC_SR ）</span></h3>
+
+<p>这里我们要用到的是EOC 位，我们通过判断该位来决定是否此次规则通道的AD转换已经完成，如果完成我们就从ADC_DR 中读取转换结果，否则等待转换完成。</p>
+<p></p><h2><span id="寄存器操作步骤">寄存器操作步骤</span></h2><br><strong>1 、开启PA口时钟，设置PA0 为模拟输入。</strong><p></p>
+<p>STM32F103RBT6的ADC通道0 在PA 0 上，所以，我们先要使能 PORTA的时钟，然后设置PA 0 为模拟输入。</p>
+<p><strong>2 、使能ADC1 时钟，并设置分频因子。</strong></p>
+<p>要使用ADC1，第一步就是要使能 ADC1 的时钟，在使能完时钟之后，进行一次 ADC1 的复位。接着我们就可以通过RCC_CFGR设置ADC1 的分频因子。分频因子要确保 ADC1 的时钟（ADCCLK）不要超过14Mhz 。</p>
+<p><strong>3 、设置ADC1 的工作模式。 </strong></p>
+<p>在设置完分频因子之后，我们就可以开始 ADC1 的模式配置了，设置单次转换模式、触发方式选择、数据对齐方式等都在这一步实现。</p>
+<p><strong>4 、设置ADC1 规则序列的相关信息。 </strong></p>
+<p>接下来我们要设置规则序列的相关信息，我们这里只有一个通道，并且是单次转换的，所以设置规则序列中通道数为1 ，然后设置通道 0 的采样周期。</p>
+<p><strong>5 、开启AD转换器，并校准。</strong></p>
+<p>在设置完了以上信息后，我们就开启AD转换器，执行复位校准和AD校准，注意这两步是必须的！不校准将导致结果很不准确。</p>
+<p><strong>6 ）读取ADC值。</strong></p>
+<p>在上面的校准完成之后，ADC就算准备好了。接下来我们要做的就是设置规则序列 0 里面的通道，然后启动ADC转换。在转换结束后，读取ADC1_DR 里面的值就是了。</p>
+<p><strong>硬件设置：我们通过ADC1 的通道0 （PA 0 ）来读取外部电压值。</strong></p>
+<p><span style="color: #ff0000;">注意：这里不能接到板上5V电源上去测试，这可能会烧坏 ADC!</span></p>
+<p></p><h2><span id="程序设计">程序设计</span></h2><br><span style="color: #ff0000;"><strong>ADC采样得到的只是一个相对值，将 转换值/4096*参考电压 即可得到采样电压 这里的4096是因为stm32的adc为12位精度，表示参考电压时即为 2^12=4096</strong></span><p></p>
+<p>MAIN.C</p>
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;sys.h&quot;
+#include &quot;usart.h&quot;        
+#include &quot;delay.h&quot;    
+#include &quot;led.h&quot; 
+#include &quot;key.h&quot;
+#include &quot;exti.h&quot;
+#include &quot;wdg.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;lcd.h&quot;       
+#include &quot;rtc.h&quot;
+#include &quot;wkup.h&quot;
+#include &quot;adc.h&quot;
+//ADC 实验
+int main(void)
+{        
+    u16 adcx;
+    float temp;
+      Stm32_Clock_Init(9);//系统时钟设置
+    delay_init(72);        //延时初始化
+    uart_init(72,9600); //串口1初始化   
+    led_init();    
+    LCD_Init();      
+    Adc_Init();    
+
+    POINT_COLOR=RED;//设置字体为红色 
+    LCD_ShowString(60,110,&quot;ADC TEST&quot;);    
+    //显示提示信息
+    POINT_COLOR=BLUE;//设置字体为蓝色
+    LCD_ShowString(60,130,&quot;ADC_CH0_VAL:&quot;);          
+    LCD_ShowString(60,150,&quot;ADC_CH0_VOL:0.000V&quot;);          
+    while(1)
+    {
+        adcx=Get_Adc(ADC_CH0);
+        LCD_ShowNum(156,130,adcx,4,16);//显示ADC的值
+        temp=(float)adcx*(3.3/4096);
+        adcx=temp;
+        LCD_ShowNum(156,150,adcx,1,16);//显示电压值
+        temp-=adcx;
+        temp*=1000;
+        LCD_ShowNum(172,150,temp,3,16);
+        LED0=!LED0;
+        delay_ms(250);
+    }
+}</pre>
+ADC.C
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;adc.h&quot;
+//ADC 驱动代码                      
+//初始化ADC
+//这里我们仅以规则通道为例
+//我们默认将开启通道0~3                                                                       
+void  Adc_Init(void)
+{    
+    //先初始化IO口
+     RCC-&gt;APB2ENR|=1&lt;&lt;2;    //使能PORTA口时钟 
+    GPIOA-&gt;CRL&amp;=0XFFFF0000;//PA0 1 2 3 anolog输入
+    //通道10/11设置             
+    RCC-&gt;APB2ENR|=1&lt;&lt;9;    //ADC1时钟使能      
+    RCC-&gt;APB2RSTR|=1&lt;&lt;9;   //ADC1复位
+    RCC-&gt;APB2RSTR&amp;=~(1&lt;&lt;9);//复位结束        
+    RCC-&gt;CFGR&amp;=~(3&lt;&lt;14);   //分频因子清零    
+    //SYSCLK/DIV2=12M ADC时钟设置为12M,ADC最大时钟不能超过14M!
+    //否则将导致ADC准确度下降! 
+    RCC-&gt;CFGR|=2&lt;&lt;14;           
+
+    ADC1-&gt;CR1&amp;=0XF0FFFF;   //工作模式清零
+    ADC1-&gt;CR1|=0&lt;&lt;16;      //独立工作模式  
+    ADC1-&gt;CR1&amp;=~(1&lt;&lt;8);    //非扫描模式      
+    ADC1-&gt;CR2&amp;=~(1&lt;&lt;1);    //单次转换模式
+    ADC1-&gt;CR2&amp;=~(7&lt;&lt;17);       
+    ADC1-&gt;CR2|=7&lt;&lt;17;       //软件控制转换  
+    ADC1-&gt;CR2|=1&lt;&lt;20;      //使用用外部触发(SWSTART)!!!    必须使用一个事件来触发
+    ADC1-&gt;CR2&amp;=~(1&lt;&lt;11);   //右对齐     
+    ADC1-&gt;SQR1&amp;=~(0XF&lt;&lt;20);
+    ADC1-&gt;SQR1&amp;=0&lt;&lt;20;     //1个转换在规则序列中 也就是只转换规则序列1                
+    //设置通道0~3的采样时间
+    ADC1-&gt;SMPR2&amp;=0XFFFFF000;//通道0,1,2,3采样时间清空      
+    ADC1-&gt;SMPR2|=7&lt;&lt;9;      //通道3  239.5周期,提高采样时间可以提高精确度     
+    ADC1-&gt;SMPR2|=7&lt;&lt;6;      //通道2  239.5周期,提高采样时间可以提高精确度     
+    ADC1-&gt;SMPR2|=7&lt;&lt;3;      //通道1  239.5周期,提高采样时间可以提高精确度     
+    ADC1-&gt;SMPR2|=7&lt;&lt;0;      //通道0  239.5周期,提高采样时间可以提高精确度     
+
+    ADC1-&gt;CR2|=1&lt;&lt;0;        //开启AD转换器     
+    ADC1-&gt;CR2|=1&lt;&lt;3;        //使能复位校准  
+    while(ADC1-&gt;CR2&amp;1&lt;&lt;3);  //等待校准结束              
+    //该位由软件设置并由硬件清除。在校准寄存器被初始化后该位将被清除。          
+    ADC1-&gt;CR2|=1&lt;&lt;2;        //开启AD校准       
+    while(ADC1-&gt;CR2&amp;1&lt;&lt;2);  //等待校准结束
+    //该位由软件设置以开始校准，并在校准结束时由硬件清除  
+}                  
+//获得ADC值
+//ch:通道值 0~3
+u16 Get_Adc(u8 ch)   
+{
+    //设置转换序列               
+    ADC1-&gt;SQR3&amp;=0XFFFFFFE0;//规则序列1 通道ch
+    ADC1-&gt;SQR3|=ch;                          
+    ADC1-&gt;CR2|=1&lt;&lt;22;       //启动规则转换通道 
+    while(!(ADC1-&gt;SR&amp;1&lt;&lt;1));//等待转换结束            
+    return ADC1-&gt;DR;        //返回adc值    
+}</pre>
+ADC.H
+<pre class="brush: php; gutter: true">#ifndef __ADC_H
+#define __ADC_H    
+
+#define ADC_CH0  0 //通道0
+#define ADC_CH1  1 //通道1
+#define ADC_CH2  2 //通道2
+#define ADC_CH3  3 //通道3       
+
+void Adc_Init(void);
+u16  Get_Adc(u8 ch);  
+
+#endif</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/stm32-dma.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32 DMA直接存储器访问简介</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-wake-up.html">
+        <span class="next-text nav-default">STM32 待机唤醒</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-adc.html';
+
+  var disqus_title = "STM32 ADC模数转换简介";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

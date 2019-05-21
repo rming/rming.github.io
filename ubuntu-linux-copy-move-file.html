@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="ubuntu 文件基本操作 复制移动">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-linux-copy-move-file.html">
+
+
+<meta name="description" content="cp命令 该命令的功能是将给出的文件或目录拷贝到另一文件或目录中，就如同DOS下的copy命令一样，功能非常强大。 语法： cp [选项] 源文件或目录 目标文件或目录 说明：该命令把指定的源文件复制到目标文件或把多个源文件复制到目标目录中。 该命令的各选项含义如下：  a 该选项通常在拷贝目录时使用。它保留链接、文件属性，并递归地拷贝目录，其作用等于dpR选项的组合。  d 拷贝时保留链接。">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 文件基本操作 复制移动">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-linux-copy-move-file.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="cp命令 该命令的功能是将给出的文件或目录拷贝到另一文件或目录中，就如同DOS下的copy命令一样，功能非常强大。 语法： cp [选项] 源文件或目录 目标文件或目录 说明：该命令把指定的源文件复制到目标文件或把多个源文件复制到目标目录中。 该命令的各选项含义如下：  a 该选项通常在拷贝目录时使用。它保留链接、文件属性，并递归地拷贝目录，其作用等于dpR选项的组合。  d 拷贝时保留链接。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu 文件基本操作 复制移动">
+<meta name="twitter:description" content="cp命令 该命令的功能是将给出的文件或目录拷贝到另一文件或目录中，就如同DOS下的copy命令一样，功能非常强大。 语法： cp [选项] 源文件或目录 目标文件或目录 说明：该命令把指定的源文件复制到目标文件或把多个源文件复制到目标目录中。 该命令的各选项含义如下：  a 该选项通常在拷贝目录时使用。它保留链接、文件属性，并递归地拷贝目录，其作用等于dpR选项的组合。  d 拷贝时保留链接。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> ubuntu 文件基本操作 复制移动 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ubuntu 文件基本操作 复制移动
+        
+      </h1>
+
+      <time class="post-time">
+          10月 18 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>cp命令</strong></p>
+<p>该命令的功能是将给出的文件或目录拷贝到另一文件或目录中，就如同DOS下的copy命令一样，功能非常强大。</p>
+<p>语法： cp [选项] 源文件或目录 目标文件或目录</p>
+<p>说明：该命令把指定的源文件复制到目标文件或把多个源文件复制到目标目录中。</p>
+<p>该命令的各选项含义如下：</p>
+<ul>
+<li><p>a 该选项通常在拷贝目录时使用。它保留链接、文件属性，并递归地拷贝目录，其作用等于dpR选项的组合。</p>
+</li>
+<li><p>d 拷贝时保留链接。</p>
+</li>
+<li><p>f 删除已经存在的目标文件而不提示。</p>
+</li>
+<li><p>i 和f选项相反，在覆盖目标文件之前将给出提示要求用户确认。回答y时目标文件将被覆盖，是交互式拷贝。</p>
+</li>
+<li><p>p 此时cp除复制源文件的内容外，还将把其修改时间和访问权限也复制到新文件中。</p>
+</li>
+<li><p>r 若给出的源文件是一目录文件，此时cp将递归复制该目录下所有的子目录和文件。此时目标文件必须为一个目录名。</p>
+</li>
+<li><p>l 不作拷贝，只是链接文件。</p>
+</li>
+</ul>
+<p>需要说明的是，为防止用户在不经意的情况下用cp命令破坏另一个文件，如用户指定的目标文件名是一个已存在的文件名，用cp命令拷贝文件后，这个文件就会被新拷贝的源文件覆盖，因此，建议用户在使用cp命令拷贝文件时，最好使用i选项。</p>
+<p><blockquote>$ cp - i exam1.c /usr/wang/shiyan1.c</blockquote><br>该命令将文件exam1.c拷贝到/usr/wang 这个目录下，并改名为 shiyan1.c。若不希望重新命名，可以使用下面的命令：</p>
+<p><blockquote>$ cp exam1.c /usr/ wang/</blockquote></p>
+<p>$ cp - r /usr/xu/ /usr/liu/</p>
+<p>将/usr/xu目录中的所有文件及其子目录拷贝到目录/usr/liu中。<br><strong>mv命令(重命名/移动)</strong></p>
+<p>用户可以使用mv命令来为文件或目录改名或将文件由一个目录移入另一个目录中。该命令如同DOS下的ren和move的组合。</p>
+<p>语法：mv [选项] 源文件或目录 目标文件或目录</p>
+<p>说明：视mv命令中第二个参数类型的不同（是目标文件还是目标目录），mv命令将文件重命名或将其移至一个新的目录中。当第二个参数类型是文件时，mv命令完成文件重命名，此时，源文件只能有一个（也可以是源目录名），它将所给的源文件或目录重命名为给定的目标文件名。当第二个参数是已存在的目录名称时，源文件或目录参数可以有多个，mv命令将各参数指定的源文件均移至目标目录中。在跨文件系统移动文件时，mv先拷贝，再将原有文件删除，而链至该文件的链接也将丢失。</p>
+<p>命令中各选项的含义为：</p>
+<ul>
+<li><p>I 交互方式操作。如果mv操作将导致对已存在的目标文件的覆盖，此时系统询问是否重写，要求用户回答y或n，这样可以避免误覆盖文件。</p>
+</li>
+<li><p>f 禁止交互操作。在mv操作要覆盖某已有的目标文件时不给任何指示，指定此选项后，i选项将不再起作用。</p>
+</li>
+</ul>
+<p>如果所给目标文件（不是目录）已存在，此时该文件的内容将被新文件覆盖。为防止用户在不经意的情况下用mv命令破坏另一个文件，建议用户在使用mv命令移动文件时，最好使用i选项。</p>
+<p>需要注意的是，mv与cp的结果不同。mv好象文件“搬家”，文件个数并末增加，而cp对文件进行复制，文件个数增加了。</p>
+<p>例1：将/usr/xu中的所有文件移到当前目录（用“.”表示）中：</p>
+<p><blockquote>$ mv /usr/xu/ * .</blockquote><br>例2：将文件wch.txt重命名为wjz.doc</p>
+<p><blockquote>$ mv wch.txt wjz.doc</blockquote><br><strong>rm命令</strong></p>
+<p>在linux中创建文件很容易，系统中随时会有文件变得过时且毫无用处。用户可以用rm命令将其删除。该命令的功能为删除一个目录中的一个或多个文件或目录，它也可以将某个目录及其下的所有文件及子目录均删除。对于链接文件，只是删除了链接，原有文件均保持不变。</p>
+<p>rm命令的一般形式为：</p>
+<p>rm [选项] 文件…</p>
+<p>如果没有使用- r选项，则rm不会删除目录。</p>
+<p>该命令的各选项含义如下：</p>
+<ul>
+<li><p>f 忽略不存在的文件，从不给出提示。</p>
+</li>
+<li><p>r 指示rm将参数中列出的全部目录和子目录均递归地删除。</p>
+</li>
+<li><p>i 进行交互式删除。</p>
+</li>
+</ul>
+<p>使用rm命令要格外小心。因为一旦一个文件被删除，它是不能被恢复的。例如，用户在输入cp，mv或其他命令时，不小心误输入了rm命令，当用户按了回车键并认识到自己的错误时，已经太晚了，文件已经没有了。为了防止此种情况的发生，可以使用rm命令中的 i选项来确认要删除的每个文件。如果用户输入y，文件将被删除。如果输入任何其他东西，文件将被保留。在下一个例子中，用户要删除文件test和example。然后会被要求对每个文件进行确认。用户最终决定删除example文件，保留test文件。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-rewrite-url.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu rewrite url 重定向配置</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/ubuntu-config-virtualhost-configured-virtual-host.html">
+        <span class="next-text nav-default">ubuntu config vhost配置虚拟主机</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-linux-copy-move-file.html';
+
+  var disqus_title = "ubuntu 文件基本操作 复制移动";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

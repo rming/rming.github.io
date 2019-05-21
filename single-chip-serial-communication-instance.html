@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="单片机串口通信实例">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/single-chip-serial-communication-instance.html">
+
+
+<meta name="description" content="上讲介绍并应用了单片机内部定时器和中断，并给出了实例。这一讲将介绍单片机上的串口通信。通过该讲，读者可以掌握单片机上串口的工作原理和如何通过程序来对串口进行设置，并根据所给出的实例实现与PC 机通信。 　　一、原理简介 　　51 单片机内部有一个全双工串行接口。什么叫全双工串口呢？一般来说，只能接受或只能发送的称为单工串行；既可接收又可发送，但不能同时进行的称为半双工；能同时接收和发送的串行口称为">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单片机串口通信实例">
+<meta property="og:url" content="http://rmingwang.com/single-chip-serial-communication-instance.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="上讲介绍并应用了单片机内部定时器和中断，并给出了实例。这一讲将介绍单片机上的串口通信。通过该讲，读者可以掌握单片机上串口的工作原理和如何通过程序来对串口进行设置，并根据所给出的实例实现与PC 机通信。 　　一、原理简介 　　51 单片机内部有一个全双工串行接口。什么叫全双工串口呢？一般来说，只能接受或只能发送的称为单工串行；既可接收又可发送，但不能同时进行的称为半双工；能同时接收和发送的串行口称为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单片机串口通信实例">
+<meta name="twitter:description" content="上讲介绍并应用了单片机内部定时器和中断，并给出了实例。这一讲将介绍单片机上的串口通信。通过该讲，读者可以掌握单片机上串口的工作原理和如何通过程序来对串口进行设置，并根据所给出的实例实现与PC 机通信。 　　一、原理简介 　　51 单片机内部有一个全双工串行接口。什么叫全双工串口呢？一般来说，只能接受或只能发送的称为单工串行；既可接收又可发送，但不能同时进行的称为半双工；能同时接收和发送的串行口称为">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 单片机串口通信实例 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          单片机串口通信实例
+        
+      </h1>
+
+      <time class="post-time">
+          1月 2 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><span style="font-family: Verdana;">上讲介绍并应用了单片机内部定时器和中断，并给出了实例。这一讲将介绍单片机上的串口通信。通过该讲，读者可以掌握单片机上串口的工作原理和如何通过程序来对串口进行设置，并根据所给出的实例实现与PC 机通信。</span></p>
+<p><span style="font-family: Verdana;">　　<strong><span style="font-size: medium;">一、原理简介</span></strong></span></p>
+<p><span style="font-family: Verdana;">　　51 单片机内部有一个全双工串行接口。什么叫全双工串口呢？一般来说，只能接受或只能发送的称为单工串行；既可接收又可发送，但不能同时进行的称为半双工；能同时接收和发送的串行口称为全双工串行口。串行通信是指数据一位一位地按顺序传送的通信方式，其突出优点是只需一根传输线，可大大降低硬件成本，适合远距离通信。其缺点是传输速度较低。</span></p>
+<p><span style="font-family: Verdana;">　　与之前一样，首先我们来了解单片机串口相关的寄存器。</span></p>
+<p><span style="font-family: Verdana;">　　SBUF 寄存器：它是两个在物理上独立的接收、发送缓冲器，可同时发送、接收数据，可通过指令对SBUF 的读写来区别是对接收缓冲器的操作还是对发送缓冲器的操作。从而控制外部两条独立的收发信号线RXD（P3.0）、TXD（P3.1），同时发送、接收数据，实现全双工。</span></p>
+<p><span style="font-family: Verdana;">　　串行口控制寄存器SCON（见表1） 。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">表1 SCON寄存器</span></p><br><span style="font-family: Verdana;">　　表中各位（从左至右为从高位到低位）含义如下。</span><p></p>
+<p><span style="font-family: Verdana;">　　SM0 和SM1 ：串行口工作方式控制位，其定义如表2 所示。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">表2 串行口工作方式控制位</span></p><br><span style="font-family: Verdana;">　　其中，fOSC 为单片机的时钟频率；波特率指串行口每秒钟发送（或接收）的位数。</span><p></p>
+<p><span style="font-family: Verdana;">　　SM2 ：多机通信控制位。 该仅用于方式2 和方式3 的多机通信。其中发送机SM2 ＝ 1（需要程序控制设置）。接收机的串行口工作于方式2 或3，SM2=1 时，只有当接收到第9 位数据（RB8）为1 时，才把接收到的前8 位数据送入SBUF，且置位RI 发出中断申请引发串行接收中断，否则会将接受到的数据放弃。当SM2=0 时，就不管第位数据是0 还是1，都将数据送入SBUF，并置位RI 发出中断申请。工作于方式0 时，SM2 必须为0。</span></p>
+<p><span style="font-family: Verdana;">　　REN ：串行接收允许位：REN =0 时，禁止接收；REN =1 时，允许接收。</span></p>
+<p><span style="font-family: Verdana;">　　TB8 ：在方式2、3 中，TB8 是发送机要发送的第9 位数据。在多机通信中它代表传输的地址或数据，TB8=0 为数据，TB8=1 时为地址。</span></p>
+<p><span style="font-family: Verdana;">　　RB8 ：在方式2、3 中，RB8 是接收机接收到的第9 位数据，该数据正好来自发送机的TB8，从而识别接收到的数据特征。</span></p>
+<p><span style="font-family: Verdana;">　　TI ：串行口发送中断请求标志。当CPU 发送完一串行数据后，此时SBUF 寄存器为空，硬件使TI 置1，请求中断。CPU 响应中断后，由软件对TI 清零。</span></p>
+<p><span style="font-family: Verdana;">　　RI ：串行口接收中断请求标志。当串行口接收完一帧串行数据时，此时SBUF 寄存器为满，硬件使RI 置1，请求中断。CPU 响应中断后，用软件对RI 清零。</span></p>
+<p><span style="font-family: Verdana;">　　电源控制寄存器PCON（见表3） 。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">表3 PCON寄存器</span></p><br><span style="font-family: Verdana;">　　表中各位（从左至右为从高位到低位）含义如下。</span><p></p>
+<p><span style="font-family: Verdana;">　　SMOD ：波特率加倍位。SMOD=1，当串行口工作于方式1、2、3 时，波特率加倍。SMOD=0，波特率不变。</span></p>
+<p><span style="font-family: Verdana;">　　GF1、GF0 ：通用标志位。</span></p>
+<p><span style="font-family: Verdana;">　　PD（PCON.1） ：掉电方式位。当PD=1 时，进入掉电方式。</span></p>
+<p><span style="font-family: Verdana;">　　IDL（PCON.0） ：待机方式位。当IDL=1 时，进入待机方式。</span></p>
+<p><span style="font-family: Verdana;">　　另外与串行口相关的寄存器有前面文章叙述的定时器相关寄存器和中断寄存器。定时器寄存器用来设定波特率。中断允许寄存器IE 中的ES 位也用来作为串行I/O 中断允许位。当ES ＝ 1，允许 串行I/O 中断；当ES ＝ 0，禁止串行I/O 中断。中断优先级寄存器IP的PS 位则用作串行I/O 中断优先级控制位。当PS=1，设定为高优先级；当PS =0，设定为低优先级。</span></p>
+<p><span style="font-family: Verdana;">　　波特率计算：在了解了串行口相关的寄存器之后，我们可得出其通信波特率的一些结论：</span></p>
+<p><span style="font-family: Verdana;">　　① 方式0 和方式2 的波特率是固定的。</span></p>
+<p><span style="font-family: Verdana;">　　在方式0 中， 波特率为时钟频率的1/12， 即fOSC/12，固定不变。</span></p>
+<p><span style="font-family: Verdana;">　　在方式2 中，波特率取决于PCON 中的SMOD 值，即波特率为：</span><br><span style="font-family: Verdana;"><span style="font-family: Verdana;">　　</span>当SMOD=0 时，波特率为fosc/64 ；当SMOD=1 时，波特率为fosc/32。</span></p>
+<p><span style="font-family: Verdana;">　　② 方式1 和方式3 的波特率可变，由定时器1 的溢出率决定。</span><br><span style="font-family: Verdana;">　　当定时器T1 用作波特率发生器时，通常选用定时初值自动重装的工作方式2（ 注意：不要把定时器的工作方式与串行口的工作方式搞混淆了）。其计数结构为8 位，假定计数初值为Count，单片机的机器周期为T，则定时时间为（256 ?Count）×T 。从而在1s内发生溢出的次数（即溢出率）可由公式（1）所示：</span><br><span style="font-family: Verdana;">　　从而波特率的计算公式由公式（2）所示：</span><br><span style="font-family: Verdana;">　　在实际应用时，通常是先确定波特率，后根据波特率求T1 定时初值，因此式（2）又可写为：</span><br><span style="font-family: Verdana;"><strong><span style="font-size: medium;">二、电路详解</span></strong></span></p>
+<p><span style="font-family: Verdana;">　　下面就对图1 所示电路进行详细说明。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">图1 串行通信实验电路图</span></p><br><span style="font-family: Verdana;">　　最小系统部分（时钟电路、复位电路等）第一讲已经讲过，在此不再叙述。我们重点来了解下与计算机通信的RS-232 接口电路。可以看到，在电路图中，有TXD 和RXD 两个接收和发送指示状态灯，此外用了一个叫MAX3232 的芯片，那它是用来实现什么的呢？首先我们要知道计算机上的串口是具有RS-232 标准的串行接口，而RS-232 的标准中定义了其电气特性：高电平“1”信号电压的范围为-15V~-3V，低电平“0”</span><p></p>
+<p><span style="font-family: Verdana;">　　信号电压的范围为+3V~+15V。可能有些读者会问，它为什么要以这样的电气特性呢？这是因为高低电平用相反的电压表示，至少有6V 的压差，非常好的提高了数据传输的可靠性。由于单片机的管脚电平为TTL，单片机与RS-232 标准的串行口进行通信时，首先要解决的便是电平转换的问题。一般来说，可以选择一些专业的集成电路芯片，如图中的MAX3232。MAX3232 芯片内部集成了电压倍增电路，单电源供电即可完成电平转换，而且工作电压宽，3V~5.5V 间均能正常工作。其典型应用如图中所示，其外围所接的电容对传输速率有影响，在试验套件中采用的是0.1μF。</span></p>
+<p><span style="font-family: Verdana;">　　值得一提的是MAX3232 芯片拥有两对电平转换线路，图中只用了一路，因此浪费了另一路，在一些场合可以将两路并联以获得较强的驱动抗干扰能力。此外，我们有必要了解图中与计算机相连的DB-9型RS-232的引脚结构（见图2）。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">图2 DB-9连接器接口图</span></p><br><span style="font-family: Verdana;">　　其各管脚定义如下（见表4）。</span><p></p>
+<p></p><p align="center"><span style="font-family: Verdana;">表4 DB-9型接口管脚定义</span></p><br><span style="font-family: Verdana;">　　<strong><span style="font-size: medium;">三、程序设计</span></strong></span><p></p>
+<p><span style="font-family: Verdana;">　　本讲设计实例程序如下：</span></p>
+<p><span style="font-family: Verdana;">　　#include “AT89X52.h” （1）</span></p>
+<p><span style="font-family: Verdana;">　　void Init_Com（void） （ 2）</span></p>
+<p><span style="font-family: Verdana;">　　{</span></p>
+<p><span style="font-family: Verdana;">　　TMOD = 0x20; （ 3）</span></p>
+<p><span style="font-family: Verdana;">　　PCON = 0x00; （ 4）</span></p>
+<p><span style="font-family: Verdana;">　　SCON = 0x50; （ 5）</span></p>
+<p><span style="font-family: Verdana;">　　TH1 = 0xE8; （ 6）</span></p>
+<p><span style="font-family: Verdana;">　　TL1 = 0xE8; （ 7）</span></p>
+<p><span style="font-family: Verdana;">　　TR1 = 1; （ 8）</span></p>
+<p><span style="font-family: Verdana;">　　}</span></p>
+<p><span style="font-family: Verdana;">　　void main（void） （ 9）</span></p>
+<p><span style="font-family: Verdana;">　　{</span></p>
+<p><span style="font-family: Verdana;">　　unsigned char dat; （ 10）</span></p>
+<p><span style="font-family: Verdana;">　　Init_Com（）； （ 11）</span></p>
+<p><span style="font-family: Verdana;">　　while（1） （ 12）</span></p>
+<p><span style="font-family: Verdana;">　　程序详细说明：</span></p>
+<p><span style="font-family: Verdana;"><span style="font-family: Verdana;">　　</span>（1）头文件包含。</span></p>
+<p><span style="font-family: Verdana;">　　（2）声明串口初始化程序。</span></p>
+<p><span style="font-family: Verdana;">　　（3）设置定时器1 工作在模式2，自动装载初值（详见第二讲）。</span></p>
+<p><span style="font-family: Verdana;">　　（4）SMOD 位清0，波特率不加倍。</span></p>
+<p><span style="font-family: Verdana;">　　（5）串行口工作在方式1，并允许接收。</span></p>
+<p><span style="font-family: Verdana;">　　（6）定时器1 高8 位赋初值。波特率为1200b/s（7）定时器1 低8 位赋初值。</span></p>
+<p><span style="font-family: Verdana;">　　（8）启动定时器。</span></p>
+<p><span style="font-family: Verdana;">　　（9）主函数。</span></p>
+<p><span style="font-family: Verdana;">　　（10）定义一个字符型变量。</span></p>
+<p><span style="font-family: Verdana;">　　（11）初始化串口。</span></p>
+<p><span style="font-family: Verdana;">　　（12）死循环。</span></p>
+<p><span style="font-family: Verdana;">　　（13）如果接收到数据。</span></p>
+<p><span style="font-family: Verdana;">　　（14）将接收到的数据赋给之前定义的变量。</span></p>
+<p><span style="font-family: Verdana;">　　（15）将接收到的值输出到P0 口。</span></p>
+<p><span style="font-family: Verdana;">　　（16）对接收标志位清0，准备再次接收。</span></p>
+<p><span style="font-family: Verdana;">　　（17）将接收到的数据又发送出去。</span></p>
+<p><span style="font-family: Verdana;">　　（18）查询是否发送完毕。</span></p>
+<p><span style="font-family: Verdana;">　　（19）对发送标志位清0。</span></p>
+<p><span style="font-family: Verdana;">　<span style="font-size: medium;">　<strong>四、调试要点与实验现象</strong></span></span></p>
+<p><span style="font-family: Verdana;">　　接好硬件，通过冷启动方式将程序所生成的。hex文件下载到单片机运行后，打开串口调试助手软件，设置好波特率1200，复位单片机，然后在通过串口调试助手往单片机发送数据（见图3），可以观察到在接收窗口有发送的数据显示，此外电路板上的串行通信指示灯也会闪烁，P0 口所接到LED 灯会闪烁所接收到的数据。</span></p>
+<p></p><p align="center"><span style="font-family: Verdana;">图3 串口软件调试界面</span></p><br><span style="font-family: Verdana;">　　另外串口调试助手软件使用时应注意的是，如果单片机开发板采用串口下载而且和串口调试助手是使用同一串口，则在打开串口软件的同时不能给单片机下载程序，如需要下载，请首先点击“关闭串口”，做发送实验的时候，注意如果选中16 进制发送的就是数字或者字母的16 进制数值，比如发送“0”，实际接收的就应该是0x00，如果不选中，默认发送的是ASCII 码值，此时发送“0”，实际接收的就应该是0x30，这点可以通过观察板子P0 口上的对应的LED 指示出来。</span><p></p>
+<p><span style="font-family: Verdana;">　　<strong><span style="font-size: medium;">五、总结</span></strong></span></p>
+<p><span style="font-family: Verdana;">　　本讲介绍了单片机串口通信的原理并给出了实例，通过该讲，读者可以了解和掌握51 单片机串口通信的原理与应用流程，利用串口通信，单片机可以与计算机相连，也可以单片机互联或者多个单片机相互通信组网等，在实际的工程应用中非常广泛。从学习的角度来说，熟练的利用串口将单片机系统中的相关信息显示在计算机上可以很直观方便的进行调试和开发。因此希望读者能够自己灵活应用串口通信到自己的实际开发当中，至此，51 单片机内部资源讲述得差不多了，从下讲开始，将要介绍单片机外围电路。下讲将讲述单片机外接按键的原理与实例，敬请期待。</span></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/some-problems-in-2012.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">2012亟待解决的几个问题</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/of-the-smallest-single-chip-system-control-and-i-o-output.html">
+        <span class="next-text nav-default">单片机最小系统组成与I/O输出控制</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/single-chip-serial-communication-instance.html';
+
+  var disqus_title = "单片机串口通信实例";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="页面的自动跳转-自定义等待时间">
+
+
+
+
+  <meta name="keywords" content="wordpress,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/page-frames-custom-wait-time.html">
+
+
+<meta name="description" content="发表评论通过修改META即可实现自动更换显示内容，更换的时间和文件都可以自行设定。语句如下： &amp;lt;HEAD&amp;gt; &amp;lt;TITLE&amp;gt;测试页面&amp;lt;/TITLE&amp;gt; &amp;lt;META HTTP-EQUIV=&quot;REFRESH&quot; CONTENT=&quot;@; URL=&amp;amp;&quot;&amp;gt; &amp;lt;/HEAD&amp;gt; @ 是刷新的时间，单位是秒。&amp;amp;是要显示的文件。 在Web上显示一段">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="页面的自动跳转-自定义等待时间">
+<meta property="og:url" content="http://rmingwang.com/page-frames-custom-wait-time.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="发表评论通过修改META即可实现自动更换显示内容，更换的时间和文件都可以自行设定。语句如下： &amp;lt;HEAD&amp;gt; &amp;lt;TITLE&amp;gt;测试页面&amp;lt;/TITLE&amp;gt; &amp;lt;META HTTP-EQUIV=&quot;REFRESH&quot; CONTENT=&quot;@; URL=&amp;amp;&quot;&amp;gt; &amp;lt;/HEAD&amp;gt; @ 是刷新的时间，单位是秒。&amp;amp;是要显示的文件。 在Web上显示一段">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="页面的自动跳转-自定义等待时间">
+<meta name="twitter:description" content="发表评论通过修改META即可实现自动更换显示内容，更换的时间和文件都可以自行设定。语句如下： &amp;lt;HEAD&amp;gt; &amp;lt;TITLE&amp;gt;测试页面&amp;lt;/TITLE&amp;gt; &amp;lt;META HTTP-EQUIV=&quot;REFRESH&quot; CONTENT=&quot;@; URL=&amp;amp;&quot;&amp;gt; &amp;lt;/HEAD&amp;gt; @ 是刷新的时间，单位是秒。&amp;amp;是要显示的文件。 在Web上显示一段">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 页面的自动跳转-自定义等待时间 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          页面的自动跳转-自定义等待时间
+        
+      </h1>
+
+      <time class="post-time">
+          10月 5 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>发表评论通过修改META即可实现自动更换显示内容，更换的时间和文件都可以自行设定。语句如下：</p>
+<pre>&lt;HEAD&gt;
+&lt;TITLE&gt;测试页面&lt;/TITLE&gt;
+&lt;META HTTP-EQUIV="REFRESH" CONTENT="@; URL=&amp;"&gt;
+&lt;/HEAD&gt;</pre>
+<pre>@ 是刷新的时间，单位是秒。&amp;是要显示的文件。</pre>
+<pre>在Web上显示一段欢迎信息，隔一定秒数后，自动跳转到其他的Web页
+面，由此可以造成新奇的效果。其实现方法是在&lt; HEAD &gt;与&lt; /HEAD &gt;标签之间加上如下语句：
+举例说明：
+如将一个显示欢迎信息的图像：welcome.gif存放在与HTML文档同一个
+目录中，则下面的HTML文件在浏览器中显示该图像，3 秒钟后将自动跳
+
+</pre>
+<pre>&lt; meta http-equiv="Refresh" content="秒数; url=跳转的文件或地址" &gt;</pre>
+<pre>&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;WELCOME&lt;/TITLE&gt;
+&lt;meta http-equiv="Refresh" content="3;
+url=http://abc.com"&gt;
+&lt;/HEAD&gt;
+&lt;/HTML&gt;SRC="welcome.gif" &gt;</pre>
+<pre>可以通过这个功能实现多种作用，自己慢慢琢磨去吧。比如，做个循环刷页面，通过这个可以实现每隔多长</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/psd-azolla-from-injury.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">【psd】满江红.离伤</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/some-good-wordpress-themes-download-site.html">
+        <span class="next-text nav-default">一些不错的WordPress主题下载站</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/page-frames-custom-wait-time.html';
+
+  var disqus_title = "页面的自动跳转-自定义等待时间";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

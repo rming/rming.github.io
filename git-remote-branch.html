@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Git查看、删除、重命名远程分支和tag">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/git-remote-branch.html">
+
+
+<meta name="description" content="Git查看、删除、重命名远程分支和tag  2015-06-15：加入姊妹篇； 2013-11-06：加入重命名远程分支的内容； 2013-01-09：加入删除远程tag的内容。  姊妹篇：使用Git、Git GUI和TortoiseGit 这篇文章记录我在使用git的过程中碰到远程分支和tag的相关内容，提纲：  查看远程分支 删除远程分支和tag 删除不存在对应远程分支的本地分支 重命名远程分">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git查看、删除、重命名远程分支和tag">
+<meta property="og:url" content="http://rmingwang.com/git-remote-branch.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="Git查看、删除、重命名远程分支和tag  2015-06-15：加入姊妹篇； 2013-11-06：加入重命名远程分支的内容； 2013-01-09：加入删除远程tag的内容。  姊妹篇：使用Git、Git GUI和TortoiseGit 这篇文章记录我在使用git的过程中碰到远程分支和tag的相关内容，提纲：  查看远程分支 删除远程分支和tag 删除不存在对应远程分支的本地分支 重命名远程分">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-01-13T02:25:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git查看、删除、重命名远程分支和tag">
+<meta name="twitter:description" content="Git查看、删除、重命名远程分支和tag  2015-06-15：加入姊妹篇； 2013-11-06：加入重命名远程分支的内容； 2013-01-09：加入删除远程tag的内容。  姊妹篇：使用Git、Git GUI和TortoiseGit 这篇文章记录我在使用git的过程中碰到远程分支和tag的相关内容，提纲：  查看远程分支 删除远程分支和tag 删除不存在对应远程分支的本地分支 重命名远程分">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Git查看、删除、重命名远程分支和tag - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Git查看、删除、重命名远程分支和tag
+        
+      </h1>
+
+      <time class="post-time">
+          6月 7 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><a href="http://zengrong.net/post/1746.htm" target="_blank" rel="noopener">Git查看、删除、重命名远程分支和tag</a></p>
+<ul>
+<li><span style="color:red;">2015-06-15</span>：加入姊妹篇；</li>
+<li><span style="color:red;">2013-11-06</span>：加入重命名远程分支的内容；</li>
+<li><span style="color:red;">2013-01-09</span>：加入删除远程tag的内容。</li>
+</ul>
+<p>姊妹篇：<a href="http://zengrong.net/post/1722.htm" target="_blank" rel="noopener">使用Git、Git GUI和TortoiseGit</a></p>
+<p>这篇文章记录我在使用git的过程中碰到远程分支和tag的相关内容，提纲：</p>
+<ol>
+<li>查看远程分支</li>
+<li>删除远程分支和tag</li>
+<li>删除不存在对应远程分支的本地分支</li>
+<li>重命名远程分支</li>
+<li>把本地tag推送到远程</li>
+<li>获取远程tag</li>
+</ol>
+<h2><span id="查看远程分支">查看远程分支</span></h2><p>加上-a参数可以查看远程分支，远程分支会用红色表示出来（如果你开了颜色支持的话）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -a</span><br><span class="line">  master</span><br><span class="line">  remote</span><br><span class="line">  tungway</span><br><span class="line">  v1.52</span><br><span class="line">* zrong</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/tungway</span><br><span class="line">  remotes/origin/v1.52</span><br><span class="line">  remotes/origin/zrong</span><br></pre></td></tr></table></figure>
+<h2><span id="删除远程分支和tag">删除远程分支和tag</span></h2><p>在Git v1.7.0 之后，可以使用这种语法删除远程分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin --delete &lt;branchName&gt;</span><br></pre></td></tr></table></figure>
+<p>删除tag这么用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete tag &lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>否则，可以使用这种语法，推送一个空分支到远程分支，其实就相当于删除远程分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin :&lt;branchName&gt;</span><br></pre></td></tr></table></figure>
+<p>这是删除tag的方法，推送一个空tag到远程tag：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d &lt;tagname&gt;</span><br><span class="line">git push origin :refs/tags/&lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+<p>两种语法作用完全相同。</p>
+<h2><span id="删除不存在对应远程分支的本地分支">删除不存在对应远程分支的本地分支</span></h2><p>假设这样一种情况：</p>
+<ol>
+<li>我创建了本地分支b1并pull到远程分支 <code>origin/b1</code>；</li>
+<li>其他人在本地使用fetch或pull创建了本地的b1分支；</li>
+<li>我删除了 <code>origin/b1</code> 远程分支；</li>
+<li>其他人再次执行fetch或者pull并不会删除这个他们本地的 <code>b1</code> 分支，运行 <code>git branch -a</code> 也不能看出这个branch被删除了，如何处理？</li>
+</ol>
+<p>使用下面的代码查看b1的状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git remote show origin</span><br><span class="line">* remote origin</span><br><span class="line">  Fetch URL: git@github.com:xxx/xxx.git</span><br><span class="line">  Push  URL: git@github.com:xxx/xxx.git</span><br><span class="line">  HEAD branch: master</span><br><span class="line">  Remote branches:</span><br><span class="line">    master                 tracked</span><br><span class="line">    refs/remotes/origin/b1 stale (use <span class="string">'git remote prune'</span> to remove)</span><br><span class="line">  Local branch configured <span class="keyword">for</span> <span class="string">'git pull'</span>:</span><br><span class="line">    master merges with remote master</span><br><span class="line">  Local ref configured <span class="keyword">for</span> <span class="string">'git push'</span>:</span><br><span class="line">    master pushes to master (up to date)</span><br></pre></td></tr></table></figure>
+<p>这时候能够看到b1是stale的，使用 <code>git remote prune origin</code> 可以将其从本地版本库中去除。</p>
+<p>更简单的方法是使用这个命令，它在fetch之后删除掉没有与远程分支对应的本地分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch -p</span><br></pre></td></tr></table></figure>
+<h2><span id="重命名远程分支">重命名远程分支</span></h2><p>在git中重命名远程分支，其实就是先删除远程分支，然后重命名本地分支，再重新提交一个远程分支。</p>
+<p>例如下面的例子中，我需要把 devel 分支重命名为 develop 分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -av</span><br><span class="line">* devel                             752bb84 Merge pull request <span class="comment">#158 from Gwill/devel</span></span><br><span class="line">  master                            53b27b8 Merge pull request <span class="comment">#138 from tdlrobin/master</span></span><br><span class="line">  zrong                             2ae98d8 modify CCFileUtils, <span class="built_in">export</span> getFileData</span><br><span class="line">  remotes/origin/HEAD               -&gt; origin/master</span><br><span class="line">  remotes/origin/add_build_script   d4a8c4f Merge branch <span class="string">'master'</span> into add_build_script</span><br><span class="line">  remotes/origin/devel              752bb84 Merge pull request <span class="comment">#158 from Gwill/devel</span></span><br><span class="line">  remotes/origin/devel_qt51         62208f1 update .gitignore</span><br><span class="line">  remotes/origin/master             53b27b8 Merge pull request <span class="comment">#138 from tdlrobin/master</span></span><br><span class="line">  remotes/origin/zrong              2ae98d8 modify CCFileUtils, <span class="built_in">export</span> getFileData</span><br></pre></td></tr></table></figure>
+<p>删除远程分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git push --delete origin devel</span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> - [deleted]         devel</span><br></pre></td></tr></table></figure>
+<p>重命名本地分支： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m devel develop</span><br></pre></td></tr></table></figure>
+<p>推送本地分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin develop</span><br><span class="line">Counting objects: 92, <span class="keyword">done</span>.</span><br><span class="line">Delta compression using up to 4 threads.</span><br><span class="line">Compressing objects: 100% (48/48), <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (58/58), 1.38 MiB, <span class="keyword">done</span>.</span><br><span class="line">Total 58 (delta 34), reused 12 (delta 5)</span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> * [new branch]      develop -&gt; develop</span><br></pre></td></tr></table></figure>
+<p>然而，在 github 上操作的时候，我在删除远程分支时碰到这个错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git push --delete origin devel</span><br><span class="line">remote: error: refusing to delete the current branch: refs/heads/devel</span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> ! [remote rejected] devel (deletion of the current branch prohibited)</span><br><span class="line">error: failed to push some refs to <span class="string">'git@github.com:zrong/quick-cocos2d-x.git'</span></span><br></pre></td></tr></table></figure>
+<p>这是由于在 github 中，devel 是项目的默认分支。要解决此问题，这样操作：</p>
+<ol>
+<li>进入 github 中该项目的 Settings 页面；</li>
+<li>设置 Default Branch 为其他的分支（例如 master）；</li>
+<li>重新执行删除远程分支命令。</li>
+</ol>
+<h2><span id="把本地tag推送到远程">把本地tag推送到远程</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+<h2><span id="获取远程tag">获取远程tag</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin tag &lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+<h2><span id="参考文章">参考文章</span></h2><ul>
+<li><a href="https://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote" target="_blank" rel="noopener">https://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote</a></li>
+<li><a href="http://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-in-github" target="_blank" rel="noopener">http://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-in-github</a></li>
+<li><a href="http://www.cnblogs.com/deepnighttwo/archive/2011/06/18/2084438.html" target="_blank" rel="noopener">http://www.cnblogs.com/deepnighttwo/archive/2011/06/18/2084438.html</a></li>
+<li><a href="http://stackoverflow.com/questions/14040754/deleting-remote-master-branch-refused-due-to-being-current-branch" target="_blank" rel="noopener">http://stackoverflow.com/questions/14040754/deleting-remote-master-branch-refused-due-to-being-current-branch</a></li>
+<li><a href="http://weli.iteye.com/blog/1441582" target="_blank" rel="noopener">http://weli.iteye.com/blog/1441582</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-the-the-git-commonly-used-command.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">git常用命令</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/51-mcu-sms-alarm-lock.html">
+        <span class="next-text nav-default">51单片机密码锁(掉电锁存/短信报警)</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/git-remote-branch.html';
+
+  var disqus_title = "Git查看、删除、重命名远程分支和tag";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

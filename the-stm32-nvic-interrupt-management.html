@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="stm32 NVIC中断管理实现">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/the-stm32-nvic-interrupt-management.html">
+
+
+<meta name="description" content="cortex-M3内核支持256个中断，其中包含16个内核中断和240个外部中断，并且具有256级的可编程中断设置，但是STM32并美元使用CM3内核的全部东西，而是只是用了它的一部分。STM32有76个中断，包括16个内核中断和60个可屏蔽的中断，具有16级可编程中断优先级，而我们常用的就是这60个可屏蔽的中断(其中包括19个外部中断)（stm32f103上只有60个中断，f107上才有68个中">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32 NVIC中断管理实现">
+<meta property="og:url" content="http://rmingwang.com/the-stm32-nvic-interrupt-management.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="cortex-M3内核支持256个中断，其中包含16个内核中断和240个外部中断，并且具有256级的可编程中断设置，但是STM32并美元使用CM3内核的全部东西，而是只是用了它的一部分。STM32有76个中断，包括16个内核中断和60个可屏蔽的中断，具有16级可编程中断优先级，而我们常用的就是这60个可屏蔽的中断(其中包括19个外部中断)（stm32f103上只有60个中断，f107上才有68个中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="stm32 NVIC中断管理实现">
+<meta name="twitter:description" content="cortex-M3内核支持256个中断，其中包含16个内核中断和240个外部中断，并且具有256级的可编程中断设置，但是STM32并美元使用CM3内核的全部东西，而是只是用了它的一部分。STM32有76个中断，包括16个内核中断和60个可屏蔽的中断，具有16级可编程中断优先级，而我们常用的就是这60个可屏蔽的中断(其中包括19个外部中断)（stm32f103上只有60个中断，f107上才有68个中">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> stm32 NVIC中断管理实现 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          stm32 NVIC中断管理实现
+        
+      </h1>
+
+      <time class="post-time">
+          7月 18 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>cortex-M3内核支持256个中断，其中包含16个内核中断和240个外部中断，并且具有256级的可编程中断设置，但是STM32并美元使用CM3内核的全部东西，而是只是用了它的一部分。STM32有76个中断，包括16个内核中断和60个可屏蔽的中断，具有16级可编程中断优先级，而我们常用的就是这60个可屏蔽的中断(其中包括19个外部中断)（stm32f103上只有60个中断，f107上才有68个中断。）。</p>
+<p><pre class="brush: php; gutter: true">/<em> IRQ Channels ————————————————————–</em>/</pre></p>
+<p>#define WWDG_IRQChannel              ((u8)0x00)  /<em> Window WatchDog Interrupt </em>/</p>
+<p>#define PVD_IRQChannel               ((u8)0x01)  /<em> PVD through EXTI Line detection Interrupt </em>/</p>
+<p>#define TAMPER_IRQChannel            ((u8)0x02)  /<em> Tamper Interrupt </em>/</p>
+<p>#define RTC_IRQChannel               ((u8)0x03)  /<em> RTC global Interrupt </em>/</p>
+<p>#define FLASH_IRQChannel             ((u8)0x04)  /<em> FLASH global Interrupt </em>/</p>
+<p>#define RCC_IRQChannel               ((u8)0x05)  /<em> RCC global Interrupt </em>/</p>
+<p>#define EXTI0_IRQChannel             ((u8)0x06)  /<em> EXTI Line0 Interrupt </em>/</p>
+<p>#define EXTI1_IRQChannel             ((u8)0x07)  /<em> EXTI Line1 Interrupt </em>/</p>
+<p>#define EXTI2_IRQChannel             ((u8)0x08)  /<em> EXTI Line2 Interrupt </em>/</p>
+<p>#define EXTI3_IRQChannel             ((u8)0x09)  /<em> EXTI Line3 Interrupt </em>/</p>
+<p>#define EXTI4_IRQChannel             ((u8)0x0A)  /<em> EXTI Line4 Interrupt </em>/</p>
+<p>#define DMA1_Channel1_IRQChannel     ((u8)0x0B)  /<em> DMA1 Channel 1 global Interrupt </em>/</p>
+<p>#define DMA1_Channel2_IRQChannel     ((u8)0x0C)  /<em> DMA1 Channel 2 global Interrupt </em>/</p>
+<p>#define DMA1_Channel3_IRQChannel     ((u8)0x0D)  /<em> DMA1 Channel 3 global Interrupt </em>/</p>
+<p>#define DMA1_Channel4_IRQChannel     ((u8)0x0E)  /<em> DMA1 Channel 4 global Interrupt </em>/</p>
+<p>#define DMA1_Channel5_IRQChannel     ((u8)0x0F)  /<em> DMA1 Channel 5 global Interrupt </em>/</p>
+<p>#define DMA1_Channel6_IRQChannel     ((u8)0x10)  /<em> DMA1 Channel 6 global Interrupt </em>/</p>
+<p>#define DMA1_Channel7_IRQChannel     ((u8)0x11)  /<em> DMA1 Channel 7 global Interrupt </em>/</p>
+<p>#define ADC1_2_IRQChannel            ((u8)0x12)  /<em> ADC1 et ADC2 global Interrupt </em>/</p>
+<p>#define USB_HP_CAN_TX_IRQChannel     ((u8)0x13)  /<em> USB High Priority or CAN TX Interrupts </em>/</p>
+<p>#define USB_LP_CAN_RX0_IRQChannel    ((u8)0x14)  /<em> USB Low Priority or CAN RX0 Interrupts </em>/</p>
+<p>#define CAN_RX1_IRQChannel           ((u8)0x15)  /<em> CAN RX1 Interrupt </em>/</p>
+<p>#define CAN_SCE_IRQChannel           ((u8)0x16)  /<em> CAN SCE Interrupt </em>/</p>
+<p>#define EXTI9_5_IRQChannel           ((u8)0x17)  /<em> External Line[9:5] Interrupts </em>/</p>
+<p>#define TIM1_BRK_IRQChannel          ((u8)0x18)  /<em> TIM1 Break Interrupt </em>/</p>
+<p>#define TIM1_UP_IRQChannel           ((u8)0x19)  /<em> TIM1 Update Interrupt </em>/</p>
+<p>#define TIM1_TRG_COM_IRQChannel      ((u8)0x1A)  /<em> TIM1 Trigger and Commutation Interrupt </em>/</p>
+<p>#define TIM1_CC_IRQChannel           ((u8)0x1B)  /<em> TIM1 Capture Compare Interrupt </em>/</p>
+<p>#define TIM2_IRQChannel              ((u8)0x1C)  /<em> TIM2 global Interrupt </em>/</p>
+<p>#define TIM3_IRQChannel              ((u8)0x1D)  /<em> TIM3 global Interrupt </em>/</p>
+<p>#define TIM4_IRQChannel              ((u8)0x1E)  /<em> TIM4 global Interrupt </em>/</p>
+<p>#define I2C1_EV_IRQChannel           ((u8)0x1F)  /<em> I2C1 Event Interrupt </em>/</p>
+<p>#define I2C1_ER_IRQChannel           ((u8)0x20)  /<em> I2C1 Error Interrupt </em>/</p>
+<p>#define I2C2_EV_IRQChannel           ((u8)0x21)  /<em> I2C2 Event Interrupt </em>/</p>
+<p>#define I2C2_ER_IRQChannel           ((u8)0x22)  /<em> I2C2 Error Interrupt </em>/</p>
+<p>#define SPI1_IRQChannel              ((u8)0x23)  /<em> SPI1 global Interrupt </em>/</p>
+<p>#define SPI2_IRQChannel              ((u8)0x24)  /<em> SPI2 global Interrupt </em>/</p>
+<p>#define USART1_IRQChannel            ((u8)0x25)  /<em> USART1 global Interrupt </em>/</p>
+<p>#define USART2_IRQChannel            ((u8)0x26)  /<em> USART2 global Interrupt </em>/</p>
+<p>#define USART3_IRQChannel            ((u8)0x27)  /<em> USART3 global Interrupt </em>/</p>
+<p>#define EXTI15_10_IRQChannel         ((u8)0x28)  /<em> External Line[15:10] Interrupts </em>/</p>
+<p>#define RTCAlarm_IRQChannel          ((u8)0x29)  /<em> RTC Alarm through EXTI Line Interrupt </em>/</p>
+<p>#define USBWakeUp_IRQChannel         ((u8)0x2A)  /<em> USB WakeUp from suspend through EXTI Line Interrupt </em>/</p>
+<p>#define TIM8_BRK_IRQChannel          ((u8)0x2B)  /<em> TIM8 Break Interrupt </em>/</p>
+<p>#define TIM8_UP_IRQChannel           ((u8)0x2C)  /<em> TIM8 Update Interrupt </em>/</p>
+<p>#define TIM8_TRG_COM_IRQChannel      ((u8)0x2D)  /<em> TIM8 Trigger and Commutation Interrupt </em>/</p>
+<p>#define TIM8_CC_IRQChannel           ((u8)0x2E)  /<em> TIM8 Capture Compare Interrupt </em>/</p>
+<p>#define ADC3_IRQChannel              ((u8)0x2F)  /<em> ADC3 global Interrupt </em>/</p>
+<p>#define FSMC_IRQChannel              ((u8)0x30)  /<em> FSMC global Interrupt </em>/</p>
+<p>#define SDIO_IRQChannel              ((u8)0x31)  /<em> SDIO global Interrupt </em>/</p>
+<p>#define TIM5_IRQChannel              ((u8)0x32)  /<em> TIM5 global Interrupt </em>/</p>
+<p>#define SPI3_IRQChannel              ((u8)0x33)  /<em> SPI3 global Interrupt </em>/</p>
+<p>#define UART4_IRQChannel             ((u8)0x34)  /<em> UART4 global Interrupt </em>/</p>
+<p>#define UART5_IRQChannel             ((u8)0x35)  /<em> UART5 global Interrupt </em>/</p>
+<p>#define TIM6_IRQChannel              ((u8)0x36)  /<em> TIM6 global Interrupt </em>/</p>
+<p>#define TIM7_IRQChannel              ((u8)0x37)  /<em> TIM7 global Interrupt </em>/</p>
+<p>#define DMA2_Channel1_IRQChannel     ((u8)0x38)  /<em> DMA2 Channel 1 global Interrupt </em>/</p>
+<p>#define DMA2_Channel2_IRQChannel     ((u8)0x39)  /<em> DMA2 Channel 2 global Interrupt </em>/</p>
+<p>#define DMA2_Channel3_IRQChannel     ((u8)0x3A)  /<em> DMA2 Channel 3 global Interrupt </em>/</p>
+<p>#define DMA2_Channel4_5_IRQChannel   ((u8)0x3B)  /<em> DMA2 Channel 4 and DMA2 Channel 5 global Interrupt </em>/</p>
+<h3><span id="与nvic相关的寄存器">与NVIC相关的寄存器</span></h3><br><pre class="brush: php; gutter: true">typedef struct<br>{<br>  vu32 ISER[2];<br>  u32  RESERVED0[30];<br>  vu32 ICER[2];<br>  u32  RSERVED1[30];<br>  vu32 ISPR[2];<br>  u32  RESERVED2[30];<br>  vu32 ICPR[2];<br>  u32  RESERVED3[30];<br>  vu32 IABR[2];<br>  u32  RESERVED4[62];<br>  vu32 IPR[15];<br>} NVIC_TypeDef;</pre><br>STM32就是在这些寄存器的控制下有序的执行的，下面介绍一下这些寄存器<br><br><strong>ISER[2]   <strong>中断使能寄存器<strong>组 </strong></strong></strong>（Interrupt Set-En able Registers）    ，STM32的可屏蔽中断只有60 个，这里用了2 个32 位的寄存器，总共可以表示64 个中断。（ISER[0]的bit0~bit31分别对应中断 0~31。ISER[1] 的bit0~27对应中断32~59 。）<br><br><strong>ICER[2]</strong>  <strong>中断除能寄存器组</strong>（Interrupt Clear-Enable Registers） 该寄存器组与ISER 的作用恰好相反，是用来清除某个中断的使能的。对应位的功能和ICER 一样，这里要专门设置一个ICER 来清除中断位，而不是向 ISER 写0 来清除，是因为<strong> NVIC的这些寄存器都是写1 有效写 0 是无效的</strong>。<br><br><strong>ISPR[2]  中断挂起控制寄存器组</strong>（Interrupt Set-Pending Registers ）对应的中断和ISER 是一样的。通过置 1可以将正在进行的中断挂起，而执行同级或更高级别的中断，写0 无效。<br><br><strong>ICPR[2]  中断解挂控制寄存器<strong>组 </strong></strong>（Interrupt Clear-Pending Registers）其作用与ISPR 相反，对应位也和 ISER 是一样的。通过设置 1 ，可以将挂起的中断接挂。写 0 无效。<br><br><strong>IABR[2] 中断激活标志位寄存器组</strong>（<strong> </strong>Active Bit Registers）对应的中断和ISER 是一样的。如果为 1 ，则表示该位所对应的中断正在被执行。这是一个只读寄存器，通过它可以知道当前在执行的中断是哪一个。在中断执行完了由硬件自动清零。<br><br><strong>IPR[15]  中断优先级控制的寄存器组</strong>（Interrupt Priority Registers） <strong>重要！</strong>STM32的中断分组与这个寄存器组密切相关。<strong>IPR 寄存器组由15 个32bit的寄存器组成，每个可屏蔽中断占用 8bit</strong> ，这样总共可以表示 15*4=60 个可屏蔽中断。刚好和 STM32的可屏蔽中断数相等。<strong>IPR[0] 的[31~24]，[23~16]，[15~8] ，[7~0]分别对应中中断 3~0 ，依次类推</strong>，总共对应 60 个外部中断。而<strong>每个可屏蔽中断占用的 8bit 并没有全部使用，而是 只用了高4 位</strong>。这4 位，又分为<strong>抢占优先级和子优先级</strong>。抢占优先级在前，子优先级在后。而这两个优先级各占几个位又要根据<span style="color: #ff0000;"><strong>SCB-&gt;AIRCR 中中断分组</strong></span>的设置来决定。<br><br>&nbsp;<br><br><strong><span style="color: #ff0000;">IPR中优先级</span>的设置前需要在SCB-&gt;AIRCR中进行<span style="color: #ff0000;">中断分组</span></strong><span style="color: #ff0000;"><span style="color: #000000;">，在了解中断分组和优先级设置前，我们先看一下</span></span><strong>先占优先级、次占优先级解释</strong>：<br><blockquote> <strong>先占优先级</strong>的概念等同于51单片机中的中断。假设有两中断先后触发，已经在执行的中断先占优先级如果没有后触发的中断 先占优先级更高，就会先处理先占优先级高的中断。也就是说又有较高的先占优先级的中断可以打断先占优先级较低的中断。这是实现中断嵌套的基础。<br><div>    <strong>次占优先级</strong>只在同一先占优先级的中断同时触发时起作用，先占优先级相同，则优先执行次占优先级较高的中断。次占优先级不会造成中断嵌套。 如果中断的两个优先级都一致，则优先执行位于中断向量表中位置较高的中断。</div></blockquote><br><div></div><br><div><span style="color: #993300;"><strong>还需要注意的一点是 这里的中断优先级 高是指  是指是否更接近0级，0级优先级是最高的。</strong></span></div><br><h3><span id="stm32的中断分组"><strong><span style="color: #ff0000;">STM32的中断分组</span></strong>：</span></h3>
+
+<p>通过这个表，我们就可以清楚的看到组0~4 对应的配置关系，例如组设置为 3 ，那么此时所有的60 个中断，每个中断的中断优先寄存器的高四位中的最高 3 位是抢占优先级，低1 位是响应优先级。每个中断，你可以设置抢占优先级为0~7 ，响应优先级为 1 或0 。<strong>抢占优先级的级别高于响应优先级。而数值越小所代表的优先级就越高。</strong></p>
+<p>结合实例说明一下：假定设置中断优先级组为 2，然后设置中断 3(RTC 中断)的抢占优先级为2 ，响应优先级为 1 。中断 6（外部中断 0 ）的抢占优先级为 3 ，响应优先级为 0 。中断 7（外部中断1 ）的抢占优先级为 2 ，响应优先级为 0 。那么这 3 个中断的优先级顺序为：中断 7&gt;中断3&gt;中断6。</p>
+<p><strong>这里需要注意2 点：</strong></p>
+<p><strong>1</strong> ，如果两个中断的抢占优先级和响应优先级都是一样的话，则看哪个中断先发生就先执行。</p>
+<p><strong>2</strong> ，<strong>高优先级的抢占优先级是可以打断正在进行的低抢占优先级中断的。而抢占优先级相同的中断，高优先级的响应优先级不可以打断低响应优先级的中断。</strong>上面例子中的中断3 和中断7 都可以打断中断6 的中断。而中断 7 和中断3 却不可以相互打断！</p>
+<p>下面看一下程序部分</p>
+<p><strong><span style="color: #ff0000;">设置NVIC分组</span></strong><strong></strong></p>
+<p><pre class="brush: php; gutter: true">/ 设置NVIC分组<br>//NVIC_Group:NVIC 分组 0~4 总共 5 组<br>void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group)<br>{<br>u32 temp，temp1;<br>temp1=(~NVIC_Group)&amp;0x07;//取后三位<br>temp1&lt;&lt;=8;<br>temp=SCB-&gt;AIRCR; //读取先前的设置<br>temp&amp;=0X0000F8FF; //清空先前分组<br>temp|=0X05FA0000; //写入钥匙<br>temp|=temp1;<br>SCB-&gt;AIRCR=temp; //设置分组<br>}</pre><br><span style="color: #ff0000;"><strong>STM32优先级分组</strong></span>的5 个分组是通过设置 <span style="color: #ff0000;">SCB-&gt;AIRCR 的BIT[10:8]</span>来实现的，SCB-&gt;AIRCR 的修改需要通过在高 16 位写入0X05FA 这个<strong>密钥</strong>才能修改的，故在设置 AIRCR之前，应该把密钥加入到要写入的内容的高 16 位，以<strong>保证能正常的写入AIRCR</strong>。在修改IRCR的时候，我们一般采用<strong>读-&gt; 改-&gt; 写</strong>的步骤，来实现不改变AIRCR原来的其他设置。以上就是MY_NVIC_PriorityGroupConfig函数<strong>设置中断优先级分组</strong>的思路。</p>
+<h2><span id="nvic初始化中断分组-抢占优先级-响应优先级-中断编号的实现"><span style="color: #ff0000;"><strong>NVIC初始化<span style="color: #000000;">（中断分组、抢占优先级、响应优先级、中断编号）的实现</span></strong></span></span></h2><br><pre class="brush: php; gutter: true">// 设置NVIC<br>//NVIC_PreemptionPriority: 抢占优先级<br>//NVIC_SubPriority : 响应优先级<br>//NVIC_Channel : 中断编号<br>//NVIC_Group : 中断分组 0~4<br>// 注意优先级不能超过设定的组的范围!否则会有意想不到的错误<br>// 组划分:<br>// 组0:0 位抢占优先级，4 位响应优先级<br>// 组1:1 位抢占优先级，3 位响应优先级<br>// 组2:2 位抢占优先级，2 位响应优先级<br>// 组3:3 位抢占优先级，1 位响应优先级<br>// 组4:4 位抢占优先级，0 位响应优先级<br>//NVIC_SubPriority 和NVIC_PreemptionPriority 的原则是，数值越小，越优先<br>void MY_NVIC_Init(u8 NVIC_PreemptionPriority ，u8 NVIC_SubPriority ，u8 NVIC_Channel ，u8<br>NVIC_Group)<br>{<br>u32 temp;<br>u8 IPRADDR=NVIC_Channel/4; //每组只能存 4 个，得到组地址<br>u8 IPROFFSET=NVIC_Channel%4;//在组内的偏移<br>IPROFFSET=IPROFFSET*8+4; // 得到偏移的确切位置<br>MY_NVIC_PriorityGroupConfig(NVIC_Group);//设置分组<br>temp=NVIC_PreemptionPriority&lt;&gt;NVIC_Group);<br>temp&amp;=0xf;//取低四位<br>if(NVIC_ChannelISER[0]|=1&lt;&lt;NVIC_Channel;//使能中断位( 要清除的话，相反 操作就OK)  else NVIC-&gt;ISER[1]|=1&lt;IPR[IPRADDR]|=temp&lt;&lt;IPROFFSET;//设置响应优先级和抢断优先级<br>}</pre><br>&nbsp;<br><br><strong>NVIC 设置函数</strong><span style="color: #ff0000;"><strong>MY_NVIC_Init</strong></span>，该函数有 4 个参数，分别为：NVIC_PreemptionPriority 、NVIC_SubPriority 、NVIC_Channel、NVIC_Group。第一个参数NVIC_PreemptionPriority 为<strong>中断抢占优先级数值</strong>，第二个参数VIC_SubPriority 为<strong>中断子优先级数值</strong>，前两个参数的值必须在规定范围内，否则也可能产生意想不到的错误。第三个参数NVIC_Channel为<strong>中断的编号</strong>（范围为<strong> 0~59</strong>），最后一个参数 NVIC_Group 为<strong>中断分组</strong>设置（范围为<strong>0~4</strong> ）。<br><br><span style="color: #ff0000;"><strong>注意:</strong></span>该函数里面还引用了MY_NVIC_PriorityGroupConfig这个函数来设置分组。其实这个分组函数在<strong>每个系统里面只要设置一次就够了，设置多次，则是以最后的那一次为准。</strong>但是只要多次设置的组号都是一样，就没事。否则前面设置的中断会因为后面组的变化优先级会发生改变，这点在使用的时候要特别注意！一个系统代码里面，<span style="color: #ff0000;"><strong>所有的中断分组都要统一！！</strong></span><br><br><strong>通过以上两个函数就实现了对NVIC 的管理和配置。但是外部中断的设置，还需要配置相关寄存器才可以。下面就介绍外部中断的配置和使用。</strong><br><h2><span id><span style="color: #ff0000;"><br></span></span></h2>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-stm32-external-interrupt-management.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32外部中断管理</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-serial-communication.html">
+        <span class="next-text nav-default">STM32串口通信</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/the-stm32-nvic-interrupt-management.html';
+
+  var disqus_title = "stm32 NVIC中断管理实现";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

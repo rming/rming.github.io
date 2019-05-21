@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="javascript代码片段笔记">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/javascript-memo.html">
+
+
+<meta name="description" content="获取DOM对象  1234567function getel(e) &amp;#123;    if (document.getElementById) &amp;#123;        return document.getElementById(e);    &amp;#125; else if (document.all)&amp;#123;        return document.all[e];    &amp;#125">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript代码片段笔记">
+<meta property="og:url" content="http://rmingwang.com/javascript-memo.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="获取DOM对象  1234567function getel(e) &amp;#123;    if (document.getElementById) &amp;#123;        return document.getElementById(e);    &amp;#125; else if (document.all)&amp;#123;        return document.all[e];    &amp;#125">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-05-03T07:59:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript代码片段笔记">
+<meta name="twitter:description" content="获取DOM对象  1234567function getel(e) &amp;#123;    if (document.getElementById) &amp;#123;        return document.getElementById(e);    &amp;#125; else if (document.all)&amp;#123;        return document.all[e];    &amp;#125">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> javascript代码片段笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          javascript代码片段笔记
+        
+      </h1>
+
+      <time class="post-time">
+          3月 3 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3><span id="获取dom对象">获取DOM对象</span></h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function getel(e) &#123;</span><br><span class="line">    if (document.getElementById) &#123;</span><br><span class="line">        return document.getElementById(e);</span><br><span class="line">    &#125; else if (document.all)&#123;</span><br><span class="line">        return document.all[e];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="xmlhttp">xmlHttp</span></h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//定义方法 获取XMLHttpRequest对象</span><br><span class="line">function ajaxLoad(method,url,cfunc)&#123;</span><br><span class="line">    if(window.XMLHttpRequest)&#123;// code for IE7+, Firefox, Chrome, Opera, Safari</span><br><span class="line">      xmlhttp=new XMLHttpRequest();</span><br><span class="line">    &#125;else&#123;// code for IE6, IE5</span><br><span class="line">      xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    xmlhttp.onreadystatechange=cfunc;</span><br><span class="line">    xmlhttp.open(method,url,true);</span><br><span class="line">    xmlhttp.send();</span><br><span class="line">&#125;</span><br><span class="line">//使用方法</span><br><span class="line">var url=&quot;http://www.baidu.com/api&quot;</span><br><span class="line">ajaxLoad(&quot;GET&quot;,url,function()&#123;</span><br><span class="line">  if (xmlhttp.readyState==4 &amp;amp;&amp;amp; xmlhttp.status==200)&#123;</span><br><span class="line">    document.getElementById(&quot;message&quot;).innerHTML=xmlhttp.responseText;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="获取url里的get参数">获取URL里的GET参数</span></h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//url里的查询参数</span><br><span class="line">function getQueryString(name) &#123;</span><br><span class="line">    var reg = new RegExp(&quot;(^|&amp;amp;)&quot; + name + &quot;=([^&amp;amp;]*)(&amp;amp;|$)&quot;, &quot;i&quot;);</span><br><span class="line">    var r = window.location.search.substr(1).match(reg);</span><br><span class="line">    if (r != null) return unescape(r[2]); return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="绑定click监听">绑定click监听</span></h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;DIV_ID&quot;).addEventListener(&apos;click&apos;, function()&#123;</span><br><span class="line">    //click后执行</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="对dom对象设置css">对DOM对象设置CSS</span></h3>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;DIV_ID&quot;).style.display=&quot;none&quot;;</span><br></pre></td></tr></table></figure>
+<p></p><h3><span id="定时器操作">定时器操作</span></h3><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//定时1秒，执行10秒</span><br><span class="line">tickLimit = 10;</span><br><span class="line">function showTicks()&#123;</span><br><span class="line">    var tickCounter = 1;</span><br><span class="line">    intervalId = setInterval(function()&#123;</span><br><span class="line">        //定时时间限制到了，清除定时器</span><br><span class="line">        if (tickCounter &amp;gt; tickLimit) &#123;</span><br><span class="line">            clearInterval(intervalId); //取消 setInterval()</span><br><span class="line">        &#125;</span><br><span class="line">        //do something</span><br><span class="line">    &#125;</span><br><span class="line">    tickCounter++;</span><br><span class="line">&#125;,1000);</span><br><span class="line">//如果需要停止定时执行</span><br><span class="line">//取消之前的定时设置 </span><br><span class="line">if(typeof(intervalId)!=&quot;undefined&quot;)&#123;</span><br><span class="line">    clearInterval(intervalId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<h2><span id="password-input-大小写输入检测">password input 大小写输入检测</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;</span><br><span class="line">&lt;p&gt;&lt;label for=&quot;password&quot;&gt;密码：&lt;/label&gt;&lt;input type=&quot;password&quot; id=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;span style=&quot;display:none;&quot;&gt;大写锁定键被按下，请注意大小写&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">//&lt;![CDATA[</span><br><span class="line">function  detectCapsLock(event)&#123;</span><br><span class="line">    var e = event||window.event;</span><br><span class="line">    var o = e.target||e.srcElement;</span><br><span class="line">    var oTip = o.nextSibling;</span><br><span class="line">    var keyCode  =  e.keyCode||e.which; // 按键的keyCode </span><br><span class="line">    var isShift  =  e.shiftKey ||(keyCode  ==   16 ) || false ; // shift键是否按住</span><br><span class="line">     if (</span><br><span class="line">     ((keyCode &gt;=   65   &amp;&amp;  keyCode  &lt;=   90 )  &amp;&amp;   !isShift) // Caps Lock 打开，且没有按住shift键 </span><br><span class="line">     || ((keyCode &gt;=   97   &amp;&amp;  keyCode  &lt;=   122 )  &amp;&amp;  isShift)// Caps Lock 打开，且按住shift键</span><br><span class="line">     )&#123;oTip.style.display = &apos;&apos;;&#125;</span><br><span class="line">     else&#123;oTip.style.display  =  &apos;none&apos;;&#125; </span><br><span class="line">&#125;</span><br><span class="line">document.getElementById(&apos;password&apos;).onkeypress = detectCapsLock;</span><br><span class="line">//]]&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-http-header.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP使用header函数设置HTTP头的示例方法</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/typecho-theme-fleurerlike.html">
+        <span class="next-text nav-default">免费typecho简洁主题FleurerLike</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/javascript-memo.html';
+
+  var disqus_title = "javascript代码片段笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

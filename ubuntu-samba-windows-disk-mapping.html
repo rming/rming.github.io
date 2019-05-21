@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="ubuntu 11.04下搭建samba文件服务器windows磁盘映射">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-samba-windows-disk-mapping.html">
+
+
+<meta name="description" content="使用samba+acl快速搭建samba服务器，在windows下使用磁盘映射，共享文件资源。1.开启acl并重启sudo vi /etc/fstab UUID=de8cdf27-39ee-40bd-8b70-dba057d3e351 /server  ext4 acl 0 2sudo  apt-get install aclsudo reboot2.建立目录mkdir /srv/share3.添">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 11.04下搭建samba文件服务器windows磁盘映射">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-samba-windows-disk-mapping.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="使用samba+acl快速搭建samba服务器，在windows下使用磁盘映射，共享文件资源。1.开启acl并重启sudo vi /etc/fstab UUID=de8cdf27-39ee-40bd-8b70-dba057d3e351 /server  ext4 acl 0 2sudo  apt-get install aclsudo reboot2.建立目录mkdir /srv/share3.添">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu 11.04下搭建samba文件服务器windows磁盘映射">
+<meta name="twitter:description" content="使用samba+acl快速搭建samba服务器，在windows下使用磁盘映射，共享文件资源。1.开启acl并重启sudo vi /etc/fstab UUID=de8cdf27-39ee-40bd-8b70-dba057d3e351 /server  ext4 acl 0 2sudo  apt-get install aclsudo reboot2.建立目录mkdir /srv/share3.添">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> ubuntu 11.04下搭建samba文件服务器windows磁盘映射 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ubuntu 11.04下搭建samba文件服务器windows磁盘映射
+        
+      </h1>
+
+      <time class="post-time">
+          9月 28 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>使用samba+acl快速搭建samba服务器，在windows下使用磁盘映射，共享文件资源。<br>1.开启acl并重启<br><code>sudo vi /etc/fstab</code></p>
+<p><blockquote>UUID=de8cdf27-39ee-40bd-8b70-dba057d3e351 /server  ext4 acl 0 2</blockquote><br><code>sudo  apt-get install acl</code><br><code>sudo reboot</code><br>2.建立目录<br><code>mkdir /srv/share</code><br>3.添加用户并设置密码<br><code>sudo useradd boss -s /usr/sbin/nologin</code><br><code><br>sudo passwd boss</code><br>4.设置acl文件访问权限<br><code>cd /server</code><br><code>sudo chown -R boss:boss /server/srv/share</code><br><code>sudo chmod -R 0750 /server/srv/share</code><br>5.配置samba<br><code>sudo  apt-get install samba</code><br><code>sudo vi /etc/samba/smb.conf</code></p>
+<p>#最后添加</p>
+<p><blockquote>[share]<br>comment = Samba file server<br>path = /server/srv/share<br>public = no<br>writeable = yes<br>create mask = 0600<br>directory mask = 0700<br>guest ok = no</blockquote><br>6.添加smba用户<br><code>smbpasswd -a boss</code><br>输入你的密码<br>7.重启samba<br><code>/etc/init.d/smbd restart</code><br>配置完成。<br>8.在windows下一般右击我的电脑，选择映射磁盘，地址里输入 \服务器地址share，然后输入用户名和密码即可。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/national-day-holiday-go-home-and-rest.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">国庆放假，回家休息</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20110926.html">
+        <span class="next-text nav-default">日记0926//读书、学习、思考</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-samba-windows-disk-mapping.html';
+
+  var disqus_title = "ubuntu 11.04下搭建samba文件服务器windows磁盘映射";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

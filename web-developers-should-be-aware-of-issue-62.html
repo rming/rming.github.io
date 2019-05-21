@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="网站开发人员应该知道的62件事">
+
+
+
+
+  <meta name="keywords" content="wordpress,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/web-developers-should-be-aware-of-issue-62.html">
+
+
+<meta name="description" content="近日，有人在Stack Overflow上发表提问“动手开发网站之前，需要知道哪些事情？”，众多人给出了不同的答案，同时所有人根据Stack Overflow问题下面的wiki区对众多答案进行了编辑，总结出62条网站开发人员应该知道的事。Web技术开发者阮一峰把这62条答案进行了翻译，现转载于此，全文如下： 有人在Stack Overflow上发问，动手开发网站之前，需要知道哪些事情？不出意料地，">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网站开发人员应该知道的62件事">
+<meta property="og:url" content="http://rmingwang.com/web-developers-should-be-aware-of-issue-62.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="近日，有人在Stack Overflow上发表提问“动手开发网站之前，需要知道哪些事情？”，众多人给出了不同的答案，同时所有人根据Stack Overflow问题下面的wiki区对众多答案进行了编辑，总结出62条网站开发人员应该知道的事。Web技术开发者阮一峰把这62条答案进行了翻译，现转载于此，全文如下： 有人在Stack Overflow上发问，动手开发网站之前，需要知道哪些事情？不出意料地，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网站开发人员应该知道的62件事">
+<meta name="twitter:description" content="近日，有人在Stack Overflow上发表提问“动手开发网站之前，需要知道哪些事情？”，众多人给出了不同的答案，同时所有人根据Stack Overflow问题下面的wiki区对众多答案进行了编辑，总结出62条网站开发人员应该知道的事。Web技术开发者阮一峰把这62条答案进行了翻译，现转载于此，全文如下： 有人在Stack Overflow上发问，动手开发网站之前，需要知道哪些事情？不出意料地，">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 网站开发人员应该知道的62件事 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          网站开发人员应该知道的62件事
+        
+      </h1>
+
+      <time class="post-time">
+          12月 19 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>近日，有人在</strong><a href="http://stackoverflow.com/questions/72394" target="_blank"><strong>Stack Overflow</strong></a><strong>上发表提问“动手开发网站之前，需要知道哪些事情？”，众多人给出了不同的答案，同时所有人根据Stack Overflow问题下面的wiki区对众多答案进行了编辑，总结出62条网站开发人员应该知道的事。Web技术开发者<a href="http://www.ruanyifeng.com/blog/" target="_blank" rel="noopener">阮一峰</a>把这62条答案进行了<a href="http://www.ruanyifeng.com/blog/2010/11/61_things_every_web_developer_should_know.html" target="_blank" rel="noopener">翻译</a>，现转载于此，全文如下：</strong></p>
+<p>有人在<a href="http://stackoverflow.com/questions/72394" target="_blank">Stack Overflow</a>上发问，动手开发网站之前，需要知道哪些事情？不出意料地，他得到了一大堆回答。</p>
+<p>通常情况下，你需要把所有人的发言从头到尾读一遍。但是，Stack Overflow有一个很贴心的设计，它允许在问题下方开设一个wiki区，让所有人共同编辑一个最佳答案。于是，就有了下面这篇文章，一共总结出六个方面共计62条“网站开发须知”。</p>
+<p>我发现，这种概述性的问题，最适合这种集合群智、头脑风暴式的回答方式了。这也是我第一次觉得，Stack Overflow做到了Wikipedia做不到的事。（难怪它最近挤进了全美前400大网站。）</p>
+<p>在我的印象中，关于网站开发，这样全面的概述性文章非常少见，因此也就非常有用。大家不妨看看，62件事情中你做到了多少？</p>
+<p><strong>界面和用户体验（Interface and User Experience）</strong></p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li> 知道各大浏览器执行Web标准的情况，保证你的站点在主要浏览器上都能正常运行。你至少要测试以下引擎：<a href="http://en.wikipedia.org/wiki/Gecko_%28layout_engine%29" target="_blank">Gecko</a>（用于<a href="http://firefox.com/" target="_blank">Firefox</a>）、Webkit（用于<a href="http://www.apple.com/safari/" target="_blank">Safari</a>、<a href="http://www.google.com/chrome" target="_blank">Chrome</a>和一些手机浏览器）、IE（你可以利用微软发布的<a href="http://www.microsoft.com/Downloads/details.aspx?FamilyID=21eabb90-958f-4b64-b5f1-73d0a413c8ef&amp;displaylang=en" target="_blank">Application Compatibility VPC Images</a>进行测试）和<a href="http://www.opera.com/" target="_blank">Opera</a>。同时，不同的操作系统，可能也会影响浏览器如何<a href="http://www.browsershots.org/" target="_blank">呈现</a>你的网站。</li><br>    <li> 除了浏览器，网站还有其他使用方式：手机、屏幕朗读器、搜索引擎等等。你应该知道在这些情况下，你的网站的运行状况。<a href="http://mobiforge.com/" target="_blank">MobiForge</a>提供了手机网站开发的一些相关知识。</li><br>    <li>知道如何在基本不影响用户使用的情况下升级网站。通常来说，你必须有版本控制系统（CVS、Subversion、Git等等）和数据备份机制（backup）。</li><br>    <li>不要让用户看到那些不友好的出错提示。</li><br>    <li> 不要直接显示用户的Email地址，至少不要用纯文本显示。</li><br>    <li> 为你的网站设置一些<a href="http://www.codinghorror.com/blog/archives/001228.html" target="_blank">合理的使用限制</a>，一旦超过门槛值，就自动停止服务。（这也与网站安全相关。）</li><br>    <li>知道如何实现网页的<a href="http://en.wikipedia.org/wiki/Progressive_enhancement" target="_blank">渐进式增强</a>（progressive enhancement）。</li><br>    <li> 用户发出POST请求后，总是将其<a href="http://en.wikipedia.org/wiki/Post/Redirect/Get" target="_blank">重导向</a>（redirect）至另外一个网页。</li><br>    <li> 不要忘记网站的可访问性（accessibility，即残疾人如何使用网站）。对于美国网站来说，有时这是<a href="http://www.section508.gov/" target="_blank">法定要求</a>。<a href="http://www.w3.org/WAI/intro/aria" target="_blank">WAI-ARIA</a>有一些这方面很好的参考资料。</li><br></ul><br><br><strong>安全性（Security</strong>）</p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li> 阅读<a href="http://www.owasp.org/index.php/Category%3aOWASP_Guide_Project" target="_blank">《OWASP开发指南》</a>，它提供了全面的网站安全指导。</li><br>    <li> 了解<a href="http://en.wikipedia.org/wiki/SQL_injection" target="_blank">SQL注入</a>（SQL injection）及其预防方法。</li><br>    <li>永远不要信任用户提交的数据（cookie也是用户端提交的！）。</li><br>    <li> 不要明文（plain-text）储存用户的密码，要hash处理后再储存。</li><br>    <li> 不要对你的用户认证系统太自信，它可能很容易就被攻破，而你事先根本没意识到存在相关漏洞。</li><br>    <li> 了解如何<a href="https://www.pcisecuritystandards.org/" target="_blank">处理信用卡</a>。</li><br>    <li> 在登录页面及其他处理敏感信息的页面，使用<a href="http://www.mozilla.org/projects/security/pki/nss/ssl/draft302.txt" target="_blank">SSL</a>/<a href="http://en.wikipedia.org/wiki/Https" target="_blank">HTTPS</a>。</li><br>    <li> 知道如何对付session劫持（session hijacking）。</li><br>    <li> 避免”<a href="http://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">跨站点执行</a>“（cross site scripting，XSS）。</li><br>    <li> 避免”<a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">跨域伪造请求</a>“（cross site request forgeries，XSRF）。</li><br>    <li> 及时打上补丁，让你的系统始终跟上最新版本。</li><br>    <li> 确认你的数据库连接信息的安全性。</li><br>    <li> 跟踪攻击技术的最新发展，以及你使用的平台的最新安全漏洞。</li><br>    <li> 阅读Google的<a href="http://code.google.com/p/browsersec/wiki/Main" target="_blank">《浏览器安全手册》</a>（Browser Security Handbook）。</li><br>    <li> 阅读<a href="http://amzn.com/0470170778" target="_blank">《网络软件的黑客手册》</a>（The Web Application Hackers Handbook）。</li><br></ul><br><br><strong>性能（Performance）</strong></p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li> 只要有可能，就使用缓存（caching）。正确理解和使用<a href="http://www.mnot.net/cache_docs/" target="_blank">HTTP caching</a>与<a href="http://www.w3.org/TR/html5/offline.html" target="_blank">HTML5离线储存</a>。</li><br>    <li> 优化图片。不要把一个20KB的图片文件，作为重复出现的网页背景图案。</li><br>    <li> 学习如何用<a href="http://developer.yahoo.com/performance/rules.html#gzip" target="_blank">gzip/deflate压缩</a>内容（<a href="http://stackoverflow.com/questions/1574168/gzip-vs-deflate-zlib-revisited" target="_blank">deflate方式更可取</a>）。</li><br>    <li> 将多个样式表文件或脚本文件，合为一个文件，这样可以减少浏览器的http请求数，以及减小gzip压缩后的文件总体积。</li><br>    <li> 浏览Yahoo的<a href="http://developer.yahoo.com/performance/" target="_blank">Exceptional Performance</a>网站，里面有大量提升前端性能的优秀建议，还有他们的<a href="http://developer.yahoo.com/yslow/" target="_blank">YSlow</a>工具。Google的<a href="http://code.google.com/speed/page-speed/docs/rules_intro.html" target="_blank">page speed</a>则是另一个用来分析网页性能的工具。两者都要求安装<a href="http://getfirebug.com/" target="_blank">Firebug</a>。</li><br>    <li> 如果你的网页用到大量的小体积图片（比如工具栏），就应该使用<a href="http://alistapart.com/articles/sprites" target="_blank">CSS Image Sprite</a>，目的是减少http请求数。</li><br>    <li> 大流量的网站应该考虑将<a href="http://developer.yahoo.com/performance/rules.html#split" target="_blank">网页对象分散在多个域名</a>（split components across domains）。</li><br>    <li> 静态内容（比如图片、CSS、JavaScript、以及其他cookie无关的网页内容）都应该放在一个<a href="http://blog.stackoverflow.com/2009/08/a-few-speed-improvements/" target="_blank">不需要使用cookie</a>的独立域名之上。因为域名之下如果有cookie，那么客户端向该域名发出的每次http请求，都会附上cookie内容。这里的一个好方法就是使用”内容分发网络”（Content Delivery Network，CDN）。</li><br>    <li> 将浏览器完成网页渲染所需要的http请求数最小化。</li><br>    <li> 使用Google的<a href="http://code.google.com/closure/compiler/" target="_blank">Closure Compiler</a>压缩JavaScript文件，<a href="http://developer.yahoo.com/yui/compressor/" target="_blank">YUI Compressor</a>亦可。</li><br>    <li> 确保网站根目录下有favicon.ico文件，因为即使网页中根本不包括这个文件，浏览器也会<a href="http://mathiasbynens.be/notes/rel-shortcut-icon" target="_blank">自动发出对它的请求</a>。所以如果这个文件不存在，就会产生大量的404错误，消耗光你的服务器的带宽。</li><br></ul><br><br><strong>搜索引擎优化（Search Engine Optimization，SEO）</strong></p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li> 使用”搜索引擎友好”的URL形式，比如example.com/pages/45-article-title，而不是example.com/index.php?page=45。</li><br>    <li> 不要使用”点击这里”之类的超级链接，因为这样等于浪费了一个SEO机会，而且降低了”屏幕朗读器”（screen reader）的使用效果。</li><br>    <li>创建一个<a href="http://www.sitemaps.org/" target="_blank">XML sitemap</a>文件，它的缺省位置一般是/sitemap.xml（即放在网站根目录下）。</li><br>    <li> 当你有多个URL指向同一个内容时，在网页代码中使用<a href="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html" target="_blank">&lt;link rel=”canonical” … /&gt;</a>。</li><br>    <li> 使用Google的<a href="http://www.google.com/webmasters/" target="_blank">Webmaster Tools</a>和Yahoo的<a href="http://siteexplorer.search.yahoo.com/" target="_blank">Site Explorer</a>。</li><br>    <li> 从一开始就使用<a href="http://www.google.com/analytics/" target="_blank">Google Analytics</a>（或者开源的访问量分析工具<a href="http://piwik.org/" target="_blank">Piwik</a>）。</li><br>    <li> 知道<a href="http://en.wikipedia.org/wiki/Robots_exclusion_standard" target="_blank">robots.txt</a>的作用，以及搜索引擎蜘蛛的工作原理。</li><br>    <li> 将<a href="http://www.example.com的访问请求导向example.com（使用301" target="_blank" rel="noopener">www.example.com的访问请求导向example.com（使用301</a> Moved Permanently重定向），或者采用相反的做法，目的是防止Google把它们当做两个网站，分开计算排名。</li><br>    <li> 知道存在着恶意或行为不正当的网络蜘蛛。</li><br>    <li> 如果你的网站有非文本的内容（比如视频、音频等等），你应该参考Google的<a href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=40318" target="_blank">sitemap扩展协议</a>。</li><br></ul><br><br><strong>技术（Technology）</strong></p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li> 理解<a href="http://www.ietf.org/rfc/rfc2616.txt" target="_blank">HTTP协议</a>，以及诸如GET、POST、sessions、cookies之类的概念，包括”无状态”（stateless）是什么意思。</li><br>    <li> 确保你的<a href="http://www.w3.org/TR/xhtml1/" target="_blank">XHTML</a>/<a href="http://www.w3.org/TR/REC-html40/" target="_blank">HTML</a>和<a href="http://www.w3.org/TR/CSS2/" target="_blank">CSS</a>符合<a href="http://www.w3.org/TR/" target="_blank">W3C标准</a>，使得它们能够通过<a href="http://validator.w3.org/" target="_blank">检验</a>。这可以使你的网页避免触发浏览器的古怪行为（quirk），而且使它在”屏幕朗读器”和手机上也能正常工作。</li><br>    <li> 理解浏览器如何处理JavaScript脚本。</li><br>    <li> 理解网页上的JavaScript文件、样式表文件和其他资源是如何装载及运行的，考虑它们对页面性能有何影响。在某些情况下，可能应该将脚本文件<a href="http://developer.yahoo.net/blog/archives/2007/07/high_performanc_5.html" target="_blank">放置在网页的尾部</a>。</li><br>    <li> 理解JavaScript沙箱（Javascript sandbox）的工作原理，尤其是如果你打算使用iframe。</li><br>    <li> 知道JavaScript可能无法使用或被禁用，以及Ajax并不是一定会运行。记住，”不允许脚本运行”（NoScript）正在某些用户中变得流行，手机浏览器对脚本的支持千差万别，而Google索引网页时不运行大部分的脚本文件。</li><br>    <li> 了解301重定向和302重定向之间的<a href="http://www.bigoakinc.com/blog/when-to-use-a-301-vs-302-redirect/" target="_blank">区别</a>（这也是一个SEO相关问题）。</li><br>    <li> 尽可能多得了解你的部署平台（deployment platform）。</li><br>    <li>考虑使用<a href="http://stackoverflow.com/questions/167531/is-it-ok-to-use-a-css-reset-stylesheet" target="_blank">样式表重置</a>（Reset Style Sheet）。</li><br>    <li> 考虑使用JavaScript框架（比如<a href="http://jquery.com/" target="_blank">jQuery</a>、<a href="http://mootools.net/" target="_blank">MooTools</a>、<a href="http://www.prototypejs.org/" target="_blank">Prototype</a>），它们可以使你不用考虑浏览器之间的差异。</li><br></ul><br><br><strong>解决bug</strong></p>
+<p><blockquote></blockquote></p>
+<p><ul><br>    <li>理解程序员20%的时间用于编码，80%的时间用于维护，根据这一点相应安排时间。</li><br>    <li> 建立一个有效的错误报告机制。</li><br>    <li> 建立某些途径或系统，让用户可以与你接触，向你提出建议和批评。</li><br>    <li> 为将来的维护和客服人员撰写文档，解释清楚系统是怎么运行的。</li><br>    <li> 经常备份！（并且确保这些备份是有效的。）除了备份机制，你还必须有一个恢复机制。</li><br>    <li> 使用某种版本控制系统储存你的文件，比如<a href="http://subversion.apache.org/" target="_blank">Subversion</a>或<a href="http://git-scm.org/" target="_blank">Git</a>。</li><br>    <li> 不要忘记做单元测试（Unit Testing），<a href="http://seleniumhq.org/" target="_blank">Selenium</a>之类的框架会对你有用。</li><br></ul><br><br>原文链接：<a href="http://stackoverflow.com/questions/72394" target="_blank" rel="noopener">http://stackoverflow.com/questions/72394</a></p>
+<p>译文链接：<a href="http://www.ruanyifeng.com/blog/2010/11/61_things_every_web_developer_should_know.html" target="_blank" rel="noopener">网站开发人员应该知道的62件事</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-1224.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记1224</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/personal-experience-of-learning-art.html">
+        <span class="next-text nav-default">个人经验浅谈美工学习</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/web-developers-should-be-aware-of-issue-62.html';
+
+  var disqus_title = "网站开发人员应该知道的62件事";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

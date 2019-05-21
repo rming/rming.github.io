@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="vsftp安装配置详解">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/detailed-installation-and-configuration-vsftp.html">
+
+
+<meta name="description" content="最近安装了一个vsftp #非常安全的ftp服务# ，下面就写写安装配置过程吧。 1、安装 $ sudo apt-get install vsftpd 2、配置 $ sudo vi /etc/vsftpd.conf  #编辑配置文件，可以看到配置文件中的默认参数，其中加#为注释 1、常用参数意义，是具体情况配置： listen=YES listen_ipv6=YES anonymous_enabl">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vsftp安装配置详解">
+<meta property="og:url" content="http://rmingwang.com/detailed-installation-and-configuration-vsftp.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="最近安装了一个vsftp #非常安全的ftp服务# ，下面就写写安装配置过程吧。 1、安装 $ sudo apt-get install vsftpd 2、配置 $ sudo vi /etc/vsftpd.conf  #编辑配置文件，可以看到配置文件中的默认参数，其中加#为注释 1、常用参数意义，是具体情况配置： listen=YES listen_ipv6=YES anonymous_enabl">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vsftp安装配置详解">
+<meta name="twitter:description" content="最近安装了一个vsftp #非常安全的ftp服务# ，下面就写写安装配置过程吧。 1、安装 $ sudo apt-get install vsftpd 2、配置 $ sudo vi /etc/vsftpd.conf  #编辑配置文件，可以看到配置文件中的默认参数，其中加#为注释 1、常用参数意义，是具体情况配置： listen=YES listen_ipv6=YES anonymous_enabl">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> vsftp安装配置详解 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vsftp安装配置详解
+        
+      </h1>
+
+      <time class="post-time">
+          5月 7 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>最近安装了一个vsftp #非常安全的ftp服务# ，下面就写写安装配置过程吧。</p>
+<p>1、安装</p>
+<pre lang="php">$ sudo apt-get install vsftpd</pre>
+2、配置
+<pre lang="php">$ sudo vi /etc/vsftpd.conf  #编辑配置文件，可以看到配置文件中的默认参数，其中加#为注释</pre>
+<strong>1、常用参数意义，是具体情况配置：</strong>
+<pre lang="php">listen=YES
+listen_ipv6=YES
+anonymous_enable=YES 允许匿名登入
+local_enable=YES #允许本地用户登入
+write_enable=YES     #允许本地用户修改和删除
+local_umask=022 #FTP上传文件权限 ，默认是077
+anon_upload_enable=YES     #允许匿名用户上传
+anon_mkdir_write_enable=YES    #允许匿名用户的写和创建目录的权限
+xferlog_enable=YES     #激活上传和下载的日志
+connect_from_port_20=YES     #启动FTP数据端口的连接请求
+chown_uploads=YES           #上传后改变宿主
+chown_username=whoever    #改变上传文件的所有着为whoever
+xferlog_file=/var/log/vsftpd.log    #上传/下载日志文件所默认的路径
+xferlog_std_format=YES   #使用标准的ftpd xferlog日志格式
+idle_session_timeout=600     #将在用户会话空闲10分钟后被中断
+data_connection_timeout=120     #将在数据连接空闲2分钟后被中断
+nopriv_user=ftpsecure     #运行vsftpd需要的非特殊系统用户默认nobody
+async_abor_enable=YES     #是否允许运行特殊的FTP命令async
+ascii_upload_enable=YES     #启用上传的ascii传输方式
+ascii_download_enable=YES     #启用下载的ascii传输方式
+ftpd_banner=Welcome to blah FTP service.  #用户连接服务器后显示信息
+deny_email_enable=YES     #是否允许某些匿名用户使用邮件地址（默认的）
+banned_email_file=/etc/vsftpd.banned_emails          #如果是输入禁止的邮件地址的路径和名
+chroot_local_user=NO 
+
+chroot_list_enable=YES   #(默认的)
+chroot_list_file= /etc/vsftpd.chroot_list  #文件格式为一行一用户。
+local_root=/var/www/web （路径自定义） #定义所有本地用户的根目录。当本地用户登入时，将被更换到此目录下。（注释则访问该用户自己目录）
+secure_chroot_dir=/var/run/vsftpd
+#这个选项必须指定一个空的数据夹且任何登入者都不能有写入的权限，当vsftpd 不需要file system 的权限时，就会将使用者限制在此数据夹中。默认值为/var/run/vsftpd
+<strong>当chroot_local_user=NO、chroot_list_enable=YES时，vsftpd.chroot_list中用户为锁定用户，即他们除了自己的目录，不可以访问其他目录。
+当chroot_local_user=YES、chroot_list_enable=YES时，vsftpd.chroot_list中用户为非锁定用户，他们可以访问任何其他目录。</strong>
+
+max_clients=100  #FTP服务器最大承载用户
+max_per_ip=5  #限制每个IP的进程
+local_max_rate=256000  #最大传输速率(b/s)
+hide_ids=YES  #是否隐藏文件的所有者和组信息
+idle_session_timeout= 3000  #空闲（发呆）用户会话的超时时间，若是超出这时间没有数据的传送或是指令的输入，则会强迫断线。单位为秒，默认值为300。
+ls_recurse_enable=YES 是否使用ls-R命令已防止浪费大量的服务器资源
+secure_chroot_dir=/var/run/vsftpd
+#这个选项必须指定一个空的数据夹且任何登入者都不能有写入的权限，当vsftpd 不需要file system 的权限时，就会将使用者限制在此数据夹中。默认值为/var/run/vsftpd
+pam_service_name=vsftpd #定义PAM 所使用的名称，预设为vsftpd
+rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem #vsftpd用的rsa证书的位置
+rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key #算法钥匙地址！</pre>
+vsftp 还可以配置虚拟用户，即专门为ftp配置的用户，无法登陆系统，但可进行ftp管理。
+<strong>2、配置vsftpd.chroot_list</strong>
+
+增加需要锁定/非锁定目录的用户(根据自己情况添加)
+
+<strong>3、删除vsftp默认访问路径</strong>
+<pre lang="php">$ sudo rmdir /home/ftp   #根据local_root定义的目录，新建一个，以控制登陆用户进入此目录</pre>
+<strong>4、重启vsftp服务</strong>
+<pre lang="php">$ /etc/init.d/vsftpd restart</pre>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu10-04-install-and-configure-zend-guard-under-the-apache2-instead-of-zend-optimizer.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu10.04下apache2安装配置Zend Guard代替Zend Optimizer</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/occasionally-think.html">
+        <span class="next-text nav-default">偶尔也这么想</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/detailed-installation-and-configuration-vsftp.html';
+
+  var disqus_title = "vsftp安装配置详解";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

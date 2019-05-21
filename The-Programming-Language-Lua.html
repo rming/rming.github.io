@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Lua-简洁、轻量、可扩展的脚本语言">
+
+
+
+
+  <meta name="keywords" content="Lua编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/The-Programming-Language-Lua.html">
+
+
+<meta name="description" content="一、Lua安装及常用库的安装 1.1 Ubuntu 1.2 OS X 1.3 luasocket库的安装 1.4 lua-cjson库的安装   二、HelloWorld 三、数据类型 有8种基本数据类型 四、函数 第一类值 函数 闭包   五、控制语句 六、逻辑运算符 and、or、not 七、协同程序 coroutine 7.1 创建协同 7.2 协同的三个状态:挂起态（suspended">
+<meta name="keywords" content="Lua编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua-简洁、轻量、可扩展的脚本语言">
+<meta property="og:url" content="http://rmingwang.com/The-Programming-Language-Lua.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="一、Lua安装及常用库的安装 1.1 Ubuntu 1.2 OS X 1.3 luasocket库的安装 1.4 lua-cjson库的安装   二、HelloWorld 三、数据类型 有8种基本数据类型 四、函数 第一类值 函数 闭包   五、控制语句 六、逻辑运算符 and、or、not 七、协同程序 coroutine 7.1 创建协同 7.2 协同的三个状态:挂起态（suspended">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-08-08T07:26:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lua-简洁、轻量、可扩展的脚本语言">
+<meta name="twitter:description" content="一、Lua安装及常用库的安装 1.1 Ubuntu 1.2 OS X 1.3 luasocket库的安装 1.4 lua-cjson库的安装   二、HelloWorld 三、数据类型 有8种基本数据类型 四、函数 第一类值 函数 闭包   五、控制语句 六、逻辑运算符 and、or、not 七、协同程序 coroutine 7.1 创建协同 7.2 协同的三个状态:挂起态（suspended">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Lua-简洁、轻量、可扩展的脚本语言 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Lua-简洁、轻量、可扩展的脚本语言
+        
+      </h1>
+
+      <time class="post-time">
+          6月 3 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#一-lua安装及常用库的安装">一、Lua安装及常用库的安装</a><ul>
+<li><a href="#11-ubuntu">1.1 Ubuntu</a></li>
+<li><a href="#12-os-x">1.2 OS X</a></li>
+<li><a href="#13-luasocket库的安装">1.3 luasocket库的安装</a></li>
+<li><a href="#14-lua-cjson库的安装">1.4 lua-cjson库的安装</a></li>
+</ul>
+</li>
+<li><a href="#二-helloworld">二、HelloWorld</a></li>
+<li><a href="#三-数据类型-有8种基本数据类型">三、数据类型 有8种基本数据类型</a></li>
+<li><a href="#四-函数-第一类值">四、函数 第一类值</a><ul>
+<li><a href="#函数">函数</a></li>
+<li><a href="#闭包">闭包</a></li>
+</ul>
+</li>
+<li><a href="#五-控制语句">五、控制语句</a></li>
+<li><a href="#六-逻辑运算符-and-or-not">六、逻辑运算符 and、or、not</a></li>
+<li><a href="#七-协同程序-coroutine">七、协同程序 coroutine</a><ul>
+<li><a href="#71-创建协同">7.1 创建协同</a></li>
+<li><a href="#72-协同的三个状态挂起态suspended-运行态running-停止态dead">7.2 协同的三个状态:挂起态（suspended）、运行态（running）、停止态（dead）。</a></li>
+<li><a href="#73-如此挂起正在运行的协同">7.3 如此挂起正在运行的协同</a></li>
+<li><a href="#74-协同数据交换">7.4 协同数据交换</a></li>
+</ul>
+</li>
+<li><a href="#八-数据结构-table">八、数据结构 table</a><ul>
+<li><a href="#81-表的创建">8.1 表的创建</a></li>
+<li><a href="#82-表的增删改查">8.2 表的增删改查</a></li>
+<li><a href="#83-数组">8.3 数组</a></li>
+<li><a href="#84-矩阵二维数组">8.4 矩阵（二维数组）</a></li>
+<li><a href="#85-链表">8.5 链表</a></li>
+</ul>
+</li>
+<li><a href="#九-metatable-元表">九、metatable 元表</a><ul>
+<li><a href="#91-元表与元方法">9.1 元表与元方法</a></li>
+<li><a href="#92-表的代理">9.2 表的代理</a></li>
+</ul>
+</li>
+<li><a href="#十-环境">十、环境</a><ul>
+<li><a href="#101-全局变量-_g">10.1 全局变量 _G</a></li>
+<li><a href="#102-非全局变量-setfenv">10.2 非全局变量 setfenv</a></li>
+</ul>
+</li>
+<li><a href="#十一-包-package">十一、包 package</a><ul>
+<li><a href="#111-包的定义">11.1 包的定义</a></li>
+</ul>
+</li>
+<li><a href="#十二-面向对象">十二、面向对象</a><ul>
+<li><a href="#121-类与继承">12.1 类与继承</a></li>
+<li><a href="#122-多重继承">12.2 多重继承</a></li>
+<li><a href="#123-私有性">12.3 私有性</a></li>
+</ul>
+</li>
+<li><a href="#十三-weak-table">十三、weak table</a></li>
+<li><a href="#十四-标准库">十四、标准库</a><ul>
+<li><a href="#141-数学库-mathematical-functions">14.1 数学库 Mathematical Functions</a></li>
+<li><a href="#142-table库">14.2 table库</a></li>
+<li><a href="#143-string库">14.3 string库</a></li>
+<li><a href="#144-io库">14.4 io库</a></li>
+<li><a href="#145-os库">14.5 os库</a></li>
+<li><a href="#146-debug库">14.6 debug库</a></li>
+</ul>
+</li>
+<li><a href="#十五-标准库">十五、标准库</a><ul>
+<li><a href="#堆栈后进先出原则">堆栈，后进先出原则</a></li>
+<li><a href="#压入">压入</a></li>
+<li><a href="#判断类型">判断类型</a></li>
+<li><a href="#获取栈中的元素并转换成c类型">获取栈中的元素并转换成C类型</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="一-lua安装及常用库的安装">一、Lua安装及常用库的安装</span></h2><h3><span id="11-ubuntu">1.1 Ubuntu</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install lua5.2</span><br></pre></td></tr></table></figure>
+<h3><span id="12-os-x">1.2 OS X</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install lua luarocks                 # luarocks是lua的模块管理工具</span><br><span class="line">$ sudo ln -s /usr/bin/make /usr/bin/gmake   # 解决 sh: gmake: command not found</span><br></pre></td></tr></table></figure>
+<h3><span id="13-luasocket库的安装">1.3 luasocket库的安装</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ luarocks install luasocket</span><br><span class="line">$ lua</span><br><span class="line">&gt; socket = require(&quot;socket&quot;)</span><br><span class="line">&gt; print(socket._VERSION)</span><br><span class="line">LuaSocket 2.0.2</span><br></pre></td></tr></table></figure>
+<h3><span id="14-lua-cjson库的安装">1.4 lua-cjson库的安装</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ luarocks install lua-cjson</span><br><span class="line">$ lua</span><br><span class="line">&gt; cjson = require(&quot;cjson&quot;)</span><br><span class="line">&gt; print(cjson.encode(&#123; name = &quot;linguofeng&quot; &#125;))</span><br><span class="line">&#123;&quot;name&quot;:&quot;linguofeng&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="二-helloworld">二、HelloWorld</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lua</span><br><span class="line">&gt; print(&quot;Hello World!!&quot;)</span><br><span class="line">Hello World!!</span><br></pre></td></tr></table></figure>
+<h2><span id="三-数据类型-有8种基本数据类型">三、数据类型 有8种基本数据类型</span></h2><ul>
+<li>nil全局变量默认值，如果要删除一个全局变量可以赋值为nil</li>
+<li>boolean布尔值</li>
+<li>number数字型</li>
+<li>string字符串型</li>
+<li>userdata用户自定义类型，一般是C/C++中的类型</li>
+<li>function函数</li>
+<li>thread线程</li>
+<li>table表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(type(nil))                    -- 输出 nil</span><br><span class="line">print(type(99.7+12*9))              -- 输出 number</span><br><span class="line">print(type(true))                   -- 输出 boolean</span><br><span class="line">print(type(&quot;Hello Wikipedia&quot;))      -- 输出 string</span><br><span class="line">print(type(print))                  -- 输出 function</span><br><span class="line">print(type&#123;1, 2, test = &quot;test&quot;&#125;)    -- 输出 table</span><br></pre></td></tr></table></figure>
+<h2><span id="四-函数-第一类值">四、函数 第一类值</span></h2><h3><span id="函数">函数</span></h3><p>第一类值指：在Lua中函数和其他值（数值、字符串）一样，函数可以被存放在变量中，也可以存放在表中，可以作为函数的参数，还可以作为函数的返回值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function add(x, y)             -- 定义一个函数add，并接收两个参数</span><br><span class="line">    local a = x + y            -- 定义一个局部变量a，接收x+y的和，局部变量仅在函数add中有效</span><br><span class="line">    return a                   -- 返回</span><br><span class="line">end                            -- 结束add函数</span><br><span class="line"></span><br><span class="line">print(&quot;15 + 64 = &quot; .. add(15, 64));    -- 打印add(15, 64)的结果</span><br><span class="line"></span><br><span class="line">local x = 1                    -- local 关键字表示该变量为局部变量，作用域为当前上下文</span><br><span class="line">                               -- 无该关键字修饰时为全局变量，作用于整个Lua状态机</span><br><span class="line"></span><br><span class="line">local add = function(x, y)     -- 局部函数，作用于当前脚本（chumk）</span><br><span class="line">Lib = &#123;&#125;</span><br><span class="line">Lib.add = function(x, y)       -- 表函数，作用于Lib表</span><br></pre></td></tr></table></figure>
+<h3><span id="闭包">闭包</span></h3><p>闭包是一个内部函数以及它的upvalues，内部函数使用了外部（父函数）局部变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function newCounter()</span><br><span class="line">    local i = 0           -- i为匿名函数的外部局部变量（upvalue）</span><br><span class="line">    return function()     -- 匿名内部函数</span><br><span class="line">        i = i + 1         -- 使用了i，所以该匿名函数是一个闭包</span><br><span class="line">        return i</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">c1 = newCounter()         -- 得到一个匿名函数的变量（闭包）</span><br><span class="line">print(c1())               -- 调用匿名函数，打印出1</span><br><span class="line">print(c1())               -- 调用匿名函数，打印出2</span><br><span class="line"></span><br><span class="line">c2 = newCounter()</span><br><span class="line">print(c2())  --&gt; 1</span><br><span class="line">print(c1())  --&gt; 3</span><br><span class="line">print(c2())  --&gt; 2</span><br></pre></td></tr></table></figure>
+<h2><span id="五-控制语句">五、控制语句</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">for int i = 0, 10, 2 do     -- for循环，2表示步长，省略时为1</span><br><span class="line">    print(&quot;i = &quot; .. i)      -- .. 表示字符串连接符</span><br><span class="line">end                         -- 结束for</span><br><span class="line"></span><br><span class="line">if a &gt; b then               -- if条件判断语句</span><br><span class="line">    print(&quot;a &gt; b&quot;)</span><br><span class="line">else</span><br><span class="line">    print(&quot;b &gt; a&quot;)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">while a &gt; b do              -- while循环</span><br><span class="line">    print(&quot;&quot;)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">repeat                      -- repeat-until循环</span><br><span class="line">    print(&quot;&quot;)</span><br><span class="line">until a &gt; b</span><br></pre></td></tr></table></figure>
+<h2><span id="六-逻辑运算符-and-or-not">六、逻辑运算符 and、or、not</span></h2><p>逻辑运算符认为false和nil是假（false），其他为真，0也是true.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a and b       -- 如果a为false，则返回a，否则返回b</span><br><span class="line">a or  b       -- 如果a为true，则返回a，否则返回b</span><br><span class="line"></span><br><span class="line">x = x or v    -- 如果x为false或者nil时则给x赋初始值v</span><br><span class="line"></span><br><span class="line">-- 等价于</span><br><span class="line">if not x then</span><br><span class="line">    x = v</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">-- 三元运算符</span><br><span class="line">a ? b : c   =&gt;   a and b or c   -- and 的优先级别比 or 高</span><br><span class="line"></span><br><span class="line">not                 -- not 的结果只返回false或true，作用类似于&quot;非&quot; &quot;!&quot;取反的意思</span><br><span class="line">print(not nil)      -- true</span><br><span class="line">print(not false)    -- true</span><br><span class="line">print(not 0)        -- false</span><br></pre></td></tr></table></figure>
+<h2><span id="七-协同程序-coroutine">七、协同程序 coroutine</span></h2><h3><span id="71-创建协同">7.1 创建协同</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">co = coroutine.create(function ()   -- 创建一个协同函数，接收一个匿名函数，返回thread类型</span><br><span class="line">    print(&quot;hi&quot;)</span><br><span class="line">end)</span><br><span class="line"></span><br><span class="line">print(co)                           -- thread: 0x7fe1834127d0</span><br></pre></td></tr></table></figure>
+<h3><span id="72-协同的三个状态挂起态suspended-运行态running-停止态dead">7.2 协同的三个状态:挂起态（suspended）、运行态（running）、停止态（dead）。</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(coroutine.status(co))         -- 查看协同的状态，默认状态是挂起态 suspended</span><br><span class="line"></span><br><span class="line">coroutine.resume(co)                -- 改变协同的状态为运行太 hi</span><br><span class="line"></span><br><span class="line">print(coroutine.status(co))         -- 协同运行完以后将变量停止态 dead</span><br></pre></td></tr></table></figure>
+<h3><span id="73-如此挂起正在运行的协同">7.3 如此挂起正在运行的协同</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">co = coroutine.create(function ()</span><br><span class="line">    print(&quot;hi&quot;)</span><br><span class="line">    coroutine.yield()               -- 协同运行到此状态将变成挂起</span><br><span class="line">    print(&quot;你好&quot;)</span><br><span class="line">end)</span><br><span class="line"></span><br><span class="line">coroutine.resume(co)                -- hi</span><br><span class="line">coroutine.resume(co)                -- 你好</span><br><span class="line">coroutine.resume(co)                -- false，协同结束后将不能再使用</span><br></pre></td></tr></table></figure>
+<h3><span id="74-协同数据交换">7.4 协同数据交换</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">co = coroutine.create(function (x, y)   -- 接收两个参数</span><br><span class="line">    print(&quot;hi&quot;, coroutine.yield(x + y)) -- 返回一个值，同时参数也传递给了coroutine.yield</span><br><span class="line">    return 100                          -- 第三种返回值的方式</span><br><span class="line">end)</span><br><span class="line"></span><br><span class="line">print(coroutine.resume(co, 12, 87))     -- 传递两个参数并接收返回值(true, 99)</span><br><span class="line"></span><br><span class="line">-- 执行coroutine.yield(x + y)之前协同被挂起，但值被返回，因此print函数未被执行，下面执行</span><br><span class="line"></span><br><span class="line">print(coroutine.resume(co, 12, 87))     -- 传递两个参数并接收返回值(true, 100)</span><br></pre></td></tr></table></figure>
+<h2><span id="八-数据结构-table">八、数据结构 table</span></h2><h3><span id="81-表的创建">8.1 表的创建</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">arrays = &#123;&#125;                         -- 创建一个空表</span><br><span class="line">arrays[1] = &quot;abc&quot;                   -- 第一个索引值为1</span><br><span class="line">arrays[2] = 123</span><br><span class="line"></span><br><span class="line">arrays[&quot;key&quot;] = &quot;value&quot;             -- map</span><br><span class="line"></span><br><span class="line">for key, value in pairs(arrays) do  -- 迭代table</span><br><span class="line">    print(key .. &quot; = &quot; .. value)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3><span id="82-表的增删改查">8.2 表的增删改查</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">list = &#123;123&#125;            -- 初始化表</span><br><span class="line">list[2] = &quot;abc&quot;         -- 增</span><br><span class="line">list.x = 123</span><br><span class="line">list.y = 987</span><br><span class="line">list[1] = nil           -- 删</span><br><span class="line">list.y = nil</span><br><span class="line">list[2] = 456           -- 改</span><br><span class="line">list.x = 987</span><br><span class="line">print(list[2])          -- 查</span><br><span class="line">print(list.x)</span><br><span class="line">print(list[&apos;x&apos;])</span><br></pre></td></tr></table></figure>
+<h3><span id="83-数组">8.3 数组</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">list = &#123;&#125;               -- 初始空化数组，数组的下标是整数，遵循Lua的标准，下标从1开始</span><br><span class="line">list[1] = &quot;abc&quot;</span><br><span class="line">list[2] = &quot;edg&quot;</span><br><span class="line">list[3] = &quot;hij&quot;</span><br></pre></td></tr></table></figure>
+<h3><span id="84-矩阵二维数组">8.4 矩阵（二维数组）</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mt = &#123;&#125;                 -- 创建矩阵matrix</span><br><span class="line">for i = 1, N do         -- 创建N行</span><br><span class="line">    mt[i] = &#123;&#125;          -- 每行都是一个数组（table元素）</span><br><span class="line">    for j = 1, M do     -- 创建M列</span><br><span class="line">        mt[i][j] = &quot;a&quot;  -- 第N行第M行的值</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3><span id="85-链表">8.5 链表</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Singly-linked-list.svg</span><br><span class="line"></span><br><span class="line">list = nil</span><br><span class="line">list = &#123;next = list, value = &quot;hello3&quot;&#125;</span><br><span class="line">list = &#123;next = list, value = &quot;hello2&quot;&#125;</span><br><span class="line">list = &#123;next = list, value = &quot;hello1&quot;&#125;</span><br><span class="line"></span><br><span class="line">-- 遍历</span><br><span class="line">local l = list</span><br><span class="line">while l do</span><br><span class="line">    print(l.value)</span><br><span class="line">    l = l.next</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2><span id="九-metatable-元表">九、metatable 元表</span></h2><h3><span id="91-元表与元方法">9.1 元表与元方法</span></h3><p>元表也是普通表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">t = &#123;&#125;</span><br><span class="line">print(getmetatable(t))      -- 获取表的metatable nil，默认不带</span><br><span class="line"></span><br><span class="line">mt = &#123;&#125;</span><br><span class="line">setmetatable(t, mt)         -- 设置一个元素</span><br><span class="line"></span><br><span class="line">-- metamethod 元表的方法（元方法）</span><br><span class="line">mt.__add                    -- 加 +</span><br><span class="line">mt.__sub                    -- 减 -</span><br><span class="line">mt.__mul                    -- 乘 *</span><br><span class="line">mt.__div                    -- 除 /</span><br><span class="line">mt.__unm                    -- 负 -</span><br><span class="line">mt.__pow                    -- 幂 ^</span><br><span class="line">mt.__concat                 -- 连接</span><br><span class="line"></span><br><span class="line">mt.__eq                     -- 等于 =</span><br><span class="line">mt.__lt                     -- 小于 &lt;</span><br><span class="line">mt.__le                     -- 大于 &gt;</span><br><span class="line"></span><br><span class="line">mt.__tostring               -- print调用</span><br><span class="line">mt.__metatable              -- 设置该元表不被修改与访问</span><br><span class="line"></span><br><span class="line">mt.__index                  -- 当访问不存在的元素时会去查询，相当于子类继承父类一样</span><br><span class="line">mt.__newindex               -- 更新表，如果增加一个不存在的元素，会去查询，有直接用，否则增加</span><br></pre></td></tr></table></figure>
+<h3><span id="92-表的代理">9.2 表的代理</span></h3><p>记录下表的增查记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">local index = &#123;&#125;                  -- 私有的key，用来记录原始表在代理表中的下标</span><br><span class="line">local mt = &#123;                      -- 创建元表</span><br><span class="line">    __index = function(t, k)</span><br><span class="line">        print(&quot;访问了&quot; .. tostring(k) .. &quot;元素&quot;)</span><br><span class="line">        return t[index][k]        -- 从代理表中获取原始表中k下标的数据</span><br><span class="line">    end,</span><br><span class="line">    </span><br><span class="line">    __newindex = function(t, k, v)</span><br><span class="line">        print(&quot;更新了 &quot; .. tostring(k) .. &quot; 元素的值为 &quot; .. tostring(v))</span><br><span class="line">        t[index][k] = v           -- 更新代理表中下标为index的原始表中的元素</span><br><span class="line">    end</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function setProxy(t)</span><br><span class="line">    local proxy = &#123;&#125;              -- 创建代理表</span><br><span class="line">    proxy[index] = t              -- 把原始表加到代理表的index下标中</span><br><span class="line">    setmetatable(proxy, mt)       -- 设置代理表的元表</span><br><span class="line">    return proxy                  -- 返回代理表，即所有操作都是直接操作代理表</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">p = setProxy(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">p[2] = &apos;abcdefg&apos;            -- 更新了 2 元素的值为 abcdefg</span><br><span class="line">print(p[2])                 -- 访问了2元素</span><br></pre></td></tr></table></figure>
+<h2><span id="十-环境">十、环境</span></h2><h3><span id="101-全局变量-_g">10.1 全局变量 _G</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&gt; _G[&quot;ewgegw&quot;] = &quot;ddddddgege&quot;</span><br><span class="line">&gt; table.foreach(_G, print)</span><br><span class="line">string  table: 0x7ffce3407a60</span><br><span class="line">xpcall  function: 0x7ffce3404780</span><br><span class="line">package table: 0x7ffce3405780</span><br><span class="line">tostring    function: 0x7ffce3405020</span><br><span class="line">print   function: 0x7ffce3405160</span><br><span class="line">os  table: 0x7ffce34073e0</span><br><span class="line">unpack  function: 0x7ffce34050d0</span><br><span class="line">ewgegw  ddddddgege                          -- 上面添加的全局变量</span><br><span class="line">require function: 0x7ffce3405e70</span><br><span class="line">getfenv function: 0x7ffce3404db0</span><br><span class="line">setmetatable    function: 0x7ffce3404f60</span><br><span class="line">next    function: 0x7ffce3404d20</span><br><span class="line">assert  function: 0x7ffce3404a80</span><br><span class="line">tonumber    function: 0x7ffce3404fc0</span><br><span class="line">io  table: 0x7ffce3406bd0</span><br><span class="line">rawequal    function: 0x7ffce34051b0</span><br><span class="line">collectgarbage  function: 0x7ffce3404ad0</span><br><span class="line">getmetatable    function: 0x7ffce3404e00</span><br><span class="line">module  function: 0x7ffce3405e20</span><br><span class="line">rawset  function: 0x7ffce3405260</span><br><span class="line">math    table: 0x7ffce3408290</span><br><span class="line">debug   table: 0x7ffce3408c50</span><br><span class="line">pcall   function: 0x7ffce3404d70</span><br><span class="line">table   table: 0x7ffce3405f10</span><br><span class="line">newproxy    function: 0x7ffce34052e0</span><br><span class="line">type    function: 0x7ffce3405080</span><br><span class="line">coroutine   table: 0x7ffce3405380            -- 对应的是协同的表</span><br><span class="line">_G  table: 0x7ffce3404110</span><br><span class="line">select  function: 0x7ffce3404ec0</span><br><span class="line">gcinfo  function: 0x7ffce3404150</span><br><span class="line">pairs   function: 0x7ffce34048c0</span><br><span class="line">rawget  function: 0x7ffce3405210</span><br><span class="line">loadstring  function: 0x7ffce3404cc0</span><br><span class="line">ipairs  function: 0x7ffce3404830</span><br><span class="line">_VERSION    Lua 5.1</span><br><span class="line">dofile  function: 0x7ffce3404bd0</span><br><span class="line">setfenv function: 0x7ffce3404f10</span><br><span class="line">load    function: 0x7ffce3404c70</span><br><span class="line">error   function: 0x7ffce3404c20</span><br><span class="line">loadfile    function: 0x7ffce3404e60</span><br><span class="line"></span><br><span class="line">&gt; table.foreach(_G.os, print)</span><br></pre></td></tr></table></figure>
+<h3><span id="102-非全局变量-setfenv">10.2 非全局变量 setfenv</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">--pack.lua</span><br><span class="line">local P = &#123;&#125;</span><br><span class="line"></span><br><span class="line">-- 改变P表的__index,这里的_G代表全局环境</span><br><span class="line">setmetatable(P, &#123;__index = _G&#125;)</span><br><span class="line"></span><br><span class="line">-- 改变当前的环境为P,setfenv前的所有定义都是在全局环境中进行的，后面的则都是在新环境中进行的，互不影响</span><br><span class="line">setfenv(1, P)</span><br><span class="line"></span><br><span class="line">-- 声明的add函数在环境P中，如果要在外部访问必须P.add</span><br><span class="line">function add(x, y)</span><br><span class="line">    print(x .. &apos; + &apos; .. y .. &apos; = &apos; .. (x + y))</span><br><span class="line">    -- 由于当前新的环境中没有print函数，但是__index指向的是全局环境，所以print是全局的函数</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">return P</span><br><span class="line"></span><br><span class="line">--pack1.lua</span><br><span class="line">local P = &#123;&#125;</span><br><span class="line"></span><br><span class="line">-- 如果需要改变环境后使用全局环境的方法需要记住，这种方法比上面的要快</span><br><span class="line">local print = print</span><br><span class="line"></span><br><span class="line">-- 改变当前的环境为P</span><br><span class="line">setfenv(1, P)</span><br><span class="line"></span><br><span class="line">-- 声明的add函数在环境P中，如果要在外部访问必须P.add</span><br><span class="line">function add(x, y)</span><br><span class="line">    print(x .. &apos; + &apos; .. y .. &apos; = &apos; .. (x + y))</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">-- 私有方法</span><br><span class="line">local function div(x, y)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">return P</span><br><span class="line"></span><br><span class="line">--main.lua</span><br><span class="line">local p = require &apos;pack&apos;</span><br><span class="line"></span><br><span class="line">p.add(12, 34)</span><br><span class="line"></span><br><span class="line">local p1 = require &apos;pack1&apos;</span><br><span class="line"></span><br><span class="line">p1.add(43, 19)</span><br></pre></td></tr></table></figure>
+<h2><span id="十一-包-package">十一、包 package</span></h2><h3><span id="111-包的定义">11.1 包的定义</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">-- student.lua</span><br><span class="line">student = &#123;&#125;</span><br><span class="line"></span><br><span class="line">function student.sayHi()</span><br><span class="line">    print(&apos;Hello&apos;)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">return student</span><br><span class="line"></span><br><span class="line">-- 使用</span><br><span class="line">student = require(&quot;student&quot;)</span><br><span class="line">student.sayHi()                 -- Hello</span><br><span class="line">11.2 私有函数</span><br><span class="line"></span><br><span class="line">local function _add(x, y)       -- 私有局部函数</span><br><span class="line">    return x + y</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">utils = &#123;                       -- utils包</span><br><span class="line">    add = _add                  -- 对外公开的函数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return utils</span><br></pre></td></tr></table></figure>
+<h2><span id="十二-面向对象">十二、面向对象</span></h2><h3><span id="121-类与继承">12.1 类与继承</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">--Person.lua</span><br><span class="line">local Person = &#123;name = &apos;&apos;&#125;</span><br><span class="line"></span><br><span class="line">function Person:getName()</span><br><span class="line">    return self.name</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">function Person:setName(name)</span><br><span class="line">    self.name = name</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">function Person:new(object)</span><br><span class="line">    object = object or &#123;&#125;</span><br><span class="line">    setmetatable(object, &#123;__index = self&#125;) -- 元表 类似继承的意思</span><br><span class="line">    return object</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">return Person</span><br><span class="line"></span><br><span class="line">--main.lua</span><br><span class="line">-- 类</span><br><span class="line">local Person = require &apos;Person&apos;</span><br><span class="line"></span><br><span class="line">-- 对象</span><br><span class="line">local student = Person:new(&#123;age = 23&#125;)</span><br><span class="line">student:setName(&apos;Tom&apos;)</span><br><span class="line"></span><br><span class="line">print(&apos;name: &apos; .. student:getName() .. &apos; age: &apos; .. student.age)</span><br></pre></td></tr></table></figure>
+<h3><span id="122-多重继承">12.2 多重继承</span></h3><p>实际就是记住所有父类，然后访问不存在的元素的时候去查询哪个父类中有，有就执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">local function search (k, plist)</span><br><span class="line">    for i=1, table.getn(plist) do</span><br><span class="line">       local v = plist[i][k]    -- 去所有父类中获取</span><br><span class="line">       if v then return v end</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">function Person:new(...)</span><br><span class="line">    local o = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    setmetatable(o, &#123;__index = function (t, k)</span><br><span class="line">        local v = search(k, arg)</span><br><span class="line">        t[k] = v      -- save for next access</span><br><span class="line">        return v</span><br><span class="line">    end&#125;)</span><br><span class="line"></span><br><span class="line">    return o</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3><span id="123-私有性">12.3 私有性</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">local function createAccount(_name) -- 工厂方法</span><br><span class="line">    local self = &#123;name = _name&#125;</span><br><span class="line"></span><br><span class="line">    local function _setName(name)</span><br><span class="line">        self.name = name</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    local function _getName()</span><br><span class="line">        return self.name</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    -- 公有方法表</span><br><span class="line">    local public = &#123;</span><br><span class="line">        setName = _setName,</span><br><span class="line">        getName = _getName,</span><br><span class="line">        --name = self.name -- 不公开私有成员变量</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return public</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">local account = createAccount(&apos;Tom&apos;)</span><br><span class="line">print(account.name) -- 无法访问，因为没有公开</span><br></pre></td></tr></table></figure>
+<h2><span id="十三-weak-table">十三、weak table</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">t = &#123;name = &apos;table&apos;&#125;              -- 创建一个普通表</span><br><span class="line">setmatetable(t, &#123;__made = &apos;k&apos;&#125;)   -- k表示t表中的keys是weak的，v表示t表中的values是weak的</span><br><span class="line"></span><br><span class="line">k = &#123;&#125;              -- 创建一个空表，此时&#123;&#125;被k引用，引用值为1</span><br><span class="line">t[k] = 1            -- 把空表作为key，由于t表的key是weak的，所以k值的引用如果为0则会被gc回收，如</span><br><span class="line">k = &#123;&#125;              -- 把k指向另一个新的&#123;&#125;，则旧的&#123;&#125;引用值减1变成0了，目前t[k] = 1还有效</span><br><span class="line">t[k] = 2            -- 把新的&#123;&#125;作为key，值是2</span><br><span class="line"></span><br><span class="line">collectgarbage()    -- 调用gc，清除引用为0的内存空间，此时，第一个&#123;&#125;的引用是0，会被gc掉，所以第一个t[k]以及值会被删除</span><br><span class="line"></span><br><span class="line">for k, v in pairs(a) do print(v) end</span><br><span class="line">    -- 此时应该只剩下2了，因为第2个k = &#123;&#125;时改变了k指向新的&#123;&#125;，而旧的&#123;&#125;引用会变成0，被gc掉</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = &#123;&#125;; </span><br><span class="line">setmetatable(a, &#123;__mode = &apos;v&apos;&#125;); -- values为weak，当值的引用为0时，删除</span><br><span class="line">v1 = &#123;name = &apos;v1&apos;&#125;</span><br><span class="line">v2 = &#123;name = &apos;v2&apos;&#125;</span><br><span class="line"></span><br><span class="line">a[1] = v1</span><br><span class="line">a[2] = v2</span><br><span class="line"></span><br><span class="line">v1 = v2</span><br><span class="line"></span><br><span class="line">collectgarbage();   -- 调用GC，清掉weak表中没有引用的内存 </span><br><span class="line"></span><br><span class="line">for k, v in pairs(a) do print(v.name) end</span><br><span class="line">    -- 输出v2，因为v1重新指向&#123;name = &apos;v2&apos;&#125;，则&#123;name = &apos;v1&apos;&#125;引用减1为0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = &#123;&#125;; </span><br><span class="line">setmetatable(a, &#123;__mode = &apos;kv&apos;&#125;); -- 同时检查kv，是上面两种情况的组合 </span><br><span class="line">v1 = &#123;name = &apos;v1&apos;&#125;</span><br><span class="line">v2 = &#123;name = &apos;v2&apos;&#125;</span><br><span class="line"></span><br><span class="line">v = &#123;&#125;</span><br><span class="line">k = &#123;&#125;</span><br><span class="line"></span><br><span class="line">a[1] = v</span><br><span class="line">v = &#123;&#125;              -- value重新引用新值，旧值被gc，如果旧值在table则对应的记录被清空</span><br><span class="line">a[2] = v</span><br><span class="line"></span><br><span class="line">a[k] = 1</span><br><span class="line">k = &#123;&#125;              -- key重新引用新值，旧值被gc，如果旧值在table则对应的记录被清空</span><br><span class="line">a[k] = 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">collectgarbage();   -- 调用GC，清掉weak表中没有引用的内存 </span><br><span class="line"></span><br><span class="line">for k, v in pairs(a) do </span><br><span class="line">    print(v)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2><span id="十四-标准库">十四、标准库</span></h2><h3><span id="141-数学库-mathematical-functions">14.1 数学库 Mathematical Functions</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>math.abs(x)</td>
+<td>求绝对值</td>
+</tr>
+<tr>
+<td>math.acos(x)</td>
+<td>求反余弦</td>
+</tr>
+<tr>
+<td>math.asin(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.atan(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.atan2(y,x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.ceil(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.cos(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.cosh(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.deg(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.exp(x)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>math.floor(x)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="142-table库">14.2 table库</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>table.concat (table [, sep [, i [, j]]])</td>
+<td>拼接成字符串，sep代表连接符，i开始位置，j结束位置</td>
+</tr>
+<tr>
+<td>table.insert (table, [pos,] value)</td>
+<td>插入一个元素，默认是最后一个，pos指定位置</td>
+</tr>
+<tr>
+<td>table.maxn (table)</td>
+<td>获取最大长度</td>
+</tr>
+<tr>
+<td>table.remove (table [, pos])</td>
+<td>删除一个元素，默认删除最后一个，pos指定位置</td>
+</tr>
+<tr>
+<td>table.sort (table [, comp])</td>
+<td>排序</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">tables = &#123;1, 2, 3, 4, 5, 6, 7&#125;</span><br><span class="line">print(#tables)      -- 5.1开始使用#获取长度    -- 7</span><br><span class="line"></span><br><span class="line">table.insert(tables, 8)</span><br><span class="line">print(table.concat(tables))                 -- 12345678</span><br><span class="line">table.insert(tables, 1, 0)</span><br><span class="line">print(table.concat(tables))                 -- 012345678</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(table.maxn(tables))                   -- 9</span><br><span class="line"></span><br><span class="line">table.remove(tables)</span><br><span class="line">print(table.concat(tables))                 -- 01234567</span><br><span class="line"></span><br><span class="line">table.remove(tables, 5)</span><br><span class="line"></span><br><span class="line">print(table.concat(tables))                 -- 0123567</span><br><span class="line">print(table.concat(tables, &apos;,&apos;))            -- 0,1,2,3,5,6,7</span><br><span class="line">print(table.concat(tables, &apos;-&apos;, 2))         -- 1-2-3-5-6-7</span><br><span class="line">print(table.concat(tables, &apos;=&apos;, 1, 4))      -- 0=1=2=3</span><br><span class="line"></span><br><span class="line">table.sort(tables)</span><br><span class="line">print(table.concat(tables))                 -- 0123567</span><br><span class="line"></span><br><span class="line">table.sort(tables, function(t1, t2)</span><br><span class="line">    if t1 &gt; t2 then</span><br><span class="line">        return true</span><br><span class="line">    else</span><br><span class="line">        return false</span><br><span class="line">    end</span><br><span class="line">end)</span><br><span class="line">print(table.concat(tables))                 -- 7653210</span><br></pre></td></tr></table></figure>
+<h3><span id="143-string库">14.3 string库</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>string.byte (s [, i [, j]])</td>
+<td>把字符转换成ASCII码</td>
+</tr>
+<tr>
+<td>string.char (…)</td>
+<td>把ASCII码转换成字符</td>
+</tr>
+<tr>
+<td>string.dump (function)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>string.find (s, pattern [, init [, plain]])</td>
+<td>查找，pattern查找的字符串，init从那里开始默认为1，plain</td>
+</tr>
+<tr>
+<td>string.format (formatstring, …)</td>
+<td>格式化字符串</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="144-io库">14.4 io库</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>io.close ([file])</td>
+<td>等效file:close()，如果没有file则关闭默认输出</td>
+</tr>
+<tr>
+<td>io.flush ()</td>
+<td>等效file:flush()</td>
+</tr>
+<tr>
+<td>io.input ([file])</td>
+<td>-</td>
+</tr>
+<tr>
+<td>io.lines ([filename])</td>
+<td>等效io.input():lines()</td>
+</tr>
+<tr>
+<td>io.open (filename [, mode])</td>
+<td>打开一个文件，模式：r,w,a,r+,w+,a+</td>
+</tr>
+<tr>
+<td>io.output ([file])</td>
+<td>-</td>
+</tr>
+<tr>
+<td>io.popen (prog [, mode])</td>
+<td>依赖系统的，不是所有平台都能用</td>
+</tr>
+<tr>
+<td>io.read (…)</td>
+<td>等效io.input():read</td>
+</tr>
+<tr>
+<td>io.tmpfile ()</td>
+<td>创建一个临时文件，当程序退出时自动删除</td>
+</tr>
+<tr>
+<td>io.type (obj)</td>
+<td>判断obj的类型，如果返回file是一个打开的文件句柄，返回close file是一个关闭的文件句柄，nil不是文件</td>
+</tr>
+<tr>
+<td>io.write (…)</td>
+<td>等效io.output():write</td>
+</tr>
+<tr>
+<td>file:close ()</td>
+<td>关闭文件，会自动gc掉，但时间不确定</td>
+</tr>
+<tr>
+<td>file:flush ()</td>
+<td>保存任何数据到文件中</td>
+</tr>
+<tr>
+<td>file:lines ()</td>
+<td>迭代文件的每一行</td>
+</tr>
+<tr>
+<td>file:read (…)</td>
+<td>读取文件，<em>n,</em>a,*l,number</td>
+</tr>
+<tr>
+<td>file:seek ([whence] [, offset])</td>
+<td>指定位置，默认是cur,1，set,end</td>
+</tr>
+<tr>
+<td>file:setvbuf (mode [, size])</td>
+<td>设置buff缓存，no,full,line</td>
+</tr>
+<tr>
+<td>file:write (…)</td>
+<td>写文件，参数必须是string或者number</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">local file = io.open(&apos;tabletest.lua&apos;, &apos;r&apos;)</span><br><span class="line">print(io.type(file))</span><br><span class="line"></span><br><span class="line">for line in file:lines() do</span><br><span class="line">    --print(line)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">--file:close()</span><br><span class="line">io.close(file)</span><br><span class="line">print(io.type(file))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for line in io.input(&apos;tabletest.lua&apos;):lines() do</span><br><span class="line">    print(line)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">for line in io.lines(&apos;tabletest.lua&apos;) do</span><br><span class="line">    --print(line)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3><span id="145-os库">14.5 os库</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os.clock ()</td>
+<td>返回程序所使用的cpu时间</td>
+</tr>
+<tr>
+<td>os.date ([format [, time]])</td>
+<td>当前系统日期，或格式化某个日期</td>
+</tr>
+<tr>
+<td>os.difftime (t2, t1)</td>
+<td>时间差</td>
+</tr>
+<tr>
+<td>os.execute ([command])</td>
+<td>执行shell命令</td>
+</tr>
+<tr>
+<td>os.exit ([code])</td>
+<td>调用C的exit函数</td>
+</tr>
+<tr>
+<td>os.getenv (varname)</td>
+<td>获取系统环境变量，变量名，不包含$</td>
+</tr>
+<tr>
+<td>os.remove (filename)</td>
+<td>删除文件，文件名</td>
+</tr>
+<tr>
+<td>os.rename (oldname, newname)</td>
+<td>修改文件名</td>
+</tr>
+<tr>
+<td>os.setlocale (locale [, category])</td>
+<td>设置地区，”all”, “collate”, “ctype”, “monetary”, “numeric”, or “time”</td>
+</tr>
+<tr>
+<td>os.time ([table])</td>
+<td>返回当前时间或把时间保存在table中，</td>
+</tr>
+<tr>
+<td>os.tmpname ()</td>
+<td>临时文件名</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">table.foreach(os, print)</span><br><span class="line"></span><br><span class="line">print(os.clock())</span><br><span class="line"></span><br><span class="line">print(os.date())</span><br><span class="line"></span><br><span class="line">print(os.date(&apos;%Y-%m-%d %H:%M&apos;))</span><br><span class="line"></span><br><span class="line">print(os.time())</span><br><span class="line"></span><br><span class="line">print(os.difftime(1364957757, os.time()))</span><br><span class="line"></span><br><span class="line">print(os.getenv (&apos;PATH&apos;))</span><br><span class="line"></span><br><span class="line">print(os.tmpname ())</span><br></pre></td></tr></table></figure>
+<h3><span id="146-debug库">14.6 debug库</span></h3><p>函数说明</p>
+<h2><span id="十五-标准库">十五、标准库</span></h2><h3><span id="堆栈后进先出原则">堆栈，后进先出原则</span></h3><h3><span id="压入">压入</span></h3><p><strong>栈底最后一个元素的索引是1,栈顶第一个元素是-1</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lua_pushnil(lua_State*)</td>
+<td>压入一个空值</td>
+</tr>
+<tr>
+<td>lua_pushboolean(lua_State*, int)</td>
+<td>压入一个布尔值</td>
+</tr>
+<tr>
+<td>lua_pushcclosure(lua_State*, lua_CFunction, int)</td>
+<td>压入一个C闭包</td>
+</tr>
+<tr>
+<td>lua_pushcfunction(lua_State*, lua_CFunction)</td>
+<td>-</td>
+<td>压入一个C函数，由lua_pushcclosure(L, f, 0)</td>
+<td>宏定义出来</td>
+</tr>
+<tr>
+<td>lua_pushlightuserdata(lua_State<em>, void</em>)</td>
+<td>压入一个指针，不被gc管理</td>
+</tr>
+<tr>
+<td>lua_pushinteger(lua_State*, lua_Integer)</td>
+<td>压入一个数字</td>
+</tr>
+<tr>
+<td>lua_pushnumber(lua_State*, lua_Number)</td>
+<td>压入数字</td>
+</tr>
+<tr>
+<td>lua_pushstring(lua_State<em>, const char</em>)</td>
+<td>压入字符串</td>
+</tr>
+<tr>
+<td>lua_pushfstring(lua_State<em>, const char</em>, …)</td>
+<td>压入一个格式化的string</td>
+</tr>
+<tr>
+<td>lua_pushvfstring(lua_State<em>, const char</em>, va_list)</td>
+<td>同上，只是接收一个va_list</td>
+</tr>
+<tr>
+<td>lua_pushlstring(lua_State<em>, const char</em>, size_t);</td>
+<td>压入长字符串</td>
+</tr>
+<tr>
+<td>lua_pushliteral(lua_State<em>, const char</em>)</td>
+<td>压入文字</td>
+</tr>
+<tr>
+<td>lua_pushthread(lua_State*)</td>
+<td>压入一个线程</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="判断类型">判断类型</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lua_isboolean(lua_State*, int)</td>
+<td>是否是布尔类型</td>
+</tr>
+<tr>
+<td>lua_iscfunction(lua_State*, int)</td>
+<td>是否是C函数类型</td>
+</tr>
+<tr>
+<td>lua_isfunction(lua_State*, int)</td>
+<td>是否是C函数或者Lua函数</td>
+</tr>
+<tr>
+<td>lua_islightuserdata(lua_State*, int)</td>
+<td>是否是用户自定义类型指针</td>
+</tr>
+<tr>
+<td>lua_isnil(lua_State*, int)</td>
+<td>是否是空</td>
+</tr>
+<tr>
+<td>lua_isnone(lua_State*, int)</td>
+<td>是否是有效的</td>
+</tr>
+<tr>
+<td>lua_isnoneornil(lua_State*, int)</td>
+<td>是否是上面两者</td>
+</tr>
+<tr>
+<td>lua_isnumber(lua_State*, int)</td>
+<td>是否是数字</td>
+</tr>
+<tr>
+<td>lua_isstring(lua_State*, int)</td>
+<td>是否是字符串</td>
+</tr>
+<tr>
+<td>lua_istable(lua_State*, int)</td>
+<td>是否是table</td>
+</tr>
+<tr>
+<td>lua_isthread(lua_State*, int)</td>
+<td>是否是线程</td>
+</tr>
+<tr>
+<td>lua_isuserdata(lua_State*, int)</td>
+<td>是否是用户类型，包括full和light</td>
+</tr>
+<tr>
+<td>lua_type(lua_State*, int)</td>
+<td>返回元素的类型，对应LUA_TNIL等枚举</td>
+</tr>
+<tr>
+<td>lua_typename(lua_State*, int)</td>
+<td>返回元素的类型名称</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="获取栈中的元素并转换成c类型">获取栈中的元素并转换成C类型</span></h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+<th>返回值类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lua_toboolean(lua_State*, int)</td>
+<td>把元素转换成C的布尔类型的值</td>
+<td>int</td>
+</tr>
+<tr>
+<td>lua_tocfunction(lua_State*, int)</td>
+<td>把元素转换成C的函数</td>
+<td>lua_CFunction</td>
+</tr>
+<tr>
+<td>lua_tointeger (lua_State*, int)</td>
+<td>-</td>
+<td>lua_Integer</td>
+</tr>
+<tr>
+<td>lua_tolstring (lua_State<em>, int, size_t </em>len)</td>
+<td>-</td>
+<td>const char*</td>
+</tr>
+<tr>
+<td>lua_tonumber (lua_State*, int)</td>
+<td>-</td>
+<td>lua_Number</td>
+</tr>
+<tr>
+<td>lua_topointer (lua_State*, int)</td>
+<td>-</td>
+<td>const void*</td>
+</tr>
+<tr>
+<td>lua_tostring (lua_State*, int)</td>
+<td>-</td>
+<td>const char*</td>
+</tr>
+<tr>
+<td>lua_tothread (lua_State*, int)</td>
+<td>-</td>
+<td>lua_State</td>
+</tr>
+<tr>
+<td>lua_touserdata (lua_State<em>, int)void</em></td>
+<td>栈内元素的操作</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lua_gettop(lua_State*)</td>
+<td>返回栈的元素个数，同时也是栈顶元素的索引</td>
+</tr>
+<tr>
+<td>lua_settop(lua_State*, int)</td>
+<td>设置某个元素为栈顶元素，该元素之上的元素会被清除</td>
+</tr>
+<tr>
+<td>lua_pushvalue(lua_State*, int)</td>
+<td>压入（拷贝）一个已经存在栈的元素至栈顶</td>
+</tr>
+<tr>
+<td>lua_insert(lua_State*, int)</td>
+<td>移动栈顶元素至某个位置</td>
+</tr>
+<tr>
+<td>lua_remove(lua_State*, int)</td>
+<td>删除栈中某个元素</td>
+</tr>
+<tr>
+<td>lua_replace(lua_State*, int)</td>
+<td>替换栈顶元素至某个位置，相应那个位置的元素至栈顶</td>
+</tr>
+</tbody>
+</table>
+<p>参考：<a href="http://book.luaer.cn" target="_blank">http://book.luaer.cn</a></p>
+<p>参考：<a href="http://www.lua.org/manual/5.1/manual.html" target="_blank">http://www.lua.org/manual/5.1/manual.html</a></p>
+<p>原文地址:<a href="http://blog.linguofeng.com/pages/language/lua.html" target="_blank">http://blog.linguofeng.com/pages/language/lua.html</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Lua编程/">Lua编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/lijiang-photograph-album.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">丽江泸沽湖照片集</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/Programming-in-Lua.html">
+        <span class="next-text nav-default">Lua学习笔记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/The-Programming-Language-Lua.html';
+
+  var disqus_title = "Lua-简洁、轻量、可扩展的脚本语言";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

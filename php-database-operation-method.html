@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="常用的PHP数据库操作方法（MYSQL版）">
+
+
+
+
+  <meta name="keywords" content="数据库技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-database-operation-method.html">
+
+
+<meta name="description" content="一、数据库操作 1. 连接MYSQL数据mysql_connect() e.g. $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die(‘Unable to connect, please check connection paremeters’);  2. 选择数据库mysql_select_db() 连接上数据库后">
+<meta name="keywords" content="数据库技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用的PHP数据库操作方法（MYSQL版）">
+<meta property="og:url" content="http://rmingwang.com/php-database-operation-method.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="一、数据库操作 1. 连接MYSQL数据mysql_connect() e.g. $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die(‘Unable to connect, please check connection paremeters’);  2. 选择数据库mysql_select_db() 连接上数据库后">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-26T02:26:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用的PHP数据库操作方法（MYSQL版）">
+<meta name="twitter:description" content="一、数据库操作 1. 连接MYSQL数据mysql_connect() e.g. $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die(‘Unable to connect, please check connection paremeters’);  2. 选择数据库mysql_select_db() 连接上数据库后">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 常用的PHP数据库操作方法（MYSQL版） - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          常用的PHP数据库操作方法（MYSQL版）
+        
+      </h1>
+
+      <time class="post-time">
+          10月 20 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="一-数据库操作">一、数据库操作</span></h2><p></p>
+<p></p><h3><span id="1-连接mysql数据">1. 连接MYSQL数据</span></h3><br><strong>mysql_connect()</strong><p></p>
+<p>e.g.</p>
+<p><blockquote>$db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die(‘Unable to connect, please check connection paremeters’);</blockquote></p>
+<p></p><h3><span id="2-选择数据库"> 2. 选择数据库</span></h3><br><strong>mysql_select_db()</strong><p></p>
+<p>连接上数据库后，PHP默认选择的数据库未必是我们后面操作中需要的数据库，为确保数据库选择正确，一般在数据库连接语句后面还要加上数据库选择语句。</p>
+<p>e.g.</p>
+<p><blockquote>mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));</blockquote></p>
+<p></p><h3><span id="3-执行sql语句">3. 执行SQL语句</span></h3><br>mysql_query()<p></p>
+<p>该函数将SQL语句发送到当前活动的数据库并执行语句，返回结果。</p>
+<p>e.g.</p>
+<p><blockquote>$query = “SELECT * FROM $table”</blockquote></p>
+<p>$result = mysql_query($query, $db) or die(mysql_error($db));</p>
+<p></p><h3><span id="4-关闭数据库">4. 关闭数据库</span></h3><br><strong>mysql_close()</strong><p></p>
+<p>该函数用于关闭不需要继续活跃的数据库，但该方法不是必须的，一般PHP会自动关闭不继续活跃的数据库。</p>
+<p>e.g.</p>
+<p><blockquote>mysql_close($db);</blockquote></p>
+<p></p><h3><span id="5-释放sql结果">5. 释放SQL结果</span></h3><br><strong>mysql_free_result()</strong><p></p>
+<p>该函数用于释放mysql_query()执行结果占用的内存，该函数很少被调用，除非result很大，占用太多内存；一般在PHP脚本执行结束之后很自动释放占用的内存。</p>
+<p></p><h2><span id="二-sql执行结果操作">二、SQL执行结果操作</span></h2><p></p>
+<p></p><h3><span id="1-返回执行结果中的一行">1. 返回执行结果中的一行</span></h3><br><strong>mysql_fetch_row()</strong><p></p>
+<p>返回执行结果的当前行的数值数组，执行这个函数后，结果指向下一行。</p>
+<p>e.g.</p>
+<p><blockquote>$row = mysql_fetch_row($result);</blockquote><br>处理执行结果一般放在while循环中，遍历每一行</p>
+<p>e.g.</p>
+<p><blockquote>while($row = mysql_fetch_row($result))<br>{……}</blockquote></p>
+<p></p><h3><span id="2-mysql_fetch_row的替代方法">2. mysql_fetch_row()的替代方法</span></h3><br><strong>mysql_fetch_array()</strong><p></p>
+<p><strong>mysql_fetch_assoc()</strong></p>
+<p>mysql_fetch_array()返回键值对数组，键为查询的table的列名；</p>
+<p>mysql_fetch_assoc()返回结果时可以先排序（如果为可选参数赋值），相当于mysql_fetch_array()+MYSQL_ASSOC</p>
+<p></p><h3><span id="3-执行结果的字段列属性">3. 执行结果的字段（列）属性</span></h3><br><strong>mysql_fetch_field()</strong><p></p>
+<p></p><h3><span id="4-查询数据库中的表名">4. 查询数据库中的表名</span></h3><br><strong>mysql_list_tables()</strong><p></p>
+<p>e.g.</p>
+<p><blockquote>$db_name = MYSQL_DB;<br>$result = mysql_list_tables($db_name);<br>echo “数据库中包含如下表：”;<br>while ($row = mysql_fetch_row($result))<br>{<br>echo $row[0];<br>}</blockquote></p>
+<p></p><h3><span id="5-查询数据库的列名字段名">5. 查询数据库的列名（字段名）</span></h3><br><strong>mysql_list_fields()</strong><p></p>
+<p>e.g.</p>
+<p><blockquote>$fields = mysql_list_fields($db_name,$table);<br>$columns = mysql_num_fields($fields);<br>for ($i = 0; $i &lt; $columns; $i++)<br>echo  mysql_field_name($fields, $i);</blockquote></p>
+<p></p><h2><span id="三-其他函数">三、其他函数</span></h2><br><strong>1. mysql_num_rows()</strong><p></p>
+<p>返回执行结果的行数。</p>
+<p>e.g.</p>
+<p><blockquote>$num = mysql_num_rows($result);</blockquote><br><strong>2. mysql_num_fields()</strong></p>
+<p>返回执行结果的列数（字段数）。</p>
+<p>e.g. $num = mysql_num_fields($result);</p>
+<p><strong>3.mysql_set_charset()</strong></p>
+<p>设置执行结果的编码，防止在网页中显示中文时乱码。</p>
+<p>e.g.</p>
+<p><blockquote>$query = “select * from $table_name”;<br>mysql_query(‘set names utf8′);<br>$result = mysql_query($query, $db) or die(mysql_error($db));</blockquote></p>
+<p></p><h2><span id="注">注：</span></h2><p></p>
+<ol>
+<li><p>文中大写代码为预定义的内容，如define(MYSQL_HOST,  ‘localhost’);</p>
+</li>
+<li><p>本文仅总结了PHP操作数据库的主要函数，完整的内容请参考PHP手册的<a href="http://www.php.net/manual/en/book.mysql.php" target="_blank" rel="noopener">相关内容</a>。</p>
+</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/数据库技术/">数据库技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-20111020.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记20111020</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/ubuntu-apache-reverse-proxy-server-configuration.html">
+        <span class="next-text nav-default">使用ubuntu+apache 反向代理服务器的配置</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-database-operation-method.html';
+
+  var disqus_title = "常用的PHP数据库操作方法（MYSQL版）";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

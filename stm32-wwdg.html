@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32窗口看门狗（WWDG）">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-wwdg.html">
+
+
+<meta name="description" content="STM32的另外一个看门狗，&amp;lt;strong&amp;gt;窗口看门狗。&amp;lt;/strong&amp;gt; 窗口看门狗简介 窗口看门狗（WWDG）通常被用来监测由外部干扰或不可预见的逻辑条件造成的应用程序背离正常的运行序列而产生的软件故障。除非递减计数器的值在T6位（WWDG-&amp;gt;CR的第六位）变成0 前被刷新，看门狗电路在达到预置的时间周期时，会产生一个 MCU复位。在递减计数器达到窗口配置寄存器(">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32窗口看门狗（WWDG）">
+<meta property="og:url" content="http://rmingwang.com/stm32-wwdg.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="STM32的另外一个看门狗，&amp;lt;strong&amp;gt;窗口看门狗。&amp;lt;/strong&amp;gt; 窗口看门狗简介 窗口看门狗（WWDG）通常被用来监测由外部干扰或不可预见的逻辑条件造成的应用程序背离正常的运行序列而产生的软件故障。除非递减计数器的值在T6位（WWDG-&amp;gt;CR的第六位）变成0 前被刷新，看门狗电路在达到预置的时间周期时，会产生一个 MCU复位。在递减计数器达到窗口配置寄存器(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32窗口看门狗（WWDG）">
+<meta name="twitter:description" content="STM32的另外一个看门狗，&amp;lt;strong&amp;gt;窗口看门狗。&amp;lt;/strong&amp;gt; 窗口看门狗简介 窗口看门狗（WWDG）通常被用来监测由外部干扰或不可预见的逻辑条件造成的应用程序背离正常的运行序列而产生的软件故障。除非递减计数器的值在T6位（WWDG-&amp;gt;CR的第六位）变成0 前被刷新，看门狗电路在达到预置的时间周期时，会产生一个 MCU复位。在递减计数器达到窗口配置寄存器(">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32窗口看门狗（WWDG） - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32窗口看门狗（WWDG）
+        
+      </h1>
+
+      <time class="post-time">
+          7月 21 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <pre>STM32的另外一个看门狗，&lt;strong&gt;窗口看门狗。&lt;/strong&gt;</pre>
+<h3><span id="窗口看门狗简介">窗口看门狗简介</span></h3>
+<blockquote>窗口看门狗（WWDG）通常被用来监测由外部干扰或不可预见的逻辑条件造成的应用程序背离正常的运行序列而产生的软件故障。除非递减计数器的值在T6位（WWDG-&gt;CR的第六位）变成0 前被刷新，看门狗电路在达到预置的时间周期时，会产生一个 MCU复位。在递减计数器达到窗口配置寄存器(WWDG-&gt;CFR) 数值之前，如果7 位的递减计数器数值(在控制寄存器中)被刷新， 那么也将产生一个MCU复位。这表明递减计数器需要在一个有限的时间窗口中被刷新。</blockquote>
+<strong>stm32有两个看门狗，独立看门狗和窗口看门狗，其实两者的功能是类似的，只是喂狗的限制时间不同。</strong>
+<ul>
+    <li>独立看门狗是限制喂狗时间在0-x内，x由你的相关寄存器决定。喂狗的时间不能过晚。</li>
+    <li>窗口看门狗，所以称之为窗口就是因为其喂狗时间是一个有上下限的范围内，你可以通过设定相关寄存器，设定其上限时间和下限时间。喂狗的时间不能过早也不能过晚。</li>
+</ul>
+
+<strong>T[6:0]就是WWDG_CR的低七位，W[6:0]即是WWDG-&gt;CFR的低七位。T[6:0]就是窗口看门狗的计数器，而W[6:0]则是窗口看门狗的上窗口，下窗口值是固定的（0X40）。当窗口看门狗的计数器在上窗口值之外被刷新，或者低于下窗口值都会产生复位。</strong>
+
+<strong>上窗口值（W[6:0]）是由用户自己设定的，根据实际要求来设计窗口值，但是一定要确保窗口值大于0X40，否则窗口就不存在了。</strong>
+<h2><span id="窗口看门狗的3-个寄存器">窗口看门狗的3 个寄存器</span></h2>
+<h3><span id="控制寄存器wwdg_cr">控制寄存器（WWDG_CR）</span></h3>
+<strong>WWDG_CR</strong>只有<strong>低八位有效</strong>，T[6:0]用来存储看门狗的计数器值，随时更新的，每个 PCLK1周期（4096 ×2^wdgtb）减 1 。当该计数器的值<strong>从 0X40变为0X3F 的时候，将产生看门狗复位</strong>。
+
+<strong> WDGA</strong>位则是<strong>看门狗的激活位</strong>，该位由软件置 1，以启动看门狗，并且一定要注意的是该位一旦设置，就只能在硬件复位后才能清零了。
+
+<h3><span id="配置寄存器wwdg_cfr">配置寄存器（WWDG_CFR）</span></h3>
+<strong><span style="color: #ff0000;">EWI 是提前唤醒中断</span></strong>，也就是在<strong>快要产生复位的前一段时间来<span style="color: #ff0000;">提醒我们</span>，需要进行喂狗了，否则将复位！</strong>
+
+<span style="color: #ff0000;"><strong>一般用该位来设置中断</strong></span>，当窗口看门狗的计数器值<strong>减到0X40的时候</strong>，如果该位设置，并开启了中断，则会产生中断，我们可以<strong>在中断里面想 WWDG_CR 重新写入计数器的值</strong>，<strong>来达到喂狗的目的。</strong>
+
+<span style="color: #ff0000;"><strong>注意：</strong></span>这里你在进入中断后，你得在不大于113us 的时间（PCLK1为36M 的条件下）内重新写 WWDG_CR，否则，看门狗将产生复位。
+
+<h3><span id="状态寄存器wwdg_sr">状态寄存器（WWDG_SR）</span></h3>
+该寄存器用来<strong>记录当前是否有提前唤醒的标志</strong>。该寄存器仅有<strong>位 0 有效</strong>，其他都是保留位。当计数器值达到 40h 时，此位由硬件置 1 。它必须通过<strong>软件写’0’来清除(中断服务程序中)</strong>。对此位写’1’无效。若中断未被使能，此位也会被置’1’。
+<h2><span id="寄存器操作步骤">寄存器操作步骤</span></h2>
+<h3><span id="1-使能wwdg时钟">1 ）使能WWDG时钟</span></h3>
+WWDG不同于IWDG ，IWDG 有自己独立的40Khz 时钟，不存在使能问题。而WWDG使用的是PCLK1的时钟，需要先<strong>使能时钟</strong>。
+<h3><span id="2-设置wwdg_cfr和wwdg_cr两个寄存器">2 ）设置WWDG_CFR和WWDG_CR两个寄存器</span></h3>
+在时钟使能完后，我们设置WWDG的CFR 和CR两个寄存器，对WWDG进行配置。包括<strong>使能窗口看门狗</strong>、<strong>开启中断</strong>、<strong>设置计数器的初始值</strong>、<strong>设置窗口值</strong>并<strong>设置分频数WDGTB</strong>等。
+<h3><span id="3-开启wwdg中断并分组">3 ）开启WWDG中断并分组</span></h3>
+在设置完了WWDG后，需要<strong>配置该中断的分组及使能</strong>。这点通过我们之前所编写的<strong>MY_NVIC_Init函数</strong>实现就可以了。
+<h3><span id="4-编写中断服务函数">4 ）编写中断服务函数</span></h3>
+在最后，还是要编写窗口看门狗的中断服务函数，通过该函数来<span style="color: #ff0000;"><strong>喂狗</strong></span>，喂狗要快，否则当窗口看门狗计数器值减到0X3F 的时候，就会引起软复位了。在终端服务函数里面也要<span style="color: #ff0000;"><strong>将状态寄存器的EWIF 位清空</strong></span>。
+<h2><span id="程序设计">程序设计</span></h2>
+//MAIN.C
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;sys.h&quot;
+#include &quot;usart.h&quot;
+#include &quot;delay.h&quot;
+#include &quot;led.h&quot;
+#include &quot;key.h&quot;
+#include &quot;exti.h&quot;
+#include &quot;wdg.h&quot;    
+//窗口看门狗实验
+int main(void)
+{    
+      Stm32_Clock_Init(9); //系统时钟设置
+    delay_init(72);         //延时初始化
+    uart_init(72,9600);  //串口初始化 
+    led_init();               //初始化与LED连接的硬件接口
+    LED0=0;
+    delay_ms(300);      
+    wwdg_init(0X7F,0X5F,3);//计数器值为7f,窗口寄存器为5f,分频数为8       
+     while(1)
+    {
+        LED0=1;                     
+    }     
+}</pre>
+//WDG.C
+<pre class="brush: php; gutter: true">#include &quot;wdg.h&quot;
+#include &quot;led.h&quot;
+//看门狗驱动代码
+//初始化独立看门狗
+//prer：分频数：0~7（只有低3位有效！）
+//分频银子=4*2^prer最大值为256
+//rlr: 重装载寄存器值: 低11 位有效. 
+// 时间计算(大概):Tout=((4×2^prer) ×rlr)/40 (ms).
+void iwdg_init(u8 prer,u16 rlr) 
+{
+    IWDG-&gt;KR=0X5555;//使能对IWDG-&gt;PR和IWDG-&gt;RLR的写                                                   
+      IWDG-&gt;PR=prer;  //设置分频系数   
+      IWDG-&gt;RLR=rlr;  //从加载寄存器 IWDG-&gt;RLR  
+    IWDG-&gt;KR=0XAAAA;//reload                                               
+      IWDG-&gt;KR=0XCCCC;//使能看门狗    
+}
+//喂独立看门狗
+void iwdg_feed(void)
+{
+    IWDG-&gt;KR=0XAAAA;//reload                                               
+}
+//保存WWDG计数器的设置值,默认为最大.
+u8 WWDG_CNT=0x7f;
+//初始化窗口看门狗
+//tr   :T[6:0],用于存储计数器的值
+//wr   :W[6:0],用于存储窗口值
+//fprer:窗口看门狗的实际设置
+//低2位有效.Fwwdg=PCLK1/4096/2^fprer.
+void wwdg_init(u8 tr,u8 wr,u8 fprer)
+{                              
+    RCC-&gt;APB1ENR|=1&lt;&lt;11;    //使能wwdg时钟
+    WWDG_CNT=tr&amp;WWDG_CNT;   //初始化WWDG_CNT.                                       
+    WWDG-&gt;CFR|=fprer&lt;&lt;7;    //PCLK1/4096再除2^fprer
+    WWDG-&gt;CFR|=1&lt;&lt;9;        //使能提前唤醒中断
+    WWDG-&gt;CFR&amp;=0XFF80;     
+    WWDG-&gt;CFR|=wr;            //设定窗口值     
+    WWDG-&gt;CR|=WWDG_CNT|(1&lt;&lt;7); //开启看门狗,设置7位计数器                                  
+    MY_NVIC_Init(2,3,WWDG_IRQChannel,2);//抢占2，子优先级3，组2       
+}
+//重设置WWDG计数器的值
+void wwdg_set_counter(u8 cnt)
+{
+    WWDG-&gt;CR|=(cnt&amp;0x7F);//重设置7位计数器
+}
+//窗口看门狗中断服务程序
+void WWDG_IRQHandler(void)
+{                        
+    u8 wr,tr;  
+     wr=WWDG-&gt;CFR&amp;0X7F;
+    tr=WWDG-&gt;CR&amp;0X7F;
+    if(tr&lt;wr)wwdg_set_counter(WWDG_CNT);//只有当计数器的值,小于窗口寄存器的值才能写CR!!                      
+    WWDG-&gt;SR=0X00;//清除提前唤醒中断标志位
+    LED1=!LED1;
+}</pre>
+<pre class="brush: php; gutter: true"></pre>
+
+<p>//WDG.H</p>
+<pre class="brush: php; gutter: true">#ifndef __WDG_H
+#define __WDG_H
+#include &quot;sys.h&quot;
+//看门狗 驱动代码
+void iwdg_init(u8 prer,u16 rlr);     //初始化IWDG
+void iwdg_feed(void);                 //IWDG喂狗
+void wwdg_init(u8 tr,u8 wr,u8 fprer);//初始化WWDG
+void wwdg_set_counter(u8 cnt);       //设置WWDG的计数器
+#endif</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/stm32-timer-interrupt.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32定时器中断</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-iwdg.html">
+        <span class="next-text nav-default">STM32独立看门狗（IWDG）</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-wwdg.html';
+
+  var disqus_title = "STM32窗口看门狗（WWDG）";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

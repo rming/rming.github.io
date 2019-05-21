@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="通过SYSTICK的查询方式实现延时函数笔记">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/systick-delay-function-notes.html">
+
+
+<meta name="description" content="首先几个操作技巧，RVMDK中打开别人的项目文件，遇到自定义的函数或变量，可以通过右键里的goto the definition of ***或者reference查看定义变量的文件和代码位置（如图）。 先上代码，后面解释 #include “sys.h”#include “delay.h”#include “usart.h”int main(){u8 t=0;Stm32_Clock_Init(9">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过SYSTICK的查询方式实现延时函数笔记">
+<meta property="og:url" content="http://rmingwang.com/systick-delay-function-notes.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="首先几个操作技巧，RVMDK中打开别人的项目文件，遇到自定义的函数或变量，可以通过右键里的goto the definition of ***或者reference查看定义变量的文件和代码位置（如图）。 先上代码，后面解释 #include “sys.h”#include “delay.h”#include “usart.h”int main(){u8 t=0;Stm32_Clock_Init(9">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-11-19T02:45:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过SYSTICK的查询方式实现延时函数笔记">
+<meta name="twitter:description" content="首先几个操作技巧，RVMDK中打开别人的项目文件，遇到自定义的函数或变量，可以通过右键里的goto the definition of ***或者reference查看定义变量的文件和代码位置（如图）。 先上代码，后面解释 #include “sys.h”#include “delay.h”#include “usart.h”int main(){u8 t=0;Stm32_Clock_Init(9">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 通过SYSTICK的查询方式实现延时函数笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          通过SYSTICK的查询方式实现延时函数笔记
+        
+      </h1>
+
+      <time class="post-time">
+          5月 21 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>首先几个操作技巧，RVMDK中打开别人的项目文件，遇到自定义的函数或变量，可以通过右键里的goto the definition of ***或者reference查看定义变量的文件和代码位置（如图）。</p>
+<p>先上代码，后面解释</p>
+<blockquote>#include “sys.h”<br>#include “delay.h”<br>#include “usart.h”<br>int main(){<br>u8 t=0;<br>Stm32_Clock_Init(9);//72M<br>delay_init(72);// 延时初始化<br>uart_init(72,9600); // 设置串口1 波特率<br>while(1){<br>printf(“t:%d<br>“,t);<br>delay_ms(500);<br>t++;<br>}<br>}</blockquote><br>下面是部分子函数<br><blockquote>void delay_init(u8 SYSCLK)<br>{<br>SysTick-&gt;CTRL&amp;=0xfffffffb;//bit2清空,选择外部时钟 HCLK/8<br>fac_us=SYSCLK/8;//计时基数 systick主频 HCLK/8=72/8=9MHZ,每次计数1/9us，所以计数为9时正好1us<br>fac_ms=(u16)fac_us<em>1000; //计时基数 1us</em>1000=1ms<br>}</blockquote><br><blockquote>void delay_ms(u16 nms)<br>{<br>u32 temp;<br>SysTick-&gt;LOAD=(u32)nms*fac_ms;//时间加载(SysTick-&gt;LOAD为24bit)<br>SysTick-&gt;VAL =0x00; //清空计数器<br>SysTick-&gt;CTRL=0x01 ; //开始倒数<br>do<br>{<br>temp=SysTick-&gt;CTRL;<br>}<br>while(temp&amp;0x01&amp;&amp;!(temp&amp;(1&lt;CTRL=0x00; //关闭计数器<br>SysTick-&gt;VAL =0X00; //清空计数器<br>}</blockquote><br>SYSTICK 是RVMDK里定义的一个结构体（准确说是一个指针，指向了结构体），具体代码部分见RVMDK安装目录KeilARMINCSTSTM32F10x下的stm32f10x_map.h，515行，下面又把它强制类型转换成了指针，以便使用”-&gt;”方式调用赋值，我的理解就是一大堆地址定义。<br>SysTick是MDK定义了的一个结构体（在stm32f10x_map. h里面），里面包含CTRL、LOAD 、<br><br>VA L 、CALIB等4 个寄存器，各位定义如所示：<br><p align="left">下面介绍STM32中的systick，Systick 部分内容属于NVIC控制部分，一共有4个寄存器，名称和地址分别是：</p><br><br><blockquote>STK_CSR,        0xE000E010  –  控制寄存器<br>STK_LOAD,     0xE000E014  –  重载寄存器<br>STK_VAL,        0xE000E018  –  当前值寄存器<br>STK_CALRB,   0xE000E01C  –   校准值寄存器<br><p align="left">首先看<strong>STK_CSR</strong><strong>控制寄存器：</strong>寄存器内有4个位t具有意义</p><br></blockquote>
+
+<blockquote><br><p align="left">第0位：ENABLE，Systick 使能位  （0：关闭Systick功能；1：开启Systick功能）<br>第1位：TICKINT，Systick 中断使能位    （0：关闭Systick中断；1：开启Systick中断）<br>第2位：CLKSOURCE，Systick时钟源选择  （0：使用HCLK/8 作为Systick时钟；1：使用HCLK作为Systick时钟）<br>第3位：COUNTFLAG，Systick计数比较标志，如果在上次读取本寄存器后，SysTick 已经数到了0，则该位为1。如果读取该位，该位将自动清零</p><br><strong>STK_LOAD  </strong><strong>重载寄存器：</strong></blockquote><br><blockquote>Systick是一个递减的定时器，当定时器递减至0时，重载寄存器中的值就会被重装载，继续开始递减。STK_LOAD  重载寄存器是个24位的寄存器最大计数0xFFFFFF。<br><br>&nbsp;<br><br><strong>STK_VAL当前值寄存器：</strong></blockquote><br><blockquote><br><p align="left">也是个24位的寄存器，读取时返回当前倒计数的值，写它则使之清零，同时还会清除在SysTick 控制及状态寄存器中的COUNTFLAG 标志。</p><br><p align="left"><strong>STK_CALRB  校准值寄存器：</strong></p><br></blockquote>
+
+<blockquote><br><p align="left">这个寄存器好像目前的水平我还用不到，大体意思明白点，把英文说明放这吧：</p><br><p align="left">位31 NOREF ：1=没有外部参考时钟（STCLK 不可用）0=外部参考时钟可用</p><br><p align="left">位30 SKEW：1=校准值不是准确的1ms 0=校准值是准确的1ms</p><br><p align="left">位[23:0] ：Calibration value</p><br>&nbsp;</blockquote>
+
+<p>SYSTICK的时钟频率，这里我们使用了外部时钟源，即RCC通关AHB时钟（HCLK）8分频后作为Cortex的系统定时器（Systic）的外部时钟，通过对Systic状态寄存器的设置，SYSTICK-&gt;CTRL寄存器第2位（0：使用HCLK/8 作为Systick时钟；1：使用HCLK作为Systick时钟），通过SYSTICK-&gt;CTRL&amp;=0xfffffffb设置第二位为0以选择HCLK/8为SYSTICK时钟频率。</p>
+<p>然后我们在延时函数初始化SYSTICK，设置计时基数，得到最小单位时间为1us的计数单位，以便设置SYSTICK-&gt;RELOAD计数数值。</p>
+<p>然后下面我们就是利用计数器延时的过程了，①、时间加载(SysTick-&gt;LOAD为24bit)②、清空计数器 ③、开始倒数④、循环查询SysTick-&gt;CTRL状态位是否计数完毕   ⑤、关闭计数器⑥、清空计数器  （对应的代码就是上文中delay_ms的子函数了）</p>
+<p>因为之前学过51，所以感觉和51的计数器差不多，不过多了一个时钟频率的选择，当然，除了查询方式的延时函数外，还可以采用中断方式，学到的时候在写。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/8051-i-o-pins-works-of-p3.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">8051单片机I/O引脚工作原理之P3</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/the-stm32-systick-fclk-sysclk-hclk.html">
+        <span class="next-text nav-default">STM32中的几个时钟SysTick、FCLK、SYSCLK、HCLK</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/systick-delay-function-notes.html';
+
+  var disqus_title = "通过SYSTICK的查询方式实现延时函数笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

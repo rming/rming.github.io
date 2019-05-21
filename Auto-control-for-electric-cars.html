@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="电动车自动档位控制">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/Auto-control-for-electric-cars.html">
+
+
+<meta name="description" content="好久好久，没状态，事情乱七八糟，想想原因，被动的原因多，不喜欢被动，不喜欢受约束，不喜欢被事情牵着走，可是这个年纪没办法了，只能去适应了。 主要考虑电动机电流过载和转速，测试版代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电动车自动档位控制">
+<meta property="og:url" content="http://rmingwang.com/Auto-control-for-electric-cars.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="好久好久，没状态，事情乱七八糟，想想原因，被动的原因多，不喜欢被动，不喜欢受约束，不喜欢被事情牵着走，可是这个年纪没办法了，只能去适应了。 主要考虑电动机电流过载和转速，测试版代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-12-03T10:06:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电动车自动档位控制">
+<meta name="twitter:description" content="好久好久，没状态，事情乱七八糟，想想原因，被动的原因多，不喜欢被动，不喜欢受约束，不喜欢被事情牵着走，可是这个年纪没办法了，只能去适应了。 主要考虑电动机电流过载和转速，测试版代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 电动车自动档位控制 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          电动车自动档位控制
+        
+      </h1>
+
+      <time class="post-time">
+          12月 3 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>好久好久，没状态，事情乱七八糟，想想原因，被动的原因多，不喜欢被动，不喜欢受约束，不喜欢被事情牵着走，可是这个年纪没办法了，只能去适应了。</p>
+<p>主要考虑电动机电流过载和转速，测试版代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stc12c2052ad.h&gt;</span><br><span class="line">#include&lt;intrins.h&gt;	       </span><br><span class="line">#define uchar unsigned char</span><br><span class="line">#define uint unsigned int </span><br><span class="line"></span><br><span class="line">/*Define ADC operation const for ADC_CONTR*/</span><br><span class="line">#define ADC_POWER   0x80            //ADC power control bit</span><br><span class="line">#define ADC_FLAG    0x10            //ADC complete flag</span><br><span class="line">#define ADC_START   0x08            //ADC start control bit</span><br><span class="line">#define ADC_SPEEDLL 0x00            //420 clocks</span><br><span class="line">#define ADC_SPEEDL  0x20            //280 clocks</span><br><span class="line">#define ADC_SPEEDH  0x40            //140 clocks</span><br><span class="line">#define ADC_SPEEDHH 0x60            //70 clocks	</span><br><span class="line"></span><br><span class="line">void delay_ms(uint i);</span><br><span class="line">void InitUart();</span><br><span class="line">void SendData(uchar dat);</span><br><span class="line">void SendString( uchar *str); </span><br><span class="line">void init_adc();</span><br><span class="line">uchar get_adc();</span><br><span class="line">void show_adc_result(uchar adc_result);</span><br><span class="line"></span><br><span class="line">uchar t1count,timecount;</span><br><span class="line">bit flag;		 //计时结束标志位</span><br><span class="line">unsigned long f,t; //频率,转速</span><br><span class="line">uchar level;//档位</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	//变量初始化</span><br><span class="line">	uchar temp_i=0;</span><br><span class="line">	t1count=0;</span><br><span class="line">	timecount=0;</span><br><span class="line">	flag=0;</span><br><span class="line">	f=0;</span><br><span class="line">	t=0;</span><br><span class="line">	level=1;</span><br><span class="line">	//串口、AD初始化</span><br><span class="line">	InitUart();                     //Init UART, use to show ADC result</span><br><span class="line">    init_adc();                      //Init ADC sfr							</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		//200A/5V 8位AD</span><br><span class="line">		temp_i=(get_adc()*200/256);</span><br><span class="line">		show_adc_result(temp_i);</span><br><span class="line">		//1秒计时结束，计算脉冲频率</span><br><span class="line">		if(flag==1)&#123;</span><br><span class="line">			flag=0;//清除标志位</span><br><span class="line">			//计算频率/Hz</span><br><span class="line">			f=t1count*65536+TH1*256+TL1; </span><br><span class="line">			//电动机一转4Hz</span><br><span class="line">			//计算转速 r/min</span><br><span class="line">			t=f/4/60;</span><br><span class="line">		&#125;</span><br><span class="line">		//情况1（转速大于2000转，电流小于100A === 换二档）</span><br><span class="line">		if(t&amp;gt;2200&amp;amp;&amp;amp;temp_i&lt;100&amp;amp;&amp;amp;level==1)&#123;</span><br><span class="line">			level=2; //设置二档标志</span><br><span class="line">			P3&amp;amp;=0xbb;//Y0开</span><br><span class="line">			P3|=0x08 //Y1断</span><br><span class="line">		&#125;elseif(t&amp;gt;2200&amp;amp;&amp;amp;temp_i&amp;gt;100&amp;amp;&amp;amp;level==2)&#123;//情况2（无视转速、电流过载、档位2 === 换一档）</span><br><span class="line">			level=1; //设置一档标志位</span><br><span class="line">			P3|=0x04;//Y0断</span><br><span class="line">			P3&amp;amp;=0xb7 //Y1开</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		/*</span><br><span class="line">		继电器操作</span><br><span class="line">		P3&amp;amp;=0x9f//Y3开</span><br><span class="line">		P3&amp;amp;=0xaf //Y2开</span><br><span class="line">		P3&amp;amp;=0xb7 //Y1开</span><br><span class="line">		P3&amp;amp;=0xbb //Y0开</span><br><span class="line">		*/</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//P3.5脉冲输入</span><br><span class="line">//定时器0工作方式1 16位定时，定时器1方式1 做外部中断计数</span><br><span class="line">void t0t1_init()&#123;</span><br><span class="line">	AUXR &amp;amp;= 0x7F;		//定时器时钟12T模式</span><br><span class="line">	TMOD=0x51;//T1方式1外部中断计数，T0方式1 16位定时</span><br><span class="line">	TH1=0;</span><br><span class="line">	TL1=0;</span><br><span class="line">	//T0定时50ms一次中断，20次中断即获取1s计时</span><br><span class="line">	TH0=(65536-4000)/256;</span><br><span class="line">	TL0=(65536-4000)%256;</span><br><span class="line">	//启动T0、T1</span><br><span class="line">	TR1=1;</span><br><span class="line">	TR0=1;</span><br><span class="line">	ET0=1;</span><br><span class="line">	ET1=1;</span><br><span class="line">	EA=1;</span><br><span class="line">&#125;</span><br><span class="line">//T0定时</span><br><span class="line">void t0(void)interrupt 1 using 0</span><br><span class="line">&#123;</span><br><span class="line">	//12T模式下 50ms</span><br><span class="line">	TL0 = 0x00;		//设置定时初值</span><br><span class="line">	TH0 = 0x4C;		//设置定时初值</span><br><span class="line">	timecount++;</span><br><span class="line">	if(timecount&amp;gt;=20)&#123; //计时1s结束</span><br><span class="line">		//暂停T1脉冲计数</span><br><span class="line">		TR1=0;</span><br><span class="line">		//计时清零</span><br><span class="line">		timecount=0;</span><br><span class="line">		//1s计时结束</span><br><span class="line">		flag=1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//T1外中断计数	 P3.5</span><br><span class="line">void t1(void)interrupt 3 using 0</span><br><span class="line">&#123;</span><br><span class="line">	t1count++;</span><br><span class="line">&#125;</span><br><span class="line">void show_adc_result(uchar adc_result)</span><br><span class="line">&#123;</span><br><span class="line">		uchar temp[5];</span><br><span class="line">		temp[0]=(uint)adc_result/100+0x30;</span><br><span class="line">		adc_result=(uint)adc_result%100;</span><br><span class="line">        temp[1]=((uint)adc_result)/10+0x30;</span><br><span class="line">        temp[2]=((uint)adc_result)%10+0x30;</span><br><span class="line">        temp[3]=&apos;\r&apos;;</span><br><span class="line">        temp[4]=&apos;\n&apos;;</span><br><span class="line">		SendString(temp);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">//AD转换初始化 ----打开ADC电源 </span><br><span class="line">void init_adc()</span><br><span class="line">&#123;</span><br><span class="line">	P1=0xff;</span><br><span class="line">	ADC_CONTR|=0x80;</span><br><span class="line">	delay_ms(80);</span><br><span class="line">	P1M0=0x10;//这两个寄存器用来设置 P1口四种状态,每一位对应一个P1引脚 ，按状态组合操作 </span><br><span class="line">	P1M1=0x10;//设置P1.1为开漏状态 </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">uchar get_adc() </span><br><span class="line">&#123; </span><br><span class="line">    ADC_DATA   = 0; //清除结果 </span><br><span class="line">    ADC_CONTR = 0x60;      //转换速度设置  0x60  最快速度 </span><br><span class="line">    ADC_CONTR = 0xE0;               //1110,0000 清 ADC_FLAG, ADC_START 位和低 3 位 </span><br><span class="line">	ADC_CONTR |= 0x04;           //选择 A/D 当前通道   P1.4 </span><br><span class="line">	delay_ms(1);                       //使输入电压达到稳定 </span><br><span class="line">    ADC_CONTR |= 0x08;              //0000,1000 令 ADCS = 1, 启动A/D转换,  </span><br><span class="line">    while (1)                       //等待A/D转换结束 </span><br><span class="line">    &#123; </span><br><span class="line">        if (ADC_CONTR &amp;amp; 0x10)       //0001,0000 测试A/D转换结束否 </span><br><span class="line">        &#123; break; &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    ADC_CONTR &amp;amp;= 0xE7;            //1111,0111 清 ADC_FLAG 位, 关闭A/D转换,  </span><br><span class="line">    return   ADC_DATA; //返回 A/D 8 位转换结果 </span><br><span class="line">&#125; </span><br><span class="line">/*----------------------------</span><br><span class="line">延时函数</span><br><span class="line">----------------------------*/</span><br><span class="line">void delay_ms(uint i)		//@11.0592MHz</span><br><span class="line">&#123;</span><br><span class="line">	uint j;</span><br><span class="line">	_nop_();</span><br><span class="line">	j = 2090;</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		while (--j);</span><br><span class="line">	&#125; while (--i);</span><br><span class="line">&#125;</span><br><span class="line">//串口初始化</span><br><span class="line">void InitUart( void ) </span><br><span class="line">&#123; </span><br><span class="line">/*</span><br><span class="line">	//脉冲计数需要用两个计数器，取消串口方式1，不用定时器1，改用串口方式2</span><br><span class="line">	SCON = 0x50 ; //SCON: serail mode 1, 8-bit UART, enable ucvr </span><br><span class="line">	TMOD |= 0x20 ; //TMOD: timer 1, mode 2, 8-bit reload </span><br><span class="line">	PCON |= 0x00 ; //SMOD=0; </span><br><span class="line">	TH1 = 0xFD ; //Baud:9600 fosc=11.0592MHz </span><br><span class="line">	IE |= 0x90 ; //Enable Serial Interrupt </span><br><span class="line">	TR1 = 1 ; // timer 1 run </span><br><span class="line">	// TI=1; </span><br><span class="line">*/</span><br><span class="line">	SCON = 0X90;//9位UART,波特率为 Fosc/64 串口方式2</span><br><span class="line">	PCON |= 0x00 ; //SMOD=0;	波特率 172800.9  hz</span><br><span class="line">	IE |= 0x90 ; //Enable Serial Interrupt </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line">//向串口发送一个字符 </span><br><span class="line">void SendData( unsigned char ch) </span><br><span class="line">&#123; </span><br><span class="line">	SBUF=ch; </span><br><span class="line">	while (TI== 0 ); </span><br><span class="line">	TI= 0 ; </span><br><span class="line">&#125; </span><br><span class="line">//向串口发送一个字符串，strlen为该字符串长度 </span><br><span class="line">void SendString( unsigned char *str) </span><br><span class="line">&#123; </span><br><span class="line">    while (*str)                  //检测字符串结束标志</span><br><span class="line">    &#123;</span><br><span class="line">        SendData(*str++);         //发送当前字符</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/8051-enc28j60-uip.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">基于51单片机的远程控制和数据采集</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/lazy.html">
+        <span class="next-text nav-default">懒</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/Auto-control-for-electric-cars.html';
+
+  var disqus_title = "电动车自动档位控制";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

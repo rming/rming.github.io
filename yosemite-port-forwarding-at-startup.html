@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Yosemite 开机启动设置端口转发">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/yosemite-port-forwarding-at-startup.html">
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;Yosemite 下 ，vagrant无法直接端口映射到宿主机的80端口（及时卸载了系统的nginx），下面是一个通过端口有转发，为 virtualbox 虚拟机设置的端口转发，并开机自动加载，实现访问本地80端口，进行web开发调试。 &amp;emsp;&amp;emsp;下面的命令都是在 root 用户下执行，推荐执行 sudo -i 之后完成下面的操作创建文件 /etc/pf.an">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yosemite 开机启动设置端口转发">
+<meta property="og:url" content="http://rmingwang.com/yosemite-port-forwarding-at-startup.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Yosemite 下 ，vagrant无法直接端口映射到宿主机的80端口（及时卸载了系统的nginx），下面是一个通过端口有转发，为 virtualbox 虚拟机设置的端口转发，并开机自动加载，实现访问本地80端口，进行web开发调试。 &amp;emsp;&amp;emsp;下面的命令都是在 root 用户下执行，推荐执行 sudo -i 之后完成下面的操作创建文件 /etc/pf.an">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-02-09T17:13:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yosemite 开机启动设置端口转发">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Yosemite 下 ，vagrant无法直接端口映射到宿主机的80端口（及时卸载了系统的nginx），下面是一个通过端口有转发，为 virtualbox 虚拟机设置的端口转发，并开机自动加载，实现访问本地80端口，进行web开发调试。 &amp;emsp;&amp;emsp;下面的命令都是在 root 用户下执行，推荐执行 sudo -i 之后完成下面的操作创建文件 /etc/pf.an">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Yosemite 开机启动设置端口转发 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Yosemite 开机启动设置端口转发
+        
+      </h1>
+
+      <time class="post-time">
+          2月 10 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>&emsp;&emsp;Yosemite 下 ，vagrant无法直接端口映射到宿主机的80端口（及时卸载了系统的nginx），下面是一个通过端口有转发，为 virtualbox 虚拟机设置的端口转发，并开机自动加载，实现访问本地80端口，进行web开发调试。</p>
+<p>&emsp;&emsp;下面的命令都是在 root 用户下执行，推荐执行 sudo -i 之后完成下面的操作<br>创建文件 /etc/pf.anchors/vbox，添加如下两行，将本地 80，22 端口转发到 8080，8022 端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rdr pass on lo0 inet proto tcp from any to any port 80 -&gt; 127.0.0.1 port 8080</span><br><span class="line">rdr pass on lo0 inet proto tcp from any to any port 22 -&gt; 127.0.0.1 port 8022</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;以上<code>lo0</code>部分需要注意，OS X 默认有个本地网络端口名字叫 <code>lo0</code> 如果你想通过局域网甚至外网访问 80, 22 端口则还需要按照这个格式添加接入网络的端口。</p>
+<p>&emsp;&emsp;BTW: 因为非 root 用户不能使用低端口，例如 22， 80 于是我为了访问虚拟机的 ssh 以及 http 使用 22 和 80 端口，于是将 virtualbox 的端口转发设置为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|宿主机|虚拟机|</span><br><span class="line">| :-------------: |:-------------:|</span><br><span class="line">|8022|22|</span><br><span class="line">|8080|80|</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;再编辑 <code>/etc/pf.conf</code> 文件，在如下位置添加<code>rdr-anchor &quot;vbox&quot;</code>  <code>load anchor &quot;vbox&quot; from &quot;/etc/pf.anchors/vbox&quot;</code>两行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">scrub-anchor &quot;com.apple/*&quot;</span><br><span class="line">nat-anchor &quot;com.apple/*&quot;</span><br><span class="line">rdr-anchor &quot;com.apple/*&quot;</span><br><span class="line">rdr-anchor &quot;vbox&quot;</span><br><span class="line">dummynet-anchor &quot;com.apple/*&quot;</span><br><span class="line">anchor &quot;com.apple/*&quot;</span><br><span class="line">load anchor &quot;com.apple&quot; from &quot;/etc/pf.anchors/com.apple&quot;</span><br><span class="line">load anchor &quot;vbox&quot; from &quot;/etc/pf.anchors/vbox&quot;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;现在可以使用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pfctl -ef /etc/pf.conf</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;测试端口转发是否生效<br>&emsp;&emsp;为了实现开机自启动，需要编辑文件 <code>/System/Library/LaunchDaemons/com.apple.pfctl.plist</code></p>
+<p>&emsp;&emsp;找到如下位置，添加一行<code>&lt;string&gt;-e&lt;/string&gt;</code>即可，之后重启即可自动设置端口转发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;string&gt;pfctl&lt;/string&gt;</span><br><span class="line">&lt;string&gt;-e&lt;/string&gt;</span><br><span class="line">&lt;string&gt;-f&lt;/string&gt;</span><br><span class="line">&lt;string&gt;/etc/pf.conf&lt;/string&gt;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/Yamini.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Yet another mini PHP framework</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/poem-of-harbin.html">
+        <span class="next-text nav-default">哈尔滨的小诗</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/yosemite-port-forwarding-at-startup.html';
+
+  var disqus_title = "Yosemite 开机启动设置端口转发";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

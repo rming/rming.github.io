@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="开漏输出与推挽式输出的区别解析">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/open-drain-output-push-pull-output-of-the-difference-between-the-analytical.html">
+
+
+<meta name="description" content="最通俗的说法 开漏输出就是不输出电压，低电平时接地，高电平时不接地。如果外接上拉电阻，则在输出高电平时电压会拉到上拉电阻的电源电压。这种方式适合在连接的外设电压比单片机电压低的时候。推挽输出就是单片机引脚可以直接输出高电平电压。低电平时接地，高电平时输出单片机电源电压。这种方式可以不接上拉电阻。但如果输出端可能会接地的话，这个时候输出高电平可能引发单片机运行不稳定，甚至可能烧坏引脚。&amp;gt;&amp;gt">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开漏输出与推挽式输出的区别解析">
+<meta property="og:url" content="http://rmingwang.com/open-drain-output-push-pull-output-of-the-difference-between-the-analytical.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="最通俗的说法 开漏输出就是不输出电压，低电平时接地，高电平时不接地。如果外接上拉电阻，则在输出高电平时电压会拉到上拉电阻的电源电压。这种方式适合在连接的外设电压比单片机电压低的时候。推挽输出就是单片机引脚可以直接输出高电平电压。低电平时接地，高电平时输出单片机电源电压。这种方式可以不接上拉电阻。但如果输出端可能会接地的话，这个时候输出高电平可能引发单片机运行不稳定，甚至可能烧坏引脚。&amp;gt;&amp;gt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开漏输出与推挽式输出的区别解析">
+<meta name="twitter:description" content="最通俗的说法 开漏输出就是不输出电压，低电平时接地，高电平时不接地。如果外接上拉电阻，则在输出高电平时电压会拉到上拉电阻的电源电压。这种方式适合在连接的外设电压比单片机电压低的时候。推挽输出就是单片机引脚可以直接输出高电平电压。低电平时接地，高电平时输出单片机电源电压。这种方式可以不接上拉电阻。但如果输出端可能会接地的话，这个时候输出高电平可能引发单片机运行不稳定，甚至可能烧坏引脚。&amp;gt;&amp;gt">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 开漏输出与推挽式输出的区别解析 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          开漏输出与推挽式输出的区别解析
+        
+      </h1>
+
+      <time class="post-time">
+          7月 15 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h3><span id="最通俗的说法">最通俗的说法</span></h3><p></p>
+<blockquote><strong>开漏输出</strong>就是不输出电压，低电平时接地，高电平时不接地。如果外接上拉电阻，则在输出高电平时电压会拉到上拉电阻的电源电压。这种方式适合在连接的外设电压比单片机电压低的时候。<br><br><strong>推挽输出</strong>就是单片机引脚可以直接输出高电平电压。低电平时接地，高电平时输出单片机电源电压。这种方式可以不接上拉电阻。但如果输出端可能会接地的话，这个时候输出高电平可能引发单片机运行不稳定，甚至可能烧坏引脚。<br><br>&gt;&gt;推挽输出:可以输出高,低电平,连接数字器件<br><br>&gt;&gt;开漏输出:输出端相当于三极管的集电极. 要得到高电平状态需要上拉电阻才行. 适合于做电流型的驱动,其吸收电流的能力相对强(一般20ma以内).<br><pre></pre><br></blockquote><br><h3><span id="原理篇">原理篇</span></h3><br>&nbsp;<br><br>我们先来说说<strong>集电极开路输出</strong>的结构。集电极开路输出的结构如图1所示，右边的那个三极管集电极什么都不接，所以叫做集电极开路（左边的三极管为反相之用，使输入为“0”时，输出也为“0”）。对于图1，当左端的输入为“0”时，前面的三极管截止（即集电极C跟发射极E之间相当于断开），所以5V电源通过1K电阻加到右边的三极管上，右边的三极管导通（即相当于一个开关闭合）；当左端的输入为“1”时，前面的三极管导通，而后面的三极管截止（相当于开关断开）。<br><br>我们将图1简化成图2的样子。图2中的开关受软件控制，“1”时断开，“0”时闭合。很明显可以看出，当开关闭合时，输出直接接地，所以输出电平为0。而当开关断开时，则输出端悬空了，即高阻态。这时电平状态未知，如果后面一个电阻负载（即使很轻的负载）到地，那么输出端的电平就被这个负载拉到低电平了，所以这个电路是不能输出高电平的。<br><br>再看图三。图三中那个1K的电阻即是上拉电阻。如果开关闭合，则有电流从1K电阻及开关上流过，但由于开关闭其它三个口带内部上拉），当我们要使用输入功能时，只要将输出口设置为1即可，这样就相当于那个开关断开，而对于P0口来说，就是高阻态了。<br><br>对于<strong>漏极开路</strong>（OD）输出，跟集电极开路输出是十分类似的。将上面的三极管换成场效应管即可。这样集电极就变成了漏极，OC就变成了OD，原理分析是一样的。<br><br><strong>推挽输出</strong>的结构就是把上面的上拉电阻也换成一个开关，当要输出高电平时，上面的开关通，下面的开关断；而要输出低电平时，则刚好相反。比起OC或者OD来说，这样的推挽结构高、低电平驱动能力都很强。如果两个输出不同电平的输出口接在一起的话，就会产生很大的电流，有可能将输出口烧坏。而上面说的OC或OD输出则不会有这样的情况，因为上拉电阻提供的电流比较小。如果是推挽输出的要设置为高阻态时，则两个开关必须同时断开（或者在输出口上使用一个传输门），这样可作为输入状态，AVR单片机的一些IO口就是这种结构。<br><br>&nbsp;<br><h3><span id="对于51单片机">对于51单片机</span></h3><br><blockquote> 1. p0作为地址数据总线时，T1和T2是一起工作的,构成推挽结构。高电平时，T1打开，T2截止；低电平时，T1截止，T2打开。这种情况下不用外接上拉电阻.而且,当T1打开,T2截止,输出高电平的时候,因为内部电源直接通过T1输出到p0口线上,因此驱动能力(电流)可以很大,这就是为什么教科书上说可以”驱动8个TTL负载”的原因。<br><br>2. p0作为一般端口时，T1就永远的截止，T2根据输出数据0导通和1截止，导通时拉地，当然是输出低电平；要输出高电平，T2就截止，p0口就没有输出了，(注意,这种情况就是所谓的高阻浮空状态),如果加上外部上拉电阻，输出就变成了高电平1。<br><br>3. 其他端口p1,p2,p3,在内部直接将p1口中的T1换成了上拉电阻,所以不用外接，但内部上拉电阻太大，电流太小，有时因为电流不够，也会再并一个上拉电阻。<br>4. 在某个时刻,p0口上输出的是作为总线的地址数据信号还是作为普通I/O口的电平信号,是依靠多路开关MUX来切换的.而MUX的切换,又是根据单片机指令来区分的.当指令为外部存储器/IO口读/写时,比如 MOVX  A,@DPTR ,MUX是切换到地址/数据总线上；而当普通MOV传送指令操作p0口时,MUX是切换到内部总线上的。<br><br>5. p0(i/o),p1,p2,p3口用于输入时，需要写1使IO下拉的MOS管截止，以免MOS管导通将输入拉底为0，当一直用于输入时不用置1（先使用该IO输出，该IO锁存器里可能是0，再用该IO输入则会使MOS管导通），将IO写1后，该IO锁存器不会变了，所以再一直用于输入不用置1。p0用于地址数据线时输入不用写1，因为MUX没和锁存器相连。<br><br>PS:<br><br>Because Ports 1, 2, and 3 have fixed internal pullups, they are sometimes called “quasi- bidirectional” ports.<br><br>因为端口1、2、3有固定的内部上拉,所以有时候他们被称为”准双向”口。<br><br>Port 0, on the other hand, is considered “true” bidirectional, because when configured as an input it floats.<br>端口0, 从另外一方面来说,就被 认为是”真正的”双向,因为当它被设置为输入的时候是浮空(高阻态)的。<br><br>P0口上拉电阻选择<br><br>如果是驱动led，那么用1K左右的就行了。如果希望亮度大一些，电阻可减小，最小不要小于200欧姆，否则电流太大；如果希望亮度小一些，电阻可增大，增加到多少呢，主要看亮度情况，以亮度合适为准，一般来说超过3K以上时，亮度就很弱了，但是对于超高亮度的LED，有时候电阻为10K时觉得亮度还能够用。我通常就用1k的。<br><br>对于驱动光耦合器，如果是高电位有效，即耦合器输入端接端口和地之间，那么和LED的情况是一样的；如果是低电位有效，即耦合器输入端接端口和VCC之间，那么除了要串接一个1——4.7k之间的电阻以外，同时上拉电阻的阻值就可以用的特别大，用100k——500K之间的都行，当然用10K的也可以，但是考虑到省电问题，没有必要用那么小的。<br><br>对于驱动晶体管，又分为PNP和NPN管两种情况：对于NPN，毫无疑问NPN管是高电平有效的，因此上拉电阻的阻值用2K——20K之间的，具体的大小还要看晶体管的集电极接的是什么负载，对于LED类负载，由于发管电流很小，因此上拉电阻的阻值可以用20k的，但是对于管子的集电极为继电器负载时，由于集电极电流大，因此上拉电阻的阻值最好不要大于4.7K，有时候甚至用2K的。对于PNP管，毫无疑问PNP管是低电平有效的，因此上拉电阻的阻值用100K以上的就行了，且管子的基极必须串接一个1——10K的电阻，阻值的大小要看管子集电极的负载是什么，对于LED类负载，由于发光电流很小，因此基极串接的电阻的阻值可以用20k的，但是对于管子的集电极为继电器负载时，由于集电极电流大，因此基极电阻的阻值最好不要大于4.7K。<br><br>对于驱动TTL集成电路，上拉电阻的阻值要用1——10K之间的，有时候电阻太大的话是拉不起来的，因此用的阻值较小。但是对于CMOS集成电路上拉电阻的阻值就可以用的很大，一般不小于20K，我通常用100K的，实际上对于CMOS电路，上拉电阻的阻值用1M的也是可以的，但是要注意上拉电阻的阻值太大的时候，容易产生干扰，尤其是线路板的线条很长的时候，这种干扰更严重，这种情况下上拉电阻不宜过大，一般要小于100K，有时候甚至小于10K。</blockquote>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/gpio-of-stm32-study-notes.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32中GPIO学习笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/pro-deep-envy-the-fish-it-is-better-to-stay-away-from-home-weaving.html">
+        <span class="next-text nav-default">临渊而羡鱼，不如归家织网</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/open-drain-output-push-pull-output-of-the-difference-between-the-analytical.html';
+
+  var disqus_title = "开漏输出与推挽式输出的区别解析";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

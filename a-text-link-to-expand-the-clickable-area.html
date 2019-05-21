@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="扩大文字a链接的可点击区域">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/a-text-link-to-expand-the-clickable-area.html">
+
+
+<meta name="description" content="通常在使用文本连接的时候，我们往往会在他的a:hover属性里设置一些诸如背景颜色的变化、文字颜色的变化，这样增加网页的动态效果，但是一般会存在文本连接范围小，这个可以通过Javascript加以改善，这里介绍css扩大文本连接可点击区域的设置方法。">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="扩大文字a链接的可点击区域">
+<meta property="og:url" content="http://rmingwang.com/a-text-link-to-expand-the-clickable-area.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="通常在使用文本连接的时候，我们往往会在他的a:hover属性里设置一些诸如背景颜色的变化、文字颜色的变化，这样增加网页的动态效果，但是一般会存在文本连接范围小，这个可以通过Javascript加以改善，这里介绍css扩大文本连接可点击区域的设置方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="扩大文字a链接的可点击区域">
+<meta name="twitter:description" content="通常在使用文本连接的时候，我们往往会在他的a:hover属性里设置一些诸如背景颜色的变化、文字颜色的变化，这样增加网页的动态效果，但是一般会存在文本连接范围小，这个可以通过Javascript加以改善，这里介绍css扩大文本连接可点击区域的设置方法。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 扩大文字a链接的可点击区域 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          扩大文字a链接的可点击区域
+        
+      </h1>
+
+      <time class="post-time">
+          3月 6 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>通常在使用文本连接的时候，我们往往会在他的a:hover属性里设置一些诸如背景颜色的变化、文字颜色的变化，这样增加网页的动态效果，但是一般会存在文本连接范围小，这个可以通过Javascript加以改善，这里介绍css扩大文本连接可点击区域的设置方法。<a id="more"></a></p>
+<p>比如我有如下代码</p>
+<p><pre lang="html"></pre></p>
+<p><div class="nav"></div></p>
+<p><ul><br>    <li><a href="#">机械工程学院</a></li><br></ul><br><br>这里如果只是设置a:hover属性则会显示背景颜色的不完全变化。</p>
+<p>这个时候，<span style="color: #2a2a2a; font-family: Tahoma, Helvetica, Arial, sans-serif; line-height: 25px;"><strong>链接被设置为inline（内嵌），使得可点击区域过小。</strong>也就是说用户只有把鼠标移到文字上才能点击，这样明显降低了用户访问网站的效率。</span></p>
+<p><span style="color: #2a2a2a; font-family: Tahoma, Helvetica, Arial, sans-serif; line-height: 25px;"><strong><span style="font-family: Tahoma, Helvetica, Arial, sans-serif;">但是我们需要做的更具可用性。每个链接肯定都会有一个父级元素，一般情况都是父级元素定义好了尺寸，而链接只是一个inline（内嵌）元素。所以，我们可以把链接的inline改成block（块），这样链接就会自动充满它的父级元素</span><span style="color: #ff0000;">(一般情况下只是自动填充了宽度，如果高度需要填充满的话可以设置 height:100%;或者line-height)</span><span style="font-family: Tahoma, Helvetica, Arial, sans-serif;">。</span></strong></span></p>
+<p><span style="color: #2a2a2a; font-family: Tahoma, Helvetica, Arial, sans-serif; line-height: 25px;"><strong>如下效果：</strong></span></p>
+<p>即使鼠标不是指向文字区域的时候，依然会显示出变化效果，更加有利于访问者的点击。</p>
+<p>这样显然会使链接更快速方便的点击，因为用户鼠标的目标区域要大得多！用户会得到更好的点击体验。每个链接节省一点时间，也许会让用户多浏览你的网站上的几个页面哦！<br>其实这个效果实现起来很简单，只要将链接样式的disply属性从inline改成block，另外也可以适当的添加填充，代码如下</p>
+<p><pre lang="css">.nav a{<br> color:#88220b;<br> display:block;<br> line-height:22px;<br>}<br>.nav  a:hover{<br> color:#FFF;<br> background:#88220b;<br>}</pre><br>如果你觉得在这个链接的区域内还有一些仅仅是静态文字形式的内容，比如发布日期或搜狐的这种链接描述。解决方法有两种：第一种是把他们就放在a标签内，然后为它们前后添加span标签，并取消hover样式。第二种是设置它们的z-index，并使用绝对或相对定位。其实，方法有很多，只要能让文字链接的点击区域扩大就可以了。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/back-to-top-of-page-button-to-add-the-code.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">网页添加返回顶部按钮的代码</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/onmouseover-image-button-link-transformation.html">
+        <span class="next-text nav-default">鼠标经过时按钮链接变换图片</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/a-text-link-to-expand-the-clickable-area.html';
+
+  var disqus_title = "扩大文字a链接的可点击区域";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

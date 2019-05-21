@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="如何用js给html表单设置style">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/html-forms-how-to-use-js-to-set-style.html">
+
+
+<meta name="description" content="首先，把CSS和JS标签style属性对照表了解了： CSS 和 JavaScript 标签 style 属性对照表： &amp;nbsp; 盒子标签和属性对照 颜色和背景标签和属性对照 样式标签和属性对照 文字样式标签和属性对照 文本标签和属性对照    CSS语法（不区分大小写） JavaScript语法（区分大小写）  border border  border-bottom borderBotto">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用js给html表单设置style">
+<meta property="og:url" content="http://rmingwang.com/html-forms-how-to-use-js-to-set-style.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="首先，把CSS和JS标签style属性对照表了解了： CSS 和 JavaScript 标签 style 属性对照表： &amp;nbsp; 盒子标签和属性对照 颜色和背景标签和属性对照 样式标签和属性对照 文字样式标签和属性对照 文本标签和属性对照    CSS语法（不区分大小写） JavaScript语法（区分大小写）  border border  border-bottom borderBotto">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何用js给html表单设置style">
+<meta name="twitter:description" content="首先，把CSS和JS标签style属性对照表了解了： CSS 和 JavaScript 标签 style 属性对照表： &amp;nbsp; 盒子标签和属性对照 颜色和背景标签和属性对照 样式标签和属性对照 文字样式标签和属性对照 文本标签和属性对照    CSS语法（不区分大小写） JavaScript语法（区分大小写）  border border  border-bottom borderBotto">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 如何用js给html表单设置style - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          如何用js给html表单设置style
+        
+      </h1>
+
+      <time class="post-time">
+          4月 18 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>首先，把<strong>CSS和JS标签style属性对照表</strong>了解了：</p>
+<p>CSS 和 JavaScript 标签 style 属性对照表：</p>
+<p>&nbsp;</p>
+<p>盒子标签和属性对照 颜色和背景标签和属性对照 样式标签和属性对照 文字样式标签和属性对照 文本标签和属性对照</p>
+<p><table></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td><strong>CSS语法（不区分大小写）</strong></td></p>
+<p><td><strong>JavaScript语法（区分大小写）</strong></td><br></p>
+<p><tr></tr></p>
+<p><td>border</td></p>
+<p><td>border</td><br></p>
+<p><tr></tr></p>
+<p><td>border-bottom</td></p>
+<p><td>borderBottom</td><br></p>
+<p><tr></tr></p>
+<p><td>border-bottom-color</td></p>
+<p><td>borderBottomColor</td><br></p>
+<p><tr></tr></p>
+<p><td>border-bottom-style</td></p>
+<p><td>borderBottomStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>border-bottom-width</td></p>
+<p><td>borderBottomWidth</td><br></p>
+<p><tr></tr></p>
+<p><td>border-color</td></p>
+<p><td>borderColor</td><br></p>
+<p><tr></tr></p>
+<p><td>border-left</td></p>
+<p><td>borderLeft</td><br></p>
+<p><tr></tr></p>
+<p><td>border-left-color</td></p>
+<p><td>borderLeftColor</td><br></p>
+<p><tr></tr></p>
+<p><td>border-left-style</td></p>
+<p><td>borderLeftStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>border-left-width</td></p>
+<p><td>borderLeftWidth</td><br></p>
+<p><tr></tr></p>
+<p><td>border-right</td></p>
+<p><td>borderRight</td><br></p>
+<p><tr></tr></p>
+<p><td>border-right-color</td></p>
+<p><td>borderRightColor</td><br></p>
+<p><tr></tr></p>
+<p><td>border-right-style</td></p>
+<p><td>borderRightStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>border-right-width</td></p>
+<p><td>borderRightWidth</td><br></p>
+<p><tr></tr></p>
+<p><td>border-style</td></p>
+<p><td>borderStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>border-top</td></p>
+<p><td>borderTop</td><br></p>
+<p><tr></tr></p>
+<p><td>border-top-color</td></p>
+<p><td>borderTopColor</td><br></p>
+<p><tr></tr></p>
+<p><td>border-top-style</td></p>
+<p><td>borderTopStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>border-top-width</td></p>
+<p><td>borderTopWidth</td><br></p>
+<p><tr></tr></p>
+<p><td>border-width</td></p>
+<p><td>borderWidth</td><br></p>
+<p><tr></tr></p>
+<p><td>clear</td></p>
+<p><td>clear</td><br></p>
+<p><tr></tr></p>
+<p><td>float</td></p>
+<p><td>floatStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>margin</td></p>
+<p><td>margin</td><br></p>
+<p><tr></tr></p>
+<p><td>margin-bottom</td></p>
+<p><td>marginBottom</td><br></p>
+<p><tr></tr></p>
+<p><td>margin-left</td></p>
+<p><td>marginLeft</td><br></p>
+<p><tr></tr></p>
+<p><td>margin-right</td></p>
+<p><td>marginRight</td><br></p>
+<p><tr></tr></p>
+<p><td>margin-top</td></p>
+<p><td>marginTop</td><br></p>
+<p><tr></tr></p>
+<p><td>padding</td></p>
+<p><td>padding</td><br></p>
+<p><tr></tr></p>
+<p><td>padding-bottom</td></p>
+<p><td>paddingBottom</td><br></p>
+<p><tr></tr></p>
+<p><td>padding-left</td></p>
+<p><td>paddingLeft</td><br></p>
+<p><tr></tr></p>
+<p><td>padding-right</td></p>
+<p><td>paddingRight</td><br></p>
+<p><tr></tr></p>
+<p><td>padding-top</td></p>
+<p><td>paddingTop</td><br></p>
+<p><tr></tr></p>
+<p><td><strong>CSS 语法（不区分大小写）</strong></td></p>
+<p><td><strong>JavaScript 语法（区分大小写）</strong></td><br></p>
+<p><tr></tr></p>
+<p><td>background</td></p>
+<p><td>background</td><br></p>
+<p><tr></tr></p>
+<p><td>background-attachment</td></p>
+<p><td>backgroundAttachment</td><br></p>
+<p><tr></tr></p>
+<p><td>background-color</td></p>
+<p><td>backgroundColor</td><br></p>
+<p><tr></tr></p>
+<p><td>background-image</td></p>
+<p><td>backgroundImage</td><br></p>
+<p><tr></tr></p>
+<p><td>background-position</td></p>
+<p><td>backgroundPosition</td><br></p>
+<p><tr></tr></p>
+<p><td>background-repeat</td></p>
+<p><td>backgroundRepeat</td><br></p>
+<p><tr></tr></p>
+<p><td>color</td></p>
+<p><td>color</td><br></p>
+<p><tr></tr></p>
+<p><td></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>CSS语法（不区分大小写）</strong></td></p>
+<p><td><strong>JavaScript 语法（区分大小写）</strong></td><br></p>
+<p><tr></tr></p>
+<p><td>display</td></p>
+<p><td>display</td><br></p>
+<p><tr></tr></p>
+<p><td>list-style-type</td></p>
+<p><td>listStyleType</td><br></p>
+<p><tr></tr></p>
+<p><td>list-style-image</td></p>
+<p><td>listStyleImage</td><br></p>
+<p><tr></tr></p>
+<p><td>list-style-position</td></p>
+<p><td>listStylePosition</td><br></p>
+<p><tr></tr></p>
+<p><td>list-style</td></p>
+<p><td>listStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>white-space</td></p>
+<p><td>whiteSpace</td><br></p>
+<p><tr></tr></p>
+<p><td></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>CSS 语法（不区分大小写）</strong></td></p>
+<p><td><strong>JavaScript 语法（区分大小写）</strong></td><br></p>
+<p><tr></tr></p>
+<p><td>font</td></p>
+<p><td>font</td><br></p>
+<p><tr></tr></p>
+<p><td>font-family</td></p>
+<p><td>fontFamily</td><br></p>
+<p><tr></tr></p>
+<p><td>font-size</td></p>
+<p><td>fontSize</td><br></p>
+<p><tr></tr></p>
+<p><td>font-style</td></p>
+<p><td>fontStyle</td><br></p>
+<p><tr></tr></p>
+<p><td>font-variant</td></p>
+<p><td>fontVariant</td><br></p>
+<p><tr></tr></p>
+<p><td>font-weight</td></p>
+<p><td>fontWeight</td><br></p>
+<p><tr></tr></p>
+<p><td></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>CSS 语法（不区分大小写）</strong></td></p>
+<p><td><strong>JavaScript 语法（区分大小写）</strong></td><br></p>
+<p><tr></tr></p>
+<p><td>letter-spacing</td></p>
+<p><td>letterSpacing</td><br></p>
+<p><tr></tr></p>
+<p><td>line-break</td></p>
+<p><td>lineBreak</td><br></p>
+<p><tr></tr></p>
+<p><td>line-height</td></p>
+<p><td>lineHeight</td><br></p>
+<p><tr></tr></p>
+<p><td>text-align</td></p>
+<p><td>textAlign</td><br></p>
+<p><tr></tr></p>
+<p><td>text-decoration</td></p>
+<p><td>textDecoration</td><br></p>
+<p><tr></tr></p>
+<p><td>text-indent</td></p>
+<p><td>textIndent</td><br></p>
+<p><tr></tr></p>
+<p><td>text-justify</td></p>
+<p><td>textJustify</td><br></p>
+<p><tr></tr></p>
+<p><td>text-transform</td></p>
+<p><td>textTransform</td><br></p>
+<p><tr></tr></p>
+<p><td>vertical-align</td></p>
+<p><td>verticalAlign</td><br><br><br><br>HTML代码示例：<br><code>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.0 Transitional//EN”&gt;<br>&lt;HTML&gt;<br>&lt;HEAD&gt;<br>&lt;TITLE&gt; New Document &lt;/TITLE&gt;<br>&lt;/HEAD&gt;</code></p>
+<p>&lt;BODY&gt;<br>&lt;input type=”text” name=”name” &gt;<br>&lt;/BODY&gt;<br>&lt;/HTML&gt;</p>
+<p>js代码示例：<br><code><br>&lt;script language=”javascript”&gt;<br>function validate(){<br>if (document.all(“name”).value == “”){<br>document.all(“name”).style[“borderColor”]=”red”;//就是这里<br>return;<br>}<br>}<br>&lt;/script&gt;</code></p>
+<p>&nbsp;</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-class-member-type-access-and-permissions.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP类成员类型、访问方式和权限</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/js-control-div-height.html">
+        <span class="next-text nav-default">js控制div高度一致</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/html-forms-how-to-use-js-to-set-style.html';
+
+  var disqus_title = "如何用js给html表单设置style";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

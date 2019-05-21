@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="单片机供电规则">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/scm-supply-rules.html">
+
+
+<meta name="description" content="由于C8051F单片机是3.3V低功耗、高速单片机，与大家过去应用传统的5V供电低速单片机在引脚处理与PCB布板方面会有一些区别，我们总结了这方面的经验，提供给大家，以避免在应用设计上走弯路。 一、电源和地线方面的处理 1、模拟电源和数字电源要分别供电，可以使用两个稳压源分别供电，但是两个电源之间的电压差必须满足数据手册中的规定( 2、在地线方面，模拟地和数字地要分开布线，然后在一点通过磁珠连接，">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单片机供电规则">
+<meta property="og:url" content="http://rmingwang.com/scm-supply-rules.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="由于C8051F单片机是3.3V低功耗、高速单片机，与大家过去应用传统的5V供电低速单片机在引脚处理与PCB布板方面会有一些区别，我们总结了这方面的经验，提供给大家，以避免在应用设计上走弯路。 一、电源和地线方面的处理 1、模拟电源和数字电源要分别供电，可以使用两个稳压源分别供电，但是两个电源之间的电压差必须满足数据手册中的规定( 2、在地线方面，模拟地和数字地要分开布线，然后在一点通过磁珠连接，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单片机供电规则">
+<meta name="twitter:description" content="由于C8051F单片机是3.3V低功耗、高速单片机，与大家过去应用传统的5V供电低速单片机在引脚处理与PCB布板方面会有一些区别，我们总结了这方面的经验，提供给大家，以避免在应用设计上走弯路。 一、电源和地线方面的处理 1、模拟电源和数字电源要分别供电，可以使用两个稳压源分别供电，但是两个电源之间的电压差必须满足数据手册中的规定( 2、在地线方面，模拟地和数字地要分开布线，然后在一点通过磁珠连接，">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 单片机供电规则 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          单片机供电规则
+        
+      </h1>
+
+      <time class="post-time">
+          9月 5 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>由于C8051F单片机是3.3V低功耗、高速单片机，与大家过去应用传统的5V供电低速单片机在引脚处理与PCB布板方面会有一些区别，我们总结了这方面的经验，提供给大家，以避免在应用设计上走弯路。</p>
+<p>一、电源和地线方面的处理</p>
+<p>1、模拟电源和数字电源要分别供电，可以使用两个稳压源分别供电，但是两个电源之间的电压差必须满足数据手册中的规定(</p>
+<p>2、在地线方面，模拟地和数字地要分开布线，然后在一点通过磁珠连接，在实际应用中也可以使用0欧姆绕线电阻连接的。该绕线电阻要有寄生电感，另外，在布线时一定要注意地线应该尽可能的粗，或者采用大面积覆地，电源线也要尽量粗，并且在单片机所有电源和地之间以及每个外围集成电路的VDD和GND间加去耦合电容。</p>
+<p>3、如果所使用的器件上有模拟电源，模拟地，数字电源和数字地，所有这些引脚不可以悬空，必须连接。</p>
+<p>二、在严酷环境下使用C8051F器件时，在PCB设计时应注意那些问题？</p>
+<p>在严酷条件下使用C8051F器件时，我们提供给您的一般性建议如下：</p>
+<p>1) 在器件的每个电源引脚处放置0.1μF和1.0μF的去耦电容，而且要尽可能地靠近芯片。这一点适用于板上所有的IC（集成电路）。*</p>
+<p>2) 尽可能将板上不使用的空间接地，即所谓的大面积覆铜。</p>
+<p>3) 在靠近器件外部振荡器引脚处放置外部晶体和其他振荡器元件（如果可行的话）。</p>
+<p>4) 使用最短的连线以避免产生“天线”，尤其在下列引脚处：/RST，MONEN，XTAL1，XTAL2，TMS，TCK，TDI和TDO。</p>
+<p>5) 应使用一个1k - 4.7k 的电阻将/RST拉为高电平。且应该在/RST走线和地之间设一个0.1uF的去耦电容*</p>
+<p>6) 应将MONEN直接接至片上的VDD (首选)或接地。*</p>
+<p>7) 将TMS、TCK、TDI 和接固定电平。*</p>
+<p>8) 连接至系统电缆或其他电路板上的信号应在PCB的连接点处适当地滤波。</p>
+<ul>
+<li>避免使这些连接在板上形成大的回路。</li>
+</ul>
+<p>三、对JTAG引脚的处理</p>
+<p>在电路设计时，JTAG口的TCK要加3.3V上拉。上拉电阻值取4.7K。另外，要考虑到在成品阶段(此时已不需要通过JTAG编程)，将TCK.TMS.TDI引脚接地，这样更能提高系统的抗干扰能力，对于提高系统的稳定性是非常主要的。</p>
+<p>四、对未用到的IO口／模拟输入口的处理</p>
+<p>对未用到的IO口建议：设置为漏极开路；并加固定电平；或设置为推挽方式；未用的模拟输入也要接地(接模拟地)。</p>
+<p>五、在电路设计时的IO口／模拟输入口的保护</p>
+<p>1、在可能对IO口有瞬态冲击的情况下，一定要对IO口进行保护，如可能会有瞬间大电流，就要在IO口上串接限流电阻，建议取值100欧姆。如有瞬态大电压，就要在IO口上接TVS或快速反应二极管。</p>
+<p>2、对在产品中使用的模拟输入引脚的输入电平，要在器件的允许范围值内(具体的参数见数据手册)。一般的ADC的输入电压范围是0V~VREF。同时不可以超过器件的极限参数(见数据手册)，否则可能造成永久性损坏。具体的做法可以加两个肖特基二极管到电源和地。</p>
+<p>六、对复位引脚／MONEN（电源监视）引脚的处理</p>
+<p>1、为了提高系统的抗干扰能力和可靠性，建议不要将复位引脚悬空，推荐电路为：在复位引脚加强上拉，电阻可以选择2~10K，还要加一个0.1uF~10uF的去耦电容。</p>
+<p>2、如果接有外部看门狗电路，在调试及下载程序的过程中要将看门狗电路断开</p>
+<p>3、如果所使用的芯片上有MONEN引脚，此引脚不要悬空，建议直接接电源(使能MONEN)。</p>
+<p>七、外接晶振的注意事项</p>
+<p>1、选择质量好的晶振、选择损耗小的晶振电容。</p>
+<p>2、X TAL1和XTAL2口不要接入5V电压，在接入CMOS时钟输入时，要注意。</p>
+<p>3、晶体振荡电路部分对在PCB的板上布局非常敏感，应将晶体尽可能地靠近器件XTAL引脚，并在晶体引脚接上微调（10PF~33PF）电容。布线应尽可能地短并用地线屏蔽，防止其它引线引入噪声或干扰。</p>
+<p>4、晶体外壳最好接地。</p>
+<p>5、对于C8051F3XX器件，在外接晶体时，一定不要忘记在晶体两端接10MW的电阻。</p>
+<p>6、晶体微调电容的地要接模拟地。</p>
+<p>八、焊接温度的注意事项</p>
+<p>当使用自动焊接时应严格控制以下参数：</p>
+<p>1、温升速率：小于6℃/秒</p>
+<p>2、预热区芯片引脚的最大温度：125℃</p>
+<p>3、回流焊的最大温度：建议215℃到220℃(最大值为235℃)</p>
+<p>4、芯片通过液态焊料温度状态的时间：30至85秒(建议75秒)</p>
+<p>5、最大冷却速率：4℃/秒</p>
+<p>如果使用手工焊接，也应注意电烙铁的温度不易过高，与芯片的接触时间不易过长；</p>
+<p>关于焊接的详细资料参见附页&lt;</p>
+<p>九、编写软件方面的注意事项</p>
+<p>1、如使用C51编程，在使用指针变量(对FLASH进行写操作)按如下方式定义：</p>
+<p>unsigned char xdata *idata(或data) pwrite；</p>
+<p>这样做的目的是确保写FLASH的指针的地址被分配在或空间。</p>
+<p>2、不用的代码空间全部清为“0”，这可以在程序跑飞后再重新运行。在跳转指令前加两到三个NOP指令。这样也可以在程序跑飞后重新运行。</p>
+<p>c8051f单片机使用经验总结</p>
+<p>我自己应用c8051f单片机总结出来的经验：</p>
+<ol>
+<li>c8051f单片机速度快，时钟频率可达到25，50甚至100Mhz！内部资源丰富！</li>
+</ol>
+<p>推荐用c8051f330d 芯片,价格便宜，20pin dip封装,上手快!</p>
+<ol start="2">
+<li><p>电源用计算机的usb接口5伏电源,然后串接3个1N4007或1N4148二极管可以得到3伏左右的电压!!!如果要使用片内ad功能，电源电压需要更好些，可以使用三极管、稳压管等构成串联稳压电路，效果还是很好的！！！重要提示，f320,f340芯片内部集成了5伏转3.3伏电路，就不需要这些电路了！！！</p>
+</li>
+<li><p>串口通信转换芯片可以不用max3232或max232,只需要2个三极管和4个电阻就可以了!我的波特率可以达到115.2kbps,很稳定!</p>
+</li>
+<li><p>c8051f330D芯片的10位ad很不错，我的采用查询方式，转换结果很满意，很稳定（转换结果在1个LSB上下变化，由于我的c8051f330D demo板3伏电源采用分立元件构成，所以软件采用了多次采样求平均值算法）！</p>
+</li>
+<li><p>f330d的da转换功能是电流型的，这样就可以测量小功率三极管直流电流放大倍数。用它提供10到20微安的电流做三极管的基极电流，集电极接3伏电源,在三极管的射极串一个精密电阻，用ad转换测量电阻两端的电压，然后就可以按公式算得三极管电流放大倍数，很遗憾这种办法不适合pnp型的三极管。</p>
+</li>
+</ol>
+<p>6.说一下自己动手焊接c8051f单片机贴片芯片比较实用的办法。c8051f单片机与其它单片机，dsp,arm芯片相比较而言是脆弱的，如果焊接时不小心就很可能把芯片损坏！建议用比较好的恒温可调的烙铁，功率在30瓦左右，温度控制在260到300度，建议采用点焊而不用拉焊，焊接时烙铁放在每个引脚的时间不能太长（最好低于3秒）。上边提到的方法还不能确保芯片完好，对芯片有危害的还有带电烙铁的静电感应！烙铁质量不是太好的，焊接时可以把烙铁电源插头拔掉，呵呵，比较麻烦！以上办法还是比较有效的。</p>
+<p>7.以前学习和使用usb是有难度的，如果现在想学习和使用usb，推荐使用c8051f320芯片,性价比高，软硬件资料很全，上手快。我自己试着做了一款c8051f320 USB demo 板，效果很好！！！</p>
+<p>8.c8051f单片机和at89c5x,at89s5x单片机的不同之处。第一，c8051f单片机没有采用时钟12分频，因此运行速度快了一个数量级；第二，c8051f单片机采用低电平复位，而at89x5x采用高电平复位；第三，c8051f单片机内部带有晶振，其中不少的精度高，可以和外部的晶振切换工作；第四，c8051f单片机的看门狗上电复位后已打开（所以通常要关掉），而at89s5x单片机的看门狗上电复位后关闭；第五，c8051f单片机的flash至少可以擦除编程20000次，而且可以当e2prom数据寄存器使用，而at89x5x单片机的flash最多擦除编程1000次；第六，at89x5x采用5伏供电，c8051f单片机虽然采用3伏供电，但i/o口可以承受5伏电压；第七，at89s5x单片机的一个i/o口最多有两种功能，而c8051f单片机的i/o口可以达到3种以上的功能，这是通过内部的交叉开关实现的；最后要说的是开发工具不一样。</p>
+<ol start="9">
+<li>自己做了c2接口的并口和串口两款下载线,我没有EC2/EC3/EC5仿真器，用它来学习和开发c8051f330d demo 板，c8051f320 USB demo 板，效果令我很满意！！！</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/driver-interface-program-communication-protocol-between-the-three-types.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">驱动程序/接口程序/通讯协议三者区别</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/51-smallest-mcu.html">
+        <span class="next-text nav-default">51单片机最小系统电路介绍</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/scm-supply-rules.html';
+
+  var disqus_title = "单片机供电规则";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

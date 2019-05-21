@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="centos挂在ntfs分区解决方法">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/mount-ntfs-in-centos.html">
+
+
+<meta name="description" content="centos下想访问NTFS分区，现在普遍的方法是利用ntfs-3g或者内核模块来实现。 一、安装ntfs-3g模块  使用yum的安装方法：  请确定你已经安装了rpmforge软件库的源。请参考：RHEL/CentOS 5.5使用第三方软件库 然后安装下列组件。 yum install fuse ntfs-3g -y 注：如果你在使用 CentOS 5.3 或更旧版本，那么你需要安装来自 EL">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos挂在ntfs分区解决方法">
+<meta property="og:url" content="http://rmingwang.com/mount-ntfs-in-centos.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="centos下想访问NTFS分区，现在普遍的方法是利用ntfs-3g或者内核模块来实现。 一、安装ntfs-3g模块  使用yum的安装方法：  请确定你已经安装了rpmforge软件库的源。请参考：RHEL/CentOS 5.5使用第三方软件库 然后安装下列组件。 yum install fuse ntfs-3g -y 注：如果你在使用 CentOS 5.3 或更旧版本，那么你需要安装来自 EL">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos挂在ntfs分区解决方法">
+<meta name="twitter:description" content="centos下想访问NTFS分区，现在普遍的方法是利用ntfs-3g或者内核模块来实现。 一、安装ntfs-3g模块  使用yum的安装方法：  请确定你已经安装了rpmforge软件库的源。请参考：RHEL/CentOS 5.5使用第三方软件库 然后安装下列组件。 yum install fuse ntfs-3g -y 注：如果你在使用 CentOS 5.3 或更旧版本，那么你需要安装来自 EL">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> centos挂在ntfs分区解决方法 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          centos挂在ntfs分区解决方法
+        
+      </h1>
+
+      <time class="post-time">
+          12月 31 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>centos下想访问NTFS分区，现在普遍的方法是利用ntfs-3g或者内核模块来实现。</strong></p>
+<p>一、安装ntfs-3g模块</p>
+<ol>
+<li>使用yum的安装方法：</li>
+</ol>
+<p>请确定你已经安装了rpmforge软件库的源。请参考：RHEL/CentOS 5.5使用第三方软件库</p>
+<p>然后安装下列组件。</p>
+<p>yum install fuse ntfs-3g -y</p>
+<p>注：如果你在使用 CentOS 5.3 或更旧版本，那么你需要安装来自 ELRepo 的 kmod-fuse。</p>
+<ol start="2">
+<li>使用ntfs-3g官方源码编译安装的方法：</li>
+</ol>
+<p>ntfs-3g下载页面：<a href="http://www.tuxera.com/community/ntfs-3g-download/" target="_blank" rel="noopener">http://www.tuxera.com/community/ntfs-3g-download/</a></p>
+<p>安装步骤：</p>
+<p>wget <a href="http://tuxera.com/opensource/ntfs-3g_ntfsprogs-2011.4.12.tgz" target="_blank" rel="noopener">http://tuxera.com/opensource/ntfs-3g_ntfsprogs-2011.4.12.tgz</a></p>
+<p>tar zxvf ntfs-3g_ntfsprogs-2011.4.12.tgz</p>
+<p>cdntfs-3g_ntfsprogs-2011.4.12</p>
+<p>./configure</p>
+<p>make</p>
+<p>make install</p>
+<p>以上两种方法二选一，yum只适用于Redhat系，编译安装适用于所有Linux发行版</p>
+<p>二、挂载NTFS文件系统</p>
+<p>假设你的NTFS文件系统是 /dev/sda1 而你将会把它挂载在 /mnt/windows/c，请执行以下步骤。</p>
+<ol>
+<li>创建挂载点。（一般建议挂在mnt目录里）</li>
+</ol>
+<p>mkdir /mnt/windows/c</p>
+<ol start="2">
+<li>挂载NTFS分区：</li>
+</ol>
+<p>mount -t ntfs-3g /dev/sda1 /mnt/windows/c</p>
+<p>注：这里的sda1是指SATA或SCSI硬盘的第一个分区，如果是老式的IDE硬盘，会是hda1，具体请用fdisk -l查看。如偶的一台机：</p>
+<p>[root@CentOS ~]# fdisk -l</p>
+<p>Disk /dev/sda: 164.6 GB, 164696555520 bytes<br>255 heads, 63 sectors/track, 20023 cylinders<br>Units = cylinders of 16065 * 512 = 8225280 bytes</p>
+<p>Device Boot Start End Blocks Id System<br>/dev/sda1 * 1 2550 20482843+ 7 HPFS/NTFS<br>/dev/sda2 2551 20022 140343840 f W95 Ext’d (LBA)<br>/dev/sda5 5101 8924 30716248+ 7 HPFS/NTFS<br>/dev/sda6 8925 12748 30716248+ 7 HPFS/NTFS<br>/dev/sda7 12749 16572 30716248+ 7 HPFS/NTFS<br>/dev/sda8 16573 20022 27712093+ 7 HPFS/NTFS<br>/dev/sda9 2551 2584 273042 83 Linux<br>/dev/sda10 2585 4928 18828148+ 83 Linux<br>/dev/sda11 4929 5016 706828+ 82 Linux swap / Solaris</p>
+<p>Partition table entries are not in disk order</p>
+<ol start="3">
+<li>如果想开机系统启动时自动挂载NTFS分区，编辑vim /etc/fstab文件，加入类似如下内容：</li>
+</ol>
+<p>只读式挂载：/dev/sda1 /mnt/windows/c ntfs-3g ro,umask=0222,defaults 0 0</p>
+<p>读写式挂载：/dev/sda1 /mnt/windows/c ntfs-3g rw,umask=0000,defaults 0 0<br>或者： /dev/sda1 /mnt/windows/c ntfs-3g defaults 0 0</p>
+<p>如偶的/etc/fstab文件如下：</p>
+<p>LABEL=/ / ext3 defaults 1 1<br>LABEL=/boot /boot ext3 defaults 1 2<br>tmpfs /dev/shm tmpfs defaults 0 0<br>devpts /dev/pts devpts gid=5,mode=620 0 0<br>sysfs /sys sysfs defaults 0 0<br>proc /proc proc defaults 0 0<br>LABEL=SWAP-sda11 swap swap defaults 0 0</p>
+<p>/dev/sda1 /mnt/windows/c ntfs-3g ro,umask=0222,defaults 0 0<br>/dev/sda5 /mnt/windows/e ntfs-3g defaults 0 0<br>/dev/sda6 /mnt/windows/f ntfs-3g defaults 0 0<br>/dev/sda7 /mnt/windows/g ntfs-3g defaults 0 0<br>/dev/sda8 /mnt/windows/h ntfs-3g defaults 0 0</p>
+<p>其他注意问题：</p>
+<p>从 CentOS 5.4 起（2.6.18-164 或更新的内核），fuse 模块已经包含在内核里。因此，已不再需要 dkms 及dkms-fuse。如果你先前安装了 dkms-fuse，请用 yum remove dkms-fuse 命令把它卸装。请注意 CentOS4.x 的用户需要这两个组件。</p>
+<p>使用 centosplus 内核的用户</p>
+<p>由CentOS-5.3开 始，centoplus内核没有启用NTFS模块。这是由于5.3内的 NTFS 是不能运行的。详情请参阅<a href="https://bugzilla.redhat.com/show_bug.cgi?id=481495。如果你想使用来自" target="_blank" rel="noopener">https://bugzilla.redhat.com/show_bug.cgi?id=481495。如果你想使用来自</a> CentOS内核的NTFS模块，你可以安装来自ELRepo的kmod-ntfs。但这个模块没有ntfs-3g好，只提供极度有限的写入功能。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/mb526-cm7-lite-rom.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MB526 的CM7精简版rom 救砖必备</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/the-ultimate-way-to-identification-the-real-defy-phone.html">
+        <span class="next-text nav-default">鉴定defy真机的终极方法——泡水</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/mount-ntfs-in-centos.html';
+
+  var disqus_title = "centos挂在ntfs分区解决方法";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

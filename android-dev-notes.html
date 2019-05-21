@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="android开发学习笔记">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/android-dev-notes.html">
+
+
+<meta name="description" content="配置环境：JDK+eclipse+AVD  //注意的是安装完成JDK以后需要配置java的path环境变量，还有在eclipse里设置AVD的目录 再打开eclipse安装android开发使用的插件，安装方法网上都有的，开发欢迎配置起来还算比较简单，只不过可能下载AVD的时候比较费时，ADSL的话怕是需要几个小时。  创建你的第一个应用（hello word）  然后打开eclipse，新建—">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android开发学习笔记">
+<meta property="og:url" content="http://rmingwang.com/android-dev-notes.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="配置环境：JDK+eclipse+AVD  //注意的是安装完成JDK以后需要配置java的path环境变量，还有在eclipse里设置AVD的目录 再打开eclipse安装android开发使用的插件，安装方法网上都有的，开发欢迎配置起来还算比较简单，只不过可能下载AVD的时候比较费时，ADSL的话怕是需要几个小时。  创建你的第一个应用（hello word）  然后打开eclipse，新建—">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android开发学习笔记">
+<meta name="twitter:description" content="配置环境：JDK+eclipse+AVD  //注意的是安装完成JDK以后需要配置java的path环境变量，还有在eclipse里设置AVD的目录 再打开eclipse安装android开发使用的插件，安装方法网上都有的，开发欢迎配置起来还算比较简单，只不过可能下载AVD的时候比较费时，ADSL的话怕是需要几个小时。  创建你的第一个应用（hello word）  然后打开eclipse，新建—">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> android开发学习笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          android开发学习笔记
+        
+      </h1>
+
+      <time class="post-time">
+          12月 5 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>配置环境：JDK+eclipse+AVD</strong> </p>
+<p>//注意的是安装完成JDK以后需要配置java的path环境变量，还有在eclipse里设置AVD的目录 再打开eclipse安装android开发使用的插件，安装方法网上都有的，开发欢迎配置起来还算比较简单，只不过可能下载AVD的时候比较费时，ADSL的话怕是需要几个小时。 </p>
+<p><strong>创建你的第一个应用（hello word）</strong> </p>
+<p>然后打开eclipse，新建——Android project——然后填写一些信息就可以成功创建了。 应用程序编写完了只需要在项目目录上单击右键——Export——然后填写一些信息就可以导出你的应用程序了，保存成APK文件然后就可以在你的手机上安装了。 当然，你也可以在AVD上运行调试。 </p>
+<p><strong>android应用目录分析</strong> </p>
+<p>SRC：你的应用程序java class 目录，在这里编写你的应用逻辑，然后调用数据等等 gen：这里会有一个R.java，这个文件是用来生成资源id的，你在res目录里的资源都会在这里自动生成资源id，然后以便于在src的程序里调用<br>assets：目录里也是防止资源文件的，比如图片神马的。</p>
+<p>//主题它与res的区别 res：里面几个子目录 ———drawable-hdpi / drawable-Ldpi / drawable-Mdpi：在这三个目录里分别放置不同分辨率的资源文件，这样可以提高应用程序的兼容性。 ———layout：正如其名，在这里可以放置一些布局文件，发现这个xml布局和html很像，一下子压力小了不少，使用的是标签形式，不同标签对应不同属性。在这里的不同命名的xml文件可以在src的类文件里进行调用完成activity的布局。 ———values：在这里放置你的字符串，为了国际化的需要吧，可以把你的字符串放置在这里的xml文件里，然后根据name进行调用。 **</p>
+<p>//res里的所有文件都会在R.java里生成唯一的id，以便于调用，这也是res区别于assets的地方。<strong> </strong></p>
+<p>//最后再提醒一个eclipse的使用技巧：alt+？可以弹出自动提示。</p>
+<p>//ctrl+shit+o可以自动fix程序中的文件导入问题。<strong> </strong></p>
+<p>//eclipse是自带这调试工具的，出了问题可以看问题在哪一行，不至于盲目乱改。<strong> </strong>android app的大概思路：资源文件(res、assets)+布局文件(layout)+程序方法(src)=apk<strong> </strong></p>
+<p>//以上纯属个人笔记，如有错误请留言指正**</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/photos-of-sdut-rainy-night.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">随手拍-山东理工大学雨夜</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20111203.html">
+        <span class="next-text nav-default">日记1203</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/android-dev-notes.html';
+
+  var disqus_title = "android开发学习笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

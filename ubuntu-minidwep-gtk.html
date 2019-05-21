@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-minidwep-gtk.html">
+
+
+<meta name="description" content="之前用过bt3亲试，破解了邻宿舍的无线密码，觉得bt3已经很粗错了，没想到今天去朋友的博客一看，发现在ubuntu之下还有一个图形化的无线密码破解工具。下面是原文，只是作为参考，以备日后之用。 对于BT3 BT4系列的无线密码破译工具大家可能都有耳闻，今天奶牛为大家介绍的是一款ubuntu下图形界面的无线密码破解工具minidwep-gtk。支持中文，国人编写。奶牛也看到过cdlinux版本，可以">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下图形界面无线wep&#x2F;wpa密码破解工具minidwep-gtk">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-minidwep-gtk.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="之前用过bt3亲试，破解了邻宿舍的无线密码，觉得bt3已经很粗错了，没想到今天去朋友的博客一看，发现在ubuntu之下还有一个图形化的无线密码破解工具。下面是原文，只是作为参考，以备日后之用。 对于BT3 BT4系列的无线密码破译工具大家可能都有耳闻，今天奶牛为大家介绍的是一款ubuntu下图形界面的无线密码破解工具minidwep-gtk。支持中文，国人编写。奶牛也看到过cdlinux版本，可以">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu下图形界面无线wep&#x2F;wpa密码破解工具minidwep-gtk">
+<meta name="twitter:description" content="之前用过bt3亲试，破解了邻宿舍的无线密码，觉得bt3已经很粗错了，没想到今天去朋友的博客一看，发现在ubuntu之下还有一个图形化的无线密码破解工具。下面是原文，只是作为参考，以备日后之用。 对于BT3 BT4系列的无线密码破译工具大家可能都有耳闻，今天奶牛为大家介绍的是一款ubuntu下图形界面的无线密码破解工具minidwep-gtk。支持中文，国人编写。奶牛也看到过cdlinux版本，可以">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk
+        
+      </h1>
+
+      <time class="post-time">
+          3月 11 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>之前用过bt3亲试，破解了邻宿舍的无线密码，觉得bt3已经很粗错了，没想到今天去朋友的博客一看，发现在ubuntu之下还有一个图形化的无线密码破解工具。下面是原文，只是作为参考，以备日后之用。</p>
+<p>对于BT3 BT4系列的无线密码破译工具大家可能都有耳闻，今天奶牛为大家介绍的是一款ubuntu下图形界面的无线密码破解工具minidwep-gtk。支持中文，国人编写。奶牛也看到过cdlinux版本，可以用cdlinux制作启动U盘工作。</p>
+<p>对于ubuntu下的minidwep-gtk，奶牛觉得方便很多，因为不再需要手动进行aircrack-ng的命令了。软件界面就4个按钮，扫描，启动，停止，还有退出。点击扫描会对无线热点进行扫描，选中要破解的对象，启动，就开始自动破解了，下面就是等待了。其它的不解释了，网上也有一些视频，大家可以看看。这个软件图形化，操作也很简单，奶牛不上图了。</p>
+<p>这个软件的目的是检测无线密码安全，请勿用于非法用途。</p>
+<p>最后说下安装，软件需要aircrack-ng的支持。</p>
+<pre lang="vim" line="1">
+sudo apt-get install aircrack-ng
+</pre>
+
+<p>然后下载minidwep-gtk的安装包，奶牛收集了两个版本，都可以使用。如果程序菜单无法正常启动程序大家可以从终端中输入minidwep-gtk启动程序。</p>
+<p>下载地址</p>
+<p><a href="http://u.115.com/file/f91449f44d" target="_blank" rel="noopener">http://u.115.com/file/f91449f44d</a></p>
+<p><a href="http://u.115.com/file/f9c3bf05d4" target="_blank" rel="noopener">http://u.115.com/file/f9c3bf05d4</a></p>
+<p style="text-align: right;"><strong>本文链接地址:</strong> <a href="http://www.nenew.net/ubuntu-minidwep-gtk.html" target="_blank" rel="noopener">Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk</a></p><br><p style="text-align: right;"><strong>原创文章，转载请注明：</strong> 转载自<a href="http://www.nenew.net/" target="_blank" rel="noopener">奶牛博客</a></p>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/js-pop-up-div-layer-source-code.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">js弹出(可移动)层/窗口源码</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20110310.html">
+        <span class="next-text nav-default">日记20110310</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-minidwep-gtk.html';
+
+  var disqus_title = "Ubuntu下图形界面无线wep/wpa密码破解工具minidwep-gtk";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

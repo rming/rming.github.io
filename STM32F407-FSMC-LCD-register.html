@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32F407的FSMC方式操作LCD显示屏">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/STM32F407-FSMC-LCD-register.html">
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;半年的时间了，没怎么更新博客，受到的打击比较多，没有什么敲键盘的心情了，整天沉浸在游戏里，试图解脱，现在游戏打得多了，也没什么意思了，还是回来面对现实吧，仔细想想面前的这点小事也不算什么，不在扯淡，开始正题。 STM32F407的FSMC方式操作LCD显示屏&amp;nbsp;&amp;emsp;&amp;emsp;之前没用过Cortex-M4的芯片，倒是从M3入门学习的，前一段时间买了一个STM">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32F407的FSMC方式操作LCD显示屏">
+<meta property="og:url" content="http://rmingwang.com/STM32F407-FSMC-LCD-register.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;半年的时间了，没怎么更新博客，受到的打击比较多，没有什么敲键盘的心情了，整天沉浸在游戏里，试图解脱，现在游戏打得多了，也没什么意思了，还是回来面对现实吧，仔细想想面前的这点小事也不算什么，不在扯淡，开始正题。 STM32F407的FSMC方式操作LCD显示屏&amp;nbsp;&amp;emsp;&amp;emsp;之前没用过Cortex-M4的芯片，倒是从M3入门学习的，前一段时间买了一个STM">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2013-02-21T06:08:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32F407的FSMC方式操作LCD显示屏">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;半年的时间了，没怎么更新博客，受到的打击比较多，没有什么敲键盘的心情了，整天沉浸在游戏里，试图解脱，现在游戏打得多了，也没什么意思了，还是回来面对现实吧，仔细想想面前的这点小事也不算什么，不在扯淡，开始正题。 STM32F407的FSMC方式操作LCD显示屏&amp;nbsp;&amp;emsp;&amp;emsp;之前没用过Cortex-M4的芯片，倒是从M3入门学习的，前一段时间买了一个STM">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32F407的FSMC方式操作LCD显示屏 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32F407的FSMC方式操作LCD显示屏
+        
+      </h1>
+
+      <time class="post-time">
+          2月 21 2013
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>&emsp;&emsp;半年的时间了，没怎么更新博客，受到的打击比较多，没有什么敲键盘的心情了，整天沉浸在游戏里，试图解脱，现在游戏打得多了，也没什么意思了，还是回来面对现实吧，仔细想想面前的这点小事也不算什么，不在扯淡，开始正题。</p>
+<h2><span id="stm32f407的fsmc方式操作lcd显示屏nbsp">STM32F407的FSMC方式操作LCD显示屏&nbsp;</span></h2><p>&emsp;&emsp;之前没用过Cortex-M4的芯片，倒是从M3入门学习的，前一段时间买了一个STM32F407的板子，从网上翻阅了一些资料，因为之前的学习是从寄存器操作学习的，感觉从M3到M4的迁移倒是没什么难度，只不过是翻翻参考手册，看看对应控制寄存器的不同，学习一个MCU大致也就如此。</p>
+<h3><span id="最基础最实用的gpio">最基础最实用的GPIO</span></h3><p>&emsp;&emsp;IO口在M4里面除去一些普通的功能选项外，就是可以进行功能复用和重新映射，因为板子上的FSMC正是采用了一些IO口的复用功能，这里我们仔细看一下IO口的复用设置。</p>
+<p>先来看一下ST对IO控制所创建的结构体，了解一下都是有哪些寄存器和IO有关系：</p>
+<p><strong>STM32F4xx.h L650</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* @brief General Purpose I/O</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  __IO uint32_t MODER;    /*! GPIO port mode register,               Address offset: 0x00      */</span><br><span class="line">  __IO uint32_t OTYPER;   /*! GPIO port output type register,        Address offset: 0x04      */</span><br><span class="line">  __IO uint32_t OSPEEDR;  /*! GPIO port output speed register,       Address offset: 0x08      */</span><br><span class="line">  __IO uint32_t PUPDR;    /*! GPIO port pull-up/pull-down register,  Address offset: 0x0C      */</span><br><span class="line">  __IO uint32_t IDR;      /*! GPIO port input data register,         Address offset: 0x10      */</span><br><span class="line">  __IO uint32_t ODR;      /*! GPIO port output data register,        Address offset: 0x14      */</span><br><span class="line">  __IO uint16_t BSRRL;    /*! GPIO port bit set/reset low register,  Address offset: 0x18      */</span><br><span class="line">  __IO uint16_t BSRRH;    /*! GPIO port bit set/reset high register, Address offset: 0x1A      */</span><br><span class="line">  __IO uint32_t LCKR;     /*! GPIO port configuration lock register, Address offset: 0x1C      */</span><br><span class="line">  __IO uint32_t AFR[2];   /*! GPIO alternate function registers,     Address offset: 0x20-0x24 */</span><br><span class="line">&#125; GPIO_TypeDef;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;刚开始的MODER、OTYPER、OSPEEDR、PUPDR、IDR、ODR、BSSRL、BSSRH、LCR这些寄存器正是设置输出模式、输出类型、输出速度、上拉下拉、输入数据（只读）、输出数据、复位、置位、锁存，我们重点看一下最后的AFR[2]，这正是端口复用功能配置寄存器，具体内容我们仔细了解。</p>
+<p>&emsp;&emsp;这里简单概括讲，就是一个IO口最多可能有16种复用功能，我们给每一个复用功能编号分组，在设置好其他寄存器后，只需要将GPIOx-&gt;AFR[y]设置上所需要的功能即可，这里我们使用AF12（FSMC），他的编号是0xC。</p>
+<p>&emsp;&emsp;如果IO口被用于FSMC，那么首先对IO设置为复用、推挽输出、无上拉无下拉、50Mhz速度，然后对复用功能设置为FSMC功能。</p>
+<p>&emsp;&emsp;其他的IO口控制寄存器可以查阅参考手册。</p>
+<p>具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">RCC-&gt;AHB1ENR|=1AHB1ENR|=1MODER |= 0x0FC0F0F0; //复用功能 </span><br><span class="line">GPIOD-&gt;MODER |= 0xA02A0A0A;	 </span><br><span class="line">GPIOD-&gt;OTYPER |= 0x38CC; //推挽输出</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0x0FC0F0F0; // 速度50M</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0xA02A0A0A; </span><br><span class="line">GPIOD-&gt;PUPDR |= 0x0FC0F0F0; //无上拉、无下拉</span><br><span class="line">GPIOD-&gt;AFR[0]  |= 0xFF00FF00;//设置复用功能为FSMC</span><br><span class="line">GPIOD-&gt;AFR[0]  |= 0x00CC00CC;</span><br><span class="line">GPIOD-&gt;AFR[1]  |= 0x00FFF000;</span><br><span class="line">GPIOD-&gt;AFR[1]  |= 0xCC000CCC; </span><br><span class="line">//PORTE7~15 复用FSMC、推挽输出、无上拉无下拉、50Mhz 	</span><br><span class="line">GPIOE-&gt;MODER |= 0x00003FFF; //复用功能 </span><br><span class="line">GPIOE-&gt;MODER |= 0xAAAA8000;	 </span><br><span class="line">GPIOE-&gt;OTYPER |= 0x007F; //推挽输出</span><br><span class="line">GPIOE-&gt;OSPEEDR |= 0x00003FFF; // 速度50M</span><br><span class="line">GPIOE-&gt;OSPEEDR |= 0xAAAA8000; </span><br><span class="line">GPIOE-&gt;PUPDR |= 0x00003FFF; //无上拉、无下拉</span><br><span class="line">GPIOE-&gt;AFR[0]  |= 0x0FFFFFFF;//设置复用功能为FSMC</span><br><span class="line">GPIOE-&gt;AFR[0]  |= 0xC0000000;</span><br><span class="line">GPIOE-&gt;AFR[1]  |= 0x00000000;</span><br><span class="line">GPIOE-&gt;AFR[1]  |= 0xCCCCCCCC;   	 </span><br><span class="line">//PORTD11 (RS)</span><br><span class="line">GPIOD-&gt;MODER |= 0xFF3FFFFF; //复用功能 </span><br><span class="line">GPIOD-&gt;MODER |= 0x00800000;	 </span><br><span class="line">GPIOD-&gt;OTYPER |= 0xF7FF; //推挽输出</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0xFF3FFFFF; // 速度50M</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0x00800000; </span><br><span class="line">GPIOD-&gt;PUPDR |= 0xFF3FFFFF; //无上拉、无下拉</span><br><span class="line">GPIOD-&gt;AFR[1]  |= 0xFFFF0FFF;</span><br><span class="line">GPIOD-&gt;AFR[1]  |= 0x0000C000;  	</span><br><span class="line">//PORTD7 (CS)</span><br><span class="line">GPIOD-&gt;MODER |= 0xFFFF3FFF; //复用功能 </span><br><span class="line">GPIOD-&gt;MODER |= 0x00008000;	 </span><br><span class="line">GPIOD-&gt;OTYPER |= 0xFF7F; //推挽输出</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0xFFFF3FFF; // 速度50M</span><br><span class="line">GPIOD-&gt;OSPEEDR |= 0x00008000; </span><br><span class="line">GPIOD-&gt;PUPDR |= 0xFFFF3FFF; //无上拉、无下拉</span><br><span class="line">GPIOD-&gt;AFR[0]  |= 0x0FFFFFFF;</span><br><span class="line">GPIOD-&gt;AFR[0]  |= 0xC0000000;</span><br></pre></td></tr></table></figure>
+<h3><span id="fsmc是个很实用的东西">FSMC是个很实用的东西</span></h3><p>&emsp;&emsp;首先我们了解下什么事FSMC，FSMC是专门为外扩sram货rom使用的。</p>
+<p> FSMC，即灵活的静态存储控制器，能够与同步或异步存储器和16位PC存储器卡接口，STM32的FSMC接口支持包括SRAM、NAND &nbsp;FLASH、NOR &nbsp;FLASH和PSRAM等存储器。</p>
+<p>&emsp;&emsp;STM32的FSMC将外部设备分为3类：NOR/PSRAM设备、NAND设备、PC卡设备。他们共用地址数据总线等信号，他们具有不同的CS以区分不同的设备，这里我们用到的TFTLCD就是用的FSMC_NE1做片选，其实就是将TFTLCD当成SRAM来控制。</p>
+<p>&emsp;&emsp;外部SRAM的控制一般有：地址线（如A0~A18）、数据线（如D0~D15）、写信号（WE）、读信号（OE）、片选信号（CS），如果SRAM支持字节控制，那么还有UB/LB信号。而TFTLCD的信号我们在18.1.1节有介绍，包括：RS、D0~D15、WR、RD、CS、RST和BL等，其中真正在操作LCD的时候需要用到的就只有：RS、D0~D15、WR、RD和CS。其操作时序和SRAM的控制完全类似，唯一不同就是FTLCD有RS信号，但是没有地址信号。</p>
+<p>&emsp;&emsp;TFTLCD通过RS信号来决定传送的数据是数据还是命令，本质上可以理解为一个地址信号，比如我们把RS接在A0上面，那么当FSMC控制器写地址0的时候，会使得A0变为0，对TFTLCD来说，就是写命令。而FSMC写地址1的时候，A0将会变为1，对TFTLCD来说，就是写数据了。这样，就把数据和命令区分开了，他们其实就是对应SRAM操作的两个连续地址。</p>
+<p>具体的寄存器操作代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">RCC-&gt;AHB3ENR|=1;       //使能FSMC时钟</span><br><span class="line">//寄存器清零</span><br><span class="line">//bank1有NE1~4,每一个有一个BCR+TCR，所以总共八个寄存器。</span><br><span class="line">//这里我们使用NE1 ，也就对应BTCR[0],[1]。				    </span><br><span class="line">FSMC_Bank1-&gt;BTCR[0]=0X00000000;</span><br><span class="line">FSMC_Bank1-&gt;BTCR[1]=0X00000000;</span><br><span class="line">FSMC_Bank1E-&gt;BWTR[0]=0X00000000;</span><br><span class="line">//操作BCR寄存器	使用异步模式</span><br><span class="line">FSMC_Bank1-&gt;BTCR[0]|=112;		//存储器写使能</span><br><span class="line">FSMC_Bank1-&gt;BTCR[0]|=114;		//读写使用不同的时序</span><br><span class="line">FSMC_Bank1-&gt;BTCR[0]|=14; 		//存储器数据宽度为16bit 	    </span><br><span class="line">//操作BTR寄存器	</span><br><span class="line">//读时序控制寄存器 							    </span><br><span class="line">FSMC_Bank1-&gt;BTCR[1]|=028;		//模式A 	 							  	 </span><br><span class="line">FSMC_Bank1-&gt;BTCR[1]|=30; 		//地址建立时间（ADDSET）为2个HCLK 1/36M=27ns	 	 </span><br><span class="line">//因为液晶驱动IC的读数据的时候，速度不能太快，尤其对1289这个IC。</span><br><span class="line">FSMC_Bank1-&gt;BTCR[1]|=0X1F8;  	//数据保存时间为16个HCLK	 	 </span><br><span class="line">//写时序控制寄存器  </span><br><span class="line">FSMC_Bank1E-&gt;BWTR[0]|=028; 	//模式A 	 							    </span><br><span class="line">FSMC_Bank1E-&gt;BWTR[0]|=10;		//地址建立时间（ADDSET）为1个HCLK </span><br><span class="line">	//4个HCLK（HCLK=72M）因为液晶驱动IC的写信号脉宽，最少也得50ns。72M/4=24M=55ns  	 </span><br><span class="line">FSMC_Bank1E-&gt;BWTR[0]|=78; 	//数据保存时间为4个HCLK	</span><br><span class="line">//使能BANK1,区域4</span><br><span class="line">FSMC_Bank1-&gt;BTCR[0]|=10;		//使能BANK1，区域4</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-20130327.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记20130327</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/8051-enc28j60-uip.html">
+        <span class="next-text nav-default">基于51单片机的远程控制和数据采集</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/STM32F407-FSMC-LCD-register.html';
+
+  var disqus_title = "STM32F407的FSMC方式操作LCD显示屏";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

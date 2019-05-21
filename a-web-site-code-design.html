@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="假期写的一个web程序的思路">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/a-web-site-code-design.html">
+
+
+<meta name="description" content="//文章显示顺序// 不同目录重复发表//查找信息目录问题//个人信息更改//邮箱确认//0状态的内容可以编辑.删除但是不能查看//自己添加时候checkbox 直接通过或者不通过//信息 ：审核 编辑 删除 状态//用户管理：增加用户 审核用户 暂停用户 删除用户 编辑用户//审核用户//url_fix 测试修改//改进控制字数的函数//完善功能能 drop 在found 和lost中分别编写后">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="假期写的一个web程序的思路">
+<meta property="og:url" content="http://rmingwang.com/a-web-site-code-design.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="//文章显示顺序// 不同目录重复发表//查找信息目录问题//个人信息更改//邮箱确认//0状态的内容可以编辑.删除但是不能查看//自己添加时候checkbox 直接通过或者不通过//信息 ：审核 编辑 删除 状态//用户管理：增加用户 审核用户 暂停用户 删除用户 编辑用户//审核用户//url_fix 测试修改//改进控制字数的函数//完善功能能 drop 在found 和lost中分别编写后">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="假期写的一个web程序的思路">
+<meta name="twitter:description" content="//文章显示顺序// 不同目录重复发表//查找信息目录问题//个人信息更改//邮箱确认//0状态的内容可以编辑.删除但是不能查看//自己添加时候checkbox 直接通过或者不通过//信息 ：审核 编辑 删除 状态//用户管理：增加用户 审核用户 暂停用户 删除用户 编辑用户//审核用户//url_fix 测试修改//改进控制字数的函数//完善功能能 drop 在found 和lost中分别编写后">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 假期写的一个web程序的思路 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          假期写的一个web程序的思路
+        
+      </h1>
+
+      <time class="post-time">
+          2月 19 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>//文章显示顺序<br>// 不同目录重复发表<br>//查找信息目录问题<br>//个人信息更改<br>//邮箱确认<br>//0状态的内容可以编辑.删除但是不能查看<br>//自己添加时候checkbox 直接通过或者不通过<br>//信息 ：审核 编辑 删除 状态<br>//用户管理：增加用户 审核用户 暂停用户 删除用户 编辑用户<br>//审核用户<br>//url_fix 测试修改<br>//改进控制字数的函数<br>//完善功能能 drop 在found 和lost中分别编写后台编写 其他列表页码中注意status<br>//在所有列表页中 失效的不显示<br>//2状态 是否已经失效 post的状态 0 未通过 1 通过 2 失效 在所有列表页中 失效的不显示<br>//页面提示内容提取 设置<br>//关闭 数据库错误信息<br>//增强搜索功能 搜索页中加入操作<br>//如何利用config 类<br>//后台<br>//后台添加用户信息和注销链接<br>//后台文章列表中添加作者信息<br>//内容页中操作 显示信息发布者 前台作者信息页<br>//后台添加作者信息页<br>|–&gt;url设计-&gt;文件目录规范 [ controller ] |<br>| |<br>// 需求分析-&gt;设计方案-&gt;模块设计-&gt;功能分析-&gt;|–&gt;数据库设计 [ model ] |–&gt;编写代码–&gt;beta测试–&gt;发布跟踪<br>| |<br>|–&gt;UI设计-&gt;用户体验测试-&gt;交互体验测试 [ view ] |<br>url设计既要兼顾程序功能又要尊重用户体验<br>后台程序代码文件和模板文件按照url层次分目录存储<br>数据库设计根据项目功能需求设计</p>
+<p>常用功能模块分析</p>
+<p>网站首页 (/)<br>文章阅读 post/</p>
+<p>|-&gt;模块首页 ( 包含以下功能链接 ) ( user )<br>|-&gt;用户注册页 ( user/signup )<br>|-&gt;用户登陆页 ( user/login )<br>用户中心（user） |-&gt;用户信息页 ( user/profile ) 个人信息删改( edit ) 确认邮箱( confirm ) 更改邮箱( reconfirm ) 更改密码( edit ) 找回密码( resetpassword ) 更改头像( edit ) ( 或mod=? )<br>|-&gt;用户资源页 ( eg:文章管理、文件存储、相册管理，根据不同程序功能确定资源管理 )<br>|-&gt;文章管理 (user/post) 发表文章( new )、编辑文章( edit )、删除文章( del )、审核文章( checked ) (或mod=?)<br>|-&gt;相册管理 ( photo )<br>|-&gt;系统设置 ( option )</p>
+<p>&nbsp;</p>
+<p>|–&gt;管理员登陆 （admin/）<br>|–&gt;用户管理 ( admin/user ) 增加用户( add ) 、审核用户（checked） 、删除用户 ( del ) 、编辑用户资料( edit )<br>后台管理（admin）|–&gt;文章管理 ( admin/post ) 审核文章( checked ) 、 发表文章( new )、编辑文章( edit )、删除文章( del )、 (或mod=?)<br>|<br>|–&gt;网站设置 (admin/set)</p>
+<p>个人信息( profile )<br>确认邮箱( confirm ) user/profile/confirm?key=hjeqweqwioequ<br>更改邮箱( reconfirm ) user/profile/reconfirm<br>找回密码( resetpassword ) user/profile/resetpassword</p>
+<p>&nbsp;</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-20-12-022-million.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记20120220</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/godaddy-the-magic-1-99-register-coupon-code-is-a-domain-name.html">
+        <span class="next-text nav-default">Godaddy神奇优惠码 $1.99美元注册域名</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/a-web-site-code-design.html';
+
+  var disqus_title = "假期写的一个web程序的思路";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

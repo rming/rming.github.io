@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="基于51单片机的远程控制和数据采集">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/8051-enc28j60-uip.html">
+
+
+<meta name="description" content="一、研究目的 二、系统说明 三、实现功能及操作方法 四、开发的作品图片 一、设计方案： 二、具体的设计内容 （一）单片机客户端系统接口图： （二）、单片机和网络服务器的通信协议编程技术实现： 1．高性能的IAP15F系列单片机 2．嵌入式TCP/IP 协议栈 3．UIP 设备驱动接口和网络应用接口 4．服务器端WEB服务的HTTP接口       三、基于单片机的以太网测量实例测试 （一）温度">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于51单片机的远程控制和数据采集">
+<meta property="og:url" content="http://rmingwang.com/8051-enc28j60-uip.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="一、研究目的 二、系统说明 三、实现功能及操作方法 四、开发的作品图片 一、设计方案： 二、具体的设计内容 （一）单片机客户端系统接口图： （二）、单片机和网络服务器的通信协议编程技术实现： 1．高性能的IAP15F系列单片机 2．嵌入式TCP/IP 协议栈 3．UIP 设备驱动接口和网络应用接口 4．服务器端WEB服务的HTTP接口       三、基于单片机的以太网测量实例测试 （一）温度">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-12-04T12:11:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于51单片机的远程控制和数据采集">
+<meta name="twitter:description" content="一、研究目的 二、系统说明 三、实现功能及操作方法 四、开发的作品图片 一、设计方案： 二、具体的设计内容 （一）单片机客户端系统接口图： （二）、单片机和网络服务器的通信协议编程技术实现： 1．高性能的IAP15F系列单片机 2．嵌入式TCP/IP 协议栈 3．UIP 设备驱动接口和网络应用接口 4．服务器端WEB服务的HTTP接口       三、基于单片机的以太网测量实例测试 （一）温度">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 基于51单片机的远程控制和数据采集 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          基于51单片机的远程控制和数据采集
+        
+      </h1>
+
+      <time class="post-time">
+          12月 4 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#一-研究目的">一、研究目的</a></li>
+<li><a href="#二-系统说明">二、系统说明</a></li>
+<li><a href="#三-实现功能及操作方法">三、实现功能及操作方法</a></li>
+<li><a href="#四-开发的作品图片">四、开发的作品图片</a><ul>
+<li><a href="#一-设计方案">一、设计方案：</a></li>
+<li><a href="#二-具体的设计内容">二、具体的设计内容</a><ul>
+<li><a href="#一单片机客户端系统接口图">（一）单片机客户端系统接口图：</a></li>
+<li><a href="#二-单片机和网络服务器的通信协议编程技术实现">（二）、单片机和网络服务器的通信协议编程技术实现：</a><ul>
+<li><a href="#1高性能的iap15f系列单片机">1．高性能的IAP15F系列单片机</a></li>
+<li><a href="#2嵌入式tcpip-协议栈">2．嵌入式TCP/IP 协议栈</a></li>
+<li><a href="#3uip-设备驱动接口和网络应用接口">3．UIP 设备驱动接口和网络应用接口</a></li>
+<li><a href="#4服务器端web服务的http接口">4．服务器端WEB服务的HTTP接口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#三-基于单片机的以太网测量实例测试">三、基于单片机的以太网测量实例测试</a><ul>
+<li><a href="#一温度的远程采集实例分析">（一）温度的远程采集实例分析</a></li>
+<li><a href="#二远程控制实例分析">（二）远程控制实例分析</a></li>
+</ul>
+</li>
+<li><a href="#四-结论">四、结论</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="一-研究目的">一、研究目的</span></h2><p>基于单片机的数据采集和控制技术目前已经得到了很好的发展，但对于在恶劣环境下的监测技术、多地域分布式数据采集技术等方面还存在很多难题，没有得到很好地解决。本研究中，我们将IAP15F2K61S2通过网络控制芯片接入互联网，通过编制单片机和服务器之间的网络通信协议，实现了通过数据中心网站来控制被控设备，并将由单片机采集到的测量数据实时存储到远端服务器数据中心。采用我们提出的解决方案，可以实现更加方便、快捷和高效的采集远程测量数据及控制被控对象，从而很好地解决了多地点测量及恶劣环境下的测量等难题。</p>
+<h2><span id="二-系统说明">二、系统说明</span></h2><p>图1. 基于单片机的以太网远程数据监测和控制系统结构图</p>
+<p>图2. 单片机接入以太网的环路示意图</p>
+<p>图1中，IAP15F2K61S2单片机开发板通过SPI总线与网络控制芯片ENC28J60相连，C语言编程通过模拟SPI时序的方式完成单片机与网络模块的通信，网络模块可通过固定IP或者DHCP的方式配置本地网络，然后再通过RJ-45双绞线接入路由器或其他上级网关设备，这样，只需要将其上级网关设备接入网络，单片机即可同时接入到以太网。</p>
+<p>图2中，单片机接入到以太网以后，即可通过单片机编程操作温度传感器DS18B20采集到温度数据，然后将传感器数据通过HTTP请求的方式提交到远端托管的数据服务器，数据服务器会根据服务器端设定存储数据到MYSQL数据库，此时，用户可以通过任意可以上网的设备（手机、笔记本电脑、台式机电脑）查看数据报表；与此同时，用户也可以通过控制中心网站，打开远程控制操作页面，对单片机上的客户端设备进行操作，通过模拟开关操作，我们可以方便的操作本地浏览器控制机远程开关的开断。</p>
+<h2><span id="三-实现功能及操作方法">三、实现功能及操作方法</span></h2><p>1、功能：单片机设备接入以太网，将测量数据保存到远端数据服务器，用户可以通过本地浏览器间接控制接入网络的单片机设备。</p>
+<p>2、操作：</p>
+<p>（1）、注册数据中心账号，申请HTTP请求接口。</p>
+<p>（2）、根据HTTP请求接口改写单片机程序，编译烧录。</p>
+<p>（3）、将单片机在任意地点通过网络芯片接入以太网。</p>
+<p>（4）、任意地点、上网设备打开数据中心网站管理你的单片机设备。</p>
+<h2><span id="四-开发的作品图片">四、开发的作品图片</span></h2><p>图3是由51单片机开发板开发的客户端，可实现本地被测对象的数据采集和控制技术。</p>
+<p>图3. 基于51单片机开发板的数据采集与控制系统客户端</p>
+<p>这里我们通过一个5V转接3V的电源模块满足两个设备的供电需求，单片机P03~P07口通过杜邦线与网络模块相应SPI总线相连，网络模块通过RJ-45接口的双绞线连接路由器，路由器通过无线网络接入以太网，这样即可实现单片机客户端接入以太网。</p>
+<p>主要包括一些部件：</p>
+<p>（1）单片机开发板（以STC15F2K61S2芯片为控制核心）</p>
+<p>（2）网络模块（ENC28J60网络控制芯片）</p>
+<p>（3）温度传感器（DS18B20温度传感器芯片）</p>
+<p>（4）RJ-45接口双绞线（普通有线网络双绞线）</p>
+<p>（5）LINUX VPS服务器（提供WEB服务和HTTP接口的远端数据中心服务器）</p>
+<h3><span id="一-设计方案">一、设计方案：</span></h3><p>硬件设计：片上资源至少2K RAM+16K ROM的51单片机，连接10M带宽的网卡模块，即可在任意地点，通过任意方式接入互联网。</p>
+<p>使用方法：一旦单片机设备通过网卡模块接入网络，对于用户来讲，只需要到指定数据中心网站注册登录，并添加设备和传感器，即可获取API地址，查看API使用方法即可在单片机上编写对应设备的操作方法，这样，数据中心就成为了一个多用户的使用平台。</p>
+<h3><span id="二-具体的设计内容">二、具体的设计内容</span></h3><h4><span id="一单片机客户端系统接口图">（一）单片机客户端系统接口图：</span></h4><p>图4. 单片机基本电路、DS18B20、P0口上拉电阻和LED原理图</p>
+<p>图5. ENC28J60原理图</p>
+<p>网络控制芯片的SPI总线接口与单片机P0口的高5位线相连，使用IAP15F2K60S2单片机模拟SPI总线时序，与ENC28J60通信，ENC28J60则通过与一个RJ-45接口通过普通双绞线接入到以太网网络中。</p>
+<h4><span id="二-单片机和网络服务器的通信协议编程技术实现">（二）、单片机和网络服务器的通信协议编程技术实现：</span></h4><h5><span id="1高性能的iap15f系列单片机">1．高性能的IAP15F系列单片机</span></h5><p>IAP15F2K61S2单片机是单时钟/机器周期(1T)的兼容8051内核单片机，是高速、低功耗的新一代8051单片机，指令代码完全兼容传统8051，而速度快8~12倍，内部集成硬件高速SPI(Serial Peripheral Interface)接口、2 KB EEPROM、A/D转换模块和MAX810专用复位电路。工作电压2.4~3.8 V，因此可用电池工作，并可长时间工作。器件在少于6 μs的时间内可以从低功耗模式迅速唤醒。IAP15F2K61S2的超小封装、高度集成、精简外部电路可设计出更小的节点，超低的价格可以大规模铺设传感器节点。IAP15F2K61S2单片机的这些特征，非常适合应用在对单片机性能有一定要求的网络应用中。 下图为单片机选型参考表</p>
+<p>图6. 单片机选型参考表</p>
+<h5><span id="2嵌入式tcpip-协议栈">2．嵌入式TCP/IP 协议栈</span></h5><p>UIP将TCP/IP协议栈的实现仅仅使用几百字节代码大小和RAM即可实现了TCP/IP协议栈的大部分常用功能，而传统的TCP/IP协议栈无论是代码容量还是内存占用上都需要大量硬件资源，因而无法使用在小型 8 或16位系统，UIP通过少量的代码实现了TCP/IP协议栈的一些基本功能，其中比如UDP、ARP，还有IP、ICMP和TCP协议，全部有几百字节的C语言代码编写实现。</p>
+<p>本文经过对UIP协议栈的进一步优化，代码容量缩减到1.2KB之小，RAM占用更甚是缩减到了500B以内，这样就更加有利于充分利用IAP15F2K61S2单片机片上资源了。</p>
+<h5><span id="3uip-设备驱动接口和网络应用接口">3．UIP 设备驱动接口和网络应用接口</span></h5><p>UIP 是一个仅包含三层网络层核心协议的协议栈，uIP 自身不包含任何类型的底层网络驱动和上层应用程序，它只提供接口函数供用户开发使用。因此为了完成与网络设备的交互，用户必须根据网络设备的类型，在uIP 中自行实现对底层网络设备的驱动。</p>
+<p>图7. UIP协议栈运行流程图</p>
+<p>图8. 配置UIP单包大小（单包RAM占用）</p>
+<p>具体的编程设计如下：</p>
+<p>①　设备驱动接口编程</p>
+<p>本次使用的硬件设备是IAP15F系列单片机和ENC28J60网络模块，获取UIP源码后需要将设备将ENC28J60的驱动程序与UIP的接口进行整合，具体操作如下：</p>
+<p>图9. SPI接口驱动</p>
+<p>图10.UIP设备驱动函数初始化</p>
+<p>ENC28J60 网卡驱动首先是对网卡芯片的上电初始化，通过函数 enc28j60_init() 进行寄存器初始化，用于设定网卡物理地址，设定收发缓冲区位置和大小等。其次是发送数据函数dev_send() 和接收数据函数 dev_poll() 。 </p>
+<p>②　网络应用接口编程</p>
+<p>图11.UIP应用程序接口函数</p>
+<p>UIP 协议的应用程序接口用于实现web 之类的应用服务。UIP 定义了一个宏UIP_APPCALL（）作为该接口，供用户使用。当用户要编程实现某应用服务时，只需要将宏UIP_APPCALL（）定义成实际的应用程序函数名。UIP 在接收到底层传来的数据包后，若需要送上层应用程序处理，它就调用UIP_APPCALL（）。不同的连接则通过判断当前连接的端口号来确定。同时UIP 还提供一些应用程序接口函数供用户编程时使用。</p>
+<p>常用的UIP 应用程序接口函数有：关闭连接接口函数uip_close（）；轮询接口函数uip_poll（）；打开连接接口函数uip_connect（）等。通过调用不同的应用程序接口函数，用户可以实现相应的功能。</p>
+<p>TCP/IP 协议栈的链路层部分由网络控制器enc28j60 完成，网络层和传输层由单片机来处理，这样就可以通过在单片机上运行UIP协议栈，通过网络模块接入互联网了。</p>
+<h5><span id="4服务器端web服务的http接口">4．服务器端WEB服务的HTTP接口</span></h5><p>数据中心网站服务使用方便，为了降低学习成本，方便技术的传播和推广，本系统的WEB服务采用类C语言的PHP语言编写，并且提供了最常见的GET请求的接口方式，非常方便在UIP中进行HTTP请求的发送。</p>
+<p>①　HTTP协议GET报文及请求</p>
+<p>简单的HTTP协议GET方式报文格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /api/1/1.html?Key=value HTTP/1.0</span><br><span class="line">Host:216.172.132.104</span><br><span class="line">Accept:*/*</span><br></pre></td></tr></table></figure>
+<p>使用UIP发送此次GET请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uip\_send(uip\_appdata,sprintf((char*)uip_appdata,&quot;%s&quot;,&quot;GET /api/1/1.html?Key=value HTTP/1.0\\r\\nHost:216.172.132.104\\r\\nAccept:*/*\\r\\n&quot;));</span><br></pre></td></tr></table></figure>
+<p>②　API接口地址和使用手册</p>
+<p>图12.控制中心网站HTTP接口说明文档</p>
+<p>通过阅读控制中心网站的API接口文档，可以清晰、明了的掌握API的使用方法和使用规范，这样，在编写单片机程序的时候就可以得心应手，方便快捷的完成下位机程序开发，快速部署客户端设备。</p>
+<p>图13.PHP代码实现HTTP协议的GET接口</p>
+<p>服务器端的控制中心网站和数据中心网站通过PHP动态语言开发，开发过程中使用了Codeigniter开源框架，为敏捷开发创造了条件，同时在API函数编写过程中使用IF判断语句严格控制命令输出，是一种高效严谨的API编写方式。</p>
+<h2><span id="三-基于单片机的以太网测量实例测试">三、基于单片机的以太网测量实例测试</span></h2><h3><span id="一温度的远程采集实例分析">（一）温度的远程采集实例分析</span></h3><p>图14. 以太网远程数据采集实例—温度采集</p>
+<p>数据采集的采样频率采用服务器端控制的方法，用户可以再服务器端设置采样时间间隔，自选传感器类型（目前仅支持数值型传感器），设置传感器数据存储字段，这样，只要客户端单片机运行正常，能够及时的将数据进行传输，数据中心就可以按照用户需求完成数据采集和图表分析。</p>
+<p>最低采样时间间隔：5 S<br>支持传感器类型：数值型传感器<br>邮件警告通知：可设定阈值</p>
+<h3><span id="二远程控制实例分析">（二）远程控制实例分析</span></h3><p>图15. 以太网远程控制开关实例</p>
+<p>远程控制采用客户端单片机GET方式获取控制命令，控制命令HTTP包大小最低173字节，单包容量小，网络传输快，模拟开关控制可实现最快1s的及时控制，同时，单片机编程也考虑到控制的可靠性设计，采用单门狗实时监控单片机程序的运行，一旦程序跑飞，及时复位单片机，有效的保证了设备运行的可靠性。</p>
+<p>远程控制实时性：1 S<br>控制命令单包大小：173 B<br>支持开关类型：单值开关<br>设备可靠性：看门狗程序监控</p>
+<h2><span id="四-结论">四、结论</span></h2><p>通过以上研究，建立了一套使用单片机作为网络客户端进行数据采集和远程控制的网络监测系统，实现了远程联网控制，采集现场信息，实时服务器端保存数据结果的基本远程监测功能，通过实验分析，获得了一套使用单片机联网监测的方案，证明了单片机作为网络控制监测客户端控制器的可行性。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/STM32F407-FSMC-LCD-register.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32F407的FSMC方式操作LCD显示屏</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/Auto-control-for-electric-cars.html">
+        <span class="next-text nav-default">电动车自动档位控制</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/8051-enc28j60-uip.html';
+
+  var disqus_title = "基于51单片机的远程控制和数据采集";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

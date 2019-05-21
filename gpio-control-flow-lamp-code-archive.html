@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="GPIO控制流水灯代码存档">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/gpio-control-flow-lamp-code-archive.html">
+
+
+<meta name="description" content="//main.c  //一些头文件未给出  #include &amp;lt;stm32f10x_lib.h&amp;gt;  #include &amp;quot;usart.h&amp;quot; #include &amp;quot;sys.h&amp;quot; #include &amp;quot;delay.h&amp;quot; #include &amp;quot;led.h&amp;quot;  int main(void) { Stm32_Clock_In">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPIO控制流水灯代码存档">
+<meta property="og:url" content="http://rmingwang.com/gpio-control-flow-lamp-code-archive.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="//main.c  //一些头文件未给出  #include &amp;lt;stm32f10x_lib.h&amp;gt;  #include &amp;quot;usart.h&amp;quot; #include &amp;quot;sys.h&amp;quot; #include &amp;quot;delay.h&amp;quot; #include &amp;quot;led.h&amp;quot;  int main(void) { Stm32_Clock_In">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GPIO控制流水灯代码存档">
+<meta name="twitter:description" content="//main.c  //一些头文件未给出  #include &amp;lt;stm32f10x_lib.h&amp;gt;  #include &amp;quot;usart.h&amp;quot; #include &amp;quot;sys.h&amp;quot; #include &amp;quot;delay.h&amp;quot; #include &amp;quot;led.h&amp;quot;  int main(void) { Stm32_Clock_In">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> GPIO控制流水灯代码存档 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          GPIO控制流水灯代码存档
+        
+      </h1>
+
+      <time class="post-time">
+          7月 15 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <pre class="brush: c; gutter: true">//main.c
+
+//一些头文件未给出
+
+#include &lt;stm32f10x_lib.h&gt;
+
+#include &quot;usart.h&quot;
+#include &quot;sys.h&quot;
+#include &quot;delay.h&quot;
+#include &quot;led.h&quot;
+
+int main(void)
+{
+Stm32_Clock_Init(9);
+delay_init(72);
+led_init();
+while(1)
+{
+LED0=0;
+LED1=1;
+delay_ms(300);
+LED0=1;
+LED1=0;
+delay_ms(300);
+
+}
+
+}</pre>
+&nbsp;
+<pre class="brush: c; gutter: true">// led.c
+
+#include &lt;stm32f10x_lib.h&gt;
+#include&quot;led.h&quot;
+void led_init(void)
+{
+//APB2ENR外设时钟使能
+RCC-&gt;APB2ENR|=1&lt;&lt;2; //使能PORTA时钟
+RCC-&gt;APB2ENR|=1&lt;&lt;5; //使能PORTD时钟
+
+GPIOA-&gt;CRH&amp;=0XFFFFFFF0; //清除原状态
+GPIOA-&gt;CRH|=0X00000003; //PA8推挽输出
+GPIOA-&gt;ODR|=1&lt;&lt;8; //PA8输出数据位高电平
+GPIOD-&gt;CRL&amp;=0XFFFFF0FF; //清除原状态
+GPIOD-&gt;CRL|=0X00000300; //PD2推挽输出
+GPIOD-&gt;ODR|=1&lt;&lt;2; //PD2输出数据位高电平
+
+}</pre>
+<pre class="brush: c; gutter: true">//led.h
+
+#ifndef __LED_H
+#define __LED_H
+#include &quot;sys.h&quot;
+#define LED0 PAout(8)
+#define LED1 PDout(2)
+void led_init(void);
+#endif</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-stm32-the-one-button-switch-and-gpio-review.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32的单键开关与GPIO复习</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/gpio-of-stm32-study-notes.html">
+        <span class="next-text nav-default">STM32中GPIO学习笔记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/gpio-control-flow-lamp-code-archive.html';
+
+  var disqus_title = "GPIO控制流水灯代码存档";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

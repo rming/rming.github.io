@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="百度百科的csshack">
+
+
+
+
+  <meta name="keywords" content="前端技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/baidu-baike-the-csshack.html">
+
+
+<meta name="description" content="baidu百科 css hack   http://baike.baidu.com/view/1119452.htm 问问题前可以上网搜索…… CSS hack由于不同的浏览器，比如Internet Explorer 6,Internet Explorer 7,Mozilla Firefox等，对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需">
+<meta name="keywords" content="前端技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度百科的csshack">
+<meta property="og:url" content="http://rmingwang.com/baidu-baike-the-csshack.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="baidu百科 css hack   http://baike.baidu.com/view/1119452.htm 问问题前可以上网搜索…… CSS hack由于不同的浏览器，比如Internet Explorer 6,Internet Explorer 7,Mozilla Firefox等，对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度百科的csshack">
+<meta name="twitter:description" content="baidu百科 css hack   http://baike.baidu.com/view/1119452.htm 问问题前可以上网搜索…… CSS hack由于不同的浏览器，比如Internet Explorer 6,Internet Explorer 7,Mozilla Firefox等，对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 百度百科的csshack - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          百度百科的csshack
+        
+      </h1>
+
+      <time class="post-time">
+          4月 10 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>baidu百科 css hack   <a href="http://baike.baidu.com/view/1119452.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/1119452.htm</a></p>
+<p>问问题前可以上网搜索……</p>
+<p>CSS hack由于不同的浏览器，比如Internet Explorer 6,Internet Explorer 7,Mozilla Firefox等，对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需要针对不同的浏览器去写不同的CSS，让它能够同时兼容不同的浏览器，能在不同的浏览器中也能得到我们想要的页面效果。</p>
+<p>目录</p>
+<p>简介<br>CSS Hack的原理是什么<br>如何写CSS Hack展开<br>编辑本段<br>简介</p>
+<p>这个针对不同的浏览器写不同的CSS code的过程，就叫CSS hack!<br>编辑本段<br>CSS Hack的原理是什么</p>
+<p>由于不同的浏览器对CSS的支持及解析结果不一样，还由于CSS中的优先级的关系。我们就可以根据这个来针对不同的浏览器来写不同的CSS。<br>CSS Hack大致有3种表现形式，CSS类内部Hack、选择器Hack以及HTML头部引用(if IE)Hack，CSS Hack主要针对IE浏览器。<br>类内部Hack：比如 IE6能识别下划线”<em>“和星号” <em> “，IE7能识别星号” </em> “，但不能识别下划线”</em>“，而firefox两个都不能认识。等等<br>选择器Hack：比如 IE6能识别<em>html .class{}，IE7能识别</em>+html .class{}或者*:first-child+html .class{}。等等<br>HTML头部引用(if IE)Hack：针对所有IE：<!--[if IE]><!--您的代码-->，针对IE6及以下版本：<!--[if lt IE 7]><!--您的代码-->，这类Hack不仅对CSS生效，对写在判断语句里面的所有代码都会生效。<br>书写顺序，一般是将识别能力强的浏览器的CSS写在后面。下面如何写里面说得更详细些。<br>编辑本段<br>如何写CSS Hack</p>
+<p>比如要分辨IE6和firefox两种浏览器，可以这样写：</p>
+<p>我在IE6中看到是红色的，在firefox中看到是绿色的。<br>解释一下：<br>上面的css在firefox中，它是认识不了后面的那个带星号的东东是什么的，于是将它过滤掉，不予理睬，解析得到的结果是:div{background:green},于是理所当然这个div的背景是绿色的。<br>在IE6中呢，它两个background都能识别出来，它解析得到的结果是:div{background:green;background:red;},于是根据优先级别，处在后面的red的优先级高，于是当然这个div的背景颜色就是红色的了。<br>CSS hack:区分IE6，IE7，firefox<br>区别不同浏览器，CSS hack写法：<br>区别IE6与FF：<br>background:orange;<em>background:blue;<br>区别IE6与IE7：<br>background:green !important;background:blue;<br>区别IE7与FF：<br>background:orange; </em>background:green;<br>区别FF，IE7，IE6：<br>background:orange;<em>background:green;_background:blue;<br>background:orange;</em>background:green !important;<em>background:blue;<br>注：IE都能识别</em>;标准浏览器(如FF)不能识别*；</p>
+<h2><span id="ie6能识别某些情况下不能识别-important">IE6能识别*，某些情况下不能识别 !important,</span></h2><p>IE6支持重定义中的!important，例如：<br>.yuanxin {color:#e00!important;}<br>.yuanxin {color:#000;}<br>你将会发现定义了样式class=”yuanxin”时，在IE下，字体显示为红色（#e00）。<br>但不支持同一定义中的!important。例如：<br>.yuanxin {color:#e00!important;color:#000}<br>此时在IE6下不支持，你将会发现定义了样式class=”yuanxin”时，字体显示为黑色（#000）。<br>不包括如下这种形式的同一定义中的!important。</p>
+<p>#pageOver{height:expression(document.documentElement.offsetHeight)!important;</p>
+<h2><span id="height100此种形式的定义ie6中是可以解释到important的">height:100%;}此种形式的定义，IE6中是可以解释到important的。</span></h2><p>IE6 IE7能识别<em>，也能识别!important;<br>FF不能识别</em>，但能识别!important;<br>IE6 IE7 FF</p>
+<ul>
+<li>√ √ ×<br>!important √<br>√ √<br>浏览器优先级别:FF 　　以: “ #demo {width:100px;} “为例;<br>#demo {width:100px;} /<em>被FIREFOX,IE6,IE7执行.</em>/</li>
+<li>html #demo {width:120px;} /<em>会被IE6执行,之前的定义会被后来的覆盖,所以#demo的宽度在IE6就为120px; </em>/<br><em>+html #demo {width:130px;} /</em>会被IE7执行*/</li>
+</ul>
+<hr>
+<p>所以最后,#demo的宽度在三个浏览器的解释为:<br>FIREFOX:100px;<br>ie6:120px;<br>ie7:130px;<br>IE8 最新css hack：<br>“9”　例:”border:1px 9;”.这里的”9”可以区别所有IE和FireFox.<br>“ ”　IE8识别，IE6、IE7不能.<br>“*”　IE6、IE7可以识别.IE8、FireFox不能.<br>“<em>“　IE6可以识别”</em>“,IE7、IE8、FireFox不能.</p>
+<p>IE6 hack<br><em>background-color:#CDCDCD; /<em> ie 6</em>/<br>IE7 hack<br><em>background-color:#dddd00; /</em> ie 7<em>/<br>IE8 hack<br>background-color:red  ; /</em> ie 8/9<em>/<br>IE9 hack<br>background-color:blue 9 ;<br>火狐，遨游，及其它高级浏览器通用<br>background-color:red!important;<br>注意写hack的顺序，其中：<br>background-color:red ;IE8和IE9都支持；background-color:blue9 ; 仅IE9支持；<br>另外，background-color:eeeeee9;的HACK支持IE6-IE8，但是IE8不能识别“</em>”和“</em>”的CSS HACK。<br>可综合上述规律灵活应用。<br>IE9 和 IE8 以及其他版本的区别说明<br>background-color:blue; 各个浏览器都认识，这里给firefox用；<br>background-color:red9;9所有的ie浏览器可识别；<br>background-color:yellow ;   是留给ie8的，最新版opera也认识，后面自有hack写了给opera认的，所以， 我们就认为是给ie8留的；<br>+background-color:pink; + ie7定了；<br>_background-color:orange; _专门留给神奇的ie6；<br>:root #test { background-color:purple9; } :root是给ie9的，网上流传了个版本是 :root #test { background-　color:purple ;}，这个，新版opera也认识，所以经笔者反复验证最终ie9特有的为:root 选择符 {属性9;}<br>@media all and (min-width:0px){ #test {background-color:black ;} } 这个是老是跟ie抢着认 的神奇的opera，必须加个 ,不然firefox，chrome，safari也都认识。。。<br>@media screen and (-webkit-min-device-pixel-ratio:0){ #test {background-color:gray;} }最后这个是浏览器新贵chrome和safari的。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/前端技术/">前端技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/the-adobe-photoshop-cs6-new-features-video-preview.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Adobe photoshop cs6 新功能视频预览</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/spring-sunset-experimental-courses.html">
+        <span class="next-text nav-default">春暖花开夕阳西下的实验课</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/baidu-baike-the-csshack.html';
+
+  var disqus_title = "百度百科的csshack";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

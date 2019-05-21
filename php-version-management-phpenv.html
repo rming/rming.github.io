@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP的多版本环境管理">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-version-management-phpenv.html">
+
+
+<meta name="description" content="1.安装PHPbrew 2.简单使用 3.编译安装PHP 4.PHP编译参数 5.其他配置选项 6.使用和切换 7.显示已经安装过的PHP版本 8.管理FPM 实践笔记   安装PHP版本   &amp;emsp;&amp;emsp;大多数语言编程的时候,都会碰到在不同版本下的代码兼容性问题,测试代码兼容性,或者调试老旧代码,需要不同的语言版本环境.   &amp;emsp;&amp;emsp;ruby有了rbenv,rvm">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP的多版本环境管理">
+<meta property="og:url" content="http://rmingwang.com/php-version-management-phpenv.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="1.安装PHPbrew 2.简单使用 3.编译安装PHP 4.PHP编译参数 5.其他配置选项 6.使用和切换 7.显示已经安装过的PHP版本 8.管理FPM 实践笔记   安装PHP版本   &amp;emsp;&amp;emsp;大多数语言编程的时候,都会碰到在不同版本下的代码兼容性问题,测试代码兼容性,或者调试老旧代码,需要不同的语言版本环境.   &amp;emsp;&amp;emsp;ruby有了rbenv,rvm">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-01-14T06:34:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP的多版本环境管理">
+<meta name="twitter:description" content="1.安装PHPbrew 2.简单使用 3.编译安装PHP 4.PHP编译参数 5.其他配置选项 6.使用和切换 7.显示已经安装过的PHP版本 8.管理FPM 实践笔记   安装PHP版本   &amp;emsp;&amp;emsp;大多数语言编程的时候,都会碰到在不同版本下的代码兼容性问题,测试代码兼容性,或者调试老旧代码,需要不同的语言版本环境.   &amp;emsp;&amp;emsp;ruby有了rbenv,rvm">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP的多版本环境管理 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP的多版本环境管理
+        
+      </h1>
+
+      <time class="post-time">
+          12月 15 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#1安装phpbrew">1.安装PHPbrew</a></li>
+<li><a href="#2简单使用">2.简单使用</a></li>
+<li><a href="#3编译安装php">3.编译安装PHP</a></li>
+<li><a href="#4php编译参数">4.PHP编译参数</a></li>
+<li><a href="#5其他配置选项">5.其他配置选项</a></li>
+<li><a href="#6使用和切换">6.使用和切换</a></li>
+<li><a href="#7显示已经安装过的php版本">7.显示已经安装过的PHP版本</a></li>
+<li><a href="#8管理fpm">8.管理FPM</a><ul>
+<li><a href="#实践笔记">实践笔记</a></li>
+</ul>
+</li>
+<li><a href="#安装php版本">安装PHP版本</a></li>
+</ul>
+<!-- tocstop -->
+<p>&emsp;&emsp;大多数语言编程的时候,都会碰到在不同版本下的代码兼容性问题,测试代码兼容性,或者调试老旧代码,需要不同的语言版本环境.  </p>
+<p>&emsp;&emsp;ruby有了rbenv,rvm,nodejs也有nvm,当然php也应该有个类似的 <a href="https://github.com/CHH/phpenv" target="_blank" rel="noopener">phpenv</a> , <a href="https://github.com/wilmoore/php-version" target="_blank" rel="noopener">php-version</a> , <a href="https://github.com/c9s/phpbrew" target="_blank" rel="noopener">phpbrew</a> 来管理PHP版本,简单查看了下这三个工具,我更偏向于phpbrew一些,其实我更愿意叫它PHPbrew.</p>
+<p class="attention"><span>如果你确定需要使用phpbrew,请认真读完本文,再去实践,请注意!前方有坑(其实我更推荐 <a href="https://www.vagrantup.com/" target="_blank">vagrant</a> ).</span></p>
+
+<p><a href="http://phpbrew.github.io/phpbrew" target="_blank" rel="noopener">Brew &amp; manage PHP versions in pure PHP at HOME</a> </p>
+<h2><span id="1安装phpbrew">1.安装PHPbrew</span></h2><p><strong>下载</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew</span><br><span class="line">chmod +x phpbrew</span><br><span class="line">sudo mv phpbrew /usr/bin/phpbrew</span><br></pre></td></tr></table></figure>
+<h2><span id="2简单使用">2.简单使用</span></h2><p>为你的shell环境运行初始化脚本:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew init</span><br></pre></td></tr></table></figure>
+<p>设置环境变量:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vi ~/.bashrc</span><br><span class="line"><span class="comment">#文件最后,插入下面这行代码</span></span><br><span class="line"><span class="built_in">source</span> ~/.phpbrew/bashrc</span><br><span class="line"><span class="comment">#保存退出</span></span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
+<p>显示已知版本:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">phpbrew known</span><br><span class="line">===&gt; Fetching release list...</span><br><span class="line">[==================================================================] 29.67/29.67KB 100%</span><br><span class="line">5.6: 5.6.3, 5.6.2, 5.6.1, 5.6.0 ...</span><br><span class="line">5.5: 5.5.19, 5.5.18, 5.5.17, 5.5.16, 5.5.15, 5.5.14, 5.5.13, 5.5.12 ...</span><br><span class="line">5.4: 5.4.35, 5.4.34, 5.4.33, 5.4.32, 5.4.31, 5.4.30, 5.4.29, 5.4.28 ...</span><br><span class="line">5.3: 5.3.29, 5.3.28, 5.3.27, 5.3.26, 5.3.25, 5.3.24, 5.3.23, 5.3.22 ...</span><br><span class="line">You can run `phpbrew update` to get a newer release list.</span><br></pre></td></tr></table></figure>
+<p>显示旧版本:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew known --old</span><br></pre></td></tr></table></figure>
+<p>更新版本列表:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew known --update</span><br></pre></td></tr></table></figure>
+<h2><span id="3编译安装php">3.编译安装PHP</span></h2><p>默认配置安装PHP:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.4.0 +default</span><br></pre></td></tr></table></figure>
+<p>测试安装:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install --<span class="built_in">test</span> 5.4.0</span><br></pre></td></tr></table></figure>
+<p>显示debug信息:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew -d install --<span class="built_in">test</span> 5.4.0</span><br></pre></td></tr></table></figure>
+<p>安装旧版本:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install --old 5.2.13</span><br></pre></td></tr></table></figure>
+<p>清理编译目录:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew clean</span><br></pre></td></tr></table></figure>
+<h2><span id="4php编译参数">4.PHP编译参数</span></h2><p>显示可用参数:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">phpbrew variants</span><br><span class="line">Variants: </span><br><span class="line">  all, apxs2, bcmath, bz2, calendar, cgi, cli, ctype, curl, dba, debug, dom, </span><br><span class="line">  embed, exif, fileinfo, filter, fpm, ftp, gcov, gd, gettext, gmp, <span class="built_in">hash</span>, </span><br><span class="line">  iconv, icu, imap, inifile, inline, intl, ipc, ipv6, json, kerberos, libgcc, </span><br><span class="line">  mbregex, mbstring, mcrypt, mhash, mysql, opcache, openssl, pcntl, pcre, </span><br><span class="line">  pdo, pgsql, phar, phpdbg, posix, readline, session, soap, sockets, sqlite, </span><br><span class="line">  static, tidy, tokenizer, wddx, xml, xml_all, xmlrpc, zip, zlib, zts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Virtual variants: </span><br><span class="line">  dbs: sqlite, mysql, pgsql, pdo</span><br><span class="line">  mb: mbstring, mbregex</span><br><span class="line">  neutral: </span><br><span class="line">  default: bcmath, bz2, calendar, cli, ctype, dom, fileinfo, filter, ipc, </span><br><span class="line">  json, mbregex, mbstring, mhash, mcrypt, pcntl, pcre, pdo, phar, posix, </span><br><span class="line">  readline, sockets, tokenizer, xml, curl, openssl, zi</span><br><span class="line">Using variants to build PHP:</span><br><span class="line"></span><br><span class="line">  phpbrew install php-5.3.10 +default</span><br><span class="line">  phpbrew install php-5.3.10 +mysql +pdo</span><br><span class="line">  phpbrew install php-5.3.10 +mysql +pdo +apxs2</span><br><span class="line">  phpbrew install php-5.3.10 +mysql +pdo +apxs2=/usr/bin/apxs2</span><br></pre></td></tr></table></figure>
+<h2><span id="5其他配置选项">5.其他配置选项</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.3.10 +mysql +sqlite -- \</span><br><span class="line">    --<span class="built_in">enable</span>-ftp --apxs2=/opt/<span class="built_in">local</span>/apache2/bin/apxs</span><br></pre></td></tr></table></figure>
+<h2><span id="6使用和切换">6.使用和切换</span></h2><p>临时使用:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew use 5.4.22</span><br></pre></td></tr></table></figure>
+<p>切换版本(设置默认版本):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew switch 5.4.18</span><br></pre></td></tr></table></figure>
+<p>关闭:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew off</span><br></pre></td></tr></table></figure>
+<h2><span id="7显示已经安装过的php版本">7.显示已经安装过的PHP版本</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew list</span><br></pre></td></tr></table></figure>
+<h2><span id="8管理fpm">8.管理FPM</span></h2><p>&emsp;&emsp;NGINX需要配合php-fpm使用,因此,如果是使用 <code>LNMP</code> 或者自己安装的<code>NGINX</code>+<code>PHP</code>的运行环境,则需要在phpbrew安装PHP的时候加上<code>+fpm</code> 模块,才能使用<code>phpbrew</code>的模块管理.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.6.3 +fpm</span><br></pre></td></tr></table></figure>
+<p>启动FPM:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew fpm start</span><br></pre></td></tr></table></figure>
+<p>停止FPM</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew fpm stop</span><br></pre></td></tr></table></figure>
+<p>显示php-fpm的模块:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew fpm module</span><br></pre></td></tr></table></figure>
+<p>测试php-fpm的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew fpm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>配置php-fpm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpbrew fpm config</span><br></pre></td></tr></table></figure>
+<p>更多 &emsp;&emsp;&emsp;&emsp;<a href="https://github.com/phpbrew/phpbrew#the-extension-installer" target="_blank" rel="noopener">扩展安装</a> &emsp;&emsp;&emsp;&emsp; <a href="https://github.com/phpbrew/phpbrew#enabling-extension" target="_blank" rel="noopener">启用扩展</a>  &emsp;&emsp;&emsp;&emsp;<a href="https://github.com/phpbrew/phpbrew#configuring-the-phpini-for-current-php-version" target="_blank" rel="noopener">配置PHP</a> &emsp;&emsp;&emsp;&emsp;<a href="https://github.com/phpbrew/phpbrew#php-fpm" target="_blank" rel="noopener">管理FPM</a>&emsp;&emsp;&emsp;&emsp; <a href="https://github.com/phpbrew/phpbrew#installing-extra-component" target="_blank" rel="noopener">其他组件(composer,phpunit)</a>.<br>&emsp;&emsp;</p>
+<h3><span id="实践笔记">实践笔记</span></h3><p><strong>OS X笔记:</strong><br><strong>安装准备：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install automake autoconf curl pcre re2c mhash libtool icu4c gettext jpeg libxml2 mcrypt gmp libevent libpng freetype</span><br><span class="line">brew link icu4c</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/include/freetype2 /usr/<span class="built_in">local</span>/include/freetype2/freetype</span><br></pre></td></tr></table></figure>
+<p><strong>安装phpbrew：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew</span><br><span class="line">chmod +x phpbrew</span><br><span class="line">sudo mv phpbrew /usr/bin/phpbrew</span><br><span class="line"></span><br><span class="line">phpbrew init</span><br><span class="line"><span class="built_in">source</span> ~/.phpbrew/bashrc</span><br><span class="line">phpbrew lookup-prefix homebrew</span><br></pre></td></tr></table></figure>
+<p><strong>安装php版本：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#同样的在其他系统平台也会出现类似库找不到的问题，需要手动指定路径</span></span><br><span class="line">phpbrew install 5.3.29 +default +fpm +pdo +mysql +sqlite +gd --  --with-gd=shared --with-jpeg-dir=/usr/<span class="built_in">local</span>/Cellar --with-png-dir=/usr/<span class="built_in">local</span>/Cellar --<span class="built_in">enable</span>-gd-native-ttf --with-freetype-dir=/usr/<span class="built_in">local</span>/Cellar</span><br><span class="line"><span class="comment">#print_r(gd_info());</span></span><br></pre></td></tr></table></figure>
+<p class="attention"><b>注意</b>：<span>如果配置或编译的时候出现报错,请查看此页面 <a href="https://github.com/phpbrew/phpbrew/wiki/Requirement" target="_blank">Requirement</a></span></p>
+
+
+<h2><span id="安装php版本">安装PHP版本</span></h2><p>测试默认config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.6.3 --<span class="built_in">test</span> +default</span><br><span class="line">tail -f /home/rming/.phpbrew/build/php-5.6.3/build.log</span><br></pre></td></tr></table></figure>
+<p>默认:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.6.3 +default +fpm +pdo +mysql +sqlite +gd</span><br><span class="line">tail -f /home/rming/.phpbrew/build/php-5.6.3/build.log</span><br></pre></td></tr></table></figure>
+<p>精简:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phpbrew install 5.6.3 +fpm +json +dbs +mb +curl +mcrypt +filter</span><br><span class="line">tail -f /home/rming/.phpbrew/build/php-5.6.3/build.log</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>+json</code>是因为phpbrew本身是个phar包,依赖于php的json函数</li>
+<li><code>+fpm</code>是为了<code>nginx</code>,phpbrew安装的php-fpm默认<code>listen=127.0.0.1:9000</code>,因此需要把之前lnmp的配置文件<code>fastcgi_pass</code>选项更改为 <code>127.0.0.1:9000</code>;</li>
+<li><code>+dbs</code>是因为没有安装mysqli扩展,想用个phpmyadmin都困难,囧;</li>
+<li><code>+mb</code> 是多种语言编码字节数问题,为了中文字符截断和匹配使用</li>
+<li><code>+curl</code> curl扩展 , 很常用的,你懂得</li>
+<li><code>+mcrypt</code>phpmyadmin需要</li>
+<li><code>+filter</code> filter_var过滤函数</li>
+</ul>
+<p>写个脚本切换php-fpm:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function nginxenv()&#123;</span><br><span class="line">        phpbrew fpm stop &amp;&gt;/dev/null;</span><br><span class="line">        phpbrew switch $&#123;1&#125;;</span><br><span class="line">        phpbrew fpm start &amp;&gt;/dev/null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;保存文件到<code>~/.phpbrew/nginxenv</code> , 然后在<code>~/.bashrc</code>最后加上 <code>source ~/.phpbrew/nginxenv</code> , 然后命令行里就可以 使用<code>nginxenv 5.3.29</code>这样切换版本了.</p>
+<p><strong>参考</strong>:</p>
+<ul>
+<li><a href="https://github.com/phpbrew/phpbrew/wiki/Cookbook" target="_blank" rel="noopener">PHPbrew Cookbook</a></li>
+<li><a href="https://github.com/phpbrew/phpbrew" target="_blank" rel="noopener">manual</a></li>
+<li><a href="https://github.com/phpbrew/phpbrew/wiki/Requirement" target="_blank" rel="noopener">Requirement</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/diary-20150103.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">日记20150103</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-regex.html">
+        <span class="next-text nav-default">PHP中的正则表达式应用</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-version-management-phpenv.html';
+
+  var disqus_title = "PHP的多版本环境管理";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

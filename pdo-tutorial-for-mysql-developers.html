@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="MySQL数据库PDO教程">
+
+
+
+
+  <meta name="keywords" content="数据库技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/pdo-tutorial-for-mysql-developers.html">
+
+
+<meta name="description" content="翻译烂到家了，看不顺眼轻喷。。。  1.为什么要使用PDO？ &amp;emsp;&amp;emsp;mysql_*函数已经过时，相当一段时间以来，mysql_*函数在其他SQL数据库编程接口方面已经有所差别；它不支持预处理，存储过程，事务等一些现代数据库设计思想，SQL语句字符串转义函数 mysql_real_escape_string（） 和 拼接SQL语句的编程方法 已经过时并且很容易出错。最近一段时间里">
+<meta name="keywords" content="数据库技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据库PDO教程">
+<meta property="og:url" content="http://rmingwang.com/pdo-tutorial-for-mysql-developers.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="翻译烂到家了，看不顺眼轻喷。。。  1.为什么要使用PDO？ &amp;emsp;&amp;emsp;mysql_*函数已经过时，相当一段时间以来，mysql_*函数在其他SQL数据库编程接口方面已经有所差别；它不支持预处理，存储过程，事务等一些现代数据库设计思想，SQL语句字符串转义函数 mysql_real_escape_string（） 和 拼接SQL语句的编程方法 已经过时并且很容易出错。最近一段时间里">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-02-01T18:06:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL数据库PDO教程">
+<meta name="twitter:description" content="翻译烂到家了，看不顺眼轻喷。。。  1.为什么要使用PDO？ &amp;emsp;&amp;emsp;mysql_*函数已经过时，相当一段时间以来，mysql_*函数在其他SQL数据库编程接口方面已经有所差别；它不支持预处理，存储过程，事务等一些现代数据库设计思想，SQL语句字符串转义函数 mysql_real_escape_string（） 和 拼接SQL语句的编程方法 已经过时并且很容易出错。最近一段时间里">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> MySQL数据库PDO教程 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          MySQL数据库PDO教程
+        
+      </h1>
+
+      <time class="post-time">
+          7月 24 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>翻译烂到家了，看不顺眼轻喷。。。</p>
+</blockquote>
+<p>1.为什么要使用PDO？</p>
+<p>&emsp;&emsp;mysql_*函数已经过时，相当一段时间以来，mysql_*函数在其他SQL数据库编程接口方面已经有所差别；它不支持预处理，存储过程，事务等一些现代数据库设计思想，SQL语句字符串转义函数 <code>mysql_real_escape_string（）</code> 和 拼接SQL语句的编程方法 已经过时并且很容易出错。最近一段时间里，它缺乏开发者的关注，缺少维护将可能导致一些安全问题不能被即时修复，或者在适配新版本的MySQL的时候不能正常工作，这成为mysql_*函数面临的的另一个问题。PHP社区最近也对mysql_*函数给出不建议使用的建议，也有可能在未来的版本中最终被弃用（不过不用过于担心，这可能还需要很长一段时间）。</p>
+<p>&emsp;&emsp;PDO拥有更好的编程接口，你可以使用它写出更加简洁，高效，安全的代码。PDO还为不同的SQL数据库提供了不同的驱动，方便你使用新的数据库而不用再学习不同的编程接口。与拼接SQL语句构造查询语句不同，绑定参数可以简洁方便的构造出更加安全的查询语句，使用绑定参数的方法在 多次相似语句查询（仅仅某个参数不同）中也可以提高不少性能。PDO在错误处理方面也提供了多种方法。mysql_*函数缺乏一致的处理，与PDO的异常模式相比，或者说没有处理异常，使用PDO，你可以得到一致的错误处理，这将节省您大量的时间来跟踪问题。</p>
+<p>&emsp;&emsp;在当前的PHP版本中，PDO模块是默认安装启用的，但是在使用PDO前你还需要安装另外两个软件包，一个是pdo_mysql数据库驱动程序，另外一个是类似php-mysql的mysql驱动程序。</p>
+<p>2.连接MySQL</p>
+<h3><span id="以前的方式"><strong>以前的方式</strong>：</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$link = mysql_connect(&apos;localhost&apos;, &apos;user&apos;, &apos;pass&apos;);</span><br><span class="line">mysql_select_db(&apos;testdb&apos;, $link);</span><br><span class="line">mysql_set_charset(&apos;UTF-8&apos;, $link);</span><br></pre></td></tr></table></figure>
+<h3><span id="新的方式">新的方式</span></h3><ul>
+<li>创建一个PDO对象，参数包括 DSN, username, password 和 一个驱动选项的数组（可忽略）。</li>
+<li>DSN其实就是一个告诉PDO该使用哪一种数据库驱动 和 一些连接信息的字符串，了解更多 <a href="http://www.php.net/manual/en/ref.pdo-mysql.connection.php" target="_blank" rel="noopener">PDO MYSQL DSN</a> .</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$db = new PDO(&apos;mysql:host=localhost;dbname=testdb;charset=utf8&apos;, &apos;username&apos;, &apos;password&apos;);</span><br></pre></td></tr></table></figure>
+<p class="attention"><b>注意</b>：<span class="red">确保DSN中设置了字符编码信息，否则将可能返回字符编码设置错误的信息，出于安全考虑，DSN最好包括字符编码信息设置。</span>  </p><br>&emsp;&emsp; 你也可以在第四个参数数组里填写一些驱动选项，建议将 <code>PDO异常模式</code>（下文讲解） 和 <code>关闭预处理模拟</code>（默认打开的，仅对于旧版本MySQL有用）两个参数加入到第四个参数数组中。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$db = new PDO(&apos;mysql:host=localhost;dbname=testdb;charset=utf8&apos;, &apos;username&apos;, &apos;password&apos;, array(PDO::ATTR_EMULATE_PREPARES =&gt; false,PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION));</span><br></pre></td></tr></table></figure><br><br> <strong>你也可以在创建PDO对象后再通过setAttribute方法设置相应选项。</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$db = new PDO(&apos;mysql:host=localhost;dbname=testdb;charset=utf8&apos;, &apos;username&apos;, &apos;password&apos;);</span><br><span class="line">$db-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</span><br><span class="line">$db-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);</span><br></pre></td></tr></table></figure><br><br>3.错误处理<br><br><strong> mysql_ 函数的错误处理</strong><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//connected to mysql</span><br><span class="line">$result = mysql_query(&quot;SELECT * FROM table&quot;, $link) or die(mysql_error($link));</span><br></pre></td></tr></table></figure><br><br><code>OR die()</code>是个不错的错误处理方法，但是会因此结束页面，将错误信息呈现到用户面前，这可能是我们不想看到的结果。<br><br><strong>PDO有三种错误处理模式</strong>：<br><br>1. PDO::ERRMODE_SILENT  # 和 mysql_*函数类似，检查代码并查看 <code>$db-&gt;errorInfo();</code> 获取详细信息。<br>2. PDO::ERRMODE_WARNING  # 抛出PHP警告。<br>3. PDO::ERRMODE_EXCEPTION  #抛出 <code>PDOException</code> 异常，在我认为，这是我们应该使用的模式， 这和 <code>die(mysql_error());</code> 类似，但是它可以捕获并抛出具体异常信息。<br><br><br><strong> code: </strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    //connect as appropriate as above</span><br><span class="line">    $db-&gt;query(&apos;hi&apos;); //invalid query!</span><br><span class="line">&#125; catch(PDOException $ex) &#123;</span><br><span class="line">    echo &quot;An Error occured!&quot;; //user friendly message</span><br><span class="line">    some_logging_function($ex-&gt;getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br><p class="attention"><b>注意：</b><span class="red">你可以不用立即执行并捕获异常，你可以在任何合适的时候随时捕获。</span></p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function getData($db) &#123;</span><br><span class="line">   $stmt = $db-&gt;query(&quot;SELECT * FROM table&quot;);</span><br><span class="line">   return $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">//then much later</span><br><span class="line">try &#123;</span><br><span class="line">   getData($db);</span><br><span class="line">&#125; catch(PDOException $ex) &#123;</span><br><span class="line">   //handle me.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你不想使用<code>try/catch</code>来处理异常，就像使用<code>OR die()</code>那样处理，在production模式下关闭<code>display_errors</code>选项即可。</p>
+<p>4.简单的查询语句（<code>SELECT</code>）</p>
+<h3><span id="mysql_代码"><strong>mysql_*代码:</strong></span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$result = mysql_query(&apos;SELECT * from table&apos;) or die(mysql_error());</span><br><span class="line"> </span><br><span class="line">$num_rows = mysql_num_rows($result);</span><br><span class="line"> </span><br><span class="line">while($row = mysql_fetch_assoc($result)) &#123;</span><br><span class="line">   echo $row[&apos;field1&apos;].&apos; &apos;.$row[&apos;field2&apos;]; //etc...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="pdo代码">PDO代码:</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foreach($db-&gt;query(&apos;SELECT * FROM table&apos;) as $row) &#123;</span><br><span class="line">    echo $row[&apos;field1&apos;].&apos; &apos;.$row[&apos;field2&apos;]; //etc...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>query()</code> 方法返回了一个 <code>PDOStatement</code> 对象，你可以通过如下方法获取结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;query(&apos;SELECT * FROM table&apos;);</span><br><span class="line"> </span><br><span class="line">while($row = $stmt-&gt;fetch(PDO::FETCH_ASSOC)) &#123;</span><br><span class="line">    echo $row[&apos;field1&apos;].&apos; &apos;.$row[&apos;field2&apos;]; //etc...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;query(&apos;SELECT * FROM table&apos;);</span><br><span class="line">$results = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br><span class="line">//use $results</span><br></pre></td></tr></table></figure>
+<h3><span id="fetch-modes">Fetch Modes</span></h3><p>注意 <code>fetch()</code> 和 <code>fetchAll()</code> 代码中的<code>PDO::FETCH_ASSOC</code> ，它高速 PDO 以关联数组的形式返回 键，值；其他比如<code>PDO::FETCH_NUM</code>模式，则返回数值键值的数组，默认模式是 <code>PDO::FETCH_BOTH</code> 则返回前面两者的集合，既有数值键值的数组，又有关联数组。PDO也可以获取数据返回对象<code>PDO::FETCH_OBJ</code>，<code>PDO::FETCH_CLASS</code>，<code>PDO::FETCH_BOUND</code>,<code>bindColumn</code>方法等更多内容，请阅读： <a href="http://www.php.net/manual/en/pdostatement.fetch.php" target="_blank" rel="noopener">PDOStatement Fetch documentation</a>。</p>
+<h3><span id="获取数据行数getting-row-count">获取数据行数（Getting Row Count）</span></h3><p><strong>代替 <code>mysql_num_rows</code> 方法，你可以使用 <code>PDOStatement</code>对象的<code>rowCount();</code>方法。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;query(&apos;SELECT * FROM table&apos;);</span><br><span class="line">$row_count = $stmt-&gt;rowCount();</span><br><span class="line">echo $row_count.&apos; rows selected&apos;;</span><br></pre></td></tr></table></figure>
+<p class="attention"><b>注意：</b><span>官方文档称此函数仅适用于返回 <code>UPDATE</code>, <code>INSERT</code>, <code>DELETE</code>操作的<code>affected rows</code>，而 <code>SELECT</code>操作，仅对于<code>PDO_MYSQL</code> 驱动，此函数同样适用（谨记），在操作其他数据库的时候尤其注意。 </span></p>
+
+<h3><span id="获取最后操作idgetting-the-last-insert-id">获取最后操作ID(Getting the Last Insert Id)</span></h3><p> <strong>mysql_*代码:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$result = mysql_query(&quot;INSERT INTO table(firstname, lastname) VALUES(&apos;John&apos;, &apos;Doe&apos;)&quot;) or die(&quot;Insert Failed &quot;.mysql_error());</span><br><span class="line">$insert_id = mysql_insert_id();</span><br></pre></td></tr></table></figure>
+<h3><span id="pdo代码"><strong>PDO代码:</strong></span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$result = $db-&gt;exec(&quot;INSERT INTO table(firstname, lastname) VAULES(&apos;John&apos;, &apos;Doe&apos;)&quot;);</span><br><span class="line">$insertId = $db-&gt;lastInsertId();</span><br></pre></td></tr></table></figure>
+<p>5.执行 <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> 操作</p>
+<h3><span id="mysql_代码"><strong>mysql_*代码:</strong></span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$results = mysql_query(&quot;UPDATE table SET field=&apos;value&apos;&quot;) or die(mysql_error());</span><br><span class="line">$affected_rows = mysql_affected_rows($result);</span><br><span class="line">echo $affected_rows.&apos; were affected&apos;;</span><br></pre></td></tr></table></figure>
+<h3><span id="pdo代码"><strong>PDO代码:</strong></span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$affected_rows = $db-&gt;exec(&quot;UPDATE table SET field=&apos;value&apos;&quot;);</span><br><span class="line">echo $affected_rows.&apos; were affected&apos;</span><br></pre></td></tr></table></figure>
+<p> <code>DELETE</code> ， <code>INSERT</code> 操作同样适用。</p>
+<p>6.运行带有查询参数的语句（Running Statements With Parameters）</p>
+<p>&emsp;&emsp;对于 不携带任何参数的查询语句，我们可以使用 <code>query</code>方法处理<code>SELECT</code>操作，使用<code>exec</code>方法处理 <code>INSERT</code>，<code>UPDATE</code>，<code>INSERT</code>操作，而对于携带查询参数的语句，你应该使用绑定参数的方法来安全的处理这些操作。</p>
+<h3><span id="mysql_代码"><strong>mysql_*代码:</strong></span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$results = mysql_query(sprintf(&quot;SELECT * FROM table WHERE id=&apos;%s&apos; AND name=&apos;%s&apos;&quot;,</span><br><span class="line">        mysql_real_escape_string($id), mysql_real_escape_string($name))) or die(mysql_error());</span><br><span class="line">$rows = array();</span><br><span class="line">while($row = mysql_fetch_assoc($results))&#123;</span><br><span class="line">    $rows[] = $row;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="pdo代码">PDO代码:</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT * FROM table WHERE id=? AND name=?&quot;);</span><br><span class="line">$stmt-&gt;execute(array($id, $name));</span><br><span class="line">$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;prepare方法将查询语句发送到服务器，以“？”作为参数占位符进行编译，execute方法将查询参数发送到服务器，运行之前编译好的查询语句。因为 <strong>查询语句</strong> 和 <strong>查询参数</strong> 是分开发送的，所以在参数里的SQL语句是不可能被执行的，所以不会发生 <strong>SQL注入</strong>，这是一种比连接字符串构造SQL语句更加安全的解决方法。</p>
+<p class="attention"><b>注意</b>：<span class="red"> 当你使用<strong>绑定参数</strong>的时候，不要对”?”占位符使用引号（SQL语句原来是对参数使用引号的），因为参数类型是在execute方法的时候确定的，所以在prepare的时候不必对占位符使用引号。</span></p><br>&emsp;&emsp;还有一些绑定参数的方法，bindValue方法可以分别绑定每个参数来代替execute方法的数组方式，同时还分别设置每个参数的类型。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT * FROM table WHERE id=? AND name=?&quot;);</span><br><span class="line">$stmt-&gt;bindValue(1, $id, PDO::PARAM_INT);</span><br><span class="line">$stmt-&gt;bindValue(2, $name, PDO::PARAM_STR);</span><br><span class="line">$stmt-&gt;execute();</span><br><span class="line">$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br></pre></td></tr></table></figure><br><br>###  #命名占位符<br>如果你有许多参数需要绑定，不要使用<code>问号占位符</code>，以防混淆出错，你可以使用<code>命名占位符</code>代替<code>问号占位符</code>。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT * FROM table WHERE id=:id AND name=:name&quot;);</span><br><span class="line">$stmt-&gt;bindValue(&apos;:id&apos;, $id, PDO::PARAM_INT);</span><br><span class="line">$stmt-&gt;bindValue(&apos;:name&apos;, $name, PDO::PARAM_STR);</span><br><span class="line">$stmt-&gt;execute();</span><br><span class="line">$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br></pre></td></tr></table></figure><br><br>你也可以使用execute方法，以数组的方式绑定参数：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT * FROM table WHERE id=:id AND name=:name&quot;);</span><br><span class="line">$stmt-&gt;execute(array(&apos;:name&apos; =&gt; $name, &apos;:id&apos; =&gt; $id));</span><br><span class="line">$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br></pre></td></tr></table></figure><br><br>###  #<code>INSERT</code>, <code>DELETE</code>, <code>UPDATE</code> 预处理查询<br><code>INSERT</code>, <code>DELETE</code>, <code>UPDATE</code> 预处理语句的使用和<code>SELECT</code>类似，我们举几个例子：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;INSERT INTO table(field1,field2,field3,field4,field5) VALUES(:field1,:field2,:field3,:field4,:field5)&quot;);</span><br><span class="line">$stmt-&gt;execute(array(&apos;:field1&apos; =&gt; $field1, &apos;:field2&apos; =&gt; $field2, &apos;:field3&apos; =&gt; $field3, &apos;:field4&apos; =&gt; $field4, &apos;:field5&apos; =&gt; $field5));</span><br><span class="line">$affected_rows = $stmt-&gt;rowCount();</span><br><span class="line"></span><br><span class="line">$stmt = $db-&gt;prepare(&quot;DELETE FROM table WHERE id=:id&quot;);</span><br><span class="line">$stmt-&gt;bindValue(&apos;:id&apos;, $id, PDO::PARAM_STR);</span><br><span class="line">$stmt-&gt;execute();</span><br><span class="line">$affected_rows = $stmt-&gt;rowCount();</span><br><span class="line"></span><br><span class="line">$stmt = $db-&gt;prepare(&quot;UPDATE table SET name=? WHERE id=?&quot;);</span><br><span class="line">$stmt-&gt;execute(array($name, $id));</span><br><span class="line">$affected_rows = $stmt-&gt;rowCount();</span><br></pre></td></tr></table></figure><br><br>###  在预处理中使用SQL函数<br><br>=&gt;无效方法：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//THIS WILL NOT WORK!</span><br><span class="line">$time = &apos;NOW()&apos;;</span><br><span class="line">$name = &apos;BOB&apos;;</span><br><span class="line">$stmt = $db-&gt;prepare(&quot;INSERT INTO table(`time`, `name`) VALUES(?, ?)&quot;);</span><br><span class="line">$stmt-&gt;execute(array($time, $name));</span><br></pre></td></tr></table></figure><br><br>=&gt;正确方法<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$name = &apos;BOB&apos;;</span><br><span class="line">$stmt = $db-&gt;prepare(&quot;INSERT INTO table(`time`, `name`) VALUES(NOW(), ?)&quot;);</span><br><span class="line">$stmt-&gt;execute(array($name));</span><br></pre></td></tr></table></figure><br><br>=&gt;你也可以在SQL函数里绑定参数：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$name = &apos;BOB&apos;;</span><br><span class="line">$password = &apos;badpass&apos;;</span><br><span class="line">$stmt = $db-&gt;prepare(&quot;INSERT INTO table(`hexvalue`, `password`) VALUES(HEX(?), PASSWORD(?))&quot;);</span><br><span class="line">$stmt-&gt;execute(array($name, $password));</span><br></pre></td></tr></table></figure><br><br>=&gt;但是不能作为LIKE的参数：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//THIS DOES NOT WORK</span><br><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT field FROM table WHERE field LIKE %?%&quot;);</span><br><span class="line">$stmt-&gt;bindParam(1, $search, PDO::PARAM_STR);</span><br><span class="line">$stmt-&gt;execute();</span><br></pre></td></tr></table></figure><br><br>=&gt;正确使用LIKE并绑定参数的方法：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$stmt = $db-&gt;prepare(&quot;SELECT field FROM table WHERE field LIKE ?&quot;);</span><br><span class="line">$stmt-&gt;bindValue(1, &quot;%$search%&quot;, PDO::PARAM_STR);</span><br><span class="line">$stmt-&gt;execute();</span><br></pre></td></tr></table></figure><br><br><p class="attention"><b>注意</b>：<span class="red">这里使用的是bindValue而不是bindParam，否则会发生PDOException或致命错误。</span></p>
+
+<h3><span id="使用循环运行预处理语句">使用循环运行预处理语句</span></h3><p>预处理语句可以一次设置，多次调用，因为仅在第一次传入的时候编译，因此在后来的多次调用中提高了不少效率。<br>&emsp;&emsp; 典型的应用就是<code>bindParam</code>，<code>bindParam</code>与<code>bindValue</code>的不同之处在于，它不是绑定了参数的值，而是绑定参数变量本身，因此，如果参数变量变化了，那么在execute处理的时候，查询也将相应变化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$values = array(&apos;bob&apos;, &apos;alice&apos;, &apos;lisa&apos;, &apos;john&apos;);</span><br><span class="line">$name = &apos;&apos;;</span><br><span class="line">$stmt = $db-&gt;prepare(&quot;INSERT INTO table(`name`) VALUES(:name)&quot;);</span><br><span class="line">$stmt-&gt;bindParam(&apos;:name&apos;, $name, PDO::PARAM_STR);</span><br><span class="line">foreach($values as $name) &#123;</span><br><span class="line">   $stmt-&gt;execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7.PDO中的事务（Transactions）</p>
+<p class="attention">注意：<span class="red">调用<code>beginTransaction()</code>方法即自动关闭了<code>自动提交</code>。 </span></p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    $db-&gt;beginTransaction();</span><br><span class="line"> </span><br><span class="line">    $db-&gt;exec(&quot;SOME QUERY&quot;);</span><br><span class="line"> </span><br><span class="line">    $stmt = $db-&gt;prepare(&quot;SOME OTHER QUERY?&quot;);</span><br><span class="line">    $stmt-&gt;execute(array($value));</span><br><span class="line"> </span><br><span class="line">    $stmt = $db-&gt;prepare(&quot;YET ANOTHER QUERY??&quot;);</span><br><span class="line">    $stmt-&gt;execute(array($value2, $value3));</span><br><span class="line"> </span><br><span class="line">    $db-&gt;commit();</span><br><span class="line">&#125; catch(PDOException $ex) &#123;</span><br><span class="line">    //Something went wrong rollback!</span><br><span class="line">    $db-&gt;rollBack();</span><br><span class="line">    echo $ex-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原文链接：<a href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers" target="_blank" rel="noopener">PDO Tutorial for MySQL Developers</a><br>参考链接：<a href="http://php.net/manual/en/book.pdo.php" target="_blank" rel="noopener">PDO Documentation</a><br>延伸阅读：<a href="http://wiki.hashphp.org/Validation" target="_blank" rel="noopener">Validation and SQL Injection</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/数据库技术/">数据库技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-pdo-notes.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP PDO 笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/shell-history-management.html">
+        <span class="next-text nav-default">SHELL命令的历史记录管理</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/pdo-tutorial-for-mysql-developers.html';
+
+  var disqus_title = "MySQL数据库PDO教程";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="wordpress+flashpapaer+downloadmonitor实现文库程序">
+
+
+
+
+  <meta name="keywords" content="wordpress,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/imitate-baidu-wenku-function.html">
+
+
+<meta name="description" content="前一段时间看了百度文库课豆丁文库的实现原理，其实都是利用了开源软件flashpaper做的二次开发，在网上也搜索到了flashpaper的各个平台上的使用方法，但是还是懒得去写代码，只好又找到了wp，然后搜索了下wp有没有flashpaper相关的插件，失望的是居然没有相关插件。只好自己另寻他路了。 wordpress 超级简单、流行的博客程序，其实他岂止是博客程序，简直是全能型代码大师，他的插件">
+<meta name="keywords" content="wordpress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wordpress+flashpapaer+downloadmonitor实现文库程序">
+<meta property="og:url" content="http://rmingwang.com/imitate-baidu-wenku-function.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="前一段时间看了百度文库课豆丁文库的实现原理，其实都是利用了开源软件flashpaper做的二次开发，在网上也搜索到了flashpaper的各个平台上的使用方法，但是还是懒得去写代码，只好又找到了wp，然后搜索了下wp有没有flashpaper相关的插件，失望的是居然没有相关插件。只好自己另寻他路了。 wordpress 超级简单、流行的博客程序，其实他岂止是博客程序，简直是全能型代码大师，他的插件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-11-19T02:48:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wordpress+flashpapaer+downloadmonitor实现文库程序">
+<meta name="twitter:description" content="前一段时间看了百度文库课豆丁文库的实现原理，其实都是利用了开源软件flashpaper做的二次开发，在网上也搜索到了flashpaper的各个平台上的使用方法，但是还是懒得去写代码，只好又找到了wp，然后搜索了下wp有没有flashpaper相关的插件，失望的是居然没有相关插件。只好自己另寻他路了。 wordpress 超级简单、流行的博客程序，其实他岂止是博客程序，简直是全能型代码大师，他的插件">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> wordpress+flashpapaer+downloadmonitor实现文库程序 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          wordpress+flashpapaer+downloadmonitor实现文库程序
+        
+      </h1>
+
+      <time class="post-time">
+          10月 21 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>前一段时间看了百度文库课豆丁文库的实现原理，其实都是利用了开源软件flashpaper做的二次开发，在网上也搜索到了flashpaper的各个平台上的使用方法，但是还是懒得去写代码，只好又找到了wp，然后搜索了下wp有没有flashpaper相关的插件，失望的是居然没有相关插件。只好自己另寻他路了。</p>
+<p>wordpress</p>
+<p>超级简单、流行的博客程序，其实他岂止是博客程序，简直是全能型代码大师，他的插件接口和主题样式使它一下子具有了强大的竞争力，毫不费力的更换前台样式，一键实现功能扩展，如此简单。</p>
+<p>flashpaper</p>
+<p>能把各种文档转化成flash的开源软件，这样我们就能轻松实现文档的在线预览了，同时网上也有相关的各种语言与软件的接口程序，实现文档转化的自动执行。</p>
+<p>downloadmonitor</p>
+<p>一款wp的插件，很强大，可以自定义下载样式，管理下载文件，重定向下载地址，统计下载信息。 这样，我们具备了文库程序必须得几个功能 在线预览+下载管理+会员机制+内容管理，而且wp的扩展功能还为后期的拓展开发提供了便利。</p>
+<h3><span id="开发进行时">开发进行时</span></h3><p>1、首先要做的当然是安装wordpress了，在这里就不多说了，上传文件，创建数据库，填写信息，安装完成。<br>2、安装downloadmonitor插件，选择合适做文库的主题样式。 3、设置downloadmonitor的下载样式 </p>
+<p>$countNum=count($fileTypeNameArr)-1;<br>$fileExt = $fileTypeNameArr[$countNum]; //取得所上传文件后缀名<br>$filename = date(‘U’).rand(0,9).’.’.$fileExt;//将文件由原名改为时间戳+随机数</p>
+<p>这样子，文档就会以我们设定好的命名形式保存了。 </p>
+<p>4、文档自动转换预览 这个需要提前找到falshpaper的php操作类，然后看一下操作代码，再再files.php中根据文档类型添加处理过程。 </p>
+<p>5、集成到编辑器 把处理后的swf文件地址通过按钮或者相关命令插入到编辑器中得文档预览位置。 这样，在我们得到一份文档之后，只需要我们在wp的文章管理中写一篇新文章，上传附件，这样程序会自动判断是否进行处理，然后插入到文章中，这时候下载链接同时插入文章，发布出来即可实现文章的在线预览和下载管理，文档的投稿可以使用wp自带的注册用户作为投稿者身份进行共享文档的投稿。 </p>
+<p>不完善的地方慢慢完善。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/">wordpress</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-mount-samb-folder.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu下挂载smb共享目录</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20111020.html">
+        <span class="next-text nav-default">日记20111020</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/imitate-baidu-wenku-function.html';
+
+  var disqus_title = "wordpress+flashpapaer+downloadmonitor实现文库程序";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

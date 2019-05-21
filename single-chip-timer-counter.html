@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="单片机定时器/计数器">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/single-chip-timer-counter.html">
+
+
+<meta name="description" content="80C51单片机内部设有两个16位的可编程定时器/计数器。可编程的意思是指其功能（如工作方式、定时时间、量程、启动方式等）均可由指令来确定和改变。在定时器/计数器中除了有两个16位的计数器之外，还有两个特殊功能寄存器（控制寄存器和方式寄存器）。 &amp;nbsp; 从上面定时器/计数器的结构图中我们可以看出，16位的定时/计数器分别由两个8位专用寄存器组成，即：T0由TH0和TL0构成；T1由TH1和T">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单片机定时器&#x2F;计数器">
+<meta property="og:url" content="http://rmingwang.com/single-chip-timer-counter.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="80C51单片机内部设有两个16位的可编程定时器/计数器。可编程的意思是指其功能（如工作方式、定时时间、量程、启动方式等）均可由指令来确定和改变。在定时器/计数器中除了有两个16位的计数器之外，还有两个特殊功能寄存器（控制寄存器和方式寄存器）。 &amp;nbsp; 从上面定时器/计数器的结构图中我们可以看出，16位的定时/计数器分别由两个8位专用寄存器组成，即：T0由TH0和TL0构成；T1由TH1和T">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单片机定时器&#x2F;计数器">
+<meta name="twitter:description" content="80C51单片机内部设有两个16位的可编程定时器/计数器。可编程的意思是指其功能（如工作方式、定时时间、量程、启动方式等）均可由指令来确定和改变。在定时器/计数器中除了有两个16位的计数器之外，还有两个特殊功能寄存器（控制寄存器和方式寄存器）。 &amp;nbsp; 从上面定时器/计数器的结构图中我们可以看出，16位的定时/计数器分别由两个8位专用寄存器组成，即：T0由TH0和TL0构成；T1由TH1和T">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 单片机定时器/计数器 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          单片机定时器/计数器
+        
+      </h1>
+
+      <time class="post-time">
+          1月 2 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>80C51单片机内部设有两个16位的可编程定时器/计数器。可编程的意思是指其功能（如工作方式、定时时间、量程、启动方式等）均可由指令来确定和改变。在定时器/计数器中除了有两个16位的计数器之外，还有两个特殊功能寄存器（控制寄存器和方式寄存器）。</p>
+<p>&nbsp;</p>
+<p>从上面定时器/计数器的结构图中我们可以看出，16位的定时/计数器分别由两个8位专用寄存器组成，即：T0由TH0和TL0构成；T1由TH1和TL1 构成。其访问地址依次为8AH-8DH。每个寄存器均可单独访问。这些寄存器是用于存放定时或计数初值的。此外，其内部还有一个8位的定时器方式寄存器 TMOD和一个8位的定时控制寄存器TCON。这些寄存器之间是通过内部总线和控制逻辑电路连接起来的。TMOD主要是用于选定定时器的工作方式； TCON主要是用于控制定时器的启动停止，此外TCON还可以保存T0、T1的溢出和中断标志。当定时器工作在计数方式时，外部事件通过引脚T0 （P3.4）和T1（P3.5）输入。</p>
+<p>定时计数器的原理：</p>
+<p>当定时器/计数器为定时工作方式时，计数器的加1信号由振荡器的12分频信号产生，即每过一个机器周期，计数器加1，直至计满溢出为止。显然，定时器的定时时间与系统的振荡频率有关。因一个机器周期等于12个振荡周期，所以计数频率fcount=1/12osc。如果晶振为12MHz，则计数周期为：<br>T=1/（12×106）Hz×1/12=1μs</p>
+<p>这是最短的定时周期。若要延长定时时间，则需要改变定时器的初值，并要适当选择定时器的长度（如8位、13位、16位等）。</p>
+<p>当定时器/计数器为计数工作方式时，通过引脚T0和T1对外部信号计数，外部脉冲的下降沿将触发计数。计数器在每个机器周期的S5P2期间采样引脚输入电 平。若一个机器周期采样值为1，下一个机器周期采样值为0，则计数器加1。此后的机器周期S3P1期间，新的计数值装入计数器。所以检测一个由1至0的跳 变需要两个机器周期，故外部事年的最高计数频率为振荡频率的1/24。例如，如果选用12MHz晶振，则最高计数频率为0.5MHz。虽然对外部输入信号 的占空比无特殊要求，但为了确保某给定电平在变化前至少被采样一次，外部计数脉冲的高电平与低电平保持时间均需在一个机器周期以上。</p>
+<p>当CPU用软件给定时器设置了某种工作方式之后，定时器就会按设定的工作方式独立运行，不再占用CPU的操作时间，除非定时器计满溢出，才可能中断CPU 当前操作。CPU也可以重新设置定时器工作方式，以改变定时器的操作。由此可见，定时器是单片机中效率高而且工作灵活的部件。</p>
+<p>综上所述，我们已知定时器/计数器是一种可编程部件，所以在定时器/计数器开始工作之前，CPU必须将一些命令（称为控制字）写入定时/计数器。将控制字写入定时/计数器的过程叫定时器/计数器初始化。在初始化过程中，要将工作方式控制字写入方式寄存器，工作状态字（或相关位）写入控制寄存器，赋定时/计 数初值。下面我们就提出的控制字的格式及各位的主要功能与大家详细的讲解。</p>
+<p>控制寄存器 定时器／计数器T0和T1有2个控制寄存器-TMOD和TCON，它们分别用来设置各个定时器／计数器的工作方式，选择定时或计数功能，控制启动运行，以及作为运行状态的标志等。其中，TCON寄存器中另有4位用于中断系统。</p>
+<p></p><h2><span id="tmod定时器计数器方式寄存器">TMOD定时器/计数器方式寄存器</span></h2><br>&nbsp;<p></p>
+<p>定时器方式控制寄存器TMOD在特殊功能寄存器中，字节地址为89H，无位地址。TMOD的格式如下图所示。</p>
+<p>&nbsp;</p>
+<p>由图可见，TMOD的高4位用于T1，低4使用于T0，4种符号的含义如下：</p>
+<p>GATE：门控制位。GATE和软件控制位TR、外部引脚信号INT的状态,共同控制定时器／计数器的打开或关闭。</p>
+<p>C／T：定时器／计数器选择位。C/T＝1，为计数器方式；C／T＝0，为定时器方式。</p>
+<p>M1M0：工作方式选择位，定时器／计数器的4种工作方式由M1M0设定。</p>
+<p><table width="100%" border="1"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td>M1M0</td></p>
+<p><td>工作方式</td></p>
+<p><td>功能描述</td><br></p>
+<p><tr></tr></p>
+<p><td>00</td></p>
+<p><td>工作方式0</td></p>
+<p><td>13位计数器</td><br></p>
+<p><tr></tr></p>
+<p><td>01</td></p>
+<p><td>工作方式1</td></p>
+<p><td>16位计数器</td><br></p>
+<p><tr></tr></p>
+<p><td>10</td></p>
+<p><td>工作方式2</td></p>
+<p><td>自动再装入8位计数器</td><br></p>
+<p><tr></tr></p>
+<p><td>11</td></p>
+<p><td>工作方式3</td></p>
+<p><td>定时器0：分成两个8位计数器；<br>定时器1：停止计数</td><br><br><br><br>定时器/计数器方式控制寄存器TMOD不能进行位寻址，只能用字节传送指令设置定时器工作方式，低半字节定义为定时器0，高半字节定义为定时器1。复位时，TMOD所有位均为0。</p>
+<p>例：设定定时器1为定时工作方式，要求软件启动定时器1按方式2工作。定时器0为计数方式，要求由软件启动定时器0，按方式1工作。</p>
+<p>我们怎么来实现这个要求呢？</p>
+<p>大家先看上面TMOD寄存器各位的分布图</p>
+<p>第一个问题：控制定时器1工作在定时方式或计数方式是哪个位？通过前面的学习，我们已知道，C/T位（D6）是定时或计数功能选择位，当C/T=0时定时/计数器就为定时工作方式。所以要使定时/计数器1工作在定时器方式就必需使D6为0。</p>
+<p>第二个问题：设定定时器1按方式2工作。上表中可以看出，要使定时/计数器1工作在方式2，M0（D4） M1（D5）的值必须是1 0。</p>
+<p>第三个问题：设定定时器0为计数方式。与第一个问题一样，定时/计数器0的工作方式选择位也是C/T（D2），当C/T=1时，就工作在计数器方式。</p>
+<p>第四个问题：由软件启动定时器0，前面已讲过，当门控位GATE=0时，定时/计数器的启停就由软件控制。</p>
+<p>第五个问题：设定定时/计数器工作在方式1，使定时/计数器0工作在方式1，M0（D0） M1（D1）的值必须是0 1。</p>
+<p>从上面的分析我们可以知道，只要将TMOD的各位，按规定的要求设置好后，定时器/计灵敏器就会按我们预定的要求工作。我们分析的这个例子最后各位的情况如下：</p>
+<p>D7 D6 D5 D4 D3 D2 D1 D0</p>
+<p>0 0 1 0 0 1 0 1</p>
+<p>二进制数00100101=十六进制数25H。所以执行MOV TMOD,#25H这条指令就可以实现上述要求。</p>
+<p></p><h2><span id="tcon定时器计数器控制寄存器">TCON定时器/计数器控制寄存器</span></h2><br>TCON在特殊功能寄存器中，字节地址为88H，位地址(由低位到高位)为88H一8FH，由于有位地址，十分便于进行位操作。<p></p>
+<p>TCON的作用是控制定时器的启、停，标志定时器溢出和中断情况。</p>
+<p>TCON的格式如下图所示。其中，TFl，TRl，TF0和TR0位用于定时器／计数器；IEl，ITl，IE0和IT0位用于中断系统。</p>
+<p>各位定义如下：</p>
+<p>TF1：定时器1溢出标志位。当字时器1计满溢出时，由硬件使TF1置“1”，并且申请中断。进入中断服务程序后，由硬件自动清“0”，在查询方式下用软件清“0”。</p>
+<p>TR1：定时器1运行控制位。由软件清“0”关闭定时器1。当GATE=1，且INT1为高电平时，TR1置“1”启动定时器1；当GATE=0，TR1置“1”启动定时器1。</p>
+<p>TF0：定时器0溢出标志。其功能及操作情况同TF1。</p>
+<p>TR0：定时器0运行控制位。其功能及操作情况同TR1。</p>
+<p>IE1：外部中断1请求标志。</p>
+<p>IT1：外部中断1触发方式选择位。</p>
+<p>IE0：外部中断0请求标志。</p>
+<p>IT0：外部中断0触发方式选择位。</p>
+<p>TCON中低4位与中断有关，我们将在下节课讲中断时再给予讲解。由于TCON是可以位寻址的，因而如果只清溢出或启动定时器工作，可以用位操作命令。例 如：执行“CLR TF0”后则清定时器0的溢出；执行“SETB TR1”后可启动定时器1开始工作（当然前面还要设置方式定）。</p>
+<p></p><h2><span id="定时器计数器的初始化">定时器/计数器的初始化</span></h2><br>由于定时器/计数器的功能是由软件编程确定的，所以一般在使用定时/计数器前都要对其进行初始化，使其按设定的功能工作。初始货的步骤一般如下：<p></p>
+<p>1、确定工作方式（即对TMOD赋值）；</p>
+<p>2、预置定时或计数的初值（可直接将初值写入TH0、TL0或TH1、TL1）；</p>
+<p>3、根据需要开放定时器/计数器的中断（直接对IE位赋值）；</p>
+<p>4、启动定时器/计数器（若已规定用软件启动，则可把TR0或TR1置“1”；若已规定由外中断引脚电平启动，则需给外引脚步加启动电平。当实现了启动要求后，定时器即按规定的工作方式和初值开始计数或定时）。</p>
+<p>下面介绍一下确定时时/计数器初值的具体方法。</p>
+<p>因为在不同工作方式下计数器位数不同，因而最大计数值也不同。</p>
+<p>现假设最大计数值为M，那么各方式下的</p>
+<p>最大值M值如下：</p>
+<p>方式0：M=213=8 192</p>
+<p>方式1：M=216=65 536</p>
+<p>方式2：M=28=256</p>
+<p>方式3：定时器0分成两个8位计数器，所以两个M均为256。</p>
+<p>因为定时器/计数器是作“加1”计数，并在计数满溢出时产生中断，因此初值X可以这样计算：</p>
+<p>X=M-计数值</p>
+<p>下面举例说明初值的确定方法。</p>
+<p>例1、选择T1方式0用于定时，在P1.1输出周期为1ms方波，晶振fosc=6MHz。</p>
+<p>解：根据题意，只要使P1.1每隔500us取反一次即可得到1ms的方波，因而T1的定时时间为500us，因定时时间不长,取方式0即可。则M1 M0=0；因是定时器方式,所以C/T=0；在此用软件启动T1，所以GATE=0。T0不用，方式字可任意设置，只要不使其进入方式3即可，一般取0， 故TMOD=00H。系统复位后TMOD为0，可不对TMOD重新清0。</p>
+<p>下面计算500us定时T1初始值：</p>
+<p>机器周期T=12/fosc=12/（6×106）Hz=2μs</p>
+<p>设初值为X，则：</p>
+<p>（1013－X）×2×10-6s=500×10-6s</p>
+<p>X=7942D=1111100000110B=1F06H</p>
+<p>因为在作13位计数器用时，TL1的高3位未用，应填写0，TH1占用高8位，所以X的实际填写应为：</p>
+<p>X=111100000000110B=F806H</p>
+<p>结果：TH1=F8H，TL1=06H</p>
+<p>源程序如下：</p>
+<p>ORG 2000H</p>
+<p>MOV TL1,#06H ;给TL1置初值</p>
+<p>MOV TH1,#0F8H ;给TH1置初值</p>
+<p>SETB TR1 ;启动T1</p>
+<p>LP1:JBC TF1,LP2 ;查询计数溢出否？</p>
+<p>AJMP LP1</p>
+<p>LP2:MOV TL1,#06H ;重新设置计数初值</p>
+<p>MOV TH1,#0F8H</p>
+<p>CPL P1.1 ;输出取反</p>
+<p>AJMP LP1 ;重复循环</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/of-the-smallest-single-chip-system-control-and-i-o-output.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">单片机最小系统组成与I/O输出控制</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/mb526-cm7-lite-rom.html">
+        <span class="next-text nav-default">MB526 的CM7精简版rom 救砖必备</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/single-chip-timer-counter.html';
+
+  var disqus_title = "单片机定时器/计数器";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

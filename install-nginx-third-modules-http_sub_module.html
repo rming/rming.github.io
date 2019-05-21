@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Nginx编译安装第三方模块http_substitutions_filter_module">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/install-nginx-third-modules-http_sub_module.html">
+
+
+<meta name="description" content="ngx_http_substitutions_filter_module OR HttpSubModule ?为了应急处理或者一些需要，有时候需要使用Nginx的反向代理某站点，并通过 HttpSubModule 和ngx_http_substitutions_filter_module 模块替换正文内容和URL。但是通常LNMP套件安装的webserver并没有编译安装nginx官方模块Http">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx编译安装第三方模块http_substitutions_filter_module">
+<meta property="og:url" content="http://rmingwang.com/install-nginx-third-modules-http_sub_module.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="ngx_http_substitutions_filter_module OR HttpSubModule ?为了应急处理或者一些需要，有时候需要使用Nginx的反向代理某站点，并通过 HttpSubModule 和ngx_http_substitutions_filter_module 模块替换正文内容和URL。但是通常LNMP套件安装的webserver并没有编译安装nginx官方模块Http">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-25T04:47:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx编译安装第三方模块http_substitutions_filter_module">
+<meta name="twitter:description" content="ngx_http_substitutions_filter_module OR HttpSubModule ?为了应急处理或者一些需要，有时候需要使用Nginx的反向代理某站点，并通过 HttpSubModule 和ngx_http_substitutions_filter_module 模块替换正文内容和URL。但是通常LNMP套件安装的webserver并没有编译安装nginx官方模块Http">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Nginx编译安装第三方模块http_substitutions_filter_module - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Nginx编译安装第三方模块http_substitutions_filter_module
+        
+      </h1>
+
+      <time class="post-time">
+          4月 19 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="ngx_http_substitutions_filter_module-or-httpsubmodule">ngx_http_substitutions_filter_module OR HttpSubModule ?</span></h2><p><strong>为了应急处理或者一些需要，有时候需要使用Nginx的反向代理某站点，并通过 HttpSubModule 和ngx_http_substitutions_filter_module 模块替换正文内容和URL。</strong><br>但是通常LNMP套件安装的webserver并没有编译安装nginx官方模块HttpSubModule(官方option),并且，官方自带的模块HttpSubModule 只能匹配1条规则，但是使用第三方模块ngx_http_substitutions_filter_module 可以匹配多条规则。</p>
+<blockquote>
+<p>备注：<br>ngx_http_substitutions_filter_module 是指第三方nginx模块 substitutions4nginx （原：<a href="https://code.google.com/p/substitutions4nginx/" target="_blank" rel="noopener">Google Code</a> 现：<a href="https://github.com/yaoweibin/ngx_http_substitutions_filter_module/" target="_blank" rel="noopener">github</a>）<br>HttpSubModule 是指Nginx官方的 with-http_sub_module模块(option)</p>
+</blockquote>
+<p><strong>Nginx自身带的module并不多，这也是它为什么性能好，系统开销较小的原因之一，相比apache，它不能动态的加载module，如果之前编译安装了Nginx，这时候就需要重新编译nginx添加模块，并替换掉原先的nginx执行文件。</strong></p>
+<h2><span id="1下载需要的文件">1.下载需要的文件</span></h2><p>substitutions4nginx <a href="https://github.com/yaoweibin/ngx_http_substitutions_filter_module/" target="_blank" rel="noopener">github下载</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 下载第三方模块</span><br><span class="line"># cd ~</span><br><span class="line"># git clone git://github.com/yaoweibin/ngx_http_substitutions_filter_module.git</span><br></pre></td></tr></table></figure>
+<h2><span id="2查看之前nginx编译configure">2.查看之前Nginx编译configure</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    # nginx -V</span><br><span class="line">    nginx version: nginx/1.2.7</span><br><span class="line">    built by gcc 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) </span><br><span class="line">    TLS SNI support enabled</span><br><span class="line">    configure arguments: --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-            http_ssl_module --with-http_gzip_static_module --with-ipv6</span><br><span class="line">因为Nginx编译安装第三方模块的时候需要添加上之前编译的configure参数，然后重新设置configure编译（但是不覆盖安装，只make不install）：</span><br><span class="line"></span><br><span class="line">    ./configure --prefix=/你的安装目录  --add-module=/第三方模块目录</span><br></pre></td></tr></table></figure>
+<h2><span id="3重新编译nginx">3.重新编译Nginx</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 打开Nginx编译目录，版本号可能不同</span><br><span class="line"># cd ~/lnmp1.0-full/nginx-1.2.7</span><br><span class="line"># 重新configure</span><br><span class="line"># ./configure --prefix= --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6  --with-http_sub_module  --add-module=/root/ngx_http_substitutions_filter_module</span><br><span class="line"># make</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>备注：重新编译的时候，记得一定要把以前编译过的模块一同加到configure参数里面.</p>
+</blockquote>
+<h2><span id="4覆盖原nginx文件">4.覆盖原nginx文件</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># /etc/init.d/nginx stop</span><br><span class="line"># cd cd objs/</span><br><span class="line"># 覆盖原文件</span><br><span class="line"># cp nginx /usr/local/nginx/sbin/</span><br><span class="line"># /etc/init.d/nginx start</span><br></pre></td></tr></table></figure>
+<h2><span id="5简单配置">5.简单配置</span></h2><h2><span id="1-httpsubmodule-的-官方文档-说的很清楚这里就不写实例了并且功能没有substitutions4nginx的强大">① HttpSubModule 的  说的很清楚，这里就不写实例了，并且功能没有substitutions4nginx的强大。</span></h2><p>###在头部引入指定JS<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">  sub_filter      &lt;/head&gt;</span><br><span class="line">  &apos;&lt;/head&gt;&lt;script language=&quot;javascript&quot; src=&quot;$script&quot;&gt;&lt;/script&gt;&apos;;</span><br><span class="line">  sub_filter_types text/html;</span><br><span class="line">  sub_filter_once on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>sub_filter</strong> 一行代码前面是需要替换的内容，后面单引号内是替换成的内容。</li>
+<li><strong>sub_filter_once</strong> 意思是只查找并替换一次。on是开启此功能，off是关闭——默认值是on。</li>
+<li><strong>sub_filter_types</strong> 一行意思是选定查找替换文件类型为文本型。也可以不加此行，因为默认只查找text/html文件。</li>
+<li><strong>sub_filter模块可以用在http, server, location模块中。主要作用就是查找替换文件字符。</strong></li>
+</ul>
+<h2><span id="2-substitutions4nginx">② substitutions4nginx</span></h2><h3><span id="subs_filter">subs_filter</span></h3><pre><code>实例：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    subs_filter_types text/html text/css text/xml;</span><br><span class="line">    subs_filter st(\d*).example.com $1.example.com ir;</span><br><span class="line">    subs_filter a.example.com s.example.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>g(default):替换所有匹配的字符串。<br>i: 执行不区分大小写的匹配。<br>o: 只需将第一个。<br>r:该模式是作为一个正则表达式处理，默认是固定的字符串。</p>
+</blockquote>
+<h3><span id="subs_filter_types">subs_filter_types</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">syntax: subs_filter_types mime-type [mime-types]</span><br><span class="line">default: subs_filter_types text/html</span><br><span class="line">context: http, server, location</span><br><span class="line"></span><br><span class="line">subs_filter ‘&lt;(no?script.*?)&gt;(.*?)&lt;(\/no?script.*?)&gt;’ ” gi; //替换掉全部的&lt;noscript&gt;&lt;/noscript&gt;</span><br><span class="line">subs_filter ‘&lt;(s?cript.*?)&gt;(?:\s|\S)*?&lt;(\/s?cript.*?)&gt;’ ” gi; //替换掉全部的&lt;script&gt;包换中间换行&lt;/script&gt;</span><br><span class="line">subs_filter ‘&lt;(i?frame.*?)&gt;(.*?)&lt;(\/i?frame.*?)&gt;’ ” gi; //替换&lt;iframe&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+<h2><span id="gtgt参考资料ltlt">&gt;&gt;参考资料&lt;&lt;</span></h2><p><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html" target="_blank" rel="noopener">ngx_http_sub_module</a></p>
+<p><a href="https://code.google.com/p/substitutions4nginx/" target="_blank" rel="noopener">substitutions4nginx</a></p>
+<p><a href="http://wiki.nginx.org/3rdPartyModules" target="_blank" rel="noopener">Nginx第三方模块</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/using-git-to-deploy-a-web-site.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">使用Git来部署一个Web站点笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-http-header.html">
+        <span class="next-text nav-default">PHP使用header函数设置HTTP头的示例方法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/install-nginx-third-modules-http_sub_module.html';
+
+  var disqus_title = "Nginx编译安装第三方模块http_substitutions_filter_module";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

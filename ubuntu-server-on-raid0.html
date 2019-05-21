@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="两块硬盘Raid0安装ubuntu server11.04">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-server-on-raid0.html">
+
+
+<meta name="description" content="身边有不少的破电脑，闲置的硬盘，这几天端午节放假，便凑活了一下自己组了一台双硬盘的PC，废话不多说了，想用这台电脑做个文件服务器，所以想起来做个raid0来。 思路：对Raid0的理解就是两块硬盘，我分别在两块盘上取一些磁道，然后组成一个新的虚拟的分区，然后再这个虚拟的分区读写的时候读写速度就是两个硬盘的和了，这样就达到了性能的提高。 因此，我们要在两个硬盘上做几个相同的分区设置，然后通过ubun">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="两块硬盘Raid0安装ubuntu server11.04">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-server-on-raid0.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="身边有不少的破电脑，闲置的硬盘，这几天端午节放假，便凑活了一下自己组了一台双硬盘的PC，废话不多说了，想用这台电脑做个文件服务器，所以想起来做个raid0来。 思路：对Raid0的理解就是两块硬盘，我分别在两块盘上取一些磁道，然后组成一个新的虚拟的分区，然后再这个虚拟的分区读写的时候读写速度就是两个硬盘的和了，这样就达到了性能的提高。 因此，我们要在两个硬盘上做几个相同的分区设置，然后通过ubun">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="两块硬盘Raid0安装ubuntu server11.04">
+<meta name="twitter:description" content="身边有不少的破电脑，闲置的硬盘，这几天端午节放假，便凑活了一下自己组了一台双硬盘的PC，废话不多说了，想用这台电脑做个文件服务器，所以想起来做个raid0来。 思路：对Raid0的理解就是两块硬盘，我分别在两块盘上取一些磁道，然后组成一个新的虚拟的分区，然后再这个虚拟的分区读写的时候读写速度就是两个硬盘的和了，这样就达到了性能的提高。 因此，我们要在两个硬盘上做几个相同的分区设置，然后通过ubun">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 两块硬盘Raid0安装ubuntu server11.04 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          两块硬盘Raid0安装ubuntu server11.04
+        
+      </h1>
+
+      <time class="post-time">
+          6月 7 2011
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>身边有不少的破电脑，闲置的硬盘，这几天端午节放假，便凑活了一下自己组了一台双硬盘的PC，废话不多说了，想用这台电脑做个文件服务器，所以想起来做个raid0来。</p>
+<p>思路：对Raid0的理解就是两块硬盘，我分别在两块盘上取一些磁道，然后组成一个新的虚拟的分区，然后再这个虚拟的分区读写的时候读写速度就是两个硬盘的和了，这样就达到了性能的提高。</p>
+<p>因此，我们要在<span style="color: #ff0000;">两个硬盘上做几个相同的分区设置</span>，然后<span style="color: #ff0000;">通过ubuntu自带的mdadm来合成软raid分区</span>。即：1个非Raid分区/boot安装grub、2个swap分区组成1个Raid0的swap，2个/分区组成一个Raid0的/, 2个Home分区组成一个Raid0的Home（<span style="color: #ff0000;">总之，除了grub的/boot 分区不能设置成raid0, 其他都可以，按照自己的喜欢自己划分4个分区</span>），我的情况是第一个盘划100M安装grub,设置成启动。</p>
+<p><strong><span style="color: #ff0000;">为什么/boot需要放在非Raid区呢？</span></strong></p>
+<p><span style="color: #ff0000;">这是因为ubuntu的软Raid是通过进入系统后根据软件虚拟的Raid，所以不能把系统的/boot引导文件等存入raid中，否则系统无法启动，也就无法读取Raid分区中的数据。</span></p>
+<p></p><h2><span id="step1-准备工作">Step1、准备工作</span></h2><p></p>
+<p></p><h4><span id="刻录ubuntu安装盘-磁盘分区方案-找个速度的网络环境"><span style="font-weight: normal;">（刻录ubuntu安装盘、磁盘分区方案、找个速度的网络环境）</span></span></h4><p></p>
+<p></p><h4><span id="1-首先下载好需要的ubuntu-server镜像刻录光盘备用"><span style="font-weight: normal;"> </span><span style="font-weight: normal;">①、首先下载好需要的ubuntu server镜像，刻录光盘备用。</span></span></h4><p></p>
+<blockquote><strong>小插曲——</strong>&gt;由于这台破电脑只有两个IDE接口，而且都被老硬盘给占了，所以只好用其他方法安装，这时，我想起来了U盘量产，于是用U盘量产了一个Ununtu server的启动盘，至于量产过程大家可以根据自己U盘去网上找教程。</blockquote><br>②、我这里的两块硬盘是40G+250G的，据我所知，做raid0是不受硬盘大小限制的。所以计划分区方案如下：<br><blockquote>/boot       100M           EXT3  存放grub<br><br>swap          2G                这个破电脑用的是512M、和128M的恋歌DDR1内存，这些swap已经够了吧，swap大概也就是内存的1.5倍吧。<br><br>/              40G       EXT3           因为没有把 / 下面的/opt、/var、/tmp 拿出来单独做分区，所以划分/ 的时候适当的做大一点，以便于以后系统安装软件等。<br><br>/home    剩余的容量  EXT3        存放用户文件</blockquote>
+
+<p>③、链接上速度的网络，安装时需要从网上下载数据。</p>
+<p></p><h2><span id="step2-制作raid0">Step2、制作Raid0</span></h2><br>通过光盘启动，进入系统安装，到了分区的时候，选择<span style="color: #ff0000;">Manual分区</span><p></p>
+<p>1、选择 “Manual” 手动分区.<br>2、选择第一块硬盘,创建一个100M的EXT3格式主分区，设置挂载点为/boot 、设置为启动（为保险起见，你也可以在第二块上设置一个同样的分区，不过在<span style="color: #ff0000;">做Raid的时候不做操作</span>）<br>3、按照预想的分区方案，对每一块硬盘执行相同分区挂载的操作。</p>
+<p>上面三步完成以后，我们就得到了如下图的分区结构</p>
+<p>4、开始制作Raid分区：选择软件RAID设置,分区格式化后，接下来的选项中选择-——创建MD设备——Raid0——空格选择两个磁盘上相同设置的分区——继续，分三次完成Raid0上的#0、#1、#2，这样我们就得到了三个Raid0分区，如下图所示，这样我们就可以对RAID分区进行创建挂载了。</p>
+<p>到此，分区工作已经结束，下面，我们就选择写入磁盘就可以了。</p>
+<p><span style="color: #0000ff;">在这里我的电脑出现了无法创建分区的情况，但是我把Raid0#2上的分区按照自动分区后调整了一下，又可以继续安装了，这一点可能是因为原先两磁盘的/home分区大小不一致导致的，没有考究什么原因。</span></p>
+<p><span style="color: #0000ff;"><br></span></p>
+<p></p><h2><span id="step3-傻瓜式继续安装系统">Step3、傻瓜式继续安装系统</span></h2><br>接下来你就按照系统提示进行安装就可以了。<p></p>
+<p>上面的图片是虚拟机的截图，是为了<span style="color: #ff0000;">配合说明</span>。真实安装实录照片如下：</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/bat-applications-clean-up-desktop-files-sub-directory-dump-by-time.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">批处理小应用-清理桌面文件，按时间分目录转存</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/enjoy-microsoft-future-vision-windows-8-demo.html">
+        <span class="next-text nav-default">Microsoft future vision & windows 8 demo</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-server-on-raid0.html';
+
+  var disqus_title = "两块硬盘Raid0安装ubuntu server11.04";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

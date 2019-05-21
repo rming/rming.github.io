@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP类成员类型、访问方式和权限">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-class-member-type-access-and-permissions.html">
+
+
+<meta name="description" content="PHP类中成员类型 普通成员(var) php类的静态成员（static）类的静态成员与一般的类成员不同: 静态成员与对象的实例无关，只与类本身有关。他们用来实现类要封装的功能和数据，但不包括特定对象的功能和数据，静态成员包括静态方法和静态属性。 静态属性包含在类中要封装的数据，可以由所有类的实例共享。实际上，除了属于一个固定的类并限制访问方式外，类的静态属性非常类似于函数的全局变量。 我们在下例">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP类成员类型、访问方式和权限">
+<meta property="og:url" content="http://rmingwang.com/php-class-member-type-access-and-permissions.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="PHP类中成员类型 普通成员(var) php类的静态成员（static）类的静态成员与一般的类成员不同: 静态成员与对象的实例无关，只与类本身有关。他们用来实现类要封装的功能和数据，但不包括特定对象的功能和数据，静态成员包括静态方法和静态属性。 静态属性包含在类中要封装的数据，可以由所有类的实例共享。实际上，除了属于一个固定的类并限制访问方式外，类的静态属性非常类似于函数的全局变量。 我们在下例">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-21T07:42:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP类成员类型、访问方式和权限">
+<meta name="twitter:description" content="PHP类中成员类型 普通成员(var) php类的静态成员（static）类的静态成员与一般的类成员不同: 静态成员与对象的实例无关，只与类本身有关。他们用来实现类要封装的功能和数据，但不包括特定对象的功能和数据，静态成员包括静态方法和静态属性。 静态属性包含在类中要封装的数据，可以由所有类的实例共享。实际上，除了属于一个固定的类并限制访问方式外，类的静态属性非常类似于函数的全局变量。 我们在下例">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP类成员类型、访问方式和权限 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP类成员类型、访问方式和权限
+        
+      </h1>
+
+      <time class="post-time">
+          4月 24 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="php类中成员类型">PHP类中成员类型</span></h2><p></p>
+<p></p><h3><span id="普通成员var">普通成员(var)</span></h3><p></p>
+<p></p><h3><span id="php类的静态成员static"><strong>php类的静态成员（static）</strong></span></h3><br>类的静态成员与一般的类成员不同: 静态成员与对象的实例无关，只与类本身有关。他们用来实现类要封装的功能和数据，但不包括特定对象的功能和数据，静态成员包括静态方法和静态属性。<p></p>
+<p>静态属性包含在类中要封装的数据，可以由所有类的实例共享。实际上，除了属于一个固定的类并限制访问方式外，类的静态属性非常类似于函数的全局变量。</p>
+<p>我们在下例中使用了一个静态属性Counter::$count。它属于Counter类，而不属于任何Counter的实例。你不能用this来引用它，但可以用self或其它有效的命名表达。在例子中，getCount方法返回self::$count，而不是Counter::$count。</p>
+<p></p><h3><span id="php类的常量成员constant"><strong>php类的常量</strong><strong>成员</strong><strong>（constant）</strong></span></h3><br>在类中可以定义常量（constant），用来表示不会改变的值。我们使用const定义一个常量，定义的这个常量不能被改变。在PHP5中const定义的常量与定义变量的方法不同，不需要加$ 修饰符。 const PI = 3.14； 这样就可以。而使用const 定义的常量名称一般都大写，这是一个约定，在任何语言中都是这样。如果定义的常量由多个单词组成，使用下划线”_”连接，这也是约定。对于从该类实例化的任何对象来说，常量值在这些对象中的整个生命周期中都保持不变。<p></p>
+<p></p><h2><span id="php类成员的访问方式和权限"> PHP类成员的访问方式和权限</span></h2><br>像C++和Java一样,PHP有三种访问方式:public,private和protected. 对于一个类成员的访问方式,可以是其中之一. 如果你没有指明访问方式,默认地访问方式为public. 你也可以为静态成员指明一种访问方式,将访问方式放在static关键字之前(如public static).<p></p>
+<p></p><h3><span id="public成员">Public成员</span></h3><br>Public成员可以被毫无限制地访问.类外部的任何代码都可以读写public属性. 你可以从脚本的任何地方调用一个public方法. 在PHP的前几个版本中,所有方法和属性都是public, 这让人觉得对象就像是结构精巧的数组.<p></p>
+<p></p><h3><span id="private私有成员">Private(私有)成员</span></h3><br>Private(私有)成员只在类的内部可见. 你不能在一个private属性所在的类方法之外改变或读取它的值. 同样地,只有在同一个类中的方法可以调用一个private方法. 继承的子类也不能访问父类中的private 成员.<p></p>
+<p>要注意,类中的任何成员和类的实例都可以访问private成员. 看例子6.8,equals方法将两个widget进行比较.==运算符比较同一个类的两个对象,但这个例子中每个对象实例都有唯一的ID.equals 方法只比较name和price. 注意equals方法如何访问另一个Widget实例的private属性. Java和C都允许这样的操作.</p>
+<pre><code>class Widget
+  {
+      private $name;
+      private $price;
+      private $id;
+
+  public function __construct($name, $price)
+  {
+      $this-&gt;name = $name;
+      $this-&gt;price = floatval($price);
+      $this-&gt;id = uniqid();
+  }
+  //checks if two widgets are the same 检查两个widget是否相同
+  public function equals($widget)
+  {
+      return(($this-&gt;name == $widget-&gt;name)AND
+      ($this-&gt;price == $widget-&gt;price));
+  }
+}
+$w1 = new Widget('Cog', 5.00);
+$w2 = new Widget('Cog', 5.00);
+$w3 = new Widget('Gear', 7.00);
+
+//TRUE
+if($w1-&gt;equals($w2))
+{
+    print("w1 and w2 are the same\n");
+}
+
+//FALSE
+if($w1-&gt;equals($w3))
+{
+    print("w1 and w3 are the same\n");
+}
+
+//FALSE, == includes id in comparison
+if($w1 == $w2) //不等,因为ID不同
+{
+    print("w1 and w2 are the same\n");
+}
+</code></pre>
+
+<p>如果你对面向对象编程不熟悉,你可能想知道用private成员的目的是什么. 你可以回忆一下封装和耦合的想法,这在本章开头我们有讨论过. Private成员有助于封装数据. 他们可以隐藏在一个类内部而不被类外部的代码接触到. 同时他们还有助于实现松散的耦合. 如果数据结构外的代码不能直接访问内部属性,那么就不会产生一个隐性的关联性.</p>
+<p>当然,大部分private属性仍然可以被外部代码共享. 解决方法是用一对public方法,一个是get(获取属性的值),另一个是set(设置属性的值). 构造函数也接受属性的初始值. 这使得成员间的交流通过一个狭窄的,经过良好限定的接口来进行. 这也提供改变传递给方法的值的机会. 注意在例子6.8中,构造函数如何强制使price成为一个float数(floadval()).</p>
+<p></p><h3><span id="protected受保护的-成员">Protected(受保护的) 成员</span></h3><br>Protected(受保护的) 成员能被同个类中的所有方法和继承出的类的中所有方法访问到. Public属性有违封装的精神,因为它们允许子类依赖于一个特定的属性来书写.protected方法则不会带来这方面的担忧.一个使用 protected方法的子类需要很清楚它的父类的结构才行.<p></p>
+<p>注意Widget现在有一个叫作getName的protected方法. 如果Widget的实例试图调用protected方法将会出错: $w1-&gt;getName()产生了一个错误. 但子类Thing中的getName方法可以调用这个protected方法.当然对于证明Widget::getName方法是protected,这个例子显得过于简单. 在实际情况下,使用protected方法要依赖于对对象的内部结构的理解.</p>
+<pre><code>class Widget
+{
+      private $name;
+      private $price;
+      private $id;
+
+  public function __construct($name, $price)
+  {
+      $this-&gt;name = $name;
+      $this-&gt;price = floatval($price);
+      $this-&gt;id = uniqid();
+  }
+
+  //checks if two widgets are the same
+  public function equals($widget)
+  {
+      return(($this-&gt;name == $widget-&gt;name)AND
+      ($this-&gt;price == $widget-&gt;price));
+  }
+
+  protected function getName()
+  {
+      return($this-&gt;name);
+  }
+}
+
+class Thing extends Widget
+{
+    private $color;
+
+    public function setColor($color)
+    {
+        $this-&gt;color = $color;
+    }
+
+    public function getColor()
+    {
+        return($this-&gt;color);
+    }
+
+    public function getName()
+    {
+        return(parent::getName());
+    }
+}
+
+  $w1 = new Widget('Cog', 5.00);
+  $w2 = new Thing('Cog', 5.00);
+  $w2-&gt;setColor('Yellow');
+
+  //TRUE (still!) 结果仍然为真
+  if($w1-&gt;equals($w2))
+  {
+      print("w1 and w2 are the same\n");
+  }
+
+  //print Cog 输出 Cog
+  print($w2-&gt;getName());
+</code></pre>
+
+<p>一个子类可能改变通过覆写父类方法来改变方法的访问方式,尽管如此,仍然有一些限制. 如果你覆写了一个public类成员,他子类中必须保持public. 如果你覆写了一个protected成员,它可保持protected或变成public.Private成员仍然只在当前类中可见. 声明一个与父类的private成员同名的成员将简单地在当前类中建立一个与原来不同的成员. 因此,在技术上你不能覆写一个private成员.</p>
+<p></p><h3><span id="不可覆写的final方法">不可覆写的final方法</span></h3><br>Final关键字是限制访问成员方法的另一个方法. 子类不能覆写父类中标识为final的方法. Final关键字不能用于属性.<p></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-php-mssql-note.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP+MSSQL折腾小记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/html-forms-how-to-use-js-to-set-style.html">
+        <span class="next-text nav-default">如何用js给html表单设置style</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-class-member-type-access-and-permissions.html';
+
+  var disqus_title = "PHP类成员类型、访问方式和权限";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

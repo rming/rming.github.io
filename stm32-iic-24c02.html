@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32 IIC读写AT24C02">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-iic-24c02.html">
+
+
+<meta name="description" content="IICIIC(Inter－Integrated Circuit) 总线是一种由PHILIPS 公司开发的两线式串行总线，用于连接微控制器及其外围设备。它是由数据线 SDA 和时钟SCL 构成的串行总线，可发送和接收数据。 在CPU 与被控IC 之间、IC 与IC 之间进行双向传送，高速 IIC 总线一般可达400kbps 以上。 I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：开始信号">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 IIC读写AT24C02">
+<meta property="og:url" content="http://rmingwang.com/stm32-iic-24c02.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="IICIIC(Inter－Integrated Circuit) 总线是一种由PHILIPS 公司开发的两线式串行总线，用于连接微控制器及其外围设备。它是由数据线 SDA 和时钟SCL 构成的串行总线，可发送和接收数据。 在CPU 与被控IC 之间、IC 与IC 之间进行双向传送，高速 IIC 总线一般可达400kbps 以上。 I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：开始信号">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32 IIC读写AT24C02">
+<meta name="twitter:description" content="IICIIC(Inter－Integrated Circuit) 总线是一种由PHILIPS 公司开发的两线式串行总线，用于连接微控制器及其外围设备。它是由数据线 SDA 和时钟SCL 构成的串行总线，可发送和接收数据。 在CPU 与被控IC 之间、IC 与IC 之间进行双向传送，高速 IIC 总线一般可达400kbps 以上。 I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：开始信号">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32 IIC读写AT24C02 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32 IIC读写AT24C02
+        
+      </h1>
+
+      <time class="post-time">
+          7月 25 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="iic">IIC</span></h2><br>IIC(Inter－Integrated Circuit) 总线是一种由PHILIPS 公司开发的两线式串行总线，用于连接微控制器及其外围设备。它是由数据线 SDA 和时钟SCL 构成的串行总线，可发送和接收数据。<p></p>
+<p>在CPU 与被控IC 之间、IC 与IC 之间进行双向传送，高速 IIC 总线一般可达400kbps 以上。</p>
+<p>I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：开始信号、结束信号和应答信号。</p>
+<p>开始信号：SCL 为高电平时，SDA 由高电平向低电平跳变，开始传送数据。</p>
+<p>结束信号：SCL 为高电平时，SDA 由低电平向高电平跳变，结束传送数据。</p>
+<p>应答信号：接收数据的IC 在接收到8bit 数据后，向发送数据的IC 发出特定的低电平脉冲，表示已收到数据。CPU 向受控单元发出一个信号后，等待受控单元发出一个应答信号，CPU接收到应答信号后，根据实际情况作出是否继续传递信号的判断。若未收到应答信号，由判断为受控单元出现故障。</p>
+<p>这些信号中，起始信号是必需的，结束信号和应答信号，都可以不要。</p>
+<p></p><h2><span id="eeprom">EEPROM</span></h2><br>AT24C01/AT24C02/AT24C04/AT24C08/AT24C16<p></p>
+<p>元件名称分别代表不同容量，如AT24C02该芯片的总容量是256 个字节(2kb)，其他类似。</p>
+<p>IIC总线上IIC 启动信号以后，需要发送一个8位设备地址，来使能IIC总线上与设备地址匹配的设备，匹配的设备会有一个”0”(ACK)应答，这样才能进行读写操作。</p>
+<p>一般所有的EEPROM设备地址前四位是固定的1010，接下来三位是设备地址（不同容量规则不同），然后最后一位数是读写使能位。</p>
+<p>AT24C01/AT24C02的设备地址 不需要设备地址，所以为 000 所以这两个芯片读是0XA1 写是0XA0</p>
+<p>目前大部分MCU都带有 IIC 总线接口，STM32也不例外。但是这里我们不使用 STM32的硬件IIC 来读写24C02 ，而是通过软件模拟。因为 STM32的IIC 实在太难用了，一个很简单的东西，ST的人把它弄得很复杂，不得不说STM32的IIC 很鸡肋。所以我们这里就通过模拟来实现了。</p>
+<p></p><h2><span id="程序设计">程序设计</span></h2><br>MAIN.C<p></p>
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;sys.h&quot;
+#include &quot;usart.h&quot;        
+#include &quot;delay.h&quot;    
+#include &quot;led.h&quot; 
+#include &quot;key.h&quot;
+#include &quot;exti.h&quot;
+#include &quot;wdg.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;lcd.h&quot;       
+#include &quot;rtc.h&quot;
+#include &quot;wkup.h&quot;
+#include &quot;adc.h&quot;
+#include &quot;dma.h&quot;
+#include &quot;24cxx.h&quot;
+//IIC 实验
+
+//要写入到24c02的字符串数组
+const u8 TEXT_Buffer[]={&quot;MiniSTM32 IIC TEST&quot;};
+#define SIZE sizeof(TEXT_Buffer)     
+int main(void)
+{        
+    u8 key;
+    u16 i=0;
+    u8 datatemp[SIZE];
+
+      Stm32_Clock_Init(9);//系统时钟设置
+    delay_init(72);        //延时初始化
+    uart_init(72,9600); //串口1初始化   
+    LED_Init();               //LED初始化
+    KEY_Init();               //按键初始化
+    LCD_Init();            //TFTLCD液晶初始化
+    AT24CXX_Init();        //IIC初始化 
+
+
+     POINT_COLOR=RED;//设置字体为蓝色       
+    LCD_ShowString(60,70,&quot;IIC TEST&quot;);             
+    while(AT24CXX_Check())//检测不到24c02
+    {
+        LCD_ShowString(60,130,&quot;24C02 Check Failed!&quot;);
+        delay_ms(500);
+        LCD_ShowString(60,130,&quot;Please Check!      &quot;);
+        delay_ms(500);
+        LED0=!LED0;//DS0闪烁
+    }
+    LCD_ShowString(60,130,&quot;24C02 Ready!&quot;);
+    //显示提示信息
+    LCD_ShowString(60,150,&quot;KEY0:Write KEY2:Read&quot;);
+
+    POINT_COLOR=BLUE;//设置字体为蓝色      
+    while(1)
+    {
+        key=KEY_Scan();
+        if(key==1)//KEY0按下,写入24C02
+        {
+            LCD_Fill(0,170,239,319,WHITE);//清除半屏    
+             LCD_ShowString(60,170,&quot;Start Write 24C02....&quot;);
+            AT24CXX_Write(0,(u8*)TEXT_Buffer,SIZE);
+            LCD_ShowString(60,170,&quot;24C02 Write Finished!&quot;);//提示传送完成
+        }
+        if(key==3)//KEY_UP按下,读取字符串并显示
+        {
+             LCD_ShowString(60,170,&quot;Start Read 24C02.... &quot;);
+            AT24CXX_Read(0,datatemp,SIZE);
+            LCD_ShowString(60,170,&quot;The Data Readed Is:  &quot;);//提示传送完成
+            LCD_ShowString(60,190,datatemp);//显示读到的字符串
+        }
+        i++;
+        delay_ms(10);
+        if(i==20)
+        {
+            LED0=!LED0;//提示系统正在运行    
+            i=0;
+        }           
+    }
+}
+
+</pre>
+MYIIC.C
+<pre class="brush: php; gutter: true">#include &quot;myiic.h&quot;
+#include &quot;delay.h&quot;
+//Mini STM32开发板
+//IIC 驱动函数       
+//初始化IIC
+void IIC_Init(void)
+{                         
+     RCC-&gt;APB2ENR|=1&lt;&lt;4;//先使能外设IO PORTC时钟                              
+    GPIOC-&gt;CRH&amp;=0XFFF00FFF;//PC11/12 推挽输出
+    GPIOC-&gt;CRH|=0X00033000;       
+    GPIOC-&gt;ODR|=3&lt;&lt;11;     //PC11,12 输出高
+}
+//产生IIC起始信号
+void IIC_Start(void)
+{
+    SDA_OUT();     //sda线输出
+    IIC_SDA=1;            
+    IIC_SCL=1;
+    delay_us(4);
+     IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
+    delay_us(4);
+    IIC_SCL=0;//钳住I2C总线，准备发送或接收数据 
+}      
+//产生IIC停止信号
+void IIC_Stop(void)
+{
+    SDA_OUT();//sda线输出
+    IIC_SCL=0;
+    IIC_SDA=0;//STOP:when CLK is high DATA change form low to high
+     delay_us(4);
+    IIC_SCL=1; 
+    IIC_SDA=1;//发送I2C总线结束信号
+    delay_us(4);                                   
+}
+//等待应答信号到来
+//返回值：1，接收应答失败
+//        0，接收应答成功
+u8 IIC_Wait_Ack(void)
+{
+    u8 ucErrTime=0;
+    SDA_IN();      //SDA设置为输入  
+    IIC_SDA=1;delay_us(1);       
+    IIC_SCL=1;delay_us(1);     
+    while(READ_SDA)
+    {
+        ucErrTime++;
+        if(ucErrTime&gt;250)
+        {
+            IIC_Stop();
+            return 1;
+        }
+    }
+    IIC_SCL=0;//时钟输出0        
+    return 0;  
+} 
+//产生ACK应答
+void IIC_Ack(void)
+{
+    IIC_SCL=0;
+    SDA_OUT();
+    IIC_SDA=0;
+    delay_us(2);
+    IIC_SCL=1;
+    delay_us(2);
+    IIC_SCL=0;
+}
+//不产生ACK应答            
+void IIC_NAck(void)
+{
+    IIC_SCL=0;
+    SDA_OUT();
+    IIC_SDA=1;
+    delay_us(2);
+    IIC_SCL=1;
+    delay_us(2);
+    IIC_SCL=0;
+}                                          
+//IIC发送一个字节
+//返回从机有无应答
+//1，有应答
+//0，无应答              
+void IIC_Send_Byte(u8 txd)
+{                        
+    u8 t;   
+    SDA_OUT();         
+    IIC_SCL=0;//拉低时钟开始数据传输
+    for(t=0;t&lt;8;t++)
+    {              
+        IIC_SDA=(txd&amp;0x80)&gt;&gt;7;
+        txd&lt;&lt;=1;       
+        delay_us(2);   //对TEA5767这三个延时都是必须的
+        IIC_SCL=1;
+        delay_us(2); 
+        IIC_SCL=0;    
+        delay_us(2);
+    }     
+}         
+//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   
+u8 IIC_Read_Byte(unsigned char ack)
+{
+    unsigned char i,receive=0;
+    SDA_IN();//SDA设置为输入
+    for(i=0;i&lt;8;i++ )
+    {
+        IIC_SCL=0; 
+        delay_us(2);
+        IIC_SCL=1;
+        receive&lt;&lt;=1;
+        if(READ_SDA)receive++;   
+        delay_us(1); 
+    }                     
+    if (!ack)
+        IIC_NAck();//发送nACK
+    else
+        IIC_Ack(); //发送ACK   
+    return receive;
+}</pre>
+MYIIC.H
+<pre class="brush: php; gutter: true">#ifndef __MYIIC_H
+#define __MYIIC_H
+#include &quot;sys.h&quot;
+//IIC 驱动函数       
+
+//IO方向设置
+#define SDA_IN()  {GPIOC-&gt;CRH&amp;=0XFFFF0FFF;GPIOC-&gt;CRH|=8&lt;&lt;12;}
+#define SDA_OUT() {GPIOC-&gt;CRH&amp;=0XFFFF0FFF;GPIOC-&gt;CRH|=3&lt;&lt;12;}
+
+//IO操作函数     
+#define IIC_SCL    PCout(12) //SCL
+#define IIC_SDA    PCout(11) //SDA     
+#define READ_SDA   PCin(11)  //输入SDA 
+
+//IIC所有操作函数
+void IIC_Init(void);                //初始化IIC的IO口                 
+void IIC_Start(void);                //发送IIC开始信号
+void IIC_Stop(void);                  //发送IIC停止信号
+void IIC_Send_Byte(u8 txd);            //IIC发送一个字节
+u8 IIC_Read_Byte(unsigned char ack);//IIC读取一个字节
+u8 IIC_Wait_Ack(void);                 //IIC等待ACK信号
+void IIC_Ack(void);                    //IIC发送ACK信号
+void IIC_NAck(void);                //IIC不发送ACK信号
+
+void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+u8 IIC_Read_One_Byte(u8 daddr,u8 addr);      
+#endif</pre>
+24CXX.C
+<pre class="brush: php; gutter: true">#include &quot;24cxx.h&quot; 
+#include &quot;delay.h&quot; 
+//24CXX驱动函数(适合24C01~24C16,24C32~256未经过测试!有待验证!)       
+//初始化IIC接口
+void AT24CXX_Init(void)
+{
+    IIC_Init();
+}
+//在AT24CXX指定地址读出一个数据
+//ReadAddr:开始读数的地址  
+//返回值  :读到的数据
+u8 AT24CXX_ReadOneByte(u16 ReadAddr)
+{                  
+    u8 temp=0;                                                                                   
+    IIC_Start();  
+    if(EE_TYPE&gt;AT24C16)
+    {
+        IIC_Send_Byte(0XA0);       //发送写命令
+        IIC_Wait_Ack();
+        IIC_Send_Byte(ReadAddr&gt;&gt;8);//发送高地址        
+    }else IIC_Send_Byte(0XA0+((ReadAddr/256)&lt;&lt;1));   //发送器件地址0XA0,写数据        
+    IIC_Wait_Ack(); 
+    IIC_Send_Byte(ReadAddr%256);   //发送低地址
+    IIC_Wait_Ack();        
+    IIC_Start();              
+    IIC_Send_Byte(0XA1);           //进入接收模式               
+    IIC_Wait_Ack();     
+    temp=IIC_Read_Byte(0);           
+    IIC_Stop();//产生一个停止条件        
+    return temp;
+}
+//在AT24CXX指定地址写入一个数据
+//WriteAddr  :写入数据的目的地址    
+//DataToWrite:要写入的数据
+void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite)
+{                                                                                                  
+    IIC_Start();  
+    if(EE_TYPE&gt;AT24C16)
+    {
+        IIC_Send_Byte(0XA0);        //发送写命令
+        IIC_Wait_Ack();
+        IIC_Send_Byte(WriteAddr&gt;&gt;8);//发送高地址      
+    }else IIC_Send_Byte(0XA0+((WriteAddr/256)&lt;&lt;1));   //发送器件地址0XA0,写数据      
+    IIC_Wait_Ack();       
+    IIC_Send_Byte(WriteAddr%256);   //发送低地址
+    IIC_Wait_Ack();                                                           
+    IIC_Send_Byte(DataToWrite);     //发送字节                               
+    IIC_Wait_Ack();                     
+    IIC_Stop();//产生一个停止条件 
+    delay_ms(10);     
+}
+//在AT24CXX里面的指定地址开始写入长度为Len的数据
+//该函数用于写入16bit或者32bit的数据.
+//WriteAddr  :开始写入的地址  
+//DataToWrite:数据数组首地址
+//Len        :要写入数据的长度2,4
+void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len)
+{      
+    u8 t;
+    for(t=0;t&lt;Len;t++)
+    {
+        AT24CXX_WriteOneByte(WriteAddr+t,(DataToWrite&gt;&gt;(8*t))&amp;0xff);
+    }                                                    
+}
+
+//在AT24CXX里面的指定地址开始读出长度为Len的数据
+//该函数用于读出16bit或者32bit的数据.
+//ReadAddr   :开始读出的地址 
+//返回值     :数据
+//Len        :要读出数据的长度2,4
+u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len)
+{      
+    u8 t;
+    u32 temp=0;
+    for(t=0;t&lt;Len;t++)
+    {
+        temp&lt;&lt;=8;
+        temp+=AT24CXX_ReadOneByte(ReadAddr+Len-t-1);                         
+    }
+    return temp;                                                    
+}
+//检查AT24CXX是否正常
+//这里用了24XX的最后一个地址(255)来存储标志字.
+//如果用其他24C系列,这个地址要修改
+//返回1:检测失败
+//返回0:检测成功
+u8 AT24CXX_Check(void)
+{
+    u8 temp;
+    temp=AT24CXX_ReadOneByte(255);//避免每次开机都写AT24CXX               
+    if(temp==0X55)return 0;           
+    else//排除第一次初始化的情况
+    {
+        AT24CXX_WriteOneByte(255,0X55);
+        temp=AT24CXX_ReadOneByte(255);      
+        if(temp==0X55)return 0;
+    }
+    return 1;                                              
+}
+
+//在AT24CXX里面的指定地址开始读出指定个数的数据
+//ReadAddr :开始读出的地址 对24c02为0~255
+//pBuffer  :数据数组首地址
+//NumToRead:要读出数据的个数
+void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead)
+{
+    while(NumToRead)
+    {
+        *pBuffer++=AT24CXX_ReadOneByte(ReadAddr++);    
+        NumToRead--;
+    }
+}  
+//在AT24CXX里面的指定地址开始写入指定个数的数据
+//WriteAddr :开始写入的地址 对24c02为0~255
+//pBuffer   :数据数组首地址
+//NumToWrite:要写入数据的个数
+void AT24CXX_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite)
+{
+    while(NumToWrite--)
+    {
+        AT24CXX_WriteOneByte(WriteAddr,*pBuffer);
+        WriteAddr++;
+        pBuffer++;
+    }
+}</pre>
+24CXX.H
+<pre class="brush: php; gutter: true">#ifndef __24CXX_H
+#define __24CXX_H
+#include &quot;myiic.h&quot;   
+//24CXX驱动函数(适合24C01~24C16,24C32~256未经过测试!有待验证!)       
+
+#define AT24C01        127
+#define AT24C02        255
+#define AT24C04        511
+#define AT24C08        1023
+#define AT24C16        2047
+#define AT24C32        4095
+#define AT24C64        8191
+#define AT24C128    16383
+#define AT24C256    32767  
+//Mini STM32开发板使用的是24c02，所以定义EE_TYPE为AT24C02
+#define EE_TYPE AT24C02
+
+u8 AT24CXX_ReadOneByte(u16 ReadAddr);                            //指定地址读取一个字节
+void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite);        //指定地址写入一个字节
+void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);//指定地址开始写入指定长度的数据
+u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len);                    //指定地址开始读取指定长度数据
+void AT24CXX_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite);    //从指定地址开始写入指定长度的数据
+void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);       //从指定地址开始读出指定长度的数据
+
+u8 AT24CXX_Check(void);  //检查器件
+void AT24CXX_Init(void); //初始化IIC
+#endif</pre>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/network-tcp-ip-enc28j60.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">网络通信之TCP/IP数据包的封装和ENC28J60的功能</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-temperate.html">
+        <span class="next-text nav-default">STM32 内部温度传感器</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-iic-24c02.html';
+
+  var disqus_title = "STM32 IIC读写AT24C02";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP中static静态变量的使用方法详解">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-static-variable.html">
+
+
+<meta name="description" content="php中static静态变量的使用方法详解  php中的变量作用范围的另一个重要特性就是静态变量（static 变量）。静态变量仅在局部函数域中存在且只被初始化一次,当程序执行离开此作用域时，其值不会消失,会使用上次执行的结果。  编程实例：  123456789&amp;#123;   static $aa = 0;   return $aa++;&amp;#125; $aa = &amp;quot;1000&amp;quot">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP中static静态变量的使用方法详解">
+<meta property="og:url" content="http://rmingwang.com/php-static-variable.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="php中static静态变量的使用方法详解  php中的变量作用范围的另一个重要特性就是静态变量（static 变量）。静态变量仅在局部函数域中存在且只被初始化一次,当程序执行离开此作用域时，其值不会消失,会使用上次执行的结果。  编程实例：  123456789&amp;#123;   static $aa = 0;   return $aa++;&amp;#125; $aa = &amp;quot;1000&amp;quot">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-26T02:08:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP中static静态变量的使用方法详解">
+<meta name="twitter:description" content="php中static静态变量的使用方法详解  php中的变量作用范围的另一个重要特性就是静态变量（static 变量）。静态变量仅在局部函数域中存在且只被初始化一次,当程序执行离开此作用域时，其值不会消失,会使用上次执行的结果。  编程实例：  123456789&amp;#123;   static $aa = 0;   return $aa++;&amp;#125; $aa = &amp;quot;1000&amp;quot">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP中static静态变量的使用方法详解 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP中static静态变量的使用方法详解
+        
+      </h1>
+
+      <time class="post-time">
+          7月 26 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="php中static静态变量的使用方法详解">php中static静态变量的使用方法详解</span></h2>
+
+<p>php中的变量作用范围的另一个重要特性就是静态变量（static 变量）。静态变量仅在局部函数域中存在且只被初始化一次,当程序执行离开此作用域时，其值不会消失,会使用上次执行的结果。</p>
+
+<p>编程实例：</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">  static $aa = 0; </span><br><span class="line">  return $aa++;</span><br><span class="line">&#125; </span><br><span class="line">$aa = &quot;1000&quot;;</span><br><span class="line">echo $aa;</span><br><span class="line">echo test();</span><br><span class="line">echo test();</span><br><span class="line">echo $aa;</span><br></pre></td></tr></table></figure>
+<p>本函数每调用test()都会输出 $aa的值并加一。<br><br>上文代码运行输出：</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1000</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">1000</span><br></pre></td></tr></table></figure>
+<p>静态变量也提供了一种处理递归函数的方法。递归函数是一种自己调用自己的方法。写递归函数时要小心，因为可能会无穷递归下去,没有出口.务必确保 有方法来中止递归。</p>
+
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-private-public-class.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP的静态绑定和动态绑定(private/public)</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-pdo-notes.html">
+        <span class="next-text nav-default">PHP PDO 笔记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-static-variable.html';
+
+  var disqus_title = "PHP中static静态变量的使用方法详解";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

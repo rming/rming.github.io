@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32外部中断管理">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/the-stm32-external-interrupt-management.html">
+
+
+<meta name="description" content="STM32外部中断STM32的EXTI控制器支持19 个外部中断/ 事件请求。每个中断设有状态位，每个中断/ 事件都有独立的触发和屏蔽设置。STM32的19 个外部中断为：线0~15：对应外部 IO口的输入中断。线16：连接到 PVD 输出。线17：连接到 RTC 闹钟事件。线18：连接到 USB 唤醒事件。 EXTI控制器的结构体： typedef struct{  vu32 IMR;  vu3">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32外部中断管理">
+<meta property="og:url" content="http://rmingwang.com/the-stm32-external-interrupt-management.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="STM32外部中断STM32的EXTI控制器支持19 个外部中断/ 事件请求。每个中断设有状态位，每个中断/ 事件都有独立的触发和屏蔽设置。STM32的19 个外部中断为：线0~15：对应外部 IO口的输入中断。线16：连接到 PVD 输出。线17：连接到 RTC 闹钟事件。线18：连接到 USB 唤醒事件。 EXTI控制器的结构体： typedef struct{  vu32 IMR;  vu3">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32外部中断管理">
+<meta name="twitter:description" content="STM32外部中断STM32的EXTI控制器支持19 个外部中断/ 事件请求。每个中断设有状态位，每个中断/ 事件都有独立的触发和屏蔽设置。STM32的19 个外部中断为：线0~15：对应外部 IO口的输入中断。线16：连接到 PVD 输出。线17：连接到 RTC 闹钟事件。线18：连接到 USB 唤醒事件。 EXTI控制器的结构体： typedef struct{  vu32 IMR;  vu3">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32外部中断管理 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32外部中断管理
+        
+      </h1>
+
+      <time class="post-time">
+          7月 18 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="stm32外部中断"><span style="color: #ff0000;"><strong>STM32外部中断</strong></span></span></h2><br>STM32的<strong>EXTI控制器</strong>支持<strong>19 个外部中断/ 事件请求</strong>。每个中断设有状态位，每个中断/ 事件都有独立的触发和屏蔽设置。STM32的19 个外部中断为：<br>线0~15：对应外部 IO口的输入中断。<br>线16：连接到 PVD 输出。<br>线17：连接到 RTC 闹钟事件。<br>线18：连接到 USB 唤醒事件。<p></p>
+<p></p><h4><span id="exti控制器的结构体">EXTI控制器的结构体：</span></h4><p></p>
+<p><pre>typedef struct<br>{<br>  vu32 IMR;<br>  vu32 EMR;<br>  vu32 RTSR;<br>  vu32 FTSR;<br>  vu32 SWIER;<br>  vu32 PR;<br>} EXTI_TypeDef;</pre><br><strong>IMR：中断屏蔽寄存器</strong></p>
+<p>这是一个 32 寄存器。但是只有前 19 位有效。当位 x 设置为1 时，则开启这个线上的中断，否则关闭该线上的中断。</p>
+<p><strong>EMR：事件屏蔽寄存器</strong></p>
+<p><strong></strong>同IMR ，只是该寄存器是针对事件的屏蔽和开启。</p>
+<p><strong>RTSR：上升沿触发选择寄存器</strong></p>
+<p><strong></strong>该寄存器同IMR ，也是一个32为的寄存器，只有前 19位有效。位 x 对应线x 上的上升沿触发，如果设置为 1 ，则是允许上升沿触发中断/ 事件。否则，不允许。</p>
+<p><strong>FTSR：下降沿触发选择寄存器</strong></p>
+<p><strong></strong>同 PTSR，不过这个寄存器是设置下降沿的。下降沿和上升沿可以被同时设置，这样就变成了任意电平触发了。</p>
+<p><strong>SWIER：软件中断事件寄存器</strong></p>
+<p>通过向该寄存器的位x 写入 1 ，在未设置 IMR 和EMR的时候，将设置PR中相应位挂起。如果设置了IMR 和EMR时将产生一次中断。被设置的SWIER位，将会在PR中的对应位清除后清除。</p>
+<p><strong> PR：挂起寄存器</strong></p>
+<p><strong></strong>当外部中断线上发生了选择的边沿事件，该寄存器的对应位会被置为1 。</p>
+<p>0 ，表示对应线上没有发生触发请求。通过向该寄存器的对应位写入 1 可以清除该位。在中断服<br>务函数里面经常会要向该寄存器的对应位写1 来清除中断请求。</p>
+<p>EXTICR寄存器组，总共有4 个，因为编译器的寄存器组都是从0 开始编号的，所以EXTICR[0]~ EXTICR[3]，对应《STM32参考手册》里的 EXTICR1~ EXTICR 4。每个 EXTICR只用了其低16 位。EXTICR[0] 的分配如下：</p>
+<p>比如如我要设置GPIOB.1 映射到1 ，则只要设置EXTICR[0] 的bit[7:4]为0001即可。默认都是0000 即映射到 GPIOA。从图 5.7 中可以看出，EXTICR[0] 只管了GPIO的0~3 端口，相应的其他端口由EXTICR[1~3] 管理。</p>
+<p></p><h4><span id="外部中断配置函数"><strong><span style="color: #ff0000;">外部中断配置函数<br></span></strong></span></h4><p></p>
+<p><pre class="brush: php; gutter: true">// 外部中断配置函数<br>// 只针对GPIOA~G;不包括PVD ，RTC 和USB 唤醒这三个<br>// 参数:GPIOx:0~6 ，代表 GPIOA~G;BITx: 需要使能的位;TRIM:触发模式，1 ，下升沿;2 ，上降沿;3 ，<br>任意电平触发<br>// 该函数一次只能配置 1 个IO口，多个IO口，需多次调用<br>// 该函数会自动开启对应中断，以及屏蔽线<br>void Ex_NVIC_Config(u8 GPIOx ，u8 BITx，u8 TRIM)<br>{<br> u8 EXTADDR;<br> u8 EXTOFFSET;<br> EXTADDR=BITx/4;//得到中断寄存器组的编号<br> EXTOFFSET=(BITx%4)*4; </pre></p>
+<p> RCC-&gt;APB2ENR|=0x01;//使能io 复用时钟<br> AFIO-&gt;EXTICR[EXTADDR]|=GPIOx&lt;&lt;EXTOFFSET;//EXTI.BITx映射到GPIOx.BITx </p>
+<p> //自动设置<br> EXTI-&gt;IMR|=1&lt;&lt;BITx;//  开启line BITx 上的中断<br> EXTI-&gt;EMR|=1&lt;&lt;BITx;//不屏蔽li ne BITx 上的事件<br> if(TRIM&amp;0x01)EXTI-&gt;FTSR |=1&lt;&lt;BITx;//line BITx 上事件下降沿触发<br> if(TRIM&amp;0x02)EXTI-&gt;RTSR|=1&lt;&lt;BITx;//line BITx上事件上升降沿触发<br>}<br><span style="color: #ff0000;">GPIOx 为GPIOA~G（0~6 ）</span>，在 sys.h里面有定义。代表要配置的 IO口。BITx则代表这个<span style="color: #ff0000;">IO口的第几位</span>。<span style="color: #ff0000;">TRIM 为触发方式</span>，低 2 位有效（0x01代表下降触发；0x02 代表上升沿触发；0x03代表任意电平触发）。</p>
+<p>Ex_NVIC_Config完全是按照我们之前的分析来编写的，首先根据<strong> GPIOx 的位得到中断寄存器组的编号</strong>，即 EXTICR 的编号，在 EXTICR 里面<strong><span style="color: #ff0000;">配置中断线应该配置到GPIOx 的哪个位</span></strong>。然后<strong><span style="color: #ff0000;">使能该位的中断及事件</span></strong>，最后<span style="color: #ff0000;"><strong>配置触发方式</strong></span>。这样就完成了外部中断的的配置了。从代码中可以看到该函数默认是开启中断和事件的。其次还要注意的一点就是<strong>该函数一次只能配置一个IO口，如果你有多个IO口需要配置，则多次调用这个函数就可以了</strong>。</p>
+<p></p><h2><span id="一个外部中断调用实例"><span style="color: #000000;">一个外部中断调用实例</span></span></h2><br>大概的步骤：<p></p>
+<p>1、初始化IO口味输入</p>
+<p>2、开启IO口复用时钟，设置IO口与中断线的映射关系</p>
+<p>3、开启与该IO口相对的线上的中断/时间，设置触发条件</p>
+<p>4、配置中断分组（NVIC），并使能中断</p>
+<p>5、编写中断服务程序</p>
+<p>//EXTI.C</p>
+<p><pre class="brush: php; gutter: true">#include &quot;exti.h&quot; </pre></p>
+<p>#include &quot;led.h&quot; </p>
+<p>#include &quot;key.h&quot; </p>
+<p>#include &quot;delay.h&quot; </p>
+<p>#include &quot;usart.h&quot;<br>// 外部中断  驱动代码<br>// 外部中断0 服务程序<br>void EXTI0_IRQHandler(void)<br>{<br>    delay_ms(10);//消抖<br>    if(KEY2==1)  //按键 2<br>    {<br>    LED0=!LED0;<br>    LED1=!LED1;<br>    }<br>    EXTI-&gt;PR=1&lt;&lt;0;  //清除 LINE0 上的中断标志位<br>} </p>
+<p>// 外部中断15~10 服务程序<br>void EXTI15_10_IRQHandler(void)<br>{<br>    delay_ms(10);    // 消抖<br>    if(KEY0==0)      //按键0<br>     {<br>        LED0=!LED0;<br>    }else if(KEY1==0)//按键1<br>    {<br>        LED1=!LED1;<br>    }<br>    EXTI-&gt;PR=1&lt;&lt;13;     // 清除LINE13上的中断标志位<br>    EXTI-&gt;PR=1&lt;&lt;15;     // 清除LINE15上的中断标志位<br>}<br>// 外部中断初始化程序<br>// 初始化PA0,PA13,PA15 为中断输入.<br>void extix_init(void)<br>{<br>    RCC-&gt;APB2ENR|=1&lt;&lt;2;     // 使能PORTA时钟<br>    JTAG_Set(JTAG_SWD_DISABLE);//关闭 JTAG 和SWD    </p>
+<pre><code>GPIOA-&amp;gt;CRL&amp;amp;=0XFFFFFFF0;//PA0设置成输入     
+GPIOA-&amp;gt;CRL|=0X00000008;    
+GPIOA-&amp;gt;CRH&amp;amp;=0X0F0FFFFF;//PA13,15设置成输入     
+GPIOA-&amp;gt;CRH|=0X80800000;         
+GPIOA-&amp;gt;ODR|=1&amp;lt;&amp;lt;13;    //PA13 上拉,PA0 默认下拉 
+GPIOA-&amp;gt;ODR|=1&amp;lt;&amp;lt;15;    //PA15 上拉 
+
+Ex_NVIC_Config(GPIO_A,0,RTIR); //上升沿触发 
+Ex_NVIC_Config(GPIO_A,13,FTIR);//下降沿触发 
+Ex_NVIC_Config(GPIO_A,15,FTIR);//下降沿触发 
+
+MY_NVIC_Init(2,2,EXTI0_IRQChannel,2);    // 抢占 2 ，子优先级 2 ，组2 
+MY_NVIC_Init(2,1,EXTI15_10_IRQChannel,2);//抢占 2 ，子优先级 1 ，组2     
+</code></pre><p>}<br>&nbsp;</p>
+<p>MAIN.C</p>
+<p><pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;</pre></p>
+<p>#include &quot;sys.h&quot;</p>
+<p>#include &quot;usart.h&quot;</p>
+<p>#include &quot;delay.h&quot;</p>
+<p>#include &quot;led.h&quot;</p>
+<p>#include &quot;key.h&quot;</p>
+<p>#include &quot;exti.h&quot;<br>int main(void)<br>{<br>Stm32_Clock_Init(9); // 系统时钟设置<br>delay_init(72); //延时初始化<br>uart_init(72,9600); //串口初始化<br>led_init(); //初始化与 LED 连接的硬件接口<br>extix_init(); //外部中断初始化<br>while(1)<br>{<br>printf(&quot;OK<br>&quot;);<br>delay_ms(1000);<br>}<br>}<br>&nbsp;</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/stm32-iwdg.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32独立看门狗（IWDG）</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/the-stm32-nvic-interrupt-management.html">
+        <span class="next-text nav-default">stm32 NVIC中断管理实现</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/the-stm32-external-interrupt-management.html';
+
+  var disqus_title = "STM32外部中断管理";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

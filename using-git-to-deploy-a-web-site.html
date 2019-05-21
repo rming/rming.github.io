@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="使用Git来部署一个Web站点笔记">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/using-git-to-deploy-a-web-site.html">
+
+
+<meta name="description" content="远程仓库实际上和本地仓库没啥不同，纯粹为了7x24小时开机并交换大家的修改。GitHub就是一个免费托管开源代码的远程仓库，如果你既不想公开源代码，又舍不得给GitHub交保护费，那就只能自己搭建一台Git服务器作为私有仓库使用。  下面我们以ubuntu server为例，介绍一下如何使用Git来管理项目代码，并且部署代码的web站点目录。 1. 准备工作： 1台拥有SSH权限的服务器 （LN">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Git来部署一个Web站点笔记">
+<meta property="og:url" content="http://rmingwang.com/using-git-to-deploy-a-web-site.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="远程仓库实际上和本地仓库没啥不同，纯粹为了7x24小时开机并交换大家的修改。GitHub就是一个免费托管开源代码的远程仓库，如果你既不想公开源代码，又舍不得给GitHub交保护费，那就只能自己搭建一台Git服务器作为私有仓库使用。  下面我们以ubuntu server为例，介绍一下如何使用Git来管理项目代码，并且部署代码的web站点目录。 1. 准备工作： 1台拥有SSH权限的服务器 （LN">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-04-20T06:33:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Git来部署一个Web站点笔记">
+<meta name="twitter:description" content="远程仓库实际上和本地仓库没啥不同，纯粹为了7x24小时开机并交换大家的修改。GitHub就是一个免费托管开源代码的远程仓库，如果你既不想公开源代码，又舍不得给GitHub交保护费，那就只能自己搭建一台Git服务器作为私有仓库使用。  下面我们以ubuntu server为例，介绍一下如何使用Git来管理项目代码，并且部署代码的web站点目录。 1. 准备工作： 1台拥有SSH权限的服务器 （LN">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 使用Git来部署一个Web站点笔记 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          使用Git来部署一个Web站点笔记
+        
+      </h1>
+
+      <time class="post-time">
+          4月 19 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>远程仓库实际上和本地仓库没啥不同，纯粹为了7x24小时开机并交换大家的修改。<br>GitHub就是一个免费托管开源代码的远程仓库，如果你既不想公开源代码，又舍不得给GitHub交保护费，那就只能自己搭建一台Git服务器作为私有仓库使用。</p>
+</blockquote>
+<p>下面我们以ubuntu server为例，介绍一下如何使用Git来管理项目代码，并且部署代码的web站点目录。</p>
+<h2><span id="1-准备工作">1. 准备工作：</span></h2><ul>
+<li>1台拥有SSH权限的服务器 （<strong>LNMP,git,ssh安装配置</strong>）</li>
+<li>一台装有git客户端的PC (<strong>本文实际在windows下的msysgit操作</strong>)</li>
+</ul>
+<p>LNMP,git,ssh安装配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    # 安装LNMP</span><br><span class="line">    $ wget -c http://soft.vpser.net/lnmp/lnmp1.0-full.tar.gz &amp;&amp; tar zxvf lnmp1.0-full.tar.gz &amp;&amp; cd lnmp1.0-full &amp;&amp; ./ubuntu.sh</span><br><span class="line">    # 安装Git ssh</span><br><span class="line">    $ sudo apt-get install git git-core  ssh</span><br><span class="line">windows下安装 **[msysgit][1]**</span><br></pre></td></tr></table></figure>
+<h2><span id="2在你的web服务器上建立git裸仓库-编写hooks-导入用户公钥-设置目录权限">2.在你的web服务器上建立git裸仓库、编写hooks、导入用户公钥、设置目录权限</span></h2><p><strong>在服务器上建立一个用户，这里命名为git，修改git的密码，并禁用shell登录</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo useradd  git</span><br><span class="line"># 修改git的密码</span><br><span class="line">$ passwd git</span><br><span class="line"># 禁用shell登录</span><br><span class="line">$ sudo vi /etc/passwd</span><br><span class="line">修改</span><br><span class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</span><br><span class="line">为</span><br><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
+<p> 这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。</p>
+<p><strong>初始化Git仓库，建立git 裸仓库，设置hook脚本（web目录需要git用户有权限，否则git的hook脚本将没有办法执行操作）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt </span><br><span class="line">$ mkdir git</span><br><span class="line">$ cd git</span><br><span class="line">$ sudo git init --bare demosite.git</span><br><span class="line"># 文件夹权限</span><br><span class="line">$ sudo chown -R git:git demosite.git</span><br><span class="line">$ cd /demosite.git/hooks</span><br><span class="line">$ sudo vi post-receive</span><br><span class="line">写入以下内容</span><br><span class="line">#!/bin/sh</span><br><span class="line">GIT_WORK_TREE=/home/wwwroot/www.demosite.com  git checkout -f</span><br><span class="line"># 写入权限</span><br><span class="line">$ chmod +x post-receive</span><br><span class="line"># 建立web目录，如果目录不存在，git不会创建目录的</span><br><span class="line">$ mkdir /home/wwwroot/www.demosite.com  -p</span><br><span class="line"># web目录的文件夹权限</span><br><span class="line">$ sudo chown -R git:git /home/wwwroot/www.demosite.com</span><br></pre></td></tr></table></figure>
+<p><strong>创建证书登录</strong></p>
+<p>收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。<br>客户端用户证书生成请参考下文。</p>
+<p>##3.在git客户端生成公钥、导入服务器、coding 、add、commit、push<br><strong>生成公钥，导入服务器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;</span><br><span class="line">一路回车或者设置密码</span><br><span class="line">windows下回提示在哪里生成了密钥</span><br><span class="line">windows8下提示在C:\Users\username\.ssh 下，linux的话会在~/.ssh下</span><br><span class="line">进入目录，打开id_rsa.pub，复制里面的key，添加到上文提到的web服务器的/home/git/.ssh/authorized_keys里。</span><br></pre></td></tr></table></figure>
+<p><strong>clone coding add commit push</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@serverip:/opt/git/demosite.git</span><br><span class="line">Cloning into &apos;demosite&apos;...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br><span class="line">$ cat &apos;hello world!&apos; &gt; index.html</span><br><span class="line">$ git add index.html</span><br><span class="line">$ git commit -m&apos;first commit&apos;</span><br><span class="line">$ git remote add origin ssh://git@serverip:/opt/git/demosite.git</span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>这里使用公钥来做权限验证，运行git里的hook的脚本权限为git用户的权限，当然你也可以使用自己在server上的用户来进行git操作，前面对于git用户的操作和客户端公钥的生成则可以省略，在git上脚本的执行权限则是你登录用户的权限，相应的origin的设置应该为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin ssh://yourusername@serverip:/opt/git/demosite.git</span><br></pre></td></tr></table></figure>
+<p>这时候每次push将需要输入密码验证。</p>
+<p><strong>忽略某些文件</strong><br>你可以在你的顶层工作目录中添加一个叫”.gitignore”的文件，来告诉Git系统要忽略 掉哪些文件，下面是文件内容的示例:<br>使”git add .” 和”git commit -a” 变得实际可用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 以&apos;#&apos; 开始的行，被视为注释.</span><br><span class="line"># 忽略掉所有文件名是 foo.txt 的文件.</span><br><span class="line">foo.txt</span><br><span class="line"># 忽略所有生成的 html 文件,</span><br><span class="line">*.html</span><br><span class="line"># foo.html是手工维护的，所以例外.</span><br><span class="line">!foo.html</span><br><span class="line">#  忽略所有.o 和 .a文件.</span><br><span class="line">*.[oa]</span><br><span class="line">#Eclipse</span><br><span class="line">.settings/*</span><br><span class="line">.buildpath</span><br><span class="line">.project</span><br></pre></td></tr></table></figure>
+<h2><span id="gtgt文章参考ltlt">&gt;&gt;文章参考&lt;&lt;</span></h2><ul>
+<li><a href="http://toroid.org/ams/git-website-howto" target="_blank" rel="noopener">Using Git to manage a web site</a></li>
+<li><a href="http://christian.skala.me/blog/using-git-to-deploy-a-web-site" target="_blank" rel="noopener">USING GIT TO DEPLOY A WEB SITE</a></li>
+<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="noopener">搭建Git服务器</a></li>
+<li><a href="http://www.cnblogs.com/trying/archive/2012/06/28/2863758.html" target="_blank" rel="noopener">搭建Git本地服务器</a></li>
+<li><a href="http://ftqq.com/2014/04/using-git-as-web-publish-tools/" target="_blank" rel="noopener">利用Hook把Git当网站发布工具用</a></li>
+<li><a href="http://stackoverflow.com/questions/7506832/git-push-origin-masterrefs-heads-master-what-does-this-do" target="_blank" rel="noopener">git push origin master:refs/heads/master what does this do</a></li>
+<li><a href="http://gitbook.liuhui998.com/4_1.html" target="_blank" rel="noopener">Git Community Book 中文版-忽略某些文件</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-slowlog-mysql-slowlog.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP慢脚本日志和Mysql的慢查询日志</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/install-nginx-third-modules-http_sub_module.html">
+        <span class="next-text nav-default">Nginx编译安装第三方模块http_substitutions_filter_module</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/using-git-to-deploy-a-web-site.html';
+
+  var disqus_title = "使用Git来部署一个Web站点笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

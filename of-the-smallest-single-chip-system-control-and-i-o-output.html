@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="单片机最小系统组成与I/O输出控制">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/of-the-smallest-single-chip-system-control-and-i-o-output.html">
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;单片机是一门实践性较强的技术，很多初学者在学习单片机技术开发的时候往往一头雾水，不知何从下手。为此，笔者结合自己使用单片机多年的经验，特意设计了单片机开发所需的Study-c 整机和硬件套件，并结合套件精心编写了单片机从入门到精通系列教程。通过讲述单片机原理、电路设计、应用开发软件工具、编写实验实例让读者全面接触单片机技术。教程编排上由浅入深，循序渐进，内容力求完整、实用、">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单片机最小系统组成与I&#x2F;O输出控制">
+<meta property="og:url" content="http://rmingwang.com/of-the-smallest-single-chip-system-control-and-i-o-output.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;单片机是一门实践性较强的技术，很多初学者在学习单片机技术开发的时候往往一头雾水，不知何从下手。为此，笔者结合自己使用单片机多年的经验，特意设计了单片机开发所需的Study-c 整机和硬件套件，并结合套件精心编写了单片机从入门到精通系列教程。通过讲述单片机原理、电路设计、应用开发软件工具、编写实验实例让读者全面接触单片机技术。教程编排上由浅入深，循序渐进，内容力求完整、实用、">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单片机最小系统组成与I&#x2F;O输出控制">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;单片机是一门实践性较强的技术，很多初学者在学习单片机技术开发的时候往往一头雾水，不知何从下手。为此，笔者结合自己使用单片机多年的经验，特意设计了单片机开发所需的Study-c 整机和硬件套件，并结合套件精心编写了单片机从入门到精通系列教程。通过讲述单片机原理、电路设计、应用开发软件工具、编写实验实例让读者全面接触单片机技术。教程编排上由浅入深，循序渐进，内容力求完整、实用、">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 单片机最小系统组成与I/O输出控制 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          单片机最小系统组成与I/O输出控制
+        
+      </h1>
+
+      <time class="post-time">
+          1月 2 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>&emsp;&emsp;单片机是一门实践性较强的技术，很多初学者在学习单片机技术开发的时候往往一头雾水，不知何从下手。为此，笔者结合自己使用单片机多年的经验，特意设计了单片机开发所需的Study-c 整机和硬件套件，并结合套件精心编写了单片机从入门到精通系列教程。通过讲述单片机原理、电路设计、应用开发软件工具、编写实验实例让读者全面接触单片机技术。教程编排上由浅入深，循序渐进，内容力求完整、实用、趣味并存，使读者在轻松愉快的学习过程中逐步提高单片机软硬件综合设计水平。</p>
+<h1><span id="一-内容提要-本讲主要向大家介绍51">一、内容提要: 本讲主要向大家介绍51</span></h1><p>&emsp;&emsp;系列单片机的最小系统的实现并通过编写程序来实现对单片机IO 口的输出控制。以点亮外部连接的LED（发光二极管）为例，简要的介绍单片机的原理、最小系统的组成，并通过简单的C51 程序设计来讲述编译软件Keil的使用并下载Hex 文件烧写单片机。</p>
+<h1><span id="二-原理简介">二、原理简介</span></h1><p>&emsp;&emsp;在了解原理之前， 首先让我们思考一个问题，什么是单片机， 单片机有什么用？ 这是一个有意思的问题，因为任何人都不能给出一个被大家都认可的概念，那到底什么是单片机呢？ 普遍来说， 单片机又称单片微控制器， 是在一块芯片中集成了CPU（ 中央处理器）、RAM（ 数据存储器）、ROM（ 程序存储器）、定时器/ 计数器和多种功能的I/O（ 输入/ 输出） 接口等一台计算机所需要的基本功能部件，从而可以完成复杂的运算、逻辑控制、通信等功能。在这里，我们没必要去找到明确的概念来解析什么是单片机，特别在使用C 语言编写程序的时，不用太多的去了解单片机的内部结构以及运行原理等。从应用的角度来说，通过从简单的程序入手，慢慢的熟悉然后逐步深入精通单片机。 在简单了解了什么是单片机之后，然后我们来构建单片机的最小系统，单片机的最小系统就是让单片机能正常工作并发挥其功能时所必须的组成部分，也可理解为是用最少的元件组成的单片机可以工作的系统。对51 系列单片机来说， 最小系统一般应该包括： 单片机、时钟电路、复位电路、输入/ 输出设备等（见图1）。</p>
+<h1><span id="三-电路详解">三、电路详解</span></h1><p>&emsp;&emsp;下面就图2 所示的单片机最小系统各部分电路进行详细说明。 </p>
+<ol>
+<li>时钟电路</li>
+</ol>
+<p>&emsp;&emsp; 在设计时钟电路之前，让我们先了解下51 单片机上的时钟管脚： XTAL1（19 脚） ：芯片内部振荡电路输入端。 XTAL2（18 脚） ：芯片内部振荡电路输出端。 XTAL1 和XTAL2 是独立的输入和输出反相放大器，它们可以被配置为使用石英晶振的片内振荡器，或者是器件直接由外部时钟驱动。图2 中采用的是内时钟模式，即采用利用芯片内部的振荡电路，在XTAL1、XTAL2 的引脚上外接定时元件（一个石英晶体和两个电容），内部振荡器便能产生自激振荡。一般来说晶振可以在1.2 ～ 12MHz 之间任选，甚至可以达到24MHz 或者更高，但是频率越高功耗也就越大。在本实验套件中采用的11.0592M 的石英晶振。和晶振并联的两个电容的大小对振荡频率有微小影响，可以起到频率微调作用。当采用石英晶振时，电容可以在20 ～ 40pF 之间选择（本实验套件使用30pF）；当采用陶瓷谐振器件时，电容要适当地增大一些，在30 ～ 50pF 之间。通常选取33pF 的陶瓷电容就可以了。 另外值得一提的是如果读者自己在设计单片机系统的印刷电路板（PCB） 时，晶体和电容应尽可能与单片机芯片靠近，以减少引线的寄生电容，保证振荡器可靠工作。检测晶振是否起振的方法可以用示波器可以观察到XTAL2 输出的十分漂亮的正弦波，也可以使用万用表测量（ 把挡位打到直流挡，这个时候测得的是有效值）XTAL2 和地之间的电压时，可以看到2V 左右一点的电压。 　**</p>
+<ol start="2">
+<li>复位电路</li>
+</ol>
+<p>&emsp;&emsp;在单片机系统中，复位电路是非常关键的，当程序跑飞（运行不正常）或死机（停止运行）时，就需要进行复位。 　　MCS-5l 系列单片机的复位引脚RST（ 第9 管脚） 出现2个机器周期以上的高电平时，单片机就执行复位操作。如果RST 持续为高电平，单片机就处于循环复位状态。 　　复位操作通常有两种基本形式：上电自动复位和开关复位。图2 中所示的复位电路就包括了这两种复位方式。上电瞬间，电容两端电压不能突变，此时电容的负极和RESET 相连，电压全部加在了电阻上，RESET 的输入为高，芯片被复位。随之+5V电源给电容充电，电阻上的电压逐渐减小，最后约等于0，芯片正常工作。并联在电容的两端为复位按键，当复位按键没有被按下的时候电路实现上电复位，在芯片正常工作后，通过按下按键使RST管脚出现高电平达到手动复位的效果。一般来说，只要RST 管脚上保持10ms 以上的高电平，就能使单片机有效的复位。图中所示的复位电阻和电容为经典值，实际制作是可以用同一数量级的电阻和电容代替，读者也可自行计算RC 充电时间或在工作环境实际测量，以确保单片机的复位电路可靠。 　　**</p>
+<ol start="3">
+<li>EA/VPP（31 脚） 的功能和接法</li>
+</ol>
+<p>&emsp;&emsp;51 单片机的EA/VPP（31 脚） 是内部和外部程序存储器的选择管脚。当EA 保持高电平时，单片机访问内部程序存储器；当EA 保持低电平时，则不管是否有内部程序存储器，只访问外部存储器。 　　对于现今的绝大部分单片机来说，其内部的程序存储器（一般为flash）容量都很大，因此基本上不需要外接程序存储器，而是直接使用内部的存储器。 　　在本实验套件中，EA 管脚接到了VCC 上，只使用内部的程序存储器。这一点一定要注意，很多初学者常常将EA 管脚悬空，从而导致程序执行不正常。 　　</p>
+<ol start="4">
+<li>P0 口外接上拉电阻</li>
+</ol>
+<p>&emsp;&emsp;51 单片机的P0 端口为开漏输出，内部无上拉电阻（见图3）。所以在当做普通I/O 输出数据时，由于V2 截止，输出级是漏极开路电路，要使“1”信号（即高电平）正常输出，必须外接上拉电阻。</p>
+<p>&emsp;&emsp;另外，避免输入时读取数据出错，也需外接上拉电阻。在这里简要的说下其原因：在输入状态下，从锁存器和从引脚上读来的信号一般是一致的，但也有例外。例如，当从内部总线输出低电平后，锁存器Q ＝ 0， Q ＝ 1，场效应管V1 开通，端口线呈低电平状态。此时无论端口线上外接的信号是低电平还是高电平，从引脚读入单片机的信号都是低电平，因而不能正确地读入端口引脚上的信号。又如，当从内部总线输出高电平后，锁存器Q ＝ 1, Q ＝ 0,场效应管V1 截止。如外接引脚信号为低电平， 从引脚上读入的信号就与从锁存器读入的信号不同。所以当P0 口作为通用I/O 接口输入使用时，在输入数据前，应先向P0 口写“1”，此时锁存器的Q 端为“0”，使输出级的两个场效应管V1、V2 均截止，引脚处于悬浮状态，才可作高阻输入。 　　总结来说：为了能使P0 口在输出时能驱动NMOS 电路和避免输入时读取数据出错，需外接上拉电阻。在本实验套件中采用的是外加一个10K 排阻。此外，51 单片机在对端口P0—P3 的输入操作上，为避免读错，应先向电路中的锁存器写入“1”，使场效应管截止，以避免锁存器为“0”状态时对引脚读入的干扰。 　<strong>　5. LED 驱动电路</strong> 　　细心的读者可能已经发现，在最小系统中，发光二极管（LED）的接法是采取了电源接到二极管正极再经过1K 电阻接到单片机I/O 口上的（见图4 中的接法1）。为什么这么接呢？首先我们要知道LED 的发光工作条件，不同的LED 其额定电压和额定电流不同，一般而言，红或绿颜色的LED 的工作电压为1.7V~2.4V，蓝或白颜色的LED 工作电压为2.7~4.2V， 直径为3mm LED 的工作电流2mA~10mA。在这里采用红色的3mm 的LED。其次，51 单片机（如本实验板中所使用的STC89C52单片机）的I/O 口作为输出口时，拉电流（向外输出电流）的能力是μA 级别，是不足以点亮一个发光二极管的。而灌电流（往内输入电流）的方式可高达20mA，故采用灌电流的方式驱动发光二极管。当然，现今的一些增强型单片机，是采用拉电流输出（接法2）的，只要单片机的输出电流能力足够强即可。另外，图4 中的电阻为1K 阻值，是为了限制电流，让发光二极管的工作电流限定在2mA~10mA。</p>
+<h1><span id="四-程序设计">四、程序设计</span></h1><p>&emsp;&emsp;在单片机编程语言上，有C 语言和汇编两种选择。本系列教程采用C 语言编写程序，在此对Ｃ语言和汇编语言在进行单片机开发时进行下简单比较，汇编语言面向硬件，要求对硬件的特性如寄存器之类的比较熟悉，执行效率高，但可读性和移植性差，不同的单片机之间的程序不能通用，例如学会了51 单片机的汇编指令，却没法用到AVR 单片机上。Ｃ语言面向过程，可读性和移植性很好，效率要比汇编低一些。对于刚接触单片机的人来说，学习这两种语言是一样的，但在以后的开发效率上，C 语言的优势就体现出来了，其可以几乎完全不改动的情况下移植，大大提高了开发速度。 　　控制发光二极管D1 闪烁的C 语言源程序： 　　</p>
+<ol>
+<li>程序详细说明</li>
+</ol>
+<p>（1）头文件包含。程序接下来调用的P0_0 就是该头文件中定义好的一个寄存器地址。在对单片机内部的寄存器操作之前，应申明其来处，有兴趣的读者可以看看AT89X52.h 文件中的内容。 　　<br>（2）宏定义led, 便于直观理解也便于程序修改，将P0_0 口命名为led, 这样在程序中就可以用led代替P0_0 口进行操作。 　　</p>
+<p>（3）延时函数声明。函数在调用之前必须进行声明，由于函数定义放在主函数之后，所以在主函数之前对延时函数进行了声明。 　　</p>
+<p>（4）主函数入口。主函数不传递参数也不返回值。 　　</p>
+<p>（5）死循环。 　　</p>
+<p>（6）输出高电平，led 不亮。 　　</p>
+<p>（7）延时一段时间，以便人眼能够直观看到。 　　</p>
+<p>（8）输出低电平，led 点亮。 　　</p>
+<p>（9）延时一段时间。 　　</p>
+<p>（10）延时函数定义。 　　</p>
+<p>（11）for 语句循环延时。 　　</p>
+<ol start="2">
+<li>程序流程图与实验现象</li>
+</ol>
+<p>&emsp;&emsp;程序流程如图5 所示。经编译软件（keil）编译，生成单片机烧写文件，然后就可下载到单片机内部运行了，硬件电路板如图6 所示，本实验板上用的是STC89C52RC，可以用通过板载USB 转串口烧写程序。故将USB 线（本实验套件中有）连接电脑和实验板。供电电源可以从USB 取，也可以从外部电源取电。冷启动，即先点击下载，然后再上电。下载程序到单片机内运行后，可以看到实验板上P0_0 口外接的LED 灯（D1） 一亮一灭的闪烁。</p>
+<h1><span id="五-总结">五、总结</span></h1><p>&emsp;&emsp;本讲主要介绍了51 单片机最小系统的设计以及编写第一个简单的程序。从过该实验，可以掌握单片机的开发流程，从而快速入门。在该讲中应该注意几个问题： 　　</p>
+<ol>
+<li><p>本讲座中采用C 语言编写程序，因为C 语言的可读性和可移植性强。若读者没有学过C 语言，则应去了解和掌握相应的C 语言知识。C 语言易学易用，相信很快就能熟练。 　　</p>
+</li>
+<li><p>程序编译软件采用的是Keil。限于篇幅的原因，在这里就不对其进行讲述，如果读者有对其不明白的地方，可以到本刊论坛的单片机版面，作者制作了一个详细的Keil 入门教程。我们通过Keil编译程序，最终生成烧写单片机的Hex 代码文件。 　　Keil 软件界面如图7 所示， 中间空白区域为代码区，左侧为项目列表，最下面为消息窗口。</p>
+</li>
+<li><p>本实验板上所用的STC 单片机通过串口下载程序。其上位机软件界面如图8 所示（推荐使用V3.1 版本，最新版本可以到STC 主页上下载：<a href="http://www.mcu-memory.com/），" target="_blank" rel="noopener">http://www.mcu-memory.com/），</a> 烧写操作很简单，点击“Open File”按钮浏览找到所生成要烧写的Hex 文件后，单片机断电，点击“下载”按钮，单片机上电，程序就可下载到单片机中了。</p>
+</li>
+<li><p>产品组件 　　读者如果按照该讲内容进行理解并实践的话，可以说单片机就算入门了。下一讲将进一步深入，将要介绍单片机内部定时器和中断系统，敬请期待。</p>
+</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/single-chip-serial-communication-instance.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">单片机串口通信实例</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/single-chip-timer-counter.html">
+        <span class="next-text nav-default">单片机定时器/计数器</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/of-the-smallest-single-chip-system-control-and-i-o-output.html';
+
+  var disqus_title = "单片机最小系统组成与I/O输出控制";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

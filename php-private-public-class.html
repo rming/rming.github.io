@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PHP的静态绑定和动态绑定(private/public)">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/php-private-public-class.html">
+
+
+<meta name="description" content="PHP的静态绑定和动态绑定(private/public)  子类Foo的对象调用了test()方法，test()方法调用了$this-&amp;gt;testPrivate();这个$this此时应该是子类的引用，按理说应该调用子类的testPrivate()方法，实际上却调用了父类的testPrivate()方法  1234567891011121314151617181920212223242526">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP的静态绑定和动态绑定(private&#x2F;public)">
+<meta property="og:url" content="http://rmingwang.com/php-private-public-class.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="PHP的静态绑定和动态绑定(private/public)  子类Foo的对象调用了test()方法，test()方法调用了$this-&amp;gt;testPrivate();这个$this此时应该是子类的引用，按理说应该调用子类的testPrivate()方法，实际上却调用了父类的testPrivate()方法  1234567891011121314151617181920212223242526">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-26T02:12:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP的静态绑定和动态绑定(private&#x2F;public)">
+<meta name="twitter:description" content="PHP的静态绑定和动态绑定(private/public)  子类Foo的对象调用了test()方法，test()方法调用了$this-&amp;gt;testPrivate();这个$this此时应该是子类的引用，按理说应该调用子类的testPrivate()方法，实际上却调用了父类的testPrivate()方法  1234567891011121314151617181920212223242526">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> PHP的静态绑定和动态绑定(private/public) - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP的静态绑定和动态绑定(private/public)
+        
+      </h1>
+
+      <time class="post-time">
+          7月 26 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2><span id="php的静态绑定和动态绑定privatepublic">PHP的静态绑定和动态绑定(private/public)</span></h2>
+
+<p>子类Foo的对象调用了test()方法，test()方法调用了$this-&gt;testPrivate();这个$this此时应该是子类的引用，按理说应该调用子类的testPrivate()方法，实际上却调用了父类的testPrivate()方法</p>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;testPrivate();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;testPublic();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testPublic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Bar::testPublic"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">testPrivate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Bar::testPrivate"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">extends</span> <span class="title">Bar</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testPublic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Foo::testPublic"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">testPrivate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Foo::testPrivate"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$myFoo = <span class="keyword">new</span> Foo();</span><br><span class="line">$myFoo-&gt;test(); </span><br><span class="line"><span class="comment">// 运行结果</span></span><br><span class="line"><span class="comment">// Bar-&gt;testPrivate </span></span><br><span class="line"><span class="comment">// Foo-&gt;testPublic</span></span><br></pre></td></tr></table></figure>
+<p>这是PHP的动态绑定和静态绑定的一种情况。</p>
+
+<p>public是动态绑定，在编译期不绑定，所以在运行期调用父类的test()方法的时候，会解析为子类的public方法。</p>
+
+<p>而private是私有的，不会继承到子类，在编译期就绑定了，是一种“静态”的绑定（类似5.3后的self）。</p>
+
+<p>与这个相关的是LSB，静态延迟绑定，PHP5.3因为有了这个特性之后，使PHP的OOP得到加强</p>
+
+<blockquote><p>public: 可以被继承，也可以被外部调用。</p><p>private: 不可以被继承，也不可以被外部调用。</p><p>protected: 可以被继承，但不能被外部调用。</p></blockquote>
+
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-mod_php5-fast-cgi.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP三种运行方式mod_php5/cgi/fast-cgi</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-static-variable.html">
+        <span class="next-text nav-default">PHP中static静态变量的使用方法详解</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/php-private-public-class.html';
+
+  var disqus_title = "PHP的静态绑定和动态绑定(private/public)";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

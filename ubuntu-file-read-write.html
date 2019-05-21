@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="ubuntu 设置文件读写权限">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu-file-read-write.html">
+
+
+<meta name="description" content="Ubuntu的许多操作是在终端中进行的，通过sudo命令治理的文件是由root持有权限的，一般用户是无法改变的。在图形界面上，我们可以通过属性中的权限选项夹进行操作。但是一旦文件的属性显示当前用户没有读写权力时，无法在图形界面上修改权限。常用方法如下：sudo chmod 600 ××× （只有所有者有读和写的权限）sudo chmod 644 ××× （所有者有读和写的权限，组用户只有读的权限）">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 设置文件读写权限">
+<meta property="og:url" content="http://rmingwang.com/ubuntu-file-read-write.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="Ubuntu的许多操作是在终端中进行的，通过sudo命令治理的文件是由root持有权限的，一般用户是无法改变的。在图形界面上，我们可以通过属性中的权限选项夹进行操作。但是一旦文件的属性显示当前用户没有读写权力时，无法在图形界面上修改权限。常用方法如下：sudo chmod 600 ××× （只有所有者有读和写的权限）sudo chmod 644 ××× （所有者有读和写的权限，组用户只有读的权限）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu 设置文件读写权限">
+<meta name="twitter:description" content="Ubuntu的许多操作是在终端中进行的，通过sudo命令治理的文件是由root持有权限的，一般用户是无法改变的。在图形界面上，我们可以通过属性中的权限选项夹进行操作。但是一旦文件的属性显示当前用户没有读写权力时，无法在图形界面上修改权限。常用方法如下：sudo chmod 600 ××× （只有所有者有读和写的权限）sudo chmod 644 ××× （所有者有读和写的权限，组用户只有读的权限）">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> ubuntu 设置文件读写权限 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ubuntu 设置文件读写权限
+        
+      </h1>
+
+      <time class="post-time">
+          10月 18 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>Ubuntu的许多操作是在终端中进行的，通过sudo命令治理的文件是由root持有权限的，一般用户是无法改变的。在图形界面上，我们可以通过属性中的权限选项夹进行操作。但是一旦文件的属性显示当前用户没有读写权力时，无法在图形界面上修改权限。<br>常用方法如下：<br>sudo chmod 600 ××× （只有所有者有读和写的权限）sudo chmod 644 ××× （所有者有读和写的权限，组用户只有读的权限）sudo chmod 700 ××× （只有所有者有读和写以及执行的权限）sudo chmod 666 ××× （每个人都有读和写的权限）sudo chmod 777 ××× （每个人都有读和写以及执行的权限）<br>其中×××指文件名（也可以是文件夹名，不过要在chmod后加-ld）。<br>解释一下，其实整个命令的形式是sudo chmod -（代表类型）×××（所有者）×××（组用户）×××（其他用户）<br>三位数的每一位都表示一个用户类型的权限设置。取值是0～7，即二进制的[000]~[111]。<br>这个三位的二进制数的每一位分别表示读、写、执行权限。<br>如000表示三项权限均无，而100表示只读。这样，我们就有了下面的对应：0 [000] 无任何权限4 [100] 只读权限6 [110] 读写权限7 [111] 读写执行权限<br>现在看上面的几个常用用法就非常清晰了。试着自己来修改权限吧<br>最后同时附上查询文件（或文件夹）权限的命令ls -l 文件名称 （文件夹将-l改为-ld）。</p>
+<p>10位属性代码对应:</p>
+<p>-rw——- (600) 只有所有者才有读和写的权限</p>
+<p>-rw-r–r– (644) 只有所有者才有读和写的权限，组群和其他人只有读的权限</p>
+<p>-rwx—— (700) 只有所有者才有读，写，执行的权限</p>
+<p>-rwxr-xr-x (755) 只有所有者才有读，写，执行的权限，组群和其他人只有读和执行的权限</p>
+<p>-rwx–x–x (711) 只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限</p>
+<p>-rw-rw-rw- (666) 每个人都有读写的权限</p>
+<p>-rwxrwxrwx (777) 每个人都有读写和执行的权限</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-config-virtualhost-configured-virtual-host.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu config vhost配置虚拟主机</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/windows-partition-c-expanding.html">
+        <span class="next-text nav-default">Windows下调整主分区大小</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu-file-read-write.html';
+
+  var disqus_title = "ubuntu 设置文件读写权限";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

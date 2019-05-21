@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Vagrant简介和安装配置">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/vagrant-commands-and-config.html">
+
+
+<meta name="description" content="简介 Vagrant能做什么？ 统一开发环境。 避免重复搭建开发环境。 多个相互隔离开发环境。   配置安装   常用命令 添加box 初始化 启动虚拟机 ssh到虚拟机 重启虚拟机（重新载入配置文件） 打包分发 更多命令查看帮助   主要配置 box设置 hostname设置 虚拟机网络设置 同步目录 端口转发 内存和cpu核心   注意事项 Vagrant内的站点访问速度慢？ 挂载失败的问">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vagrant简介和安装配置">
+<meta property="og:url" content="http://rmingwang.com/vagrant-commands-and-config.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="简介 Vagrant能做什么？ 统一开发环境。 避免重复搭建开发环境。 多个相互隔离开发环境。   配置安装   常用命令 添加box 初始化 启动虚拟机 ssh到虚拟机 重启虚拟机（重新载入配置文件） 打包分发 更多命令查看帮助   主要配置 box设置 hostname设置 虚拟机网络设置 同步目录 端口转发 内存和cpu核心   注意事项 Vagrant内的站点访问速度慢？ 挂载失败的问">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-12-11T07:41:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vagrant简介和安装配置">
+<meta name="twitter:description" content="简介 Vagrant能做什么？ 统一开发环境。 避免重复搭建开发环境。 多个相互隔离开发环境。   配置安装   常用命令 添加box 初始化 启动虚拟机 ssh到虚拟机 重启虚拟机（重新载入配置文件） 打包分发 更多命令查看帮助   主要配置 box设置 hostname设置 虚拟机网络设置 同步目录 端口转发 内存和cpu核心   注意事项 Vagrant内的站点访问速度慢？ 挂载失败的问">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Vagrant简介和安装配置 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Vagrant简介和安装配置
+        
+      </h1>
+
+      <time class="post-time">
+          1月 10 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#简介">简介</a><ul>
+<li><a href="#vagrant能做什么">Vagrant能做什么？</a><ul>
+<li><a href="#统一开发环境">统一开发环境。</a></li>
+<li><a href="#避免重复搭建开发环境">避免重复搭建开发环境。</a></li>
+<li><a href="#多个相互隔离开发环境">多个相互隔离开发环境。</a></li>
+</ul>
+</li>
+<li><a href="#配置安装">配置安装</a></li>
+</ul>
+</li>
+<li><a href="#常用命令">常用命令</a><ul>
+<li><a href="#添加box">添加box</a></li>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#启动虚拟机">启动虚拟机</a></li>
+<li><a href="#ssh到虚拟机">ssh到虚拟机</a></li>
+<li><a href="#重启虚拟机重新载入配置文件">重启虚拟机（重新载入配置文件）</a></li>
+<li><a href="#打包分发">打包分发</a></li>
+<li><a href="#更多命令查看帮助">更多命令查看帮助</a></li>
+</ul>
+</li>
+<li><a href="#主要配置">主要配置</a><ul>
+<li><a href="#box设置">box设置</a></li>
+<li><a href="#hostname设置">hostname设置</a></li>
+<li><a href="#虚拟机网络设置">虚拟机网络设置</a></li>
+<li><a href="#同步目录">同步目录</a></li>
+<li><a href="#端口转发">端口转发</a></li>
+<li><a href="#内存和cpu核心">内存和cpu核心</a></li>
+</ul>
+</li>
+<li><a href="#注意事项">注意事项</a><ul>
+<li><a href="#vagrant内的站点访问速度慢">Vagrant内的站点访问速度慢？</a></li>
+<li><a href="#挂载失败的问题">挂载失败的问题？</a></li>
+<li><a href="#redis-文件权限问题">Redis 文件权限问题</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="简介">简介</span></h2><p>&emsp;&emsp;<a href="https://www.vagrantup.com/" target="_blank" rel="noopener">Vagrant</a> 是一款用来构建虚拟开发环境的工具，它底层支持VirtualBox、VMware甚至AWS作为虚拟机系统。</p>
+<h3><span id="vagrant能做什么">Vagrant能做什么？</span></h3><h4><span id="统一开发环境">统一开发环境。</span></h4><p>&emsp;&emsp;一次配置打包，统一分发给团队成员，统一团队开发环境，解决诸如“编码问题”，“缺少模块”，“配置文件不同”带来的问题；</p>
+<h4><span id="避免重复搭建开发环境">避免重复搭建开发环境。</span></h4><p>&emsp;&emsp;新员工加入，不用浪费时间搭建开发环境，快速加入开发，减少时间成本的浪费；</p>
+<h4><span id="多个相互隔离开发环境">多个相互隔离开发环境。</span></h4><p>&emsp;&emsp;可以在不用box里跑不同的语言，或者编译安装同一语言不同版本，搭建多个相互隔离的开发环境，卸载清除时也很快捷轻松。</p>
+<h3><span id="配置安装">配置安装</span></h3><ul>
+<li><a href="https://www.vagrantup.com/" target="_blank" rel="noopener">https://www.vagrantup.com</a></li>
+<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">https://www.virtualbox.org/wiki/Downloads</a></li>
+<li>mac上是傻瓜式一键安装</li>
+</ul>
+<p><strong> 需要挂载的路径不能在虚拟机中创建符号链接！！！否则无法正常挂载！！！</strong></p>
+<h2><span id="常用命令">常用命令</span></h2><h3><span id="添加box">添加box</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#提前下载好的box文件，~/box/precise64.box，我们给这个box命名为ubuntu12.04</span><br><span class="line">vagrant box add ubuntu12.04 ~/box/precise64.box</span><br><span class="line">#box文件也可以是远程地址 base 为默认名称</span><br><span class="line">#vagrant box add base http://files.vagrantup.com/lucid64.box</span><br></pre></td></tr></table></figure>
+<h3><span id="初始化">初始化</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#打开目录</span><br><span class="line">#cd ~/vagrant/work </span><br><span class="line">#初始化</span><br><span class="line">vagrant init</span><br><span class="line">#如果你添加的box名称不是base，那么需要在初始化的时候指定名称，例如</span><br><span class="line">vagrant init ubuntu12.04</span><br></pre></td></tr></table></figure>
+<h3><span id="启动虚拟机">启动虚拟机</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
+<h3><span id="ssh到虚拟机">ssh到虚拟机</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant ssh</span><br></pre></td></tr></table></figure>
+<h3><span id="重启虚拟机重新载入配置文件">重启虚拟机（重新载入配置文件）</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant reload</span><br></pre></td></tr></table></figure>
+<h3><span id="打包分发">打包分发</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant package</span><br></pre></td></tr></table></figure>
+<h3><span id="更多命令查看帮助">更多命令查看帮助</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant  -h</span><br></pre></td></tr></table></figure>
+<h2><span id="主要配置">主要配置</span></h2><p>&emsp;&emsp;开发目录下有一个文件Vagrantfile，里面包含有大量的配置信息，主要包括三个方面的配置，虚拟机的配置、SSH配置、Vagrant的一些基础配置。<br>&emsp;&emsp;打开看一下，注释很全，所以不用担心不会配置了，下面主要备忘几个常用配置：</p>
+<h3><span id="box设置">box设置</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.box = &quot;ubuntu12.04&quot;</span><br></pre></td></tr></table></figure>
+<h3><span id="hostname设置">hostname设置</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.hostname = &quot;for_work&quot;</span><br></pre></td></tr></table></figure>
+<h3><span id="虚拟机网络设置">虚拟机网络设置</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.10&quot;</span><br><span class="line">config.vm.network &quot;public_network&quot;</span><br></pre></td></tr></table></figure>
+<h3><span id="同步目录">同步目录</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder &quot;../data&quot;, &quot;/vagrant_data&quot;</span><br></pre></td></tr></table></figure>
+<h3><span id="端口转发">端口转发</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080</span><br></pre></td></tr></table></figure>
+<h3><span id="内存和cpu核心">内存和cpu核心</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">config.vm.provider &quot;virtualbox&quot; do |vb|</span><br><span class="line">    #Display the VirtualBox GUI when booting the machine</span><br><span class="line">    vb.gui = true</span><br><span class="line">    #Customize the amount of memory on the VM:</span><br><span class="line">    vb.memory = &quot;1024&quot;</span><br><span class="line">    vb.cpus = 2</span><br><span class="line">    vb.name = &quot;my_vm&quot;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2><span id="注意事项">注意事项</span></h2><p>&emsp;&emsp;使用 Apache/Nginx 时会出现诸如图片修改后但页面刷新仍然是旧文件的情况，是由于静态文件缓存造成的。需要对虚拟机里的 Apache/Nginx 配置文件进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Apache 配置添加:</span><br><span class="line">EnableSendfile off</span><br><span class="line"></span><br><span class="line"># Nginx 配置添加:</span><br><span class="line">sendfile off;</span><br></pre></td></tr></table></figure>
+<h3><span id="vagrant内的站点访问速度慢">Vagrant内的站点访问速度慢？</span></h3><p><a href="https://stefanwrobel.com/how-to-make-vagrant-performance-not-suck" target="_blank" rel="noopener">How to make Vagrant performance not suck ?</a><br><a href="http://docs.vagrantup.com/v2/synced-folders/nfs.html" target="_blank" rel="noopener">Vagrant NFS configration</a>  </p>
+<ul>
+<li>使用NFS !important</li>
+<li>使用CPU多核心，加点内存</li>
+<li>打包保存自己的BOX，备用</li>
+<li>域名解析问题?</li>
+</ul>
+<p>具体配置操作，参考原文 和 vagrant文档。</p>
+<ul>
+<li>nfs权限问题  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder &apos;.&apos;, &apos;/vagrant&apos;, :nfs =&gt;&#123;</span><br><span class="line">    :linux__nfs_options =&gt; [&quot;no_root_squash&quot;],</span><br><span class="line">    :map_uid =&gt; 0,</span><br><span class="line">    :map_gid =&gt; 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>域名解析慢的问题</p>
+<p>  <a href="http://serverfault.com/questions/495914/vagrant-slow-internet-connection-in-guest" target="_blank" rel="noopener">Vagrant: Slow internet connection in guest</a></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config.vm.provider :virtualbox do |vb|</span><br><span class="line">    #vb.gui = true</span><br><span class="line">    vb.customize [&quot;modifyvm&quot;, :id, &quot;--natdnshostresolver1&quot;, &quot;on&quot;]</span><br><span class="line">    vb.customize [&quot;modifyvm&quot;, :id, &quot;--natdnsproxy1&quot;, &quot;on&quot;]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3><span id="挂载失败的问题">挂载失败的问题？</span></h3><p><strong>报错:</strong></p>
+<blockquote>
+<p>Failed to mount folders in Linux guest. This is usually because the “vboxsf” file system is not available. Please verify that the guest additions are properly installed in the guest and can work properly. The command attempted was:</p>
+</blockquote>
+<p>尝试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//sudo apt-get install virtualbox-guest-dkms</span><br><span class="line">sudo apt-get install virtualbox-guest-utils</span><br></pre></td></tr></table></figure>
+<p><strong>报错：</strong></p>
+<blockquote>
+<p>default: stdin: is not a tty</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /root/.profile</span><br></pre></td></tr></table></figure>
+<p>把 <code>mesg n</code> 替换成 <code>tty -s &amp;&amp; mesg n</code></p>
+<h3><span id="redis-文件权限问题">Redis 文件权限问题</span></h3><p><strong>报错：</strong></p>
+<blockquote>
+<p>redis Can’t open the log file<br>redis 无法加载.rdb<br>redis 无法载入.rdb</p>
+</blockquote>
+<p>解决办法：</p>
+<p>把 redis:redis 用户组设置更改为 vagrant:vagrant.</p>
+<p><a href="http://serverfault.com/questions/541258/permissions-error-trying-to-dump-redis-to-a-vagrant-shared-folder" target="_blank" rel="noopener">Permissions error trying to dump Redis to a Vagrant shared folder</a></p>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a href="https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/01.2.md" target="_blank" rel="noopener">1.2 Vgrant安装配置</a></li>
+<li><a href="https://docs.vagrantup.com/v2/virtualbox/configuration.html" target="_blank" rel="noopener">VirtualBox configuration</a></li>
+<li><a href="http://segmentfault.com/blog/fenbox/1190000000264347" target="_blank" rel="noopener">使用 Vagrant 打造跨平台开发环境</a></li>
+<li><a href="https://stefanwrobel.com/how-to-make-vagrant-performance-not-suck" target="_blank" rel="noopener">How to make Vagrant performance not suck</a></li>
+<li><a href="http://serverfault.com/questions/495914/vagrant-slow-internet-connection-in-guest" target="_blank" rel="noopener">Vagrant: Slow internet connection in guest</a></li>
+<li><a href="http://www.danpurdy.co.uk/web-development/osx-yosemite-port-forwarding-for-vagrant/" target="_blank" rel="noopener">OSX Yosemite Port Forwarding for Vagrant</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/How-to-make-Vagrant-performance-not-suck.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP输出控制</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/diary-20150103.html">
+        <span class="next-text nav-default">日记20150103</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/vagrant-commands-and-config.html';
+
+  var disqus_title = "Vagrant简介和安装配置";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

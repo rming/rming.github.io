@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="三种变量命名规则（匈牙利法，小驼峰法，大驼峰法）">
+
+
+
+
+  <meta name="keywords" content="PHP编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/variable-naming-conventions.html">
+
+
+<meta name="description" content="1. 匈牙利命名：  开头字母用变量类型的缩写，其余部分用变量的英文或英文的缩写，要求单词第一个字母大写。For example: long lsum = 0;”l”是类型的缩写；  2. 小驼峰式：(little camel-case)  第一个单词首字母小写，后面其他单词首字母大写。For example: string firstName = string.Empty;  3. 大驼峰式：(">
+<meta name="keywords" content="PHP编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三种变量命名规则（匈牙利法，小驼峰法，大驼峰法）">
+<meta property="og:url" content="http://rmingwang.com/variable-naming-conventions.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="1. 匈牙利命名：  开头字母用变量类型的缩写，其余部分用变量的英文或英文的缩写，要求单词第一个字母大写。For example: long lsum = 0;”l”是类型的缩写；  2. 小驼峰式：(little camel-case)  第一个单词首字母小写，后面其他单词首字母大写。For example: string firstName = string.Empty;  3. 大驼峰式：(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-07-26T02:23:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三种变量命名规则（匈牙利法，小驼峰法，大驼峰法）">
+<meta name="twitter:description" content="1. 匈牙利命名：  开头字母用变量类型的缩写，其余部分用变量的英文或英文的缩写，要求单词第一个字母大写。For example: long lsum = 0;”l”是类型的缩写；  2. 小驼峰式：(little camel-case)  第一个单词首字母小写，后面其他单词首字母大写。For example: string firstName = string.Empty;  3. 大驼峰式：(">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 三种变量命名规则（匈牙利法，小驼峰法，大驼峰法） - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          三种变量命名规则（匈牙利法，小驼峰法，大驼峰法）
+        
+      </h1>
+
+      <time class="post-time">
+          7月 26 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3><span id="1-匈牙利命名">1. 匈牙利命名：</span></h3>
+
+<ul><br><li>开头字母用变量类型的缩写，其余部分用变量的英文或英文的缩写，要求单词第一个字母大写。</li><br><li>For example: long lsum = 0;”l”是类型的缩写；</li><br></ul>
+
+<h3><span id="2-小驼峰式little-camel-case">2. 小驼峰式：(little camel-case)</span></h3>
+
+<ul><br><li>第一个单词首字母小写，后面其他单词首字母大写。</li><br><li>For example: string firstName = string.Empty;</li><br></ul>
+
+<h3><span id="3-大驼峰式big-camel-case">3. 大驼峰式：(big camel-case)</span></h3>
+
+<ul><br><li>每个单词的第一个字母都大写;</li><br><li>For example：string FirstName = string.Empty;</li><br></ul>
+
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/PHP编程/">PHP编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-function-name-parameter.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP函数名参数和闭包</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/php-mod_php5-fast-cgi.html">
+        <span class="next-text nav-default">PHP三种运行方式mod_php5/cgi/fast-cgi</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/variable-naming-conventions.html';
+
+  var disqus_title = "三种变量命名规则（匈牙利法，小驼峰法，大驼峰法）";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

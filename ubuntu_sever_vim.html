@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="要学ubuntu sever 了……今天先看了看vim">
+
+
+
+
+  <meta name="keywords" content="服务器技术,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/ubuntu_sever_vim.html">
+
+
+<meta name="description" content="VIM简介 VIM打开文件的方式 移动光标 修改命令 删除 删除整行 剪切、复制、粘贴   退出VIM   VIM简介&amp;emsp;&amp;emsp;今天接触了一下服务器版的ubuntu，呵呵，就是用ssh远程登陆以后，在一片漆黑的背景下显示着一行行的白色字母…… 安装就免了，网上一搜索可是一大堆啊，哎，还是把自己的学习过程写下来吧，看了看别人的操作，靠，光看见手在键盘上乱按，屏幕上急速的显示着一行行">
+<meta name="keywords" content="服务器技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="要学ubuntu sever 了……今天先看了看vim">
+<meta property="og:url" content="http://rmingwang.com/ubuntu_sever_vim.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="VIM简介 VIM打开文件的方式 移动光标 修改命令 删除 删除整行 剪切、复制、粘贴   退出VIM   VIM简介&amp;emsp;&amp;emsp;今天接触了一下服务器版的ubuntu，呵呵，就是用ssh远程登陆以后，在一片漆黑的背景下显示着一行行的白色字母…… 安装就免了，网上一搜索可是一大堆啊，哎，还是把自己的学习过程写下来吧，看了看别人的操作，靠，光看见手在键盘上乱按，屏幕上急速的显示着一行行">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="要学ubuntu sever 了……今天先看了看vim">
+<meta name="twitter:description" content="VIM简介 VIM打开文件的方式 移动光标 修改命令 删除 删除整行 剪切、复制、粘贴   退出VIM   VIM简介&amp;emsp;&amp;emsp;今天接触了一下服务器版的ubuntu，呵呵，就是用ssh远程登陆以后，在一片漆黑的背景下显示着一行行的白色字母…… 安装就免了，网上一搜索可是一大堆啊，哎，还是把自己的学习过程写下来吧，看了看别人的操作，靠，光看见手在键盘上乱按，屏幕上急速的显示着一行行">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 要学ubuntu sever 了……今天先看了看vim - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          要学ubuntu sever 了……今天先看了看vim
+        
+      </h1>
+
+      <time class="post-time">
+          10月 17 2010
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#vim简介">VIM简介</a></li>
+<li><a href="#vim打开文件的方式">VIM打开文件的方式</a></li>
+<li><a href="#移动光标">移动光标</a></li>
+<li><a href="#修改命令">修改命令</a><ul>
+<li><a href="#删除">删除</a></li>
+<li><a href="#删除整行">删除整行</a></li>
+<li><a href="#剪切-复制-粘贴">剪切、复制、粘贴</a></li>
+</ul>
+</li>
+<li><a href="#退出vim">退出VIM</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="vim简介">VIM简介</span></h2><p>&emsp;&emsp;今天接触了一下服务器版的ubuntu，呵呵，就是用ssh远程登陆以后，在一片漆黑的背景下显示着一行行的白色字母…… 安装就免了，网上一搜索可是一大堆啊，哎，还是把自己的学习过程写下来吧，看了看别人的操作，靠，光看见手在键盘上乱按，屏幕上急速的显示着一行行的代码，我呢，可是没那个水平，只好一边学习命令，一边找字母啦，哈哈 首先ssh登陆 输入你的ip 然后就可以登陆啦，哈哈，连接成功以后呢，你需要输入用户名和密码来登陆， 登陆成功以后呢，你就开始通过命令操作吧，哈哈 ，今天先接触了一下vim这个强大的编辑器（……说其强大，其实我还没感觉到，不过通过它在windows下版本的稳定来看，这个软件应该是相当好的，哈） 输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim</span><br></pre></td></tr></table></figure>
+<p>就可以进入vim编辑器啦，如果你要使用vim打开某个文件时可以使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim FILE_NAME</span><br></pre></td></tr></table></figure>
+<p>来打开 bash_profile 文件，例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>则编辑 .bash_profile 这个文件，如果这个文件不存在，则表示新建这个文件并编辑。 </p>
+<h2><span id="vim打开文件的方式">VIM打开文件的方式</span></h2><p>vim打开文件的方式有三种:</p>
+<ul>
+<li>正常（Normal）模式</li>
+<li>插入（insert）模式</li>
+<li>可视（visual）模式</li>
+</ul>
+<p>&emsp;&emsp;默认的模式是正常模式，正常模式下可以输入一些命令(如文本操作命令,<code>dd</code>),如果需要编辑文章可以使用按键 <code>i</code> 或 <code>a</code> 就可以切换到插入模式啦，输入一些代码，然后按键 <code>esc</code> 就切换到了正常模式，可以查看啦，如果你编辑完了，那么你只要输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w filename</span><br></pre></td></tr></table></figure>
+<p>那么就可以保存为filename的文件啦，如果在打开文件的时候是打开的文件名（vim filename），那么保存时只需要输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:w</span><br></pre></td></tr></table></figure>
+<p>输入文本内容在insert模式下，其他进行修改、删除、拷贝、粘贴等。</p>
+<p>&emsp;&emsp;在Normal模式下，这样，貌似是麻烦啦，但是高手们都说这样好用- -|| i和a这俩个指令的区别就是i代表在光标前插入字符，a代表在光标后插入字符。</p>
+<h2><span id="移动光标">移动光标</span></h2><p>&emsp;&emsp;十分有必要的，在Noraml模式下，键盘上的h、j、k、l 分别代表左、下、上、右移动光标。OK，在你刚才编辑的文档中试试移动光标，爽吧！再也不用移动手指到那4个方向键了！当然方向键也是有效地。 </p>
+<h2><span id="修改命令">修改命令</span></h2><h3><span id="删除">删除</span></h3><p>&emsp;&emsp;在word等编辑器下，如果输入错了，我们可以用Delete和Backspace键删除，然后再重新输入，vim也可以这样，x就是删除光标所在处的字符（char），dw就是删除一个字（word），然后在输入i或者a进行新内容的输入。 </p>
+<h3><span id="删除整行">删除整行</span></h3><p>&emsp;&emsp;如何操作？dd就可以删除光标所在行。 那 <strong>删除光标所在处到本行的结尾</strong> 呢？D或者d$就可以了。还记得$吗?代表什么来着？ 删除结束还要在输入i 或者a 才能输入真麻烦！有没有删除后就进入inster模式的指令呢？当然有，就是关于c的指令，cw是删除一个Word，cc删除整行，c$和C都是删除光标所在处到本行的结尾。你可能已经明白了，其实c的指令是修改指令。 好了，你是否已经把内容删干净了，没有可以编辑的内容了呢？呵呵，没关系，u指令可以让你恢复删除的内容。在Normal模式下，输入u，就恢复了，重复输入u就把整个内容都恢复了，u就是其他文本编辑器里的Undo的指令，对应的Redo指令就是[Ctrl]r。需要注意的是在不同模式下，u 的含义是不同的。如果在instert模式下输入然后在Normal模式下执行u，则会删除上一次输入的所有内容。如果是在 Normal 模式下执行其他的指令例如x，然后再执行u，就恢复一次 Normal 下的指令。Redo也一样。 </p>
+<p>OK，让我们来学习更加重要的功能吧！ </p>
+<h3><span id="剪切-复制-粘贴">剪切、复制、粘贴</span></h3><p>&emsp;&emsp;剪切、复制等这些指令都是同块（block）相关的操作，因此无论如何都要先了解一下块的基本知识。vim里用mark来定义一个标记，然后用y指令把指定的内容进行复制到缓存中，然后用p来粘贴。！@#￥％^&amp;，用个例子来说明吧，很简单的！ 例如下面的文本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this is the first line this is 2nd line</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;我们可以先把光标移动到第一行的行首，然后切换到Normal模式（还记得如何切换吗？），输入ma（表示标记a），然后移动光标到第2行的2nd处，输入y`a（表示把标记a到光标所在处复制到缓存中），然后移动光标到你希望粘贴的地方输入p（表示粘贴）。OK你已经完成了最基本的复制、粘贴功能。 </p>
+<h2><span id="退出vim">退出VIM</span></h2><p>&emsp;&emsp;在Normal模式下，输入ZZ就可以保存文档并退出。 在Noraml模式下，输入:q!可以强制退出，就是不保留修改退出。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/服务器技术/">服务器技术</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/ubuntu-find-dir-file.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu［linux］下find命令的具体应用</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/ubuntu-comand.html">
+        <span class="next-text nav-default">ubuntu常用命令</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/ubuntu_sever_vim.html';
+
+  var disqus_title = "要学ubuntu sever 了……今天先看了看vim";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

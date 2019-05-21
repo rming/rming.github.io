@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Python元祖，列表，字典，集合的比较">
+
+
+
+
+  <meta name="keywords" content="Python编程,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/python-tuple-list-dict-set.html">
+
+
+<meta name="description" content="元组 列表 字典 集合   元组可以包含不同类型的对象，但是是不可变的，不可以在增减元素，用()来定义.元组的操作: tuple(obj),切片,in,for in,del,cmp,len,max,min 12345678910111213141516171819202122232425262728#定义一个元组tuple1 =()tuple1 = tuple(&amp;#123;1,2,3,4,5,">
+<meta name="keywords" content="Python编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python元祖，列表，字典，集合的比较">
+<meta property="og:url" content="http://rmingwang.com/python-tuple-list-dict-set.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="元组 列表 字典 集合   元组可以包含不同类型的对象，但是是不可变的，不可以在增减元素，用()来定义.元组的操作: tuple(obj),切片,in,for in,del,cmp,len,max,min 12345678910111213141516171819202122232425262728#定义一个元组tuple1 =()tuple1 = tuple(&amp;#123;1,2,3,4,5,">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2014-11-10T08:16:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python元祖，列表，字典，集合的比较">
+<meta name="twitter:description" content="元组 列表 字典 集合   元组可以包含不同类型的对象，但是是不可变的，不可以在增减元素，用()来定义.元组的操作: tuple(obj),切片,in,for in,del,cmp,len,max,min 12345678910111213141516171819202122232425262728#定义一个元组tuple1 =()tuple1 = tuple(&amp;#123;1,2,3,4,5,">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> Python元祖，列表，字典，集合的比较 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Python元祖，列表，字典，集合的比较
+        
+      </h1>
+
+      <time class="post-time">
+          10月 16 2014
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <!-- toc -->
+<ul>
+<li><a href="#元组">元组</a></li>
+<li><a href="#列表">列表</a></li>
+<li><a href="#字典">字典</a></li>
+<li><a href="#集合">集合</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="元组">元组</span></h2><p>可以包含不同类型的对象，但是是不可变的，不可以在增减元素，用()来定义.<br><strong>元组的操作:</strong> <code>tuple(obj)</code>,<code>切片</code>,<code>in</code>,<code>for in</code>,<code>del</code>,<code>cmp</code>,<code>len</code>,<code>max</code>,<code>min</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义一个元组</span></span><br><span class="line">tuple1 =()</span><br><span class="line">tuple1 = tuple(&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="string">'6'</span>&#125;)</span><br><span class="line">tuple1 = (<span class="number">1</span>, <span class="number">2</span>, <span class="string">'3'</span>, <span class="number">4</span>, <span class="string">'5'</span>)</span><br><span class="line"><span class="comment"># 定义了一个元组之后就无法再添加或修改元组中的元素,但是可以重新赋值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> tuple1[<span class="number">0</span>]    <span class="comment"># 元组的元素都有确定的顺序。元组的索引也是以0为基点的</span></span><br><span class="line"><span class="keyword">print</span> tuple1[<span class="number">-1</span>]   <span class="comment"># 负的索引从元组的尾部开始计数</span></span><br><span class="line"><span class="keyword">print</span> tuple1[<span class="number">1</span>:<span class="number">3</span>]  <span class="comment"># 元组也可以进行切片操作。对元组切片可以得到新的元组。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用 in 运算符检查某元素是否存在于元组中。</span></span><br><span class="line"><span class="keyword">print</span> <span class="number">1</span> <span class="keyword">in</span> tuple1   <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用for in 进行遍历元组</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> tuple1:</span><br><span class="line">    <span class="keyword">print</span> item</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要获取item的序号 可以使用下面的遍历方法：</span></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> range(len(tuple1)):</span><br><span class="line">    <span class="keyword">print</span> tuple1[index]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 还可以使用内置的enumerate函数</span></span><br><span class="line"><span class="keyword">for</span> index, item <span class="keyword">in</span> enumerate(tuple1):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'%i, %s'</span> % (index, item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> max(tuple1)</span><br><span class="line"><span class="keyword">print</span> min(tuple1)</span><br><span class="line"><span class="keyword">print</span> len(tuple1)</span><br></pre></td></tr></table></figure>
+<h2><span id="列表">列表</span></h2><p>列表是Python中最具灵活性的有序集合对象类型,与字符串不同的是,列表可以包含任何种类的对象:数字,字符串,甚至是其他列表.并且列表都是可变对象,它支持在原处修改的操作.也可以通过指定的索引和分片获取元素.列表就可元组的可变版本，用[]来定义.<br><strong>列表的操作:</strong> <code>list(obj)</code>,<code>切片</code>,<code>in</code>,<code>for in</code>,<code>del</code>,<code>cmp</code>,<code>len</code>,<code>max</code>,<code>min</code><br><strong>额外的操作:</strong><br><code>list.append()</code>,<code>list.insert(index,obj)</code>,<code>list.extend(seq)</code>,<code>list.remove(obj)</code>,<code>list.pop(index=-1)</code>,<code>list.count(obj)</code>,<code>sorted(list)</code>,<code>reversed(list)</code>,<code>list.index(obj)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义一个列表</span></span><br><span class="line">listA = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">list(obj)</span><br><span class="line"><span class="comment">#把对象转换成列表,obj可以是元组,字典,字符串等</span></span><br><span class="line"><span class="keyword">print</span> list((<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line"><span class="comment">#[1,2,3,4,5,6,8,6]</span></span><br><span class="line">haloword = list(<span class="string">'halo word'</span>)</span><br><span class="line"><span class="keyword">print</span> haloword</span><br><span class="line"><span class="comment">#['h', 'a', 'l', 'o', ' ', 'w', 'o', 'r', 'd']</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#元素计数</span></span><br><span class="line"><span class="keyword">print</span> haloword.count(<span class="string">'o'</span>)</span><br><span class="line"><span class="comment">#2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#元素查找(返回第一次出现索引,没有则报错)</span></span><br><span class="line"><span class="keyword">print</span> haloword.index(<span class="string">'o'</span>)</span><br><span class="line"><span class="comment">#3</span></span><br><span class="line"><span class="comment">#haloword[3]='o'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#元素排序,倒置位置</span></span><br><span class="line">numbers = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">'4'</span>,<span class="number">5</span>,<span class="string">'6'</span>]</span><br><span class="line"><span class="keyword">print</span> sorted(numbers)</span><br><span class="line"><span class="comment">#[1, 2, 3, 5, '4', '6']</span></span><br><span class="line"><span class="keyword">print</span> list(reversed(numbers))</span><br><span class="line"><span class="comment">#['6', 5, '4', 3, 2, 1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向 list 中增加元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.使用append   向 list 的末尾追加单个元素。</span></span><br><span class="line">listA.append(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.使用 insert  将单个元素插入到 list 中。数值参数是插入点的索引</span></span><br><span class="line">listA.insert(<span class="number">3</span>, <span class="string">'d'</span>) <span class="comment"># 在下标为3处添加一个元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.使用 extend 用来连接 list</span></span><br><span class="line">listA.extend([<span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># extend 和 append 看起来类似，但实际上完全不同。</span></span><br><span class="line"><span class="comment"># extend 接受一个参数，这个参数总是一个 list，</span></span><br><span class="line"><span class="comment"># 并且把这个 list 中的每个元素添加到原 list 中。</span></span><br><span class="line"><span class="comment"># 另一方面，append 接受一个参数，这个参数可以是任何数据类型，并且简单地追加到 list 的尾部。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取列表的长度</span></span><br><span class="line"><span class="keyword">print</span> len(listA)  <span class="comment"># 9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 list 中搜索</span></span><br><span class="line">listA.index(<span class="number">3</span>)  <span class="comment"># index 在 list 中查找一个值的首次出现并返回索引值。</span></span><br><span class="line"></span><br><span class="line">listA.index(<span class="string">'100'</span>)  <span class="comment"># 如果在 list 中没有找到值，Python 会引发一个异常。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要测试一个值是否在 list 内，使用 in。如果值存在，它返回 True，否则返为 False 。</span></span><br><span class="line"><span class="keyword">print</span> <span class="number">5</span> <span class="keyword">in</span> listA  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 从 list 中删除元素</span></span><br><span class="line"><span class="comment"># remove 从 list 中 仅仅 删除一个值的首次出现。如果在 list 中没有找到值，Python 会引发一个异常</span></span><br><span class="line">listA.remove(<span class="number">3</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># pop 它会做两件事：删除 list 的最后一个元素，然后返回删除元素的值。</span></span><br><span class="line"><span class="keyword">print</span> listA.pop()  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历list</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> listA:</span><br><span class="line">    <span class="keyword">print</span> item</span><br></pre></td></tr></table></figure>
+<h2><span id="字典">字典</span></h2><p>字典(Dictionary) 是 Python 的内置数据类型之一，它定义了键和值之间一对一的关系,但它们是以无序的方式储存的。  </p>
+<p>定义 Dictionary 使用一对大(花)括号” { } ”。    </p>
+<p><strong>字典的操作:</strong> <code>dict(obj)</code>,<code>in</code>,<code>for key in dict</code>,<code>del</code>,<code>cmp</code>,<code>len</code>,<code>max</code>,<code>min</code><br><strong>额外的操作:</strong><br><code>dict[key]</code>,<code>dict.keys()</code>,<code>dict.fromkeys(seq,value)</code>,<code>dict.has_key(key)</code>,<code>dict.get(key,default)</code>,<code>dict.items()</code>,<code>dict.values():</code>,<code>dict.update(dict2)</code>,<code>dict.pop(key)</code>,<code>dict.setdefault(key ,defaultvalue)</code>,<code>dict.clear()</code>,<code>dict.copy()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个字典</span></span><br><span class="line"><span class="comment"># Dictionary 不只是用于存储字符串。Dictionary 的值可以是任意数据类型，</span></span><br><span class="line"><span class="comment"># 包括字符串、整数、对象，甚至其它的 dictionary。</span></span><br><span class="line"><span class="comment"># 在单个 dictionary 里，dictionary 的值并不需要全都是同一数据类型，可以根据需要混用和匹配。</span></span><br><span class="line">dict1 = &#123;<span class="string">'name'</span> : <span class="string">'LiuZhichao'</span>, <span class="string">'age'</span> : <span class="number">24</span>, <span class="string">'sex'</span> : <span class="string">'Male'</span>&#125;</span><br><span class="line"></span><br><span class="line">dict1[<span class="string">'name'</span>] = <span class="string">'Liuzc'</span> <span class="comment"># 为一个已经存在的 dictionary key 赋值，将简单覆盖原有的值。</span></span><br><span class="line"></span><br><span class="line">dict1[<span class="string">'Age'</span>] = <span class="number">25</span> <span class="comment"># 在 Python 中是区分大小写的  age和Age是完全不同的两个key</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用dict()创建字典</span></span><br><span class="line">dict_test = dict(([<span class="string">'x'</span>,<span class="number">1</span>],[<span class="string">'y'</span>,<span class="number">2</span>]))</span><br><span class="line"><span class="comment">#&#123;'y': 2, 'x': 1&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用dict.fromkeys()创建字典</span></span><br><span class="line"><span class="comment">#创建并返回一个新字典，以序列seq中元素做字典的键，val为字典所有键对应的初始值(默认为None)</span></span><br><span class="line">dict.fromkeys(seq,val=<span class="literal">None</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">#遍历数组 form key in dict_test (不可以更改字典长度,报错)</span></span><br><span class="line"><span class="comment"># 方法 1.报错</span></span><br><span class="line">form key <span class="keyword">in</span> dict_test:</span><br><span class="line">    <span class="keyword">if</span>(key==<span class="string">'x'</span>):</span><br><span class="line">        <span class="keyword">del</span> dict_test[key]</span><br><span class="line"><span class="comment"># 方法 2.正常</span></span><br><span class="line"><span class="keyword">from</span> key <span class="keyword">in</span> dict_test.keys()</span><br><span class="line">    <span class="keyword">if</span>(key==<span class="string">'x'</span>):</span><br><span class="line">        <span class="keyword">del</span> dict_test[key]</span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.has_key(key)判断key是否存在</span></span><br><span class="line">dict_test.has_key(<span class="string">'x'</span>)</span><br><span class="line"><span class="comment">#True</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.get(key,default) 返回键值key的值，若是key不存在，返回default的值 </span></span><br><span class="line">dict_test.get(<span class="string">'x'</span>,<span class="number">0</span>)</span><br><span class="line"><span class="comment">#1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.update(dict2) 将dict2的键值对列表添加到字典dict中去 </span></span><br><span class="line">dict_test.update(&#123;</span><br><span class="line">    <span class="string">'name'</span>:<span class="string">'rming'</span>,</span><br><span class="line">    <span class="string">'age'</span>:<span class="number">100</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">#&#123;'y': 2, 'x': 1,'name':'rming','age':100&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.pop(key)返回键值key的value ,删除原字典该减值</span></span><br><span class="line"><span class="keyword">print</span> dict_test.pop(<span class="string">'name'</span>)</span><br><span class="line"><span class="keyword">print</span> dict_test</span><br><span class="line"><span class="comment">#rming</span></span><br><span class="line"><span class="comment">#&#123;'y': 2, 'x': 1,'age':100&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.setdefault(key ,defaultvalue) 类似get方法，能够获得给定key的value，此外setdefault还能在自动重不含有给定key的情况下设定相应的key-value</span></span><br><span class="line">dict_test.setdefault(<span class="string">'sex'</span>,<span class="string">'male'</span>)</span><br><span class="line"><span class="comment">#male</span></span><br><span class="line"><span class="comment">#&#123;'y': 2, 'x': 1,'age':100,'sex','male'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dict.copy():返回具有相同key-value的新字典，为浅复制(shallow copy)</span></span><br><span class="line">new_dict = dict_test.copy()</span><br><span class="line"></span><br><span class="line"><span class="comment">#key in dict 是否有该键,同 dict.has_key(key)</span></span><br><span class="line"><span class="string">'x'</span> <span class="keyword">in</span> new_dict</span><br><span class="line"><span class="comment">#True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从字典中删除元素</span></span><br><span class="line"><span class="keyword">del</span> dict1[<span class="string">'sex'</span>]  <span class="comment"># del 允许您使用 key 从一个 dictionary 中删除独立的元素</span></span><br><span class="line"></span><br><span class="line">dict1.clear()  <span class="comment"># clear 从一个 dictionary 中清除所有元素</span></span><br></pre></td></tr></table></figure>
+<h2><span id="集合">集合</span></h2><p>Python的集合(set)和其他语言类似, 是一个无序不重复元素集, 基本功能包括关系测试和消除重复元素. 集合对象还支持union(联合), intersection(交), difference(差)和sysmmetric difference(对称差集)等数学运算.由于集合是无序的,所以，sets 不支持 索引, 分片, 或其它类序列（sequence-like）的操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义一个集合</span></span><br><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用 set 函数</span></span><br><span class="line"></span><br><span class="line">list1 = [<span class="number">6</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line">set2 = set(list1)</span><br><span class="line"></span><br><span class="line">set2.add(<span class="number">10</span>)  <span class="comment"># 添加新元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> set2  <span class="comment"># set([8, 9, 6, 7])  去掉重复内容,而且是无序的</span></span><br><span class="line"></span><br><span class="line">set3 = frozenset(list1)</span><br><span class="line"></span><br><span class="line">set3.add(<span class="number">10</span>)  <span class="comment"># 固定集合不能添加元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#方法（所有的集合方法）：</span></span><br><span class="line">s.issubset(t)  <span class="comment">#如果s是t的子集,返回True，否则返回False</span></span><br><span class="line">s.issuperset(t)  <span class="comment">#如果s是t的超集,返回True，否则返回False</span></span><br><span class="line">s.union(t)   <span class="comment">#返回一个新集合, 该集合是s和t的并集</span></span><br><span class="line">s.intersection(t)  <span class="comment">#返回一个新集合, 该集合是s和t的交集</span></span><br><span class="line">s.difference(t)  <span class="comment">#返回一个新集合, 该集合是s的成员, 但不是t的成员, 即返回s不同于t的元素</span></span><br><span class="line">s.symmetric_defference(t)  <span class="comment">#返回所有s和t独有的(非共同拥有)元素集合</span></span><br><span class="line">s.copy()  <span class="comment">#返回一个s的浅拷贝, 效率比工厂要好</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#方法（仅适用于可变集合）:以下方法参数必须是可哈希的</span></span><br><span class="line">s.update(t) <span class="comment">#用t中的元素 修改s，即s现在包含s或t的成员</span></span><br><span class="line">s.intersection_update(t) <span class="comment">#s中的成员是共同属于s和t的元素</span></span><br><span class="line">s.difference_update(t) <span class="comment">#s中的成员是属于s但不包含在t中的元素</span></span><br><span class="line">s.symmetric_difference_update(t) <span class="comment">#s中的成员更新为那些包含在s或t中，但不是s和t共有的元素</span></span><br><span class="line">s.add(obj) <span class="comment">#在集合s中添加对象obj</span></span><br><span class="line">s.remove(obj) <span class="comment">#从集合s中删除对象obj，如果obj不是集合s中的元素（obj not in s）,将引发keyError错误</span></span><br><span class="line">s.discard(obj) <span class="comment">#如果obj是集合s中的元素，从集合s中删除对象obj</span></span><br><span class="line">s.pop() <span class="comment">#删除集合s中得任意一个对象，并返回它</span></span><br><span class="line">s.clear() <span class="comment">#删除集合s中的所有元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 集合有并集，交集，求差操作</span></span><br><span class="line"><span class="comment">## 并集：intersection() 方法返回一个新集合，包含在两个集合中同时出现的所有元素。</span></span><br><span class="line"><span class="comment">## 交集：union() 方法返回一个新集合，包含在两个 集合中出现的元素。</span></span><br><span class="line"><span class="comment">## 差集：difference() 方法返回的新集合中，包含所有在 集合A出现但未在集合B中的元素。</span></span><br><span class="line"><span class="comment">## symmetric_difference() 方法返回一个新集合，包含所有只在其中一个集合中出现的元素。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除元素</span></span><br><span class="line">set2.discard(<span class="number">6</span>)   <span class="comment"># 当元素不存在时,不会引发异常</span></span><br><span class="line">set2.remove(<span class="number">6</span>)    <span class="comment"># 与discard的区别在于，如果没有要删除的元素，remove会引发一个异常</span></span><br><span class="line">set2.pop()  <span class="comment"># 因为set是无序的，所以pop会随机的从set中删除一个元素</span></span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/Python编程/">Python编程</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/php-regex.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PHP中的正则表达式应用</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/why-ok-buttons-on-the-left.html">
+        <span class="next-text nav-default">确定在左，取消在右？</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/python-tuple-list-dict-set.html';
+
+  var disqus_title = "Python元祖，列表，字典，集合的比较";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

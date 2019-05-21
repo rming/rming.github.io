@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32 DMA直接存储器访问简介">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-dma.html">
+
+
+<meta name="description" content="DMA简介DMA，全称为：Direct Memory Access，即直接存储器访问。DMA传输方式无需CPU 直接控制传输，也没有中断处理方式那样保留现场和恢复现场的过程，通过硬件为RAM 与I/O设备开辟一条直接传送数据的通路，能使CPU 的效率大为提高。 stm32中 DMA1有7个通道，DMA2有5个通道（DMA2 仅存在大容量产品中）。DMA挂载的时钟为AHB总线,其时钟为72Mhz，所">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 DMA直接存储器访问简介">
+<meta property="og:url" content="http://rmingwang.com/stm32-dma.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="DMA简介DMA，全称为：Direct Memory Access，即直接存储器访问。DMA传输方式无需CPU 直接控制传输，也没有中断处理方式那样保留现场和恢复现场的过程，通过硬件为RAM 与I/O设备开辟一条直接传送数据的通路，能使CPU 的效率大为提高。 stm32中 DMA1有7个通道，DMA2有5个通道（DMA2 仅存在大容量产品中）。DMA挂载的时钟为AHB总线,其时钟为72Mhz，所">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32 DMA直接存储器访问简介">
+<meta name="twitter:description" content="DMA简介DMA，全称为：Direct Memory Access，即直接存储器访问。DMA传输方式无需CPU 直接控制传输，也没有中断处理方式那样保留现场和恢复现场的过程，通过硬件为RAM 与I/O设备开辟一条直接传送数据的通路，能使CPU 的效率大为提高。 stm32中 DMA1有7个通道，DMA2有5个通道（DMA2 仅存在大容量产品中）。DMA挂载的时钟为AHB总线,其时钟为72Mhz，所">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32 DMA直接存储器访问简介 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32 DMA直接存储器访问简介
+        
+      </h1>
+
+      <time class="post-time">
+          7月 24 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="dma简介">DMA简介</span></h2><br><strong><span style="color: #ff0000;">DMA</span></strong>，全称为：<strong>Direct Memory Access</strong>，即<span style="color: #ff0000;"><strong>直接存储器访问</strong></span>。DMA传输方式无需CPU 直接控制传输，也没有中断处理方式那样保留现场和恢复现场的过程，通过硬件为RAM 与I/O设备开辟一条直接传送数据的通路，能使CPU 的效率大为提高。<p></p>
+<p>stm32中 DMA1有7个通道，DMA2有5个通道（DMA2 仅存在大容量产品中）。DMA挂载的时钟为AHB总线,其时钟为72Mhz，所以可以实现高速数据搬运。</p>
+<p>STM32F103RBT6 只有1 个DMA控制器，DMA1 ，下面我们就针对DMA1 进行介绍。</p>
+<p>从<strong>外设（TIMx、ADC、SPIx 、I2Cx 和USARTx ）</strong>产生的<strong>DMA请求</strong>，通过逻辑或输入到<strong>DMA控制器</strong>，这就意味着同时只能有一个请求有效。外设的DMA请求，可以通过设置相应的<strong>外设寄存器中的控制位</strong>，被独立地开启或关闭。</p>
+<p>DMA1 各通道一览表：</p>
+<p>这里解释一下上面说的<strong>逻辑或</strong>，例如通道 1 的几个 DMA1 请求（ADC1、TIM2_CH3、TIM4_CH1），这几个是通过逻辑或到通道 1 的，这样我们在同一时间，就只能使用其中的一个。其他通道也是类似的。</p>
+<p>这里我们要使用的是<span style="color: #ff0000;"><strong>串口 1</strong> 的 <strong>DMA 传送</strong></span>，也就是要用到<strong>通道 4</strong>。接下来，我们介绍一下 DMA设置相关的几个寄存器。</p>
+<p></p><h2><span id="寄存器简介">寄存器简介</span></h2><p></p>
+<h3><span id="dma-中断状态寄存器dma_isr"> DMA 中断状态寄存器（DMA_ISR）</span></h3>
+
+<p>我们如果<strong>开启了 DMA_ISR 中这些中断</strong>，在<strong>达到条件后就会跳到中断服务函数里面去</strong>，即使没开启，我们也可以通过<strong>查询</strong>这些位来获得当前 DMA 传输的状态。这里我们常用的是<strong> TCIFx</strong>，即通道 <strong>DMA 传输完成与否的标志</strong>。</p>
+<p><strong>注意此寄存器为只读寄存器，所以在这些位被置位之后，只能通过其他的操作来清除。</strong></p>
+<h3><span id="dma-中断标志清除寄存器dma_ifcr"> DMA 中断标志清除寄存器（DMA_IFCR）</span></h3>
+
+<p><strong>DMA_IFCR 的各位就是用来清除 DMA_ISR 的对应位的</strong>，<strong><span style="color: #ff0000;">通过写 0 清除</span>。</strong>在 DMA_ISR 被置位后，我们必须通过向该位寄存器对应的位写入 0 来清除。</p>
+<p></p><h3><span id="dma-通道-x-配置寄存器dma_ccrxx1~7"><strong> DMA 通道 x 配置寄存器（DMA_CCRx）（x=1~7)</strong></span></h3><br><strong></strong><strong></strong>该寄存器控制着 DMA 的很多相关信息，包括数据宽度、外设及存储器的宽度、通道优先级、增量模式、传输方向、中断允许、使能等都是通过该寄存器来设置的。所以 DMA_CCRx 是 DMA 传输的核心控制寄存器。<p></p>
+<p>MEM2MEM：存储器到存储器模式 (Memory to memory mode) 该位由软件设置和清除。 0：非存储器到存储器模式； 1：启动存储器到存储器模式。</p>
+<p>PL：通道优先级 (Channel priority level)  这些位由软件设置和清除。 00：低 01：中 10：高 11：最高</p>
+<p>MSIZE：存储器数据宽度 (Memory size) 这些位由软件设置和清除。 00：8位 01：16位 10：32位 11：保留</p>
+<p>PSIZE：外设数据宽度 (Peripheral size)  这些位由软件设置和清除。 00：8位 01：16位 10：32位 11：保留</p>
+<p>MINC：存储器地址增量模式 (Memory increment mode)  该位由软件设置和清除。 0：不执行存储器地址增量操作 1：执行存储器地址增量操作</p>
+<p>PINC：外设地址增量模式 (Peripheral increment mode) 该位由软件设置和清除。 0：不执行外设地址增量操作 1：执行外设地址增量操作</p>
+<p>CIRC：循环模式 (Circular mode)  该位由软件设置和清除。 0：不执行循环操作 1：执行循环操作</p>
+<p>DIR：数据传输方向 (Data transfer direction)   该位由软件设置和清除。 0：从外设读 1：从存储器读</p>
+<p>TEIE：允许传输错误中断 (Transfer error interrupt enable)  该位由软件设置和清除。 0：禁止TE中断 0：允许TE中断</p>
+<p>HTIE：允许半传输中断 (Half transfer interrupt enable) 该位由软件设置和清除。 0：禁止HT中断 0：允许HT中断</p>
+<p>TCIE：允许传输完成中断 (Transfer complete interrupt enable) 该位由软件设置和清除。 0：禁止TC中断 0：允许TC中断</p>
+<p>EN：通道开启 (Channel enable) 该位由软件设置和清除。 0：通道不工作 1：通道开启</p>
+<p></p><h3><span id="dma通道x传输数量寄存器dma_cndtrxx-17"><strong>DMA通道x传输数量寄存器(DMA_CNDTRx)(x = 1…7)</strong></span></h3><br><strong>低16位有效。这个寄存器控制通道每次传输的数据量，数据传输数量为0至65535。</strong><p></p>
+<p>该寄存器会随着传输的进行而递减，为0表示已经发送完成。所以可以通过这个寄存器的值来知道当前 DMA 传输的进度。</p>
+<p></p><h3><span id="dma外设地址寄存器dma_cparx"><strong>DMA外设地址寄存器（DMA_CPARx）</strong></span></h3><p></p>
+<p><div><strong>32位寄存器。外设数据寄存器的基地址，作为数据传输的源或目标。</strong></div></p>
+<p><div> 比如我们使用串口 1，那么该寄存器必须写入 0x40013804（其实就是&amp;USART1_DR）。如果使用其他外设，就修改成相应外设的地址就行了。</div></p>
+<p></p><h3><span id="dma存储地址寄存器dma_cmarx"><strong>DMA存储地址寄存器(DMA_CMARx)</strong></span></h3><p></p>
+<p><div><strong>存储器地址[31:0],存储器地址作为数据传输的源或目标。</strong></div></p>
+<p><div>比如我们使用 SendBuf[5200]数组来做存储器，那么我们在DMA_CMARx 中写入&amp;SendBuff 就可以了。</div></p>
+<p></p><h2><span id="寄存器操作步骤">寄存器操作步骤、</span></h2><br><strong>1、设置外设地址。 </strong><p></p>
+<p>设置外设地址通过<strong> DMA1_CPAR4</strong> 来设置，我们只要在这个寄存器里面写入&amp;USART1_DR 的值就可以了。该地址将作为 DMA 传输的目标地址。</p>
+<p><strong>2、设置存储器地址。 </strong></p>
+<p>设置存储器地址，我们通过 DMA1_CMAR4 来设置，假设我们要把数组 SendBuf 作为存储器，那么我们在该寄存器写入&amp;SendBuf 就可以了。该地址将作为 DMA 传输的源地址。</p>
+<p><strong>3、设置传输数据量。 </strong></p>
+<p>通过 DMA1_CNDTR4 来设置 DMA1 通道 4 的数据传输量，这里面写入此次你要传输的数据量就可以了，也就是 SendBuf 的大小。该寄存器的数值将在 DMA 启动后自减，每次新的 DMA 传输，都重新向该寄存器写入要传输的数据量。</p>
+<p><strong>4、设置通道 4 的配置信息。 </strong></p>
+<p>配置信息通过 DMA1_CCR4 来设置。这里我们设置存储器和外设的数据位宽均为 8，且模式是存储器到外设的存储器增量模式。优先级可以随便设置，因为我们只有一个通道被开启了。</p>
+<p>假设有多个通道开启（最多 7 个），那么就要设置优先级了，DMA 仲裁器将根据这些优先级的设置来决定先执行那个通道的 DMA。优先级越高的，越早执行，当优先级相同的时候，根据硬件上的编号来决定哪个先执行（编号越小越优先）。</p>
+<p><strong>5、使能 DMA1 通道 4，启动传输。 </strong></p>
+<p>在以上配置都完成了之后，我们就使能 DMA1_CCR4 的最低位开启 DMA 传输，这里注意要设置 USART1 的使能 DMA 传输位，通过USART1-&gt;CR3 的第七位设置。</p>
+<p>通过以上 5 步设置，我们就可以启动一次 USART1 的 DMA 传输了。</p>
+<p></p><h2><span id="程序设计">程序设计</span></h2><br>MAIN.C<p></p>
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;sys.h&quot;
+#include &quot;usart.h&quot;        
+#include &quot;delay.h&quot;    
+#include &quot;led.h&quot; 
+#include &quot;key.h&quot;
+#include &quot;exti.h&quot;
+#include &quot;wdg.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;lcd.h&quot;       
+#include &quot;rtc.h&quot;
+#include &quot;wkup.h&quot;
+#include &quot;adc.h&quot;
+#include &quot;dma.h&quot;
+
+const u8 *COMPILED_DATE=__DATE__;//获得编译日期
+const u8 *COMPILED_TIME=__TIME__;//获得编译时间
+
+//DMA 实验
+u8 SendBuff[5200];
+const u8 TEXT_TO_SEND[]={&quot;DMA 串口实验&quot;};     
+int main(void)
+{        
+    u16 i;
+    u8 t=0;
+    u8 j,mask=0;
+    float pro=0;//进度
+
+      Stm32_Clock_Init(9);//系统时钟设置
+    delay_init(72);        //延时初始化
+    uart_init(72,9600); //串口1初始化   
+    led_init();
+    key_init();    
+    LCD_Init(); 
+    MYDMA_Config(DMA1_Channel4,(u32)&amp;USART1-&gt;DR,(u32)SendBuff,5200);//DMA1通道4,外设为串口1,存储器为SendBuff,长度5200.
+
+     POINT_COLOR=RED;//设置字体为蓝色       
+    LCD_ShowString(60,110,&quot;DMA USART TEST&quot;);    
+    //显示提示信息
+    LCD_ShowString(60,130,&quot;Press KEY0 To Start!&quot;);
+
+    j=sizeof(TEXT_TO_SEND);       
+    for(i=0;i&lt;5200;i++)//填充ASCII字符集数据
+    {
+        if(t&gt;=j)//加入换行符
+        {
+            if(mask)
+            {
+                SendBuff[i]=0x0a;
+                t=0;
+            }else 
+            {
+                SendBuff[i]=0x0d;
+                mask++;
+            }    
+        }else//复制TEXT_TO_SEND语句
+        {
+            mask=0;
+            SendBuff[i]=TEXT_TO_SEND[t];
+            t++;
+        }          
+    }         
+    POINT_COLOR=BLUE;//设置字体为蓝色      
+    i=0;
+    while(1)
+    {
+        t=key_scan();
+        if(t==1)//KEY0按下
+        {
+            LCD_ShowString(60,150,&quot;Start Transimit....&quot;);
+            LCD_ShowString(60,170,&quot;   %&quot;);//显示百分号
+            printf(&quot;
+
+DMA DATA:
+&quot;);         
+            USART1-&gt;CR3=1&lt;&lt;7;           //使能串口1的DMA发送       
+            MYDMA_Enable(DMA1_Channel4);//开始一次DMA传输！      
+            //等待DMA传输完成，此时我们来做另外一些事，点灯
+            //实际应用中，传输数据期间，可以执行另外的任务
+            while(1)
+            {
+                if(DMA1-&gt;ISR&amp;(1&lt;&lt;13))//等待通道4传输完成
+                {
+                    DMA1-&gt;IFCR|=1&lt;&lt;13;//清除通道4传输完成标志
+                    break; 
+                }
+                pro=DMA1_Channel4-&gt;CNDTR;//得到当前还剩余多少个数据
+                pro=1-pro/5200;//得到百分比      
+                pro*=100;      //扩大100倍
+                LCD_ShowNum(60,170,pro,3,16);      
+            }                
+            LCD_ShowNum(60,170,100,3,16);//显示100%      
+            LCD_ShowString(60,150,&quot;Transimit Finished!&quot;);//提示传送完成
+        }
+        i++;
+        delay_ms(10);
+        if(i==20)
+        {
+            LED0=!LED0;//提示系统正在运行    
+            i=0;
+        }           
+    }
+}</pre>
+DMA.C
+<pre class="brush: php; gutter: true">#include &quot;dma.h&quot;
+//DMA 驱动代码               
+
+u16 DMA1_MEM_LEN;//保存DMA每次数据传送的长度             
+//DMA1的各通道配置
+//这里的传输形式是固定的,这点要根据不同的情况来修改
+//从存储器-&gt;外设模式/8位数据宽度/存储器增量模式
+//DMA_CHx:DMA通道CHx
+//cpar:外设地址
+//cmar:存储器地址
+//cndtr:数据传输量  
+void MYDMA_Config(DMA_Channel_TypeDef*DMA_CHx,u32 cpar,u32 cmar,u16 cndtr)
+{
+    u32 DR_Base;  //做缓冲用,不知道为什么.非要不可
+    RCC-&gt;AHBENR|=1&lt;&lt;0;//开启DMA1时钟
+    __nop();                    //等待 DMA1 时钟稳定
+    __nop();                    //经测试最少 2 个 nop
+    __nop();
+    DR_Base=cpar;
+    DMA_CHx-&gt;CPAR=DR_Base;      //DMA1 外设地址 
+    DMA_CHx-&gt;CMAR=(u32)cmar; //DMA1,存储器地址
+    DMA1_MEM_LEN=cndtr;      //保存DMA传输数据量
+    DMA_CHx-&gt;CNDTR=cndtr;    //DMA1,传输数据量
+    DMA_CHx-&gt;CCR=0X00000000;//复位
+    DMA_CHx-&gt;CCR|=1&lt;&lt;4;  //从存储器读
+    DMA_CHx-&gt;CCR|=0&lt;&lt;5;  //普通模式
+    DMA_CHx-&gt;CCR|=0&lt;&lt;6;  //外设地址非增量模式
+    DMA_CHx-&gt;CCR|=1&lt;&lt;7;  //存储器增量模式
+    DMA_CHx-&gt;CCR|=0&lt;&lt;8;  //外设数据宽度为8位
+    DMA_CHx-&gt;CCR|=0&lt;&lt;10; //存储器数据宽度8位
+    DMA_CHx-&gt;CCR|=1&lt;&lt;12; //中等优先级
+    DMA_CHx-&gt;CCR|=0&lt;&lt;14; //非存储器到存储器模式              
+} 
+//开启一次DMA传输
+void MYDMA_Enable(DMA_Channel_TypeDef*DMA_CHx)
+{
+    DMA_CHx-&gt;CCR&amp;=~(1&lt;&lt;0);       //关闭DMA传输 
+    DMA_CHx-&gt;CNDTR=DMA1_MEM_LEN; //DMA1,传输数据量 
+    DMA_CHx-&gt;CCR|=1&lt;&lt;0;          //开启DMA传输
+}</pre>
+DMA.H
+<pre class="brush: php; gutter: true">#ifndef __DMA_H
+#define    __DMA_H       
+#include &quot;sys.h&quot;
+
+void MYDMA_Config(DMA_Channel_TypeDef*DMA_CHx,u32 cpar,u32 cmar,u16 cndtr);//配置DMA1_CHx
+void MYDMA_Enable(DMA_Channel_TypeDef*DMA_CHx);//使能DMA1_CHx           
+#endif</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/stm32-temperate.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">STM32 内部温度传感器</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-adc.html">
+        <span class="next-text nav-default">STM32 ADC模数转换简介</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-dma.html';
+
+  var disqus_title = "STM32 DMA直接存储器访问简介";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

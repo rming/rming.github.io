@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="STM32 RTC实时时钟">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/stm32-rtc-clock.html">
+
+
+<meta name="description" content="RTC简介“RTC”是Real Time Clock 的简称，意为实时时钟。stm32提供了一个秒中断源和一个闹钟中断源。 RTC 模块拥有一组连续计数的计数器，在相应软件配置下，可提供时钟日历的功能。RTC的技术器是一个32位的计数器，使用32.768khz的外部晶振。 修改计数器的值可以重新设置系统当前的时间和日期。 RTC 模块和时钟配置系统(RCC_BDCR 寄存器)是在后备区域，即在系统">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 RTC实时时钟">
+<meta property="og:url" content="http://rmingwang.com/stm32-rtc-clock.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="RTC简介“RTC”是Real Time Clock 的简称，意为实时时钟。stm32提供了一个秒中断源和一个闹钟中断源。 RTC 模块拥有一组连续计数的计数器，在相应软件配置下，可提供时钟日历的功能。RTC的技术器是一个32位的计数器，使用32.768khz的外部晶振。 修改计数器的值可以重新设置系统当前的时间和日期。 RTC 模块和时钟配置系统(RCC_BDCR 寄存器)是在后备区域，即在系统">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32 RTC实时时钟">
+<meta name="twitter:description" content="RTC简介“RTC”是Real Time Clock 的简称，意为实时时钟。stm32提供了一个秒中断源和一个闹钟中断源。 RTC 模块拥有一组连续计数的计数器，在相应软件配置下，可提供时钟日历的功能。RTC的技术器是一个32位的计数器，使用32.768khz的外部晶振。 修改计数器的值可以重新设置系统当前的时间和日期。 RTC 模块和时钟配置系统(RCC_BDCR 寄存器)是在后备区域，即在系统">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> STM32 RTC实时时钟 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          STM32 RTC实时时钟
+        
+      </h1>
+
+      <time class="post-time">
+          7月 22 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p></p><h2><span id="rtc简介">RTC简介</span></h2><br><strong>“RTC”</strong>是<strong>Real Time Clock</strong> 的简称，意为<strong>实时时钟</strong>。<strong>stm32提供了一个秒中断源和一个闹钟中断源</strong>。<p></p>
+<p>RTC 模块拥有一组连续计数的计数器，在相应软件配置下，可提供<strong>时钟日历的功能</strong>。RTC的技术器是一个32位的计数器，使用32.768khz的外部晶振。</p>
+<p><strong>修改计数器的值可以重新设置系统当前的时间和日期</strong>。 RTC 模块和时钟配置系统(RCC_BDCR 寄存器)是在后备区域，即在系统复位或从待机模式唤醒后RTC 的设置和时间维持不变。但是在<strong>系统复位后，会自动禁止访问后备寄存器和RTC</strong> ，以防止对后备区域(BKP) 的意外写操作。所以在要设置时间之前， 先要<strong>取消备份区域（BKP ）写保护</strong>。</p>
+<h3><span id="rtc由两个主要部分组成">RTC由两个主要部分组成</span></h3><br><strong>第一部分(APB1 接口)用来和 APB1总线相连</strong>。此单元还<strong>包含一组16 位寄存器</strong>，可通过 APB1总线对其进行读写操作。<strong>APB1接口由APB1总线时钟驱动</strong>，用来与APB1总线接口。<br><br>另一部分(<strong>RTC 核心</strong>)由<strong>一组可编程计数器组成</strong>，分成两个主要模块。第一个模块是 <strong>RTC 的预分频模块</strong>，它可编程产生最长为1 秒的RTC 时间基准T<strong>R_CLK</strong> 。RTC 的预分频模块包含了一个20 位的可编程分频器(RTC 预分频器)。如果在RTC_CR 寄存器中设置了相应的允许位，则在每个TR_CLK 周期中 RTC 产生一个中断(秒中断)。第二个模块是<strong>一个32位的可编程计数器</strong>，可被初始化为当前的系统时间，一个32 位的时钟计数器，按秒钟计算，可以记录<strong>4294967296</strong>秒，约合136 年左右，作为一般应用，这已经是足够了的。<br><h3><span id="2038年问题"><span style="color: #ff0000;">2038年问题</span></span></h3><br><div><br><blockquote><br><div>在计算机应用上，2038年问题可能会导致某些软件在2038年无法正常工作。所有使用UNIX时间表示时间的程序都将受其影响，因为它们以自1970年1月1日经过的秒数（忽略闰秒）来表示时间。这种时间表示法在类Unix（Unix-like）操作系统上是一个标准，并会影响以其C编程语言开发给其他大部份操作系统使用的软件。</div><br><div>    在大部份的32位操作系统上，此“time_t”数据模式使用一个有正负号的32位元整数（signedint32)存储计算的秒数。也就是说最大可以计数的秒数为 2^31次方 可以算得：</div><br><div>                2^31/3600/24/365 ≈ 68年</div><br><div>所以依照此“time_t”标准，在此格式能被表示的最后时间是2038年1月19日03:14:07，星期二（UTC）。超过此一瞬间，时间将会被掩盖（wrap around）且在内部被表示为一个负数，并造成程序无法工作，因为它们无法将此时间识别为2038年，而可能会依个别实作而跳回1970年或1901年。</div><br><div></div><br><div><br><div>    对于PC机来说，时间开始于1980年1月1日，并以无正负符号的32位整数的形式按秒递增，这与UNIX时间非常类似。可以算得：</div><br><div>                 2^32/3600/24/365 ≈ 136年</div><br><div>到2116年，这个整数将溢出。</div><br><div></div><br><div>    Windows NT使用64位整数来计时。但是，它使用100纳秒作为增量单位，且时间开始于1601年1月1日，所以NT将遇到2184年问题。</div><br><div></div><br><div>苹果公司声明，Mac在29,940年之前不会出现时间问题！</div><br><div></div><br></div></blockquote><br></div><br><blockquote><br><div>        由于RTC是一个32位计数器，同样其计时时间是有限的。库函数中使用到了C标准时间库，时间库中的计时起始时间是1900年，可以知道时间库中不是用 有符号位的32位整数来表示时间的，否则在1968年就已经溢出了。如果用32位无符号整数计时，其溢出时间为2036年左右，所以会遇到这个问题。</div><br><div></div><br><div>    直接操作寄存器中，可以自由设定这个时间戳起始的年份，RTC的32位寄存器存储的只是距离这个起始年份的总秒数，所以不会遇到这个问题。而且可以用无符号32位的二进制表示时间，这意味着此类系统的时间戳可以表示更多的秒数。但是由于其使用32位寄存器表示秒数，最大只能计时到136年后。</div></blockquote><br>RTC还有一个<strong>闹钟寄存器RTC_ALR</strong>，用于<strong>产生闹钟</strong>。系统时间按 TR_CLK 周期累加并与存储在RTC_ALR 寄存器中的可编程时间相比较，如果 <strong>RTC_CR 控制寄存器中设置了相应允许位</strong>，比较匹配时将产生一个<strong>闹钟中断</strong>。<br><h2><span id="rtc相关寄存器">RTC相关寄存器</span></h2><br><h3><span id="rtc-的控制寄存器-rtc_cr">RTC 的控制寄存器 （<strong>RTC_CR）</strong></span></h3><br>RTC总共有2 个控制寄存器<strong>RTC_CRH</strong> 和<strong>RTC_CRL</strong>，两个都是16位的。<br><br><span style="color: #ff0000;"><strong>RTC_CRH寄存器</strong></span><br><br><br>该寄存器用来<strong>控制中断</strong>的，我们这一节将要用到<strong>秒钟中断</strong>，所以<strong>在该寄存器必须设置最低位为1 ，以允许秒钟中断</strong>。<br><br><span style="color: #ff0000;"><strong>RTC_CRL寄存器</strong></span><br><br><br>这一节我们用到的是该寄存器的<strong>0 、3~5 这几个位</strong>，<strong>第 0 位是秒钟标志位</strong>，我们在进入闹钟中断的时候，通过判断这位来决定是不是发生了秒钟中断。然后必须通过软件将该位清零（写0 ）。<strong>第 3 位为寄存器同步标志位</strong>，我们在修改控制寄存器 TC_CRH/CRL 之前，必须先判断该位，是否已经同步了，如果没有则等待同步，在没同步的情况下修改 RTC_CRH/CRL 的值是不行的。<strong>第 4 位为配置标位</strong>，在软件修改 RTC_CNT/RTC_ALR/RTC_PRL 的值的时候，必须先软件置位该位，以允许进入<strong>配置模式</strong>。<strong>第 5 位为 RTC 操作位</strong>，该位由硬件操作，软件只读。通过该位可以判断上次对RTC 寄存器的操作是否完成，如果没有，我们必须等待上一次操作结束才能开始下一次操作。<br><h3><span id="rtc-预分频装载寄存器">RTC 预分频装载寄存器</span></h3><br>这两个寄存器用来<strong>配置 RTC 时钟的分频数</strong>的，比如我们使用外部 32.768K 的晶振作为时钟的输入频率，那么我们要设置这两个寄存器的值为 32767，<strong>以得到一秒钟的计数频率。</strong><br><br><span style="color: #ff0000;"><strong>RTC_PRLH寄存器</strong></span><br><br><br><span style="color: #ff0000;"><strong>RTC_PRLL寄存器</strong></span><br><br><br><span style="color: #ff0000;"><strong>另：<span style="color: #333399;"> RTC 预分频器余数寄存器</span></strong></span>，该寄存器也有 2 个寄存器组成RTC_DIVH 和RTC_DIVL ，这两个寄存器的作用就是用来获得比秒钟更为准确的时钟，比如可以得到0.1 秒，或者 0.01 秒等。该寄存器的值自减的，用于保存还需要多少时钟周期获得一个秒信号。在一次秒钟更新后，由硬件重新装载。这两个寄存器和RTC 预分频装载寄存器的各位是一样的，这里我们就不列出来了。<br><h3><span id="rtc-计数器寄存器rtc_cnt">RTC 计数器寄存器（<strong>RTC_CNT）</strong></span></h3><br>该寄存器由 <strong>2 个16 位的寄存器</strong>组成<strong>RTC_CNTH</strong>和<strong>RTC_CNTL</strong>，总共<strong> 32位</strong>，用来<strong>记录秒钟值</strong>（一般情况下）。此两个计数器也比较简单，我们也不多说了。注意一点，<strong>在修改这个寄存器的时候要先进入配置模式</strong>。<br><h3><span id="rtc-闹钟寄存器-rtc_alr">RTC 闹钟寄存器 （<strong>RTC_ALR）</strong></span></h3><br>该寄存器也是<strong>由 2 个16 为的寄存器</strong>组成<strong>RTC_ALRH</strong>和<strong>RTC_ALRL</strong>。总共也是 32 位，用来<strong>标记闹钟产生的时间（以秒为单位）</strong>，如<strong>果RTC_CNT 的值与RTC_ALR 的值相等</strong>，并<strong>使能了中断</strong>的话，会产生一个<span style="color: #ff0000;"><strong>闹钟中断</strong></span>。<strong>该寄存器的修改也要进入配置模式才能进行</strong>。<br><h2><span id></span></h2><br><blockquote>因为我们使用到备份寄存器来存储RTC 的相关信息（我们这里主要用来标记时钟是否已经经过了配置），我们这里顺便介绍一下STM32的备份寄存器。</blockquote><br><h3><span id="备份寄存器bkp">备份寄存器（BKP）</span></h3><br><strong>备份寄存器</strong>是<strong>42 个16 位的寄存器</strong>（大容量产品才有，STM32F103RBT6 ，属于小容量产品，只有 10个16 位的寄存器），可用来存储84个字节的用户应用程序数据。他们处在备份域里，<strong>当VDD电源被切断，他们仍然由<span style="color: #ff0000;">VBAT 维持供电</span>。当系统在待机模式下被唤醒，或系统复位或电源复位时，他们也<span style="color: #ff0000;">不会被复位</span>。</strong><br><br>此外，<strong>BKP 控制寄存器</strong>用来管理侵入检测和RTC 校准功能。 复位后，对备份寄存器和 RTC 的访问被禁止，并且备份域被保护以防止可能存在的意外的写操作。<br><br>执行以下操作可以<strong>使能对备份寄存器和RTC 的访问</strong>：<br><br>1）通过设置寄存器 RCC_APB1ENR 的PWREN 和BKPEN位来打开电源和后备接口的时钟<br><br>2）电源控制寄存器(PWR_CR) 的DBP 位来使能对后备寄存器和RTC 的访问。<br><br>我们一般用BKP 来存储RTC 的校验值或者记录一些重要的数据，<strong>相当于一个EEPROM</strong>，不过这个EEPROM并不是真正的EPROM，而是<strong>需要电池来维持它的数据</strong>（关于 BKP 的详细介绍请看《STM32参考手册》的第 47 页，5.1一节）。<br><h3><span id="备份区域控制寄存器rcc_bdcr">备份区域控制寄存器RCC_BDCR</span></h3>
+
+<p><span style="color: #ff0000;"><strong>RTC的时钟源选择及使能设置</strong></span>都是通过这个寄存器来实现的，所以我们在RTC 操作之前先要通过这个寄存器<strong>选择RTC 的时钟源</strong>，然后才能开始其他的操作。</p>
+<p></p><h2><span id="寄存器操作步骤">寄存器操作步骤</span></h2><p></p>
+<p></p><h3><span id="1-使能电源时钟和备份区域时钟"><strong>1、使能电源时钟和备份区域时钟。 </strong></span></h3><br>我们要访问 RTC 和备份区域就必须先<strong>使能电源时钟 和 备份区域时钟</strong>。这个通过<strong>RCC_APB1ENR 寄存器</strong>来设置。<p></p>
+<p></p><h3><span id="2-取消备份区写保护">2、取消备份区写保护。</span></h3><br>要向备份区域写入数据，就要先取消备份区域写保护（写保护在每次硬复位之后被使能），否则是无法向备份区域写入数据的。我们需要用到向备份区域写入一个字节，来标记时钟已经配置过了，这样避免每次复位之后重新配置时钟。<p></p>
+<p></p><h3><span id="3-复位备份区域开启外部低速振荡器">3、复位备份区域，开启外部低速振荡器。</span></h3><br>在取消备份区域写保护之后，我们可以先对这个区域复位，以清除前面的设置，当然这个操作不要每次都执行，因为备份区域的复位将导致之前存在的数据丢失，所以要不要复位，要看情况而定。然后我们使能外部低速振荡器，注意这里一般要先判断RCC_BDCR的LSERDY位来确定低速振荡器已经就绪了才开始下面的操作。<p></p>
+<p></p><h3><span id="4-选择rtc时钟并使能">4、选择RTC时钟，并使能。</span></h3><br>这里我们将通过<strong>RCC_BDCR的RTCSEL</strong> 来选择选择外部LSI 作为RTC 的时钟。然后通过<strong>RTCEN位</strong>使能RTC 时钟。<p></p>
+<p></p><h3><span id="5-设置rtc的分频以及配置rtc时钟">5、设置RTC的分频，以及配置RTC时钟。</span></h3><br>在开启了RTC 时钟之后，我们要做的就是设置RTC 时钟的分频数，通过RTC_PRLH 和RTC_PRLL 来设置，然后等待RTC 寄存器操作完成，并同步之后，设置秒钟中断。然后设置RTC 的允许配置位（RTC_CRH 的CNF 位），设置时间（其实就是设置RTC_CNTH和RTC_CNTL两个寄存器）。<p></p>
+<p></p><h3><span id="6-更新配置设置rtc中断">6、更新配置，设置RTC中断。</span></h3><br>在设置完时钟之后，我们将配置更新，这里还是通过RTC_CRH 的CNF 来实现。在这之后我们在备份区域BKP_DR1中写入0X5050代表我们已经初始化过时钟了，下次开机（或复位）的时候，先读取BKP_DR1 的值，然后判断是否是0X5050 来决定是不是要配置。接着我们配置RTC 的秒钟中断，并进行分组。<p></p>
+<p></p><h3><span id="7-编写中断服务函数">7、编写中断服务函数。</span></h3><br>最后，我们要编写中断服务函数，在秒钟中断产生的时候，读取当前的时间值，并显示到TFTLCD 模块上。<p></p>
+<p></p><h2><span id="程序设计">程序设计</span></h2><br>//MAIN.C<p></p>
+<pre class="brush: php; gutter: true">#include &lt;stm32f10x_lib.h&gt;
+#include &quot;sys.h&quot;
+#include &quot;usart.h&quot;        
+#include &quot;delay.h&quot;    
+#include &quot;led.h&quot; 
+#include &quot;key.h&quot;
+#include &quot;exti.h&quot;
+#include &quot;wdg.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;lcd.h&quot;       
+#include &quot;rtc.h&quot;
+//RTC实时时钟 实验
+
+const u8 *COMPILED_DATE=__DATE__;//获得编译日期
+const u8 *COMPILED_TIME=__TIME__;//获得编译时间
+
+const u8* Week[7]={&quot;Sunday&quot;,&quot;Monday&quot;,&quot;Tuesday&quot;,&quot;Wednesday&quot;,&quot;Thursday&quot;,&quot;Friday&quot;,&quot;Saturday&quot;};
+
+int main(void)
+{        
+    u8 t=0;        
+     Stm32_Clock_Init(9);//系统时钟设置
+    delay_init(72);        //延时初始化
+    uart_init(72,9600); //串口1初始化   
+    led_init();                  
+    LCD_Init();    
+    RTC_Init();      
+    //RTC_Set(2004,12,31,23,59,55);  //设置时间       
+    POINT_COLOR=RED;//设置字体为红色 
+    LCD_ShowString(60,90,&quot;RTC TEST&quot;);    
+    LCD_ShowString(60,110,&quot;2012/7/22&quot;);    
+    //显示时间
+    POINT_COLOR=BLUE;//设置字体为蓝色
+    LCD_ShowString(60,130,&quot;    -  -  &quot;);       
+    LCD_ShowString(60,162,&quot;  :  :  &quot;);            
+    while(1)
+    {                                    
+        if(t!=timer.sec)
+        {
+            t=timer.sec;
+            LCD_ShowNum(60,130,timer.w_year,4,16);                                      
+            LCD_ShowNum(100,130,timer.w_month,2,16);                                      
+            LCD_ShowNum(124,130,timer.w_date,2,16);     
+            switch(timer.week)
+            {
+                case 0:
+                    LCD_ShowString(60,148,&quot;Sunday   &quot;);
+                    break;
+                case 1:
+                    LCD_ShowString(60,148,&quot;Monday   &quot;);
+                    break;
+                case 2:
+                    LCD_ShowString(60,148,&quot;Tuesday  &quot;);
+                    break;
+                case 3:
+                    LCD_ShowString(60,148,&quot;Wednesday&quot;);
+                    break;
+                case 4:
+                    LCD_ShowString(60,148,&quot;Thursday &quot;);
+                    break;
+                case 5:
+                    LCD_ShowString(60,148,&quot;Friday   &quot;);
+                    break;
+                case 6:
+                    LCD_ShowString(60,148,&quot;Saturday &quot;);
+                    break;  
+            }
+            LCD_ShowNum(60,162,timer.hour,2,16);                                      
+            LCD_ShowNum(84,162,timer.min,2,16);                                      
+            LCD_ShowNum(108,162,timer.sec,2,16);
+            LED0=!LED0;
+        }    
+        delay_ms(10);                                  
+    };  
+}</pre>
+//RTC.C
+<pre class="brush: php; gutter: true">#include &quot;sys.h&quot;
+#include &quot;rtc.h&quot; 
+#include &quot;delay.h&quot;
+#include &quot;usart.h&quot; 
+//////////////////////////////////////////////////////////////////////////////////     
+//RTC实时时钟 驱动代码           
+
+//********************************************************************************
+//V1.1修改说明
+//修改了RTC_Init函数分频设置无效的bug
+//修改了RTC_Get函数的一个bug
+//////////////////////////////////////////////////////////////////////////////////     
+
+//RTC实时时钟 驱动代码             
+
+tm timer;//时钟结构体        
+//实时时钟配置
+//初始化RTC时钟,同时检测时钟是否工作正常
+//BKP-&gt;DR1用于保存是否第一次配置的设置
+//返回0:正常
+//其他:错误代码
+u8 RTC_Init(void)
+{
+    //检查是不是第一次配置时钟
+    u8 temp=0;
+    if(BKP-&gt;DR1!=0X5050)//第一次配置
+    {     
+          RCC-&gt;APB1ENR|=1&lt;&lt;28;     //使能电源时钟        
+        RCC-&gt;APB1ENR|=1&lt;&lt;27;     //使能备份时钟        
+        PWR-&gt;CR|=1&lt;&lt;8;           //取消备份区写保护
+        RCC-&gt;BDCR|=1&lt;&lt;16;        //备份区域软复位       
+        RCC-&gt;BDCR&amp;=~(1&lt;&lt;16);     //备份区域软复位结束           
+        RCC-&gt;BDCR|=1&lt;&lt;0;         //开启外部低速振荡器 
+        while((!(RCC-&gt;BDCR&amp;0X02))&amp;&amp;temp&lt;250)//等待外部时钟就绪     
+        {
+            temp++;
+            delay_ms(10);
+        };
+        if(temp&gt;=250)return 1;//初始化时钟失败,晶振有问题        
+
+        RCC-&gt;BDCR|=1&lt;&lt;8; //LSI作为RTC时钟         
+        RCC-&gt;BDCR|=1&lt;&lt;15;//RTC时钟使能      
+          while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));//等待RTC寄存器操作完成     
+        while(!(RTC-&gt;CRL&amp;(1&lt;&lt;3)));//等待RTC寄存器同步  
+        RTC-&gt;CRH|=0X01;            //允许秒中断
+        while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));//等待RTC寄存器操作完成     
+        RTC-&gt;CRL|=1&lt;&lt;4;              //允许配置       
+        RTC-&gt;PRLH=0X0000;
+        RTC-&gt;PRLL=32767;             //时钟周期设置(有待观察,看是否跑慢了?)理论值：32767                                         
+        Auto_Time_Set();
+        //RTC_Set(2009,12,2,10,0,55);  //设置时间      
+        RTC-&gt;CRL&amp;=~(1&lt;&lt;4);           //配置更新
+        while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));   //等待RTC寄存器操作完成                                               
+        BKP-&gt;DR1=0X5050;
+        //BKP_Write(1,0X5050);;//在寄存器1标记已经开启了 
+        //printf(&quot;FIRST TIME
+&quot;);
+    }else//系统继续计时
+    {
+        while(!(RTC-&gt;CRL&amp;(1&lt;&lt;3)));//等待RTC寄存器同步  
+        RTC-&gt;CRH|=0X01;            //允许秒中断
+        while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));//等待RTC寄存器操作完成
+        //printf(&quot;OK
+&quot;);
+    }                              
+    MY_NVIC_Init(0,0,RTC_IRQChannel,2);//RTC,G2,P2,S2.优先级最低     
+    RTC_Get();//更新时间 
+    return 0; //ok
+}
+//RTC中断服务函数         
+//const u8* Week[2][7]=
+//{
+//{&quot;Sunday&quot;,&quot;Monday&quot;,&quot;Tuesday&quot;,&quot;Wednesday&quot;,&quot;Thursday&quot;,&quot;Friday&quot;,&quot;Saturday&quot;},
+//{&quot;日&quot;,&quot;一&quot;,&quot;二&quot;,&quot;三&quot;,&quot;四&quot;,&quot;五&quot;,&quot;六&quot;}
+//};                        
+//RTC时钟中断
+//每秒触发一次   
+void RTC_IRQHandler(void)
+{                                
+    if(RTC-&gt;CRL&amp;0x0001)//秒钟中断
+    {                            
+        RTC_Get();//更新时间      
+        //printf(&quot;CRL:%d
+&quot;,RTC-&gt;CRL);    
+     }
+    if(RTC-&gt;CRL&amp;0x0002)//闹钟中断
+    {
+        //printf(&quot;Alarm!
+&quot;);    
+        RTC-&gt;CRL&amp;=~(0x0002);//清闹钟中断
+         //闹钟处理
+    }                                                    
+    RTC-&gt;CRL&amp;=0X0FFA;         //清除溢出，秒钟中断标志
+    while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));//等待RTC寄存器操作完成                                                    
+}
+//判断是否是闰年函数
+//月份   1  2  3  4  5  6  7  8  9  10 11 12
+//闰年   31 29 31 30 31 30 31 31 30 31 30 31
+//非闰年 31 28 31 30 31 30 31 31 30 31 30 31
+//输入:年份
+//输出:该年份是不是闰年.1,是.0,不是
+u8 Is_Leap_Year(u16 year)
+{              
+    if(year%4==0) //必须能被4整除
+    { 
+        if(year%100==0) 
+        { 
+            if(year%400==0)return 1;//如果以00结尾,还要能被400整除        
+            else return 0;   
+        }else return 1;   
+    }else return 0;    
+}                    
+//设置时钟
+//把输入的时钟转换为秒钟
+//以1970年1月1日为基准
+//1970~2099年为合法年份
+//返回值:0,成功;其他:错误代码.
+//月份数据表                                             
+u8 const table_week[12]={0,3,3,6,1,4,6,2,5,0,3,5}; //月修正数据表      
+//平年的月份日期表
+const u8 mon_table[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec)
+{
+    u16 t;
+    u32 seccount=0;
+    if(syear&lt;1970||syear&gt;2099)return 1;       
+    for(t=1970;t&lt;syear;t++)    //把所有年份的秒钟相加
+    {
+        if(Is_Leap_Year(t))seccount+=31622400;//闰年的秒钟数
+        else seccount+=31536000;              //平年的秒钟数
+    }
+    smon-=1;
+    for(t=0;t&lt;smon;t++)       //把前面月份的秒钟数相加
+    {
+        seccount+=(u32)mon_table[t]*86400;//月份秒钟数相加
+        if(Is_Leap_Year(syear)&amp;&amp;t==1)seccount+=86400;//闰年2月份增加一天的秒钟数       
+    }
+    seccount+=(u32)(sday-1)*86400;//把前面日期的秒钟数相加 
+    seccount+=(u32)hour*3600;//小时秒钟数
+    seccount+=(u32)min*60;     //分钟秒钟数
+    seccount+=sec;//最后的秒钟加上去
+
+    //设置时钟
+    RCC-&gt;APB1ENR|=1&lt;&lt;28;//使能电源时钟
+    RCC-&gt;APB1ENR|=1&lt;&lt;27;//使能备份时钟
+    PWR-&gt;CR|=1&lt;&lt;8;    //取消备份区写保护
+    //上面三步是必须的!
+    RTC-&gt;CRL|=1&lt;&lt;4;   //允许配置 
+    RTC-&gt;CNTL=seccount&amp;0xffff;
+    RTC-&gt;CNTH=seccount&gt;&gt;16;
+    RTC-&gt;CRL&amp;=~(1&lt;&lt;4);//配置更新
+    while(!(RTC-&gt;CRL&amp;(1&lt;&lt;5)));//等待RTC寄存器操作完成      
+    return 0;        
+}
+//得到当前的时间
+//返回值:0,成功;其他:错误代码.
+u8 RTC_Get(void)
+{
+    static u16 daycnt=0;
+    u32 timecount=0; 
+    u32 temp=0;
+    u16 temp1=0;      
+
+    timecount=RTC-&gt;CNTH;//得到计数器中的值(秒钟数)
+    timecount&lt;&lt;=16;
+    timecount+=RTC-&gt;CNTL;             
+
+    temp=timecount/86400;   //得到天数(秒钟数对应的)
+    if(daycnt!=temp)//超过一天了
+    {      
+        daycnt=temp;
+        temp1=1970;    //从1970年开始
+        while(temp&gt;=365)
+        {                 
+            if(Is_Leap_Year(temp1))//是闰年
+            {
+                if(temp&gt;=366)temp-=366;//闰年的秒钟数
+                else break;  
+            }
+            else temp-=365;      //平年 
+            temp1++;  
+        }   
+        timer.w_year=temp1;//得到年份
+        temp1=0;
+        while(temp&gt;=28)//超过了一个月
+        {
+            if(Is_Leap_Year(timer.w_year)&amp;&amp;temp1==1)//当年是不是闰年/2月份
+            {
+                if(temp&gt;=29)temp-=29;//闰年的秒钟数
+                else break; 
+            }
+            else 
+            {
+                if(temp&gt;=mon_table[temp1])temp-=mon_table[temp1];//平年
+                else break;
+            }
+            temp1++;  
+        }
+        timer.w_month=temp1+1;//得到月份
+        timer.w_date=temp+1;  //得到日期 
+    }
+    temp=timecount%86400;     //得到秒钟数          
+    timer.hour=temp/3600;     //小时
+    timer.min=(temp%3600)/60; //分钟    
+    timer.sec=(temp%3600)%60; //秒钟
+    timer.week=RTC_Get_Week(timer.w_year,timer.w_month,timer.w_date);//获取星期   
+    return 0;
+}     
+//获得现在是星期几
+//功能描述:输入公历日期得到星期(只允许1901-2099年)
+//输入参数：公历年月日 
+//返回值：星期号                                                                                         
+u8 RTC_Get_Week(u16 year,u8 month,u8 day)
+{    
+    u16 temp2;
+    u8 yearH,yearL;
+
+    yearH=year/100;    yearL=year%100; 
+    // 如果为21世纪,年份数加100  
+    if (yearH&gt;19)yearL+=100;
+    // 所过闰年数只算1900年之后的  
+    temp2=yearL+yearL/4;
+    temp2=temp2%7; 
+    temp2=temp2+day+table_week[month-1];
+    if (yearL%4==0&amp;&amp;month&lt;3)temp2--;
+    return(temp2%7);
+} 
+//比较两个字符串指定长度的内容是否相等
+//参数:s1,s2要比较的两个字符串;len,比较长度
+//返回值:1,相等;0,不相等
+u8 str_cmpx(u8*s1,u8*s2,u8 len)
+{
+    u8 i;
+    for(i=0;i&lt;len;i++)if((*s1++)!=*s2++)return 0;
+    return 1;       
+}
+extern const u8 *COMPILED_DATE;//获得编译日期
+extern const u8 *COMPILED_TIME;//获得编译时间
+const u8 Month_Tab[12][3]={&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;,&quot;Sep&quot;,&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;}; 
+//自动设置时间为编译器时间   
+void Auto_Time_Set(void)
+{
+    u8 temp[3];
+    u8 i;
+    u8 mon,date;
+    u16 year;
+    u8 sec,min,hour;
+    for(i=0;i&lt;3;i++)temp[i]=COMPILED_DATE[i];   
+    for(i=0;i&lt;12;i++)if(str_cmpx((u8*)Month_Tab[i],temp,3))break;    
+    mon=i+1;//得到月份
+    if(COMPILED_DATE[4]==&#039; &#039;)date=COMPILED_DATE[5]-&#039;0&#039;; 
+    else date=10*(COMPILED_DATE[4]-&#039;0&#039;)+COMPILED_DATE[5]-&#039;0&#039;;  
+    year=1000*(COMPILED_DATE[7]-&#039;0&#039;)+100*(COMPILED_DATE[8]-&#039;0&#039;)+10*(COMPILED_DATE[9]-&#039;0&#039;)+COMPILED_DATE[10]-&#039;0&#039;;       
+    hour=10*(COMPILED_TIME[0]-&#039;0&#039;)+COMPILED_TIME[1]-&#039;0&#039;;  
+    min=10*(COMPILED_TIME[3]-&#039;0&#039;)+COMPILED_TIME[4]-&#039;0&#039;;  
+    sec=10*(COMPILED_TIME[6]-&#039;0&#039;)+COMPILED_TIME[7]-&#039;0&#039;;  
+    RTC_Set(year,mon,date,hour,min,sec)    ;
+}</pre>
+//RTC.H
+<pre class="brush: php; gutter: true">#ifndef __RTC_H
+#define __RTC_H        
+//////////////////////////////////////////////////////////////////////////////////     
+//RTC实时时钟 驱动代码           
+//********************************************************************************
+//V1.1修改说明
+//修改了RTC_Init函数分频设置无效的bug
+//修改了RTC_Get函数的一个bug
+//////////////////////////////////////////////////////////////////////////////////     
+//时间结构体
+typedef struct 
+{
+    u8 hour;
+    u8 min;
+    u8 sec;            
+    //公历日月年周
+    u16 w_year;
+    u8  w_month;
+    u8  w_date;
+    u8  week;         
+}tm;                     
+extern tm timer; 
+
+extern u8 const mon_table[12];//月份日期数据表
+void Disp_Time(u8 x,u8 y,u8 size);//在制定位置开始显示时间
+void Disp_Week(u8 x,u8 y,u8 size,u8 lang);//在指定位置显示星期
+u8 RTC_Init(void);        //初始化RTC,返回0,失败;1,成功;
+u8 Is_Leap_Year(u16 year);//平年,闰年判断
+u8 RTC_Get(void);         //更新时间   
+u8 RTC_Get_Week(u16 year,u8 month,u8 day);
+u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);//设置时间      
+void Auto_Time_Set(void);//设置时间为编译时间
+#endif</pre>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/arm-c-program.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ARM C程序基础</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/stm32-pwm.html">
+        <span class="next-text nav-default">STM32 脉冲宽度调制(PWM)输出</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/stm32-rtc-clock.html';
+
+  var disqus_title = "STM32 RTC实时时钟";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>

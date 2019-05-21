@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="8051单片机I/O引脚工作原理之P3">
+
+
+
+
+  <meta name="keywords" content="电子设计,">
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Rming">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.2">
+
+
+
+<link rel="canonical" href="http://rmingwang.com/8051-i-o-pins-works-of-p3.html">
+
+
+<meta name="description" content="P3端口的结构及工作原理 P3口是一个多功能口，它除了可以作为I/O口外，还具有第二功能    P3端口和Pl端口的结构相似，区别仅在于P3端口的各端口线有两种功能选择。当处于第一功能时，第二输出功能线为1，此时，内部总线信号经锁存器和场效应管输入/输出，其作用与P1端口作用相同，也是静态准双向I/O端口。当处于第二功能时，锁存器输出1，通过第二输出功能线输出特定的内含信号，在输入方面，即可以通过">
+<meta name="keywords" content="电子设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8051单片机I&#x2F;O引脚工作原理之P3">
+<meta property="og:url" content="http://rmingwang.com/8051-i-o-pins-works-of-p3.html">
+<meta property="og:site_name" content="Rming">
+<meta property="og:description" content="P3端口的结构及工作原理 P3口是一个多功能口，它除了可以作为I/O口外，还具有第二功能    P3端口和Pl端口的结构相似，区别仅在于P3端口的各端口线有两种功能选择。当处于第一功能时，第二输出功能线为1，此时，内部总线信号经锁存器和场效应管输入/输出，其作用与P1端口作用相同，也是静态准双向I/O端口。当处于第二功能时，锁存器输出1，通过第二输出功能线输出特定的内含信号，在输入方面，即可以通过">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2012-10-17T18:30:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8051单片机I&#x2F;O引脚工作原理之P3">
+<meta name="twitter:description" content="P3端口的结构及工作原理 P3口是一个多功能口，它除了可以作为I/O口外，还具有第二功能    P3端口和Pl端口的结构相似，区别仅在于P3端口的各端口线有两种功能选择。当处于第一功能时，第二输出功能线为1，此时，内部总线信号经锁存器和场效应管输入/输出，其作用与P1端口作用相同，也是静态准双向I/O端口。当处于第二功能时，锁存器输出1，通过第二输出功能线输出特定的内含信号，在输入方面，即可以通过">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26275cbf6baa00fb8df9ba266da07c6d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-22663233-12', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+
+
+
+  
+
+
+    <title> 8051单片机I/O引脚工作原理之P3 - Rming </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Rming</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/links.html">
+                            
+                            
+                                友情链接
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          8051单片机I/O引脚工作原理之P3
+        
+      </h1>
+
+      <time class="post-time">
+          5月 31 2012
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><strong>P3端口的结构及工作原理</strong></p>
+<p align="left">P3口是一个多功能口，它除了可以作为I/O口外，还具有第二功能</p><br><p align="left">    P3端口和Pl端口的结构相似，区别仅在于P3端口的各端口线有两种功能选择。当处于第一功能时，第二输出功能线为1，此时，内部总线信号经锁存器和场效应管输入/输出，其作用与P1端口作用相同，也是静态准双向I/O端口。当处于第二功能时，锁存器输出1，通过第二输出功能线输出特定的内含信号，在输入方面，即可以通过缓冲器读入引脚信号，还可以通过替代输入功能读入片内的特定第二功能信号。由于输出信号锁存并且有双重功能，故P3端口为静态双功能端口。</p><br><p align="left">P3口的特殊功能（即第二功能）：</p><br><p align="left"></p>
+
+<p><div align="center"></div></p>
+<p><table width="75%" border="1" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td width="24%"></td></p>
+<p align="center">口线</p><br><br><td width="24%"><br><p align="center">第二功能</p><br></td><br><td width="52%"><br><p align="center">信号名称</p><br></td><br><br><tr><br><td><br><p align="center">P3.0</p><br></td><br><td><br><p align="center">RXD</p><br></td><br><td><br><p align="center">串行数据接收</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.1</p><br></td><br><td><br><p align="center">TXD</p><br></td><br><td><br><p align="center">串行数据发送</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.2</p><br></td><br><td><br><p align="center">INT0</p><br></td><br><td><br><p align="center">外部中断0申请</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.3</p><br></td><br><td><br><p align="center">INT1</p><br></td><br><td><br><p align="center">外部中断1申请</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.4</p><br></td><br><td><br><p align="center">T0</p><br></td><br><td><br><p align="center">定时器/计数器0计数输入</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.5</p><br></td><br><td><br><p align="center">T1</p><br></td><br><td><br><p align="center">定时器/计数器1计数输入</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.6</p><br></td><br><td><br><p align="center">WR</p><br></td><br><td><br><p align="center">外部RAM写选通</p><br></td><br></tr><br><tr><br><td><br><p align="center">P3.7</p><br></td><br><td><br><p align="center">RD</p><br></td><br><td><br><p align="center">外部RAM读选通</p><br></td><br></tr><br><br><br><br><p align="left"></p><br><p align="left"><strong>使</strong><strong>P3</strong><strong>端品各线处于第二功能的条件是</strong><strong>:</strong></p><br><p align="left">1、串行I/O处于运行状态(RXD,TXD);</p><br><p align="left">2、打开了处部中断(INT0,INT1);</p><br><p align="left">3、定时器/计数器处于外部计数状态(T0,T1)</p><br><p align="left">4、执行读写外部RAM的指令(RD,WR)</p><br><p align="left">    在应用中,如不设定P3端口各位的第二功能(WR,RD信叼的产生不用设置),则P3端口线自动处于第一功能状态，也就是静态I／O端口的工作状态。在更多的场合是根据应用的需要，把几条端口线设置为第二功能，而另外几条端口线处于第一功能运行状态。在这种情况下，不宜对P3端口作字节操作，需采用位操作的形式。<br></p><br><p align="left"><strong>端口的负载能力和输入／输出操作</strong><strong>:</strong></p><br><p align="left">     P0端口能驱动8个LSTTL负载。如需增加负载能力，可在P0总线上增加总线驱动器。P1，P2，P3端口各能驱动4个LSTTL负载。<br>前已述及，由于P0-P3端口已映射成特殊功能寄存器中的P0一P3端口寄存器，所以对这些端口寄存器的读／写就实现了信息从相应端口的输入／输出。例如：<br>MOV A， P1 ；把Pl端口线上的信息输入到A<br>MoV P1， A ；把A的内容由P1端口输出<br>MOV P3， #0FFH ；使P3端口线各位置l</p>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/电子设计/">电子设计</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/51-mcu-sms-alarm-lock.html">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">51单片机密码锁(掉电锁存/短信报警)</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/systick-delay-function-notes.html">
+        <span class="next-text nav-default">通过SYSTICK的查询方式实现延时函数笔记</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2008 -
+    
+    2019
+    <span class="footer-author">Rming.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/Rming/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'rming';
+  var disqus_identifier = '/8051-i-o-pins-works-of-p3.html';
+
+  var disqus_title = "8051单片机I/O引脚工作原理之P3";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.2"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.2"></script>
+
+  </body>
+</html>
